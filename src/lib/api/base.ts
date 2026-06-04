@@ -133,6 +133,9 @@ export abstract class BaseClient {
   abstract saveComment(form: types.SaveComment): Promise<types.CommentResponse>
   abstract distinguishComment(form: types.DistinguishComment): Promise<types.CommentResponse>
   abstract getComments(form: types.GetComments): Promise<types.PagedResponse<types.CommentView>>
+  abstract getCommentsSlim(
+    form: types.GetComments,
+  ): Promise<types.PagedResponse<types.CommentSlimView>>
   abstract getComment(form: types.GetComment): Promise<types.CommentResponse>
   abstract createCommentReport(
     form: types.CreateCommentReport,
@@ -157,6 +160,19 @@ export abstract class BaseClient {
   abstract login(form: types.Login): Promise<types.LoginResponse>
   abstract logout(): Promise<types.SuccessResponse>
   abstract getPersonDetails(form: types.GetPersonDetails): Promise<types.GetPersonDetailsResponse>
+  abstract listPersonContent(
+    form: types.ListPersonContent,
+  ): Promise<types.PagedResponse<types.PostCommentCombinedView>>
+  abstract listPersonSaved(
+    form: types.ListPersonSaved,
+  ): Promise<types.PagedResponse<types.PostCommentCombinedView>>
+  abstract listPersonLiked(
+    form: types.ListPersonLiked,
+  ): Promise<types.PagedResponse<types.PostCommentCombinedView>>
+  abstract listPersonRead(form: types.ListPersonRead): Promise<types.PagedResponse<types.PostView>>
+  abstract listPersonHidden(
+    form: types.ListPersonHidden,
+  ): Promise<types.PagedResponse<types.PostView>>
   abstract listNotifications(
     form: types.ListNotifications,
   ): Promise<types.PagedResponse<types.NotificationView>>

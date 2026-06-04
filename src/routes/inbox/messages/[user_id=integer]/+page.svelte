@@ -32,7 +32,7 @@
       data.messages.items,
       (i) => {
         if (i.data.type_ != 'private_message') throw new TypeError('Invalid data type received')
-        return i
+        return i as { data: PrivateMessageView; notification: Notification }
       },
     ),
   )
@@ -98,12 +98,6 @@
   async function loadMore(cursor?: string) {
     const res = await client().listNotifications({
       creator_id: Number(creator.person_view.person.id),
-      limit: 50,
-      page_cursor: cursor,
-    })
-
-    const res = await client().listNotifications({
-      creator_id: Number(profile.cur),
       limit: 50,
       page_cursor: cursor,
     })

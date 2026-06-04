@@ -21,6 +21,9 @@ import { SvelteMap } from 'svelte/reactivity'
 
 type FetchFn<P, R> = (params: P) => R
 
+/*
+ * The Feed class has a terrible name, and is responsible for caching data on certain routes.
+ */
 export class Feed<Params, Response> {
   #data = $state<Response>()
   #fetch: FetchFn<Params, Response>
@@ -71,7 +74,7 @@ export interface FeedTypes {
       client: { itemHeights?: (number | null)[]; lastSeen?: number }
     },
   ]
-  '/u/[name]': [GetPersonDetails, { data: GetPersonDetailsResponse }]
+  '/u/[name]': [GetPersonDetails, GetPersonDetailsResponse]
   '/post/[instance]/[id=integer]': [
     {
       posts: GetPost

@@ -4,9 +4,6 @@
   "workspaces": {
     "": {
       "name": "photon-lemmy",
-      "dependencies": {
-        "lemmy-js-client-v3": "npm:lemmy-js-client@0.19.11-donation-dialog.1",
-      },
       "devDependencies": {
         "@dicebear/core": "^9.3.1",
         "@dicebear/initials": "^9.3.1",
@@ -28,7 +25,8 @@
         "eslint": "^9.39.2",
         "eslint-plugin-svelte": "^3.14.0",
         "jsdom": "^22.1.0",
-        "lemmy-js-client": "^1.0.0-admin-endpoints.0",
+        "lemmy-js-client": "1.0.0-alpha.2",
+        "lemmy-js-client-v3": "npm:lemmy-js-client@0.19.11-donation-dialog.1",
         "linkify-it": "^5.0.0",
         "marked": "^17.0.1",
         "marked-linkify-it": "^3.1.14",
@@ -739,7 +737,7 @@
 
     "known-css-properties": ["known-css-properties@0.37.0", "", {}, "sha512-JCDrsP4Z1Sb9JwG0aJ8Eo2r7k4Ou5MwmThS/6lcIe1ICyb7UBJKGRIUUdqc2ASdE/42lgz6zFUnzAIhtXnBVrQ=="],
 
-    "lemmy-js-client": ["lemmy-js-client@1.0.0-admin-endpoints.0", "", { "dependencies": { "@tsoa/runtime": "^6.6.0" } }, "sha512-8MQfRri20Q/nwtfnVRpfRt7OWZAkVcB/2XA53UAGtwhRi+e5nayc5eDCs+9Zv8KRhihxKBFcTZKK/uF+nctWhw=="],
+    "lemmy-js-client": ["lemmy-js-client@1.0.0-alpha.2", "", { "dependencies": { "@tsoa/runtime": "^6.6.0" } }, "sha512-hdHEIObGcAzkz/r/0hxV1XIsZ/JYOnGP28KemCfdKjbdVc5U/rd5AXr+PY4tShi7Zsf9QLFteKs24b/XJ/gYgg=="],
 
     "lemmy-js-client-v3": ["lemmy-js-client@0.19.11-donation-dialog.1", "", {}, "sha512-dmny1WwteMY07EKLoOGYt46HVc7k6H+o0ZzCPcNcpaAVgK5jJ6fs2i2BfMrEtQwAdRzqyVtVX0gXHy17j/cWGw=="],
 
