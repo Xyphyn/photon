@@ -57,7 +57,8 @@ def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        # full chromium for correct kerning
+        browser = p.chromium.launch(channel="chromium")
 
         try:
             for shot in SCREENSHOTS:
