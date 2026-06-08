@@ -24,7 +24,7 @@
     ShieldCheck,
   } from 'svelte-hero-icons/dist'
   import { PostVote } from '..'
-  import { PostFormState } from '../form/postform.svelte'
+  import { PostFormState } from '../form/post-form.svelte'
   import { postLink } from '../post-helpers'
   import type { PostModel } from '../post.svelte'
 
@@ -83,11 +83,12 @@
         editPost={post.post.id}
         onsubmit={(e) => {
           editing = false
-          post.edit(e)
+          post.data = e
           onedit?.(e)
         }}
         init={new PostFormState({
           type: post.post.poll ? 'poll' : post.post.event ? 'event' : 'normal',
+          community: post.community,
           ...post.post,
         })}
       >

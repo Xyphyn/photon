@@ -1,34 +1,30 @@
 <script lang="ts">
   import CommunityForm from '$lib/feature/community/CommunityForm.svelte'
-  import CommunityTitle from '$lib/feature/community/CommunityTitle.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte.js'
   import { Header } from '$lib/ui/layout'
 
   let { data } = $props()
+  let community = $derived(repos.communities.get(data.community.community_view))
+  let languages = $derived(data.community.discussion_languages)
 </script>
 
-<div class="flex flex-col gap-4">
-  <Header pageHeader>
-    <span>Settings</span>
-    {#snippet extended()}
-      <CommunityTitle community={data.community.value.community_view.community} />
-    {/snippet}
-  </Header>
-  <CommunityForm
-    edit={data.community.value.community_view.community.id}
-    formData={{
-      name: data.community.value.community_view.community.name,
-      displayName: data.community.value.community_view.community.title,
-      nsfw: data.community.value.community_view.community.nsfw,
-      postsLockedToModerators:
-        data.community.value.community_view.community.posting_restricted_to_mods,
-      sidebar: data.community.value.community_view.community.summary ?? '',
-      icon: data.community.value.community_view.community.icon,
-      banner: data.community.value.community_view.community.banner,
-      visibility: data.community.value.community_view.community.visibility,
-      submitting: false,
-      languages: data.community.value.discussion_languages,
-    }}
-  >
-    {#snippet formtitle()}{/snippet}
-  </CommunityForm>
-</div>
+<Header pageHeader>
+  <span>Settings</span>
+</Header>
+<CommunityForm
+  edit={community.community.id}
+  formData={{
+    name: community.community.name,
+    displayName: community.community.title!,
+    nsfw: community.community.nsfw,
+    postsLockedToModerators: community.community.posting_restricted_to_mods,
+    sidebar: community.community.summary ?? '',
+    icon: community.community.icon,
+    banner: community.community.banner,
+    visibility: community.community.visibility,
+    submitting: false,
+    languages: languages,
+  }}
+>
+  {#snippet formtitle()}{/snippet}
+</CommunityForm>

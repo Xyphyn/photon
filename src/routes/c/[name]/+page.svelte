@@ -21,7 +21,7 @@
     if (browser) setSessionStorage('lastSeenCommunity', community.data)
 
     resumables.add({
-      name: community.community.title,
+      name: community.community.name,
       type: 'community',
       url: page.url.toString(),
       avatar: community.community.icon,

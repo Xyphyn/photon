@@ -231,3 +231,20 @@ export async function loader<T>(
     setLoading(false)
   }
 }
+
+export function formatBytes(bytes: number, locale = 'en-US') {
+  if (bytes === 0) return new Intl.NumberFormat(locale, { style: 'unit', unit: 'byte' }).format(0)
+
+  const k = 1024
+  const units = ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte', 'petabyte']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  const value = bytes / Math.pow(k, i)
+
+  return new Intl.NumberFormat(locale, {
+    style: 'unit',
+    unit: units[i],
+    unitDisplay: 'short',
+    maximumFractionDigits: 2,
+  }).format(value)
+}

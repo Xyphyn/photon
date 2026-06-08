@@ -7,10 +7,11 @@
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { settings } from '$lib/app/settings.svelte'
-  import { placeholders } from '$lib/app/util.svelte'
+  import { isImage, isVideo, placeholders } from '$lib/app/util.svelte'
   import Duration from '$lib/ui/form/Duration.svelte'
+  import { uploadStrategy } from '$lib/ui/form/files/file-upload.svelte'
+  import FileUpload from '$lib/ui/form/files/FileUpload.svelte'
   import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
-  import ImageInputModal from '$lib/ui/form/ImageInputModal.svelte'
   import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
   import MultiSelect from '$lib/ui/form/Switch.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
@@ -47,7 +48,7 @@
     Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
-  import { autofillPost, PostFormState } from './postform.svelte'
+  import { autofillPost, PostFormState } from './post-form.svelte'
 
   interface Props {
     editPost?: number
@@ -69,8 +70,6 @@
   })
 
   let loading = $state<boolean>(false)
-  let uploadImage = $state(false)
-  let customThumbnail = $state(false)
 
   async function autofill(
     data: URL | { title?: string; body?: string },
@@ -115,17 +114,6 @@
       bind:selected={form.type}
     />
   </div>
-{/if}
-
-{#if uploadImage}
-  <ImageInputModal bind:open={uploadImage} bind:imageUrl={() => '', (v) => (form.url = v)} />
-{/if}
-
-{#if customThumbnail}
-  <ImageInputModal
-    bind:open={customThumbnail}
-    bind:imageUrl={() => form.thumbnail, (v) => (form.thumbnail = v)}
-  />
 {/if}
 
 {#snippet altText()}
@@ -381,16 +369,19 @@
     <div
       class="bg-gradient-to-l from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute right-0 w-3 h-full z-10"
     ></div>
-    <ButtonGroup orientation="horizontal" class="flex flex-row *:flex-shrink-0 w-full">
+    <ButtonGroup orientation="horizontal" class="flex flex-row *:shrink-0 w-full">
       {#if form.type == 'normal'}
-        <Button
-          onclick={() => {
-            uploadImage = !uploadImage
-          }}
-          icon={Photo}
+        <FileUpload
+          upload={uploadStrategy.default}
+          preview={isImage(form.url) || isVideo(form.url) ? form.url : undefined}
+          onupload={(res) => (form.url = res)}
         >
-          {$t('form.post.uploadImage')}
-        </Button>
+          {#snippet target(toggle)}
+            <Button onclick={toggle} icon={Photo}>
+              {$t('form.post.uploadImage')}
+            </Button>
+          {/snippet}
+        </FileUpload>
         {#if form.url && URL.canParse(form.url)}
           <Button
             class="animate-pop-in"
@@ -402,16 +393,22 @@
           </Button>
         {/if}
         {#if form.url}
-          <Button
-            class="animate-pop-in"
-            onclick={() => {
-              customThumbnail = !customThumbnail
-            }}
-            color={form.thumbnail ? 'primary' : 'secondary'}
-            icon={QrCode}
+          <FileUpload
+            upload={uploadStrategy.default}
+            preview={form.thumbnail}
+            onupload={(res) => (form.thumbnail = res)}
           >
-            {$t('form.post.customThumbnail')}
-          </Button>
+            {#snippet target(toggle)}
+              <Button
+                class="animate-pop-in"
+                onclick={toggle}
+                color={form.thumbnail ? 'primary' : 'secondary'}
+                icon={QrCode}
+              >
+                {$t('form.post.customThumbnail')}
+              </Button>
+            {/snippet}
+          </FileUpload>
         {/if}
       {/if}
       {#if form.language === undefined}

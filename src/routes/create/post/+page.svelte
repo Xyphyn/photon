@@ -5,7 +5,7 @@
   import { t } from '$lib/app/i18n'
   import { getSessionStorage, setSessionStorage } from '$lib/app/session'
   import PostForm from '$lib/feature/post/form/PostForm.svelte'
-  import { PostFormState, type PostFormInit } from '$lib/feature/post/form/postform.svelte.js'
+  import { PostFormState, type PostFormInit } from '$lib/feature/post/form/post-form.svelte'
   import { postLink } from '$lib/feature/post/post-helpers'
   import { onDestroy } from 'svelte'
 

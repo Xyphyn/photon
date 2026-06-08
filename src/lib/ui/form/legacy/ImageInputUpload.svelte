@@ -13,7 +13,6 @@
   } = $props()
 
   let imageUrl = $derived(passedImageUrl)
-
   let open = $state(false)
 </script>
 
@@ -40,12 +39,7 @@
       </div>
       <img src={imageUrl} alt="" class="rounded-md mx-auto h-full" />
     {:else}
-      <Icon
-        src={DocumentPlus}
-        class="text-slate-400 dark:text-zinc-500"
-        size="36"
-        solid
-      />
+      <Icon src={DocumentPlus} class="text-slate-400 dark:text-zinc-500" size="36" solid />
       <p class="text-slate-600 dark:text-zinc-400 font-medium">
         {$t('common.attach')}
       </p>

@@ -18,12 +18,11 @@
 
     try {
       loading = true
-      const res = await client().deleteImage({
-        token: image.pictrs_delete_token,
+      const res = await client().deleteMedia({
         filename: image.pictrs_alias,
       })
 
-      ondelete?.(res)
+      ondelete?.(res.success)
     } catch (e) {
       toast({ content: e as string, type: 'error' })
     }
@@ -43,15 +42,11 @@
   {#snippet img()}
     <button
       onclick={() =>
-        showImage(
-          `${instanceToURL(profile.current.instance)}/pictrs/image/${image.pictrs_alias}`,
-        )}
+        showImage(`${instanceToURL(profile.current.instance)}/api/v4/image/${image.pictrs_alias}`)}
       class="cursor-pointer"
     >
       <img
-        src="{instanceToURL(
-          profile.current.instance,
-        )}/pictrs/image/{image.pictrs_alias}"
+        src="{instanceToURL(profile.current.instance)}/api/v4/image/{image.pictrs_alias}"
         width="500"
         height="500"
         class="aspect-square w-full h-full object-cover rounded-xl"
@@ -68,13 +63,11 @@
   <div class="flex items-center gap-2">
     <RelativeDate
       class="text-sm text-slate-700 dark:text-zinc-300"
-      date={publishedToDate(image.published)}
+      date={publishedToDate(image.published_at)}
     />
     <Button
       title={$t('routes.profile.media.download')}
-      href="{instanceToURL(
-        profile.current.instance,
-      )}/pictrs/image/{image.pictrs_alias}"
+      href="{instanceToURL(profile.current.instance)}/api/v4/image/{image.pictrs_alias}"
       size="square-md"
       class="ml-auto"
       icon={ArrowDownTray}

@@ -72,7 +72,7 @@
   {compact}
   banner={banner ? community.community.banner : undefined}
   avatar={community.community.icon}
-  name={community.community.title}
+  name={community.community.title ?? community.community.name}
   url={communityLink(community.community)}
   stats={counts
     ? [

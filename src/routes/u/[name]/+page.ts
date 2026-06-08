@@ -6,7 +6,7 @@ export async function load({ params, url, fetch, route }) {
   const cursor = url.searchParams.get('cursor') || undefined
   const type: 'comments' | 'posts' | 'all' =
     (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
-  const sort: PostSortType = (url.searchParams.get('sort') as PostSortType) || 'New'
+  const sort: PostSortType = (url.searchParams.get('sort') as PostSortType) || 'new'
 
   const user = await feed(
     route.id,

@@ -400,12 +400,9 @@ export function getGroups(
       actions:
         profile.user?.follows.map((f) => ({
           icon: f.community.icon ?? Newspaper,
-          name: f.community.title,
-          href: `/c/${fullCommunityName(
-            f.community.name,
-            f.community.actor_id,
-          )}`,
-          detail: new SvelteURL(f.community.actor_id).hostname,
+          name: f.community.title ?? f.community.name,
+          href: `/c/${fullCommunityName(f.community.name, f.community.ap_id)}`,
+          detail: new SvelteURL(f.community.ap_id).hostname,
         })) ?? [],
     },
   ]

@@ -109,9 +109,6 @@ export abstract class BaseClient {
   abstract likePost(form: types.CreatePostLike): Promise<types.PostResponse>
   abstract listPostLikes(form: types.ListPostLikes): Promise<types.PagedResponse<types.VoteView>>
   abstract savePost(form: types.SavePost): Promise<types.PostResponse>
-  abstract listPersonSaved(
-    form: types.ListPersonSaved,
-  ): Promise<types.PagedResponse<types.PostCommentCombinedView>>
   abstract getMyUser(): Promise<types.MyUserInfo>
   // TODO should unify these reports probably
   abstract createPostReport(form: types.CreatePostReport): Promise<types.PostReportResponse>
@@ -232,6 +229,8 @@ export abstract class BaseClient {
   abstract deleteUserBanner(): Promise<types.SuccessResponse>
   abstract deleteCommunityIcon(query: types.CommunityIdQuery): Promise<types.SuccessResponse>
   abstract deleteCommunityBanner(query: types.CommunityIdQuery): Promise<types.SuccessResponse>
+  abstract deleteMedia(query: types.DeleteImageParams): Promise<types.SuccessResponse>
+  abstract adminDeleteMedia(query: types.DeleteImageParams): Promise<types.SuccessResponse>
   abstract markNotificationAsRead(
     form: types.MarkNotificationAsRead,
   ): Promise<types.SuccessResponse>

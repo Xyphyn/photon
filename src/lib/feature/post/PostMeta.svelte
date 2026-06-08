@@ -182,7 +182,7 @@
         </button>
       {/snippet}
       {#snippet popover(open)}
-        {#if open && community && subscribed}
+        {#if open && community}
           <Material
             color="uniform"
             rounding="2xl"
@@ -191,7 +191,7 @@
             data-autoclose="false"
           >
             {#await import('../community/CommunityHeader.svelte') then { default: CommunityHeader }}
-              <CommunityHeader {community} {subscribed} />
+              <CommunityHeader {community} subscribed={subscribed ?? false} />
             {/await}
           </Material>
         {/if}

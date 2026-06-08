@@ -40,7 +40,6 @@ export function createLemmyClient(
       return oMethod
     },
   }) as unknown as UnwrapClientMethods<typeof oClient> & { type: ClientType }
-
   return client
 }
 
