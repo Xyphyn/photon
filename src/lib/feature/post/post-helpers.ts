@@ -1,13 +1,7 @@
 import { env } from '$env/dynamic/public'
-import { client } from '$lib/api/client.svelte'
 import type { CommentView, PersonView, Post } from '$lib/api/types'
 import { profile } from '$lib/app/auth'
-import {
-  canParseUrl,
-  findClosestNumber,
-  isImage,
-  isVideo,
-} from '$lib/app/util.svelte'
+import { canParseUrl, findClosestNumber, isImage, isVideo } from '$lib/app/util.svelte'
 
 export const isCommentMutable = (comment: CommentView, me: PersonView) =>
   me.person.id == comment.creator.id
@@ -39,22 +33,21 @@ export const optimizeImageURL = (
       return urlStr
     }
 
-    const newUrl = new URL(
-      env.PUBLIC_IMAGE_PROXY ? `${env.PUBLIC_IMAGE_PROXY}/thumbnail` : url,
-    )
-    if (env.PUBLIC_IMAGE_PROXY)
-      newUrl.searchParams.set('url', encodeURIComponent(url.toString()))
+    const newUrl = new URL(env.PUBLIC_IMAGE_PROXY ? `${env.PUBLIC_IMAGE_PROXY}/thumbnail` : url)
+    if (env.PUBLIC_IMAGE_PROXY) newUrl.searchParams.set('url', encodeURIComponent(url.toString()))
 
-    if (format) newUrl.searchParams.set('format', format)
+    if (format) {
+      newUrl.searchParams.set('format', format)
+      newUrl.searchParams.set('file_type', format)
+    }
 
     if (width > 0 && !newUrl.searchParams.has('thumbnail')) {
-      newUrl.searchParams.set(
-        'thumbnail',
-        findClosestNumber(
-          [32, 64, 128, 196, 256, 512, 728, 1024, 1536],
-          width,
-        ).toString(),
-      )
+      const thumbnailSize = findClosestNumber(
+        [32, 64, 128, 196, 256, 512, 728, 1024, 1536],
+        width * 2,
+      ).toString()
+      newUrl.searchParams.set('thumbnail', thumbnailSize)
+      newUrl.searchParams.set('max_size', thumbnailSize)
     }
 
     return newUrl.toString()
@@ -77,14 +70,7 @@ export function postLink(post: Post) {
   return `/post/${encodeURIComponent(profile.current.instance)}/${post.id}`
 }
 
-export type MediaType =
-  | 'video'
-  | 'image'
-  | 'iframe'
-  | 'embed'
-  | 'poll'
-  | 'event'
-  | 'none'
+export type MediaType = 'video' | 'image' | 'iframe' | 'embed' | 'poll' | 'event' | 'none'
 export type IframeType = 'youtube' | 'video' | 'none'
 
 export function mediaType(post?: Post | string): MediaType {
@@ -117,17 +103,4 @@ export function iframeType(url: string): IframeType {
   if (isVideo(url)) return 'video'
   if (isYoutubeLink(url)) return 'youtube'
   return 'none'
-}
-
-export async function hidePost(
-  id: number,
-  hide: boolean,
-  jwt: string,
-): Promise<boolean> {
-  await client({ auth: jwt }).hidePost({
-    hide: hide,
-    post_ids: [id],
-  })
-
-  return hide
 }

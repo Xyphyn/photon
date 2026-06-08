@@ -110,7 +110,7 @@ export interface FeedTypes {
       type: ListingType
       sort: CommunitySortType
       query: string
-      page: number
+      cursor?: string
     },
     PagedResponse<CommunityView>,
   ]

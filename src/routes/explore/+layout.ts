@@ -1,25 +1,16 @@
-import type { ListingType, SortType } from '$lib/api/types'
-import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
+import type { CommunitySortType, ListingType } from '$lib/api/types'
 
 export function load({ url }) {
-  const sort = (url.searchParams.get('sort') as SortType) || 'TopDay'
-  const page = Number(url.searchParams.get('page')) || 1
+  const sort = (url.searchParams.get('sort') as CommunitySortType) || 'active_daily'
+  const cursor = url.searchParams.get('cursor') || undefined
   const query = url.searchParams.get('q') || ''
 
-  const typeParam = url.searchParams.get('type')
-  const typeInstance = typeParam?.split('instance-')[1]
-
-  const type = (
-    typeInstance
-      ? 'Local'
-      : typeParam || (LINKED_INSTANCE_URL ? 'Local' : 'All')
-  ) as ListingType
+  const type = (url.searchParams.get('type') as ListingType) || 'all'
 
   return {
     sort: sort,
-    page: page,
+    cursor: cursor,
     query: query,
     type: type,
-    typeInstance: typeInstance,
   }
 }
