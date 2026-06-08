@@ -1,9 +1,9 @@
 <script lang="ts">
   import { client, site } from '$lib/api/client.svelte'
   import type { SaveUserSettings } from '$lib/api/types'
-  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import { loader } from '$lib/app/util.svelte'
   import { UserModel } from '$lib/feature/user/user.svelte'
   import { uploadStrategy } from '$lib/ui/form/files/file-upload.svelte'
   import FileUpload from '$lib/ui/form/files/FileUpload.svelte'
@@ -40,29 +40,18 @@
   let person = $derived(
     new UserModel({ ...data.local_user_view, is_admin: data.local_user_view.local_user.admin }),
   )
-
-  async function save() {
-    if (!form || !profile.current?.jwt) return
-
-    loading = true
-
-    try {
-      await client().saveUserSettings(form)
-
-      toast({
-        content: $t('toast.saveSettings'),
-        type: 'success',
-      })
-    } catch (err) {
-      toast({
-        content: err as string,
-        type: 'error',
-      })
-    }
-    loading = false
-  }
-
   let loading = $state(false)
+
+  export const save = () =>
+    loader(
+      (v) => (loading = v),
+      () => client().saveUserSettings(form),
+      () =>
+        toast({
+          content: $t('toast.saveSettings'),
+          type: 'success',
+        }),
+    )
 </script>
 
 {#if !inline}
@@ -99,7 +88,10 @@
               />
             {/if}
             <div
-              class="absolute inset-0 w-full h-full grid place-items-center bg-black/10 group-hover:opacity-100 transition-opacity opacity-0"
+              class={[
+                'absolute inset-0 grid place-items-center bg-black/10 group-hover:opacity-100 transition-opacity',
+                person.person.banner && 'opacity-0',
+              ]}
             >
               <Icon src={DocumentPlus} size="32" solid />
             </div>
@@ -109,9 +101,9 @@
     </div>
     <div class="relative w-max -mt-8 group">
       <div
-        class="absolute inset-0 grid place-items-center bg-black/10 rounded-full aspect-square group-hover:opacity-100 transition-opacity opacity-0"
+        class="absolute pointer-events-none z-10 inset-0 grid place-items-center bg-white/40 dark:bg-black/40 rounded-full aspect-square group-hover:opacity-100 transition-opacity"
       >
-        <Icon src={DocumentPlus} size="24" solid class="text-white/50" />
+        <Icon src={DocumentPlus} size="24" solid class="text-black/80 dark:text-white/80" />
       </div>
       <FileUpload
         upload={uploadStrategy.userAvatar}
@@ -219,7 +211,7 @@
 </form>
 
 <Fixate styling placement="bottom">
-  <Button submit size="lg" color="primary" class="w-full" {loading} disabled={loading}>
+  <Button onclick={save} size="lg" color="primary" class="w-full" {loading} disabled={loading}>
     {$t('common.save')}
   </Button>
 </Fixate>

@@ -78,7 +78,7 @@
     <form class="flex flex-col gap-2">
       <label>
         <div
-          class="btn btn-secondary rounded-2xl items-center justify-center h-64 relative"
+          class="btn btn-secondary rounded-2xl items-center justify-center h-64 relative overflow-hidden"
           aria-label={$t('common.attach')}
         >
           {#if previewUrl}
