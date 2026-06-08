@@ -57,7 +57,7 @@ export interface FeedTypes {
   '/': [
     GetPosts,
     PagedResponse<PostView> & {
-      params: GetPosts & { page_cursor: string }
+      params: GetPosts
       client: {
         itemHeights?: (number | null)[]
         lastSeen?: number
@@ -70,7 +70,7 @@ export interface FeedTypes {
       posts: PostView[]
       community: GetCommunityResponse
       next_page?: string
-      params: GetPosts & { page_cursor: string }
+      params: GetPosts
       client: { itemHeights?: (number | null)[]; lastSeen?: number }
     },
   ]

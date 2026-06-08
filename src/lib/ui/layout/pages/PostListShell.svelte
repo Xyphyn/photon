@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import type { GetPosts, ListingType, PostView, SortType } from '$lib/api/types'
+  import type { GetPosts, ListingType, PostSortType, PostView } from '$lib/api/types'
   import { settings } from '$lib/app/settings.svelte'
   import { Listing } from '$lib/feature/feeds/listing.svelte'
   import { repos } from '$lib/feature/feeds/repo.svelte'
@@ -20,7 +20,7 @@
     cursor?: string
     params: {
       location?: ListingType
-      sort?: SortType
+      sort?: PostSortType
     }
     title?: string
     extended?: Snippet
@@ -43,13 +43,13 @@
     header = true,
   }: Props = $props()
 
-  let listing = $derived(new Listing(posts, (p) => repos.posts.get(p)))
+  let listing = new Listing(posts, (p) => repos.posts.get(p))
 
   $effect(() => {
     if (filters.sort) settings.defaultSort.sort = filters.sort
   })
 
-  let filters = $state({
+  let filters = $derived({
     location: params.location,
     sort: params.sort,
   })
