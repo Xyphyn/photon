@@ -1,12 +1,22 @@
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/c6262803-c046-4e76-ac58-65458a93db07">
-    <img alt="Photon light theme cozy" src="https://github.com/user-attachments/assets/bc72a843-013f-4b87-ae80-59a3b9132ecc" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="screenshots/compact-dark.png">
+    <img alt="Photon front page, compact layout" src="screenshots/compact-light.png" width="100%">
+</picture>
+
+<details>
+<summary>Screenshots</summary>
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="screenshots/cozy-dark.png">
+    <img alt="Photon front page, cozy layout" src="screenshots/cozy-light.png" width="100%">
 </picture>
 
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/c13f94c0-c2c4-48b2-b379-5ee714ae0556">
-    <img src="https://github.com/user-attachments/assets/11cf24c2-fd4f-480a-8a16-41f0f0a5b245">
+    <source media="(prefers-color-scheme: dark)" srcset="screenshots/mobile-dark.png">
+    <img alt="Photon communities page on mobile" src="screenshots/mobile-light.png" width="300">
 </picture>
+
+</details>
 
 # Photon
 
