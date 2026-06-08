@@ -85,6 +85,29 @@
 
 body {
   @apply bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 accent-slate-950 dark:accent-zinc-50;
+
+  --tag-color01: var(--color-slate-200);
+  --tag-color02: var(--color-blue-400);
+  --tag-color03: var(--color-orange-400);
+  --tag-color04: var(--color-green-400);
+  --tag-color05: var(--color-yellow-400);
+  --tag-color06: var(--color-red-400);
+  --tag-color07: var(--color-purple-300);
+  --tag-color08: var(--color-pink-300);
+  --tag-color09: var(--color-slate-200);
+  --tag-color10: var(--color-slate-200);
+  @variant dark {
+    --tag-color01: var(--color-zinc-800);
+    --tag-color02: var(--color-blue-300);
+    --tag-color03: var(--color-orange-300);
+    --tag-color04: var(--color-green-300);
+    --tag-color05: var(--color-yellow-300);
+    --tag-color06: var(--color-red-300);
+    --tag-color07: var(--color-purple-300);
+    --tag-color08: var(--color-pink-300);
+    --tag-color09: var(--color-slate-200);
+    --tag-color10: var(--color-slate-200);
+  }
 }
 
 .dark {

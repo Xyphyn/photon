@@ -9,36 +9,30 @@
   let { data } = $props()
 
   async function unblock(id: number) {
-    if (!data.my_user?.instance_blocks) return
-    data.my_user?.instance_blocks.splice(
-      data.my_user?.instance_blocks.findIndex((i) => i.instance.id == id),
+    if (!data.instance_communities_blocks) return
+    data.instance_communities_blocks.splice(
+      data.instance_communities_blocks.findIndex((i) => i.id == id),
       1,
     )
 
-    await profile.client.blockInstance({
+    await profile.client.userBlockInstanceCommunities({
       block: false,
       instance_id: id,
     })
   }
 </script>
 
-{#if data.my_user?.instance_blocks && data.my_user?.instance_blocks?.length > 0}
+{#if data.instance_communities_blocks && data.instance_communities_blocks?.length > 0}
   <ItemList
-    items={data.my_user?.instance_blocks.map((i) => ({
-      id: i.instance.id,
-      name: i.site?.name ?? i.instance.domain,
-      avatar: i.site?.icon,
-      instance: i.instance.domain,
+    items={data.instance_communities_blocks.map((i) => ({
+      id: i.id,
+      name: i.domain,
+      instance: i.domain,
     }))}
     link={false}
   >
     {#snippet action(block)}
-      <Button
-        title="Unblock"
-        size="square-md"
-        onclick={() => unblock(block.id)}
-        icon={Trash}
-      />
+      <Button title="Unblock" size="square-md" onclick={() => unblock(block.id)} icon={Trash} />
     {/snippet}
   </ItemList>
 {:else}

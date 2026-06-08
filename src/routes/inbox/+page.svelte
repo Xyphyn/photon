@@ -1,18 +1,22 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import { getClient } from '$lib/api/client.svelte'
+  import { client } from '$lib/api/client.svelte'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
+  import { InboxItemModel } from '$lib/feature/inbox/inbox-item.svelte.js'
+  import InboxItem from '$lib/feature/inbox/InboxItem.svelte'
   import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList, Header, Pageination } from '$lib/ui/layout'
   import { Button, Option, Select } from 'mono-svelte'
   import { ArrowPath, Check, Funnel, Icon, Inbox } from 'svelte-hero-icons/dist'
-  import InboxItem from './InboxItem.svelte'
 
   let { data } = $props()
+
+  let inbox = $derived(data.inbox.items)
+  let params = $derived(data.params.value)
 
   let markingAsRead = $state(false)
 
@@ -24,7 +28,7 @@
 
     markingAsRead = true
 
-    const response = await getClient().markAllAsRead()
+    await client().markAllNotificationsAsRead()
 
     profile.inbox.notifications.inbox = 0
 
@@ -33,8 +37,6 @@
     }).then(() => {
       markingAsRead = false
     })
-
-    return response.replies
   }
 </script>
 
@@ -49,17 +51,9 @@
     <div class="flex gap-2 tracking-normal items-end">
       <Select
         class="relative"
-        bind:value={
-          () => data.unreadOnly.value.toString(),
-          (v) => (data.unreadOnly.value = v == 'true')
-        }
+        bind:value={() => params.unreadOnly.toString(), (v) => (params.unreadOnly = v == 'true')}
         onchange={() =>
-          searchParam(
-            page.url,
-            'unreadOnly',
-            data.unreadOnly.value ? 'true' : 'false',
-            'page',
-          )}
+          searchParam(page.url, 'unreadOnly', params.unreadOnly ? 'true' : 'false', 'page')}
       >
         {#snippet customLabel()}
           <div class="flex items-center gap-1">
@@ -74,7 +68,7 @@
       <Button
         onclick={markAllAsRead}
         loading={markingAsRead}
-        disabled={markingAsRead || data.inbox.value.length == 0}
+        disabled={markingAsRead || inbox.length == 0}
         color="primary"
         icon={Check}
         size="lg"
@@ -91,7 +85,7 @@
   {/snippet}
 </Header>
 
-{#if !data.inbox?.value || (data.inbox.value?.length ?? 0) == 0}
+{#if !inbox || (inbox.length ?? 0) == 0}
   <Placeholder
     icon={Inbox}
     title={$t('routes.inbox.empty.title')}
@@ -100,21 +94,21 @@
   />
 {:else}
   <CommonList size="md">
-    {#each data.inbox.value as item}
-      <li class={[!item.read && 'bg-blue-300/10! dark:bg-blue-500/5!']}>
-        <InboxItem {item} />
+    {#each inbox as item}
+      {@const inboxItem = new InboxItemModel(item)}
+      <li class={[!inboxItem.read && 'bg-blue-300/10! dark:bg-blue-500/5!']}>
+        <InboxItem item={inboxItem} />
       </li>
     {/each}
   </CommonList>
 {/if}
-{#if !(data.page == 1 && (data?.inbox?.value.length ?? 0) == 0)}
+
+{#if params.next != null || params.prev != null}
   <Fixate placement="bottom">
     <Pageination
-      hasMore={!(
-        !data.inbox || (data.inbox.value?.length ?? 0) < (data?.limit ?? 0)
-      )}
-      page={data.page}
-      href={(page) => `?page=${page}`}
+      hasMore={params.next != null}
+      cursor={{ next: params.next, back: params.prev }}
+      href={(cursor) => `?cursor=${cursor}`}
     />
   </Fixate>
 {/if}

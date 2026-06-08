@@ -3,7 +3,7 @@
   import { parseURL } from '$lib/ui/form/Link.svelte'
   import { Material } from 'mono-svelte'
   import { Icon, Link } from 'svelte-hero-icons/dist'
-  import { optimizeImageURL } from './helpers'
+  import { optimizeImageURL } from './post-helpers'
 
   interface Props {
     url: string
@@ -14,14 +14,7 @@
     view?: View
   }
 
-  let {
-    url,
-    thumbnail_url,
-    nsfw = false,
-    embed_title,
-    embed_body,
-    view = 'cozy',
-  }: Props = $props()
+  let { url, thumbnail_url, nsfw = false, embed_title, embed_body, view = 'cozy' }: Props = $props()
 
   let richURL = $derived(parseURL(url))
 </script>
@@ -33,9 +26,7 @@
 {#if embed_title && view == 'cozy'}
   <Material
     color="default"
-    class={[
-      'post-link group/link hover:bg-slate-50 hover:dark:bg-zinc-800 transition-colors',
-    ]}
+    class={['post-link group/link hover:bg-slate-50 hover:dark:bg-zinc-800 transition-colors']}
     rounding="2xl"
     element="a"
     padding="none"
@@ -65,11 +56,7 @@
                 thumbnail_url,
                 256,
                 format as 'avif' | 'webp',
-              )} 256w, {optimizeImageURL(
-                thumbnail_url,
-                512,
-                format as 'avif' | 'webp',
-              )} 512w"
+              )} 256w, {optimizeImageURL(thumbnail_url, 512, format as 'avif' | 'webp')} 512w"
               media="(min-width: 0px)"
               type="image/{format}"
             />
@@ -87,12 +74,7 @@
     {/if}
   </Material>
 {:else}
-  <a
-    href={url}
-    target="_blank"
-    rel="noopener noreferrer"
-    class="post-link-compact"
-  >
+  <a href={url} target="_blank" rel="noopener noreferrer" class="post-link-compact">
     <Icon src={Link} size="16" micro class="shrink-0" />
     {#if richURL}
       <div class="post-link-url">

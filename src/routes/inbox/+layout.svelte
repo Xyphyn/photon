@@ -12,11 +12,11 @@
       name: $t('filter.location.all'),
     },
     {
-      href: '/inbox?type=replies',
+      href: '/inbox?type=reply',
       name: $t('filter.inbox.replies'),
     },
     {
-      href: '/inbox?type=mentions',
+      href: '/inbox?type=mention',
       name: $t('filter.inbox.mentions'),
     },
     {

@@ -3,7 +3,8 @@ import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
 import { instanceToURL } from '$lib/app/util.svelte'
 import { error } from '@sveltejs/kit'
 import { BaseClient, DEFAULT_CLIENT_TYPE, type ClientType } from './base'
-import { LemmyClient } from './lemmy/adapter'
+import { LemmyV3Client } from './lemmy-v3/adapter'
+import { LemmyV4Client } from './lemmy-v4/adapter'
 import { PiefedClient } from './piefed/adapter'
 import type { GetSiteResponse } from './types'
 
@@ -23,10 +24,7 @@ export const site = new SiteData()
 
 async function customFetch(
   func:
-    | ((
-        input: RequestInfo | URL,
-        init?: RequestInit | undefined,
-      ) => Promise<Response>)
+    | ((input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>)
     | undefined,
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
@@ -58,15 +56,11 @@ export function client({
   clientType,
 }: {
   instanceURL?: string
-  func?: (
-    input: RequestInfo | URL,
-    init?: RequestInit | undefined,
-  ) => Promise<Response>
+  func?: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
   auth?: string
   clientType?: ClientType
 } = {}): BaseClient {
-  if (!instanceURL)
-    instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
+  if (!instanceURL) instanceURL = profile.current.instance || DEFAULT_INSTANCE_URL
 
   if (!clientType) {
     clientType = profile.current.client ?? DEFAULT_CLIENT_TYPE
@@ -80,7 +74,12 @@ export function client({
   // but not here, so that if jwt == '', it doesnt put a bearer
   const headers = jwt ? { authorization: `Bearer ${jwt}` } : {}
 
-  const Client = clientType.name == 'piefed' ? PiefedClient : LemmyClient
+  const Client =
+    clientType.name == 'piefed'
+      ? PiefedClient
+      : clientType.baseUrl == '/api/v3'
+        ? LemmyV3Client
+        : LemmyV4Client
   return new Client(instanceToURL(instanceURL), {
     fetchFunction: (input, init) => customFetch(func, input, init, jwt),
     headers: headers,
@@ -90,10 +89,7 @@ export function client({
 // here for parts where i forgor to switch
 export function getClient(
   instanceURL?: string,
-  func?: (
-    input: RequestInfo | URL,
-    init?: RequestInit | undefined,
-  ) => Promise<Response>,
+  func?: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>,
   auth?: string,
 ) {
   return client({ instanceURL, func, auth })

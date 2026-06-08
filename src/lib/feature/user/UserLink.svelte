@@ -5,12 +5,7 @@
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import Logo from '$lib/ui/generic/Logo.svelte'
   import { Badge } from 'mono-svelte'
-  import {
-    Icon,
-    type IconSource,
-    Language,
-    NoSymbol,
-  } from 'svelte-hero-icons/dist'
+  import { Icon, type IconSource, Language, NoSymbol } from 'svelte-hero-icons/dist'
 
   function parseBadge() {
     try {
@@ -77,8 +72,7 @@
     avatarSize = 24,
     badges = true,
     inComment = false,
-    showInstance = settings.showInstances.user ||
-      (settings.showInstances.comments && inComment),
+    showInstance = settings.showInstances.user || (settings.showInstances.comments && inComment),
     displayName = settings.displayNames,
     instanceClass = '',
     class: clazz = '',
@@ -86,31 +80,20 @@
     extraBadges,
   }: Props = $props()
 
-  let envBadge = $derived(getEnvBadge(user.actor_id))
+  let envBadge = $derived(getEnvBadge(user.ap_id))
 </script>
 
 <a
   class="items-center inline-flex flex-row gap-1 hover:underline max-w-full min-w-0 {clazz}"
-  href="/u/{user.name}@{new URL(user.actor_id).hostname}"
+  href="/u/{user.name}@{new URL(user.ap_id).hostname}"
   data-sveltekit-preload-data="tap"
 >
   {@render children?.()}
   {#if avatar}
-    <Avatar
-      url={user.avatar}
-      alt={user.name}
-      width={avatarSize}
-      class="shrink-0"
-    />
+    <Avatar url={user.avatar} alt={user.name} width={avatarSize} class="shrink-0" />
   {/if}
-  <span
-    class="flex gap-0 items-center shrink max-w-full min-w-0"
-    class:ml-0.5={avatar}
-  >
-    <span
-      class:font-medium={showInstance}
-      class="username-text {envBadge && envBadge.classes}"
-    >
+  <span class="flex gap-0 items-center shrink max-w-full min-w-0" class:ml-0.5={avatar}>
+    <span class:font-medium={showInstance} class="username-text {envBadge && envBadge.classes}">
       {displayName ? user.display_name || user.name : user.name}
     </span>
     {#if showInstance}
@@ -118,7 +101,7 @@
         class="text-slate-500 dark:text-zinc-500 font-normal instance-text shrink {instanceClass ??
           ''}"
       >
-        @{new URL(user.actor_id).hostname}
+        @{new URL(user.ap_id).hostname}
       </span>
     {/if}
   </span>
@@ -135,12 +118,7 @@
       {#if envBadge.icon == 'photon'}
         <Logo width={16} />
       {:else}
-        <Icon
-          src={envBadge.icon}
-          micro
-          size="16"
-          class={envBadge.iconClass ?? envBadge.classes}
-        />
+        <Icon src={envBadge.icon} micro size="16" class={envBadge.iconClass ?? envBadge.classes} />
       {/if}
     {/if}
     {#if user.flair}

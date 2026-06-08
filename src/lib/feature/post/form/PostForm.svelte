@@ -7,10 +7,11 @@
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { settings } from '$lib/app/settings.svelte'
-  import { placeholders } from '$lib/app/util.svelte'
+  import { isImage, isVideo, placeholders } from '$lib/app/util.svelte'
   import Duration from '$lib/ui/form/Duration.svelte'
+  import { uploadStrategy } from '$lib/ui/form/files/file-upload.svelte'
+  import FileUpload from '$lib/ui/form/files/FileUpload.svelte'
   import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
-  import ImageInputModal from '$lib/ui/form/ImageInputModal.svelte'
   import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
   import MultiSelect from '$lib/ui/form/Switch.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
@@ -47,7 +48,7 @@
     Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
-  import { autofillPost, PostFormState } from './postform.svelte'
+  import { autofillPost, PostFormState } from './post-form.svelte'
 
   interface Props {
     editPost?: number
@@ -58,13 +59,10 @@
 
   let { editPost, init, title, onsubmit }: Props = $props()
 
-  let form = $state<PostFormState>(
-    init ?? new PostFormState({ type: 'normal' }),
-  )
+  let form = $state<PostFormState>(init ?? new PostFormState({ type: 'normal' }))
 
   let extendedCommunity = $derived.by(() => {
     const api = client()
-    if (!(api instanceof PiefedClient)) return undefined
 
     if (form.community?.id) {
       return api.getCommunity({ id: form.community.id })
@@ -72,8 +70,6 @@
   })
 
   let loading = $state<boolean>(false)
-  let uploadImage = $state(false)
-  let customThumbnail = $state(false)
 
   async function autofill(
     data: URL | { title?: string; body?: string },
@@ -120,20 +116,6 @@
   </div>
 {/if}
 
-{#if uploadImage}
-  <ImageInputModal
-    bind:open={uploadImage}
-    bind:imageUrl={() => '', (v) => (form.url = v)}
-  />
-{/if}
-
-{#if customThumbnail}
-  <ImageInputModal
-    bind:open={customThumbnail}
-    bind:imageUrl={() => form.thumbnail, (v) => (form.thumbnail = v)}
-  />
-{/if}
-
 {#snippet altText()}
   <TextArea bind:value={form.altText} />
 {/snippet}
@@ -145,26 +127,23 @@
         <Spinner />
       </div>
     {:then communityView}
-      {#each communityView?.community_view.flair_list ?? [] as flair}
-        {@const selected = form.flairList?.some((i) => i.id == flair.id)}
+      {#each communityView?.community_view.tags ?? [] as tag}
+        {@const selected = form.flairList?.some((i) => i.id == tag.id)}
         <button
           class="rounded-full cursor-pointer hover:brightness-100 badge-tag-color"
-          style="--tag-color: {flair.background_color}; --tag-text-color: {flair.text_color};"
+          style="--tag-color: var(--tag-{tag.color});"
           onclick={() => {
             if (selected) {
-              const index = form.flairList.findIndex((i) => i.id == flair.id)
+              const index = form.flairList.findIndex((i) => i.id == tag.id)
               if (index != -1) form.flairList.splice(index, 1)
-            } else form.flairList.push(flair)
+            } else form.flairList.push(tag)
           }}
         >
-          <Badge
-            color={selected ? 'gray-subtle' : 'custom'}
-            class="ring-white/20"
-          >
+          <Badge color={selected ? 'gray-subtle' : 'custom'} class="ring-white/20">
             {#snippet icon()}
               <Icon src={selected ? Check : Plus} size="16" micro />
             {/snippet}
-            {flair.flair_title}
+            {tag.display_name ?? tag.name}
           </Badge>
         </button>
       {/each}
@@ -223,9 +202,7 @@
     form
       .submit(editPost)
       .then(onsubmit)
-      .catch((err) =>
-        pushError({ message: errorMessage(err as string), scope: 'post-form' }),
-      )
+      .catch((err) => pushError({ message: errorMessage(err as string), scope: 'post-form' }))
       .then(() => (loading = false))
   }}
   class="flex flex-col gap-4 h-full"
@@ -241,7 +218,6 @@
   {#if !editPost}
     {#if !form.community}
       <ObjectAutocomplete
-        listing_type="All"
         label={$t('form.post.community')}
         onselect={(i) => {
           form.community = i.community
@@ -259,16 +235,12 @@
           rounding="xl"
         >
           {#snippet prefix()}
-            <Avatar
-              url={form.community?.icon}
-              alt={form.community?.name}
-              width={24}
-            />
+            <Avatar url={form.community?.icon} alt={form.community?.name} width={24} />
           {/snippet}
           <div class="flex flex-col gap-0">
             <span class="text-sm">{form.community.name}</span>
             <span class="text-[10px] leading-3">
-              {new URL(form.community?.actor_id).hostname}
+              {new URL(form.community?.ap_id).hostname}
             </span>
           </div>
         </Button>
@@ -308,6 +280,7 @@
           onclick={() =>
             modal({
               title: $t('form.post.generateTitle'),
+              // tbh this error is so long that i cannot process it
               snippet: autofillPostModal,
               actions: [],
             })}
@@ -324,10 +297,7 @@
         {#each form.poll.choices as _, index}
           <li class="px-4 py-1 flex flex-row items-center xs">
             <div class="p-0! font-medium flex-1">
-              <FreeTextInput
-                bind:value={form.poll.choices[index].choice_text}
-                class="w-full"
-              />
+              <FreeTextInput bind:value={form.poll.choices[index].choice_text} class="w-full" />
             </div>
             <div>
               <Button
@@ -374,18 +344,12 @@
             bind:value={
               () => {
                 return form.poll?.end_poll
-                  ? Math.floor(
-                      Date.now() -
-                        publishedToDate(form.poll?.end_poll).getTime(),
-                    )
+                  ? Math.floor(Date.now() - publishedToDate(form.poll?.end_poll).getTime())
                   : Date.now() + 24 * 60 * 60
               },
               (v) => {
                 if (v <= 0) form.poll!.end_poll = undefined
-                else
-                  form.poll!.end_poll = new Date(
-                    Date.now() + v * 1000,
-                  ).toISOString()
+                else form.poll!.end_poll = new Date(Date.now() + v * 1000).toISOString()
               }
             }
           />
@@ -405,41 +369,46 @@
     <div
       class="bg-gradient-to-l from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute right-0 w-3 h-full z-10"
     ></div>
-    <ButtonGroup
-      orientation="horizontal"
-      class="flex flex-row *:flex-shrink-0 w-full"
-    >
+    <ButtonGroup orientation="horizontal" class="flex flex-row *:shrink-0 w-full">
       {#if form.type == 'normal'}
-        <Button
-          onclick={() => {
-            uploadImage = !uploadImage
-          }}
-          icon={Photo}
+        <FileUpload
+          upload={uploadStrategy.default}
+          preview={isImage(form.url) || isVideo(form.url) ? form.url : undefined}
+          onupload={(res) => (form.url = res)}
         >
-          {$t('form.post.uploadImage')}
-        </Button>
+          {#snippet target(toggle)}
+            <Button onclick={toggle} icon={Photo}>
+              {$t('form.post.uploadImage')}
+            </Button>
+          {/snippet}
+        </FileUpload>
         {#if form.url && URL.canParse(form.url)}
           <Button
             class="animate-pop-in"
             color={(form.altText ?? '') != '' ? 'primary' : 'secondary'}
-            onclick={() =>
-              modal({ title: $t('form.post.altText'), snippet: altText })}
+            onclick={() => modal({ title: $t('form.post.altText'), snippet: altText })}
             icon={ChatBubbleBottomCenterText}
           >
             {$t('form.post.altText')}
           </Button>
         {/if}
         {#if form.url}
-          <Button
-            class="animate-pop-in"
-            onclick={() => {
-              customThumbnail = !customThumbnail
-            }}
-            color={form.thumbnail ? 'primary' : 'secondary'}
-            icon={QrCode}
+          <FileUpload
+            upload={uploadStrategy.default}
+            preview={form.thumbnail}
+            onupload={(res) => (form.thumbnail = res)}
           >
-            {$t('form.post.customThumbnail')}
-          </Button>
+            {#snippet target(toggle)}
+              <Button
+                class="animate-pop-in"
+                onclick={toggle}
+                color={form.thumbnail ? 'primary' : 'secondary'}
+                icon={QrCode}
+              >
+                {$t('form.post.customThumbnail')}
+              </Button>
+            {/snippet}
+          </FileUpload>
         {/if}
       {/if}
       {#if form.language === undefined}
@@ -448,12 +417,11 @@
         </Button>
       {/if}
       {#await extendedCommunity then communityView}
-        {#if (communityView?.community_view.flair_list?.length || 0) > 0}
+        {#if (communityView?.community_view.tags?.length || 0) > 0}
           <Button
             color={form.flairList.length > 0 ? 'primary' : 'secondary'}
             class="animate-pop-in"
-            onclick={() =>
-              modal({ title: $t('form.post.flair'), snippet: flairs })}
+            onclick={() => modal({ title: $t('form.post.flair'), snippet: flairs })}
             icon={Tag}
           >
             {$t('form.post.flair')}

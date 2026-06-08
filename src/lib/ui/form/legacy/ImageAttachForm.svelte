@@ -13,6 +13,7 @@
     image?: FileList | null
     preview?: boolean
     multiple?: boolean
+    upload?: () => void
     onupload?: (urls: string[]) => void
   }
 
@@ -20,6 +21,7 @@
     image = $bindable(null),
     preview = true,
     multiple = true,
+    upload,
     onupload,
   }: Props = $props()
   let progress = $state(1)

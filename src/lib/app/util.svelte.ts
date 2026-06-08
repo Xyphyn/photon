@@ -3,23 +3,18 @@ import { goto } from '$app/navigation'
 import { env } from '$env/dynamic/public'
 import { client } from '$lib/api/client.svelte'
 import type { Community, Person } from '$lib/api/types'
+import { toast } from 'mono-svelte'
 import { SvelteURL } from 'svelte/reactivity'
+import { errorMessage } from './error'
 import { t } from './i18n'
 
 // Despite the name, this will round up
 // This is because I do not care
 // Example: findClosestNumber([8, 16, 32, 64, 128], 76) will return 128
 export const findClosestNumber = (numbers: number[], target: number): number =>
-  numbers.reduce((prev, curr) =>
-    curr >= target && (prev < target || curr < prev) ? curr : prev,
-  )
+  numbers.reduce((prev, curr) => (curr >= target && (prev < target || curr < prev) ? curr : prev))
 
-export const searchParam = (
-  _url: URL,
-  key: string,
-  value: string,
-  ...deleteKeys: string[]
-) => {
+export const searchParam = (_url: URL, key: string, value: string, ...deleteKeys: string[]) => {
   const url = new SvelteURL(_url)
   url.searchParams.set(key, value)
   deleteKeys.forEach((k) => url.searchParams.delete(k))
@@ -49,11 +44,7 @@ export const placeholders = {
 
 // lol this function was made 3 years ago when lil xylight
 // was still learning cs
-export function moveItem<T>(
-  array: T[],
-  currentIndex: number,
-  newIndex: number,
-): T[] {
+export function moveItem<T>(array: T[], currentIndex: number, newIndex: number): T[] {
   if (
     currentIndex < 0 ||
     currentIndex >= array.length ||
@@ -95,9 +86,7 @@ export async function uploadImage(
 }
 
 export const instanceToURL = (input: string) =>
-  input.startsWith('http://') || input.startsWith('https://')
-    ? input
-    : `https://${input}`
+  input.startsWith('http://') || input.startsWith('https://') ? input : `https://${input}`
 
 export function canParseUrl(url: string): boolean {
   try {
@@ -190,10 +179,10 @@ export const isVideo = (url: string | undefined) => {
 }
 
 export const communityLink = (community: Community, prefix: string = '') =>
-  `${prefix}/c/${fullCommunityName(community.name, community.actor_id)}`
+  `${prefix}/c/${fullCommunityName(community.name, community.ap_id)}`
 
 export const userLink = (person: Person, prefix: string = '') =>
-  `${prefix}/u/${person.name}@${new SvelteURL(person.actor_id).hostname}`
+  `${prefix}/u/${person.name}@${new SvelteURL(person.ap_id).hostname}`
 
 /**
  * Basic types only, don't use for anything more than basic equality
@@ -225,4 +214,37 @@ export function recursiveEqual<T>(a: T, b: T): boolean {
   }
 
   return true
+}
+
+export async function loader<T>(
+  setLoading: (v: boolean) => void,
+  fn: () => Promise<T>,
+  final?: () => void,
+) {
+  setLoading(true)
+  try {
+    return await fn()
+  } catch (e) {
+    toast({ content: errorMessage(e), type: 'error' })
+  } finally {
+    final?.()
+    setLoading(false)
+  }
+}
+
+export function formatBytes(bytes: number, locale = 'en-US') {
+  if (bytes === 0) return new Intl.NumberFormat(locale, { style: 'unit', unit: 'byte' }).format(0)
+
+  const k = 1024
+  const units = ['byte', 'kilobyte', 'megabyte', 'gigabyte', 'terabyte', 'petabyte']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  const value = bytes / Math.pow(k, i)
+
+  return new Intl.NumberFormat(locale, {
+    style: 'unit',
+    unit: units[i],
+    unitDisplay: 'short',
+    maximumFractionDigits: 2,
+  }).format(value)
 }

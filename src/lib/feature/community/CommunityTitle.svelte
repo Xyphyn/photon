@@ -14,7 +14,7 @@
   <div class="flex flex-col gap-0">
     <h1 class="font-bold text-xl">{community.title}</h1>
     <span class="dark:text-zinc-400 text-slate-600 text-sm">
-      !{community.name}@{new URL(community.actor_id).hostname}
+      !{community.name}@{new URL(community.ap_id).hostname}
     </span>
   </div>
 </div>

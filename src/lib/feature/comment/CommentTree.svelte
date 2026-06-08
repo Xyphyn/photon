@@ -7,8 +7,8 @@
   import { t } from '$lib/app/i18n'
   import { Button, toast } from 'mono-svelte'
   import { ArrowDownCircle } from 'svelte-hero-icons/dist'
+  import { type CommentNodeI, buildCommentsTree } from './comment-tree.svelte'
   import Comment from './Comment.svelte'
-  import { type CommentNodeI, buildCommentsTree } from './comments.svelte'
   import CommentTree from './CommentTree.svelte'
 
   interface Props {
@@ -21,17 +21,15 @@
   async function fetchChildren(parent: CommentNodeI) {
     try {
       parent.loading = true
-      parent.page ??= 1
 
       const newComments = await client().getComments({
         max_depth: 3,
-        parent_id: parent.comment_view.comment.id,
-        type_: 'All',
+        parent_id: parent.comment.comment.id,
+        type_: 'all',
         limit: 1000000,
-        page: parent.page++,
       })
 
-      if (newComments.comments.length == 0) {
+      if (newComments.items.length == 0) {
         toast({
           content: $t('toast.noComments'),
           type: 'error',
@@ -39,16 +37,11 @@
         return
       }
 
-      if (
-        newComments.comments.length >= parent.comment_view.counts.child_count
-      ) {
+      if (newComments.items.length >= parent.comment.comment.child_count) {
         parent.hasMore = false
       }
 
-      parent.children = buildCommentsTree(
-        newComments.comments,
-        parent.depth,
-      )[0].children
+      parent.children = buildCommentsTree(newComments.items, parent.depth)[0].children
     } catch (err) {
       console.error(err)
       toast({
@@ -60,13 +53,11 @@
 </script>
 
 <ul>
-  {#each nodes as node, index (node.comment_view.comment.id)}
+  {#each nodes as node, index (node.comment.comment.id)}
     <Comment
       bind:node={nodes[index]}
       contentClass={[
-        (node.children.length > 0 ||
-          node.comment_view.counts.child_count > 0) &&
-          'border-l',
+        (node.children.length > 0 || node.comment.comment.child_count > 0) && 'border-l',
         'ml-2.5 pl-3 sm:pl-4 lg:pl-5',
         'comment-border',
       ]}
@@ -82,11 +73,11 @@
         <CommentTree {post} bind:nodes={nodes[index].children} />
       {/if}
     </Comment>
-    {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
+    {#if node.comment.comment.child_count > 0 && node.children.length == 0}
       <svelte:element
         this={browser ? 'div' : 'a'}
         class="w-full h-10 -mt-2 -ml-2.5"
-        href="/comment/{node.comment_view.comment.id}"
+        href="/comment/{node.comment.comment.id}"
       >
         <Button
           loading={nodes[index].loading}
@@ -98,18 +89,16 @@
           loaderWidth={16}
           onclick={() => {
             if (nodes[index].depth > 6) {
-              goto(`/comment/${nodes[index].comment_view.comment.id}#comments`)
+              goto(`/comment/${nodes[index].comment.comment.id}#comments`)
             } else {
               nodes[index].loading = true
-              fetchChildren(nodes[index]).then(
-                () => (nodes[index].loading = false),
-              )
+              fetchChildren(nodes[index]).then(() => (nodes[index].loading = false))
             }
           }}
           icon={ArrowDownCircle}
         >
           {$t('comment.more', {
-            comments: node.comment_view.counts.child_count,
+            comments: node.comment.comment.child_count,
           })}
         </Button>
       </svelte:element>
@@ -129,17 +118,9 @@
     transition: border-color 600ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
     &:has(:global(> * > .expand-btn:hover:not(:active))) {
-      border-color: color-mix(
-        in oklab,
-        var(--color-primary-900),
-        var(--color-slate-500)
-      );
+      border-color: color-mix(in oklab, var(--color-primary-900), var(--color-slate-500));
       @variant dark {
-        border-color: color-mix(
-          in oklab,
-          var(--color-primary-100),
-          var(--color-zinc-500)
-        );
+        border-color: color-mix(in oklab, var(--color-primary-100), var(--color-zinc-500));
       }
     }
   }

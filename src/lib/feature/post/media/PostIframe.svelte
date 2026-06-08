@@ -1,14 +1,8 @@
 <script lang="ts" module>
   import { settings } from '$lib/app/settings.svelte'
   import Blobs from '$lib/ui/generic/Blobs.svelte'
-  import {
-    Icon,
-    type IconSource,
-    Play,
-    PuzzlePiece,
-    VideoCamera,
-  } from 'svelte-hero-icons/dist'
-  import { type IframeType, optimizeImageURL } from '../helpers'
+  import { Icon, type IconSource, Play, PuzzlePiece, VideoCamera } from 'svelte-hero-icons/dist'
+  import { type IframeType, optimizeImageURL } from '../post-helpers'
 
   const youtubeDomain = (place: 'youtube' | 'invidious' | 'piped') => {
     switch (place) {

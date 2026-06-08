@@ -17,3 +17,4 @@ playwright-report
 test-results
 .vscode
 *TS.md
+.zed

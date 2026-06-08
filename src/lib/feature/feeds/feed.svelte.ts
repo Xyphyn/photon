@@ -1,6 +1,7 @@
 import { browser } from '$app/environment'
 import type {
   CommentView,
+  CommunitySortType,
   CommunityView,
   FeedView,
   GetComments,
@@ -9,10 +10,9 @@ import type {
   GetPersonDetailsResponse,
   GetPost,
   GetPosts,
-  ListCommunitiesResponse,
   ListingType,
+  PagedResponse,
   PostView,
-  SortType,
   TopicView,
 } from '$lib/api/types'
 import { profile } from '$lib/app/auth'
@@ -21,6 +21,9 @@ import { SvelteMap } from 'svelte/reactivity'
 
 type FetchFn<P, R> = (params: P) => R
 
+/*
+ * The Feed class has a terrible name, and is responsible for caching data on certain routes.
+ */
 export class Feed<Params, Response> {
   #data = $state<Response>()
   #fetch: FetchFn<Params, Response>
@@ -53,9 +56,7 @@ export class Feed<Params, Response> {
 export interface FeedTypes {
   '/': [
     GetPosts,
-    {
-      posts: PostView[]
-      next_page?: string
+    PagedResponse<PostView> & {
       params: GetPosts & { page_cursor: string }
       client: {
         itemHeights?: (number | null)[]
@@ -73,7 +74,7 @@ export interface FeedTypes {
       client: { itemHeights?: (number | null)[]; lastSeen?: number }
     },
   ]
-  '/u/[name]': [GetPersonDetails, { data: GetPersonDetailsResponse }]
+  '/u/[name]': [GetPersonDetails, GetPersonDetailsResponse]
   '/post/[instance]/[id=integer]': [
     {
       posts: GetPost
@@ -107,11 +108,11 @@ export interface FeedTypes {
   '/explore/communities': [
     {
       type: ListingType
-      sort: SortType
+      sort: CommunitySortType
       query: string
-      page: number
+      cursor?: string
     },
-    ListCommunitiesResponse,
+    PagedResponse<CommunityView>,
   ]
   '/f/[id]': [
     GetPosts,

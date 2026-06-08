@@ -3,6 +3,7 @@ import * as types from './types'
 
 export type ClientType =
   | { name: 'lemmy'; baseUrl: '/api/v3' }
+  | { name: 'lemmy'; baseUrl: '/api/v4' }
   | { name: 'piefed'; baseUrl: '/api/alpha' }
 
 export const DEFAULT_CLIENT_TYPE: ClientType =
@@ -11,10 +12,15 @@ export const DEFAULT_CLIENT_TYPE: ClientType =
         name: 'piefed',
         baseUrl: '/api/alpha',
       }
-    : {
-        name: 'lemmy',
-        baseUrl: '/api/v3',
-      }
+    : env.PUBLIC_INSTANCE_TYPE == 'lemmyv3'
+      ? {
+          name: 'lemmy',
+          baseUrl: '/api/v3',
+        }
+      : {
+          name: 'lemmy',
+          baseUrl: '/api/v4',
+        }
 
 export abstract class BaseClient {
   abstract type: ClientType
@@ -34,16 +40,22 @@ export abstract class BaseClient {
 
       if (!res.ok) return null
 
-      const software: { name: string; version: string } = (await res.json())
-        .software
+      const software: { name: string; version: string } = (await res.json()).software
 
       // should probably extract this into not a static function but its ok
       switch (software.name) {
         case 'lemmy': {
-          return {
-            type: { baseUrl: '/api/v3', name: 'lemmy' },
-            version: software.version,
-          }
+          // awful version parsing. works for now, TODO change later
+          if (software.version.startsWith('1'))
+            return {
+              type: { baseUrl: '/api/v4', name: 'lemmy' },
+              version: software.version,
+            }
+          else
+            return {
+              type: { baseUrl: '/api/v3', name: 'lemmy' },
+              version: software.version,
+            }
         }
         case 'piefed': {
           return {
@@ -63,44 +75,24 @@ export abstract class BaseClient {
   abstract getSite(): Promise<types.GetSiteResponse>
   abstract editSite(form: types.EditSite): Promise<types.SiteResponse>
   abstract generateTotpSecret(): Promise<types.GenerateTotpSecretResponse>
-  abstract listLogins(): Promise<types.LoginToken[]>
-  abstract listAllMedia(form: types.ListMedia): Promise<types.ListMediaResponse>
-  abstract updateTotp(form: types.UpdateTotp): Promise<types.UpdateTotpResponse>
-  abstract getModlog(form: types.GetModlog): Promise<types.GetModlogResponse>
+  abstract listLogins(): Promise<types.ListLoginsResponse>
+  abstract listMedia(form: types.ListMedia): Promise<types.PagedResponse<types.LocalImageView>>
+  abstract editTotp(form: types.EditTotp): Promise<types.EditTotpResponse>
+  abstract getModlog(form: types.GetModlog): Promise<types.PagedResponse<types.ModlogView>>
   abstract search(form: types.Search): Promise<types.SearchResponse>
-  abstract resolveObject(
-    form: types.ResolveObject,
-  ): Promise<types.ResolveObjectResponse>
-  abstract createCommunity(
-    form: types.CreateCommunity,
-  ): Promise<types.CommunityResponse>
-  abstract getCommunity(
-    form: types.GetCommunity,
-  ): Promise<types.GetCommunityResponse>
-  abstract editCommunity(
-    form: types.EditCommunity,
-  ): Promise<types.CommunityResponse>
+  abstract resolveObject(form: types.ResolveObject): Promise<types.ResolveObjectView>
+  abstract createCommunity(form: types.CreateCommunity): Promise<types.CommunityResponse>
+  abstract getCommunity(form: types.GetCommunity): Promise<types.GetCommunityResponse>
+  abstract editCommunity(form: types.EditCommunity): Promise<types.CommunityResponse>
   abstract listCommunities(
     form: types.ListCommunities,
-  ): Promise<types.ListCommunitiesResponse>
-  abstract followCommunity(
-    form: types.FollowCommunity,
-  ): Promise<types.CommunityResponse>
-  abstract blockCommunity(
-    form: types.BlockCommunity,
-  ): Promise<types.BlockCommunityResponse>
-  abstract deleteCommunity(
-    form: types.DeleteCommunity,
-  ): Promise<types.CommunityResponse>
-  abstract hideCommunity(
-    form: types.HideCommunity,
-  ): Promise<types.SuccessResponse>
-  abstract removeCommunity(
-    form: types.RemoveCommunity,
-  ): Promise<types.CommunityResponse>
-  abstract banFromCommunity(
-    form: types.BanFromCommunity,
-  ): Promise<types.BanFromCommunityResponse>
+  ): Promise<types.PagedResponse<types.CommunityView>>
+  abstract followCommunity(form: types.FollowCommunity): Promise<types.CommunityResponse>
+  abstract blockCommunity(form: types.BlockCommunity): Promise<types.CommunityResponse>
+  abstract deleteCommunity(form: types.DeleteCommunity): Promise<types.CommunityResponse>
+  abstract hideCommunity(form: types.HideCommunity): Promise<types.SuccessResponse>
+  abstract removeCommunity(form: types.RemoveCommunity): Promise<types.CommunityResponse>
+  abstract banFromCommunity(form: types.BanFromCommunity): Promise<types.PersonResponse>
   abstract addModToCommunity(
     form: types.AddModToCommunity,
   ): Promise<types.AddModToCommunityResponse>
@@ -109,59 +101,38 @@ export abstract class BaseClient {
   abstract editPost(form: types.EditPost): Promise<types.PostResponse>
   abstract deletePost(form: types.DeletePost): Promise<types.PostResponse>
   abstract removePost(form: types.RemovePost): Promise<types.PostResponse>
-  abstract markPostAsRead(
-    form: types.MarkPostAsRead,
-  ): Promise<types.SuccessResponse>
-  abstract hidePost(form: types.HidePost): Promise<types.SuccessResponse>
+  abstract markPostAsRead(form: types.MarkPostAsRead): Promise<types.PostResponse>
+  abstract hidePost(form: types.HidePost): Promise<types.PostResponse>
   abstract lockPost(form: types.LockPost): Promise<types.PostResponse>
   abstract featurePost(form: types.FeaturePost): Promise<types.PostResponse>
-  abstract getPosts(form: types.GetPosts): Promise<types.GetPostsResponse>
+  abstract getPosts(form: types.GetPosts): Promise<types.PagedResponse<types.PostView>>
   abstract likePost(form: types.CreatePostLike): Promise<types.PostResponse>
-  abstract listPostLikes(
-    form: types.ListPostLikes,
-  ): Promise<types.ListPostLikesResponse>
+  abstract listPostLikes(form: types.ListPostLikes): Promise<types.PagedResponse<types.VoteView>>
   abstract savePost(form: types.SavePost): Promise<types.PostResponse>
+  abstract getMyUser(): Promise<types.MyUserInfo>
   // TODO should unify these reports probably
-  abstract createPostReport(
-    form: types.CreatePostReport,
-  ): Promise<types.PostReportResponse>
-  abstract resolvePostReport(
-    form: types.ResolvePostReport,
-  ): Promise<types.PostReportResponse>
-  abstract listPostReports(
-    form: types.ListPostReports,
-  ): Promise<types.ListPostReportsResponse>
-  abstract getSiteMetadata(
-    form: types.GetSiteMetadata,
-  ): Promise<types.GetSiteMetadataResponse>
-  abstract createComment(
-    form: types.CreateComment,
-  ): Promise<types.CommentResponse>
+  abstract createPostReport(form: types.CreatePostReport): Promise<types.PostReportResponse>
+  abstract resolvePostReport(form: types.ResolvePostReport): Promise<types.PostReportResponse>
+  abstract listReports(
+    form: types.ListReports,
+  ): Promise<types.PagedResponse<types.ReportCombinedView>>
+  abstract getSiteMetadata(form: types.GetSiteMetadata): Promise<types.GetSiteMetadataResponse>
+  abstract createComment(form: types.CreateComment): Promise<types.CommentResponse>
   abstract editComment(form: types.EditComment): Promise<types.CommentResponse>
-  abstract deleteComment(
-    form: types.DeleteComment,
-  ): Promise<types.CommentResponse>
-  abstract removeComment(
-    form: types.RemoveComment,
-  ): Promise<types.CommentResponse>
-  abstract markCommentReplyAsRead(
-    form: types.MarkCommentReplyAsRead,
-  ): Promise<types.CommentReplyResponse | void>
-  abstract likeComment(
-    form: types.CreateCommentLike,
-  ): Promise<types.CommentResponse>
+  abstract deleteComment(form: types.DeleteComment): Promise<types.CommentResponse>
+  abstract removeComment(form: types.RemoveComment): Promise<types.CommentResponse>
+  abstract likeComment(form: types.CreateCommentLike): Promise<types.CommentResponse>
   abstract listCommentLikes(
     form: types.ListCommentLikes,
-  ): Promise<types.ListCommentLikesResponse>
+  ): Promise<types.PagedResponse<types.VoteView>>
   // TODO unify saving with posts too
   // i have options for unifying these since I'm making the API client myself now
   abstract saveComment(form: types.SaveComment): Promise<types.CommentResponse>
-  abstract distinguishComment(
-    form: types.DistinguishComment,
-  ): Promise<types.CommentResponse>
-  abstract getComments(
+  abstract distinguishComment(form: types.DistinguishComment): Promise<types.CommentResponse>
+  abstract getComments(form: types.GetComments): Promise<types.PagedResponse<types.CommentView>>
+  abstract getCommentsSlim(
     form: types.GetComments,
-  ): Promise<types.GetCommentsResponse>
+  ): Promise<types.PagedResponse<types.CommentSlimView>>
   abstract getComment(form: types.GetComment): Promise<types.CommentResponse>
   abstract createCommentReport(
     form: types.CreateCommentReport,
@@ -169,23 +140,12 @@ export abstract class BaseClient {
   abstract resolveCommentReport(
     form: types.ResolveCommentReport,
   ): Promise<types.CommentReportResponse>
-  abstract listCommentReports(
-    form: types.ListCommentReports,
-  ): Promise<types.ListCommentReportsResponse>
-  abstract getPrivateMessages(
-    form: types.GetPrivateMessages,
-  ): Promise<types.PrivateMessagesResponse>
   abstract createPrivateMessage(
     form: types.CreatePrivateMessage,
   ): Promise<types.PrivateMessageResponse>
-  abstract editPrivateMessage(
-    form: types.EditPrivateMessage,
-  ): Promise<types.PrivateMessageResponse>
+  abstract editPrivateMessage(form: types.EditPrivateMessage): Promise<types.PrivateMessageResponse>
   abstract deletePrivateMessage(
     form: types.DeletePrivateMessage,
-  ): Promise<types.PrivateMessageResponse>
-  abstract markPrivateMessageAsRead(
-    form: types.MarkPrivateMessageAsRead,
   ): Promise<types.PrivateMessageResponse>
   abstract createPrivateMessageReport(
     form: types.CreatePrivateMessageReport,
@@ -193,55 +153,43 @@ export abstract class BaseClient {
   abstract resolvePrivateMessageReport(
     form: types.ResolvePrivateMessageReport,
   ): Promise<types.PrivateMessageReportResponse>
-  abstract listPrivateMessageReports(
-    form: types.ListPrivateMessageReports,
-  ): Promise<types.ListPrivateMessageReportsResponse>
   abstract register(form: types.Register): Promise<types.LoginResponse>
   abstract login(form: types.Login): Promise<types.LoginResponse>
   abstract logout(): Promise<types.SuccessResponse>
-  abstract getPersonDetails(
-    form: types.GetPersonDetails,
-  ): Promise<types.GetPersonDetailsResponse>
-  // TODO unify these inbox things too
-  abstract getPersonMentions(
-    form: types.GetPersonMentions,
-  ): Promise<types.GetPersonMentionsResponse>
-  abstract markPersonMentionAsRead(
-    form: types.MarkPersonMentionAsRead,
-  ): Promise<types.PersonMentionResponse | void>
-  abstract getReplies(form: types.GetReplies): Promise<types.GetRepliesResponse>
-  abstract banPerson(form: types.BanPerson): Promise<types.BanPersonResponse>
-  abstract getBannedPersons(): Promise<types.BannedPersonsResponse>
-  abstract blockPerson(
-    form: types.BlockPerson,
-  ): Promise<types.BlockPersonResponse>
+  abstract getPersonDetails(form: types.GetPersonDetails): Promise<types.GetPersonDetailsResponse>
+  abstract listPersonContent(
+    form: types.ListPersonContent,
+  ): Promise<types.PagedResponse<types.PostCommentCombinedView>>
+  abstract listPersonSaved(
+    form: types.ListPersonSaved,
+  ): Promise<types.PagedResponse<types.PostCommentCombinedView>>
+  abstract listPersonLiked(
+    form: types.ListPersonLiked,
+  ): Promise<types.PagedResponse<types.PostCommentCombinedView>>
+  abstract listPersonRead(form: types.ListPersonRead): Promise<types.PagedResponse<types.PostView>>
+  abstract listPersonHidden(
+    form: types.ListPersonHidden,
+  ): Promise<types.PagedResponse<types.PostView>>
+  abstract listNotifications(
+    form: types.ListNotifications,
+  ): Promise<types.PagedResponse<types.NotificationView>>
+  abstract banPerson(form: types.BanPerson): Promise<types.PersonResponse>
+  abstract blockPerson(form: types.BlockPerson): Promise<types.PersonResponse>
   abstract getCaptcha(): Promise<types.GetCaptchaResponse>
-  abstract deleteAccount(
-    form: types.DeleteAccount,
+  abstract deleteAccount(form: types.DeleteAccount): Promise<types.SuccessResponse>
+  abstract resetPassword(form: types.ResetPassword): Promise<types.SuccessResponse>
+  abstract changePasswordAfterReset(
+    form: types.ChangePasswordAfterReset,
   ): Promise<types.SuccessResponse>
-  abstract passwordReset(
-    form: types.PasswordReset,
-  ): Promise<types.SuccessResponse>
-  abstract passwordChangeAfterReset(
-    form: types.PasswordChangeAfterReset,
-  ): Promise<types.SuccessResponse>
-  abstract markAllAsRead(): Promise<types.GetRepliesResponse>
-  abstract saveUserSettings(
-    form: types.SaveUserSettings,
-  ): Promise<types.SuccessResponse>
-  abstract changePassword(
-    form: types.ChangePassword,
-  ): Promise<types.LoginResponse>
-  abstract getReportCount(
-    form: types.GetReportCount,
-  ): Promise<types.GetReportCountResponse>
-  abstract getUnreadCount(): Promise<types.GetUnreadCountResponse>
+  abstract markAllNotificationsAsRead(): Promise<types.SuccessResponse>
+  abstract saveUserSettings(form: types.SaveUserSettings): Promise<types.SuccessResponse>
+  abstract changePassword(form: types.ChangePassword): Promise<types.LoginResponse>
+  abstract getUnreadCounts(): Promise<types.UnreadCountsResponse>
   abstract verifyEmail(form: types.VerifyEmail): Promise<types.SuccessResponse>
   abstract addAdmin(form: types.AddAdmin): Promise<types.AddAdminResponse>
-  abstract getUnreadRegistrationApplicationCount(): Promise<types.GetUnreadRegistrationApplicationCountResponse>
   abstract listRegistrationApplications(
     form: types.ListRegistrationApplications,
-  ): Promise<types.ListRegistrationApplicationsResponse>
+  ): Promise<types.PagedResponse<types.RegistrationApplicationView>>
   abstract approveRegistrationApplication(
     form: types.ApproveRegistrationApplication,
   ): Promise<types.RegistrationApplicationResponse>
@@ -249,39 +197,53 @@ export abstract class BaseClient {
     form: types.GetRegistrationApplication,
   ): Promise<types.RegistrationApplicationResponse>
   abstract purgePerson(form: types.PurgePerson): Promise<types.SuccessResponse>
-  abstract purgeCommunity(
-    form: types.PurgeCommunity,
-  ): Promise<types.SuccessResponse>
+  abstract purgeCommunity(form: types.PurgeCommunity): Promise<types.SuccessResponse>
   abstract purgePost(form: types.PurgePost): Promise<types.SuccessResponse>
-  abstract purgeComment(
-    form: types.PurgeComment,
+  abstract purgeComment(form: types.PurgeComment): Promise<types.SuccessResponse>
+  abstract getFederatedInstances(
+    form: types.GetFederatedInstances,
+  ): Promise<types.PagedResponse<types.FederatedInstanceView>>
+  abstract userBlockInstanceCommunities(
+    form: types.UserBlockInstanceCommunitiesParams,
   ): Promise<types.SuccessResponse>
-  abstract getFederatedInstances(): Promise<types.GetFederatedInstancesResponse>
-  abstract blockInstance(
-    form: types.BlockInstance,
-  ): Promise<types.BlockInstanceResponse>
-  abstract uploadImage(
+  abstract userBlockInstancePersons(
+    form: types.UserBlockInstancePersonsParams,
+  ): Promise<types.SuccessResponse>
+  abstract adminListMedia(form: types.ListMedia): Promise<types.PagedResponse<types.LocalImageView>>
+  abstract uploadImage(form: types.UploadImage): Promise<types.UploadImageResponse>
+  abstract uploadSiteIcon(form: types.UploadImage): Promise<types.UploadImageResponse>
+  abstract uploadSiteBanner(form: types.UploadImage): Promise<types.UploadImageResponse>
+  abstract uploadUserAvatar(form: types.UploadImage): Promise<types.UploadImageResponse>
+  abstract uploadUserBanner(form: types.UploadImage): Promise<types.UploadImageResponse>
+  abstract uploadCommunityIcon(
+    query: types.CommunityIdQuery,
     form: types.UploadImage,
   ): Promise<types.UploadImageResponse>
-  abstract deleteImage(form: types.DeleteImage): Promise<boolean>
+  abstract uploadCommunityBanner(
+    query: types.CommunityIdQuery,
+    form: types.UploadImage,
+  ): Promise<types.UploadImageResponse>
+  abstract deleteSiteIcon(): Promise<types.SuccessResponse>
+  abstract deleteSiteBanner(): Promise<types.SuccessResponse>
+  abstract deleteUserAvatar(): Promise<types.SuccessResponse>
+  abstract deleteUserBanner(): Promise<types.SuccessResponse>
+  abstract deleteCommunityIcon(query: types.CommunityIdQuery): Promise<types.SuccessResponse>
+  abstract deleteCommunityBanner(query: types.CommunityIdQuery): Promise<types.SuccessResponse>
+  abstract deleteMedia(query: types.DeleteImageParams): Promise<types.SuccessResponse>
+  abstract adminDeleteMedia(query: types.DeleteImageParams): Promise<types.SuccessResponse>
+  abstract markNotificationAsRead(
+    form: types.MarkNotificationAsRead,
+  ): Promise<types.SuccessResponse>
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
   abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
   abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>
   abstract assignFlair?(form: types.AssignFlair): Promise<types.PostView>
-  abstract listMedia(form: types.ListMedia): Promise<types.ListMediaResponse>
   abstract voteOnPoll?(form: types.PollVote): Promise<types.PostView>
   abstract setNote?(form: types.SetNote): Promise<types.PersonView>
-  abstract getPostReplies(form: types.GetPostReplies)
 }
 
-export type NullableFnArg<T, Fallback = never> = T extends (
-  ...args: infer A
-) => any
-  ? A
-  : Fallback
+export type NullableFnArg<T, Fallback = never> = T extends (...args: infer A) => any ? A : Fallback
 
-export type NullableFnReturn<T, Fallback = never> = T extends (
-  ...args: any[]
-) => infer A
+export type NullableFnReturn<T, Fallback = never> = T extends (...args: any[]) => infer A
   ? A
   : Fallback

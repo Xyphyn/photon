@@ -1,5 +1,5 @@
 import { client } from '$lib/api/client.svelte'
-import type { ListingType, SortType } from '$lib/api/types'
+import type { ListingType, PostSortType } from '$lib/api/types'
 import { t } from '$lib/app/i18n'
 import { settings } from '$lib/app/settings.svelte'
 import { ReactiveState, awaitIfServer } from '$lib/app/util.svelte'
@@ -9,8 +9,8 @@ import { ChevronDoubleUp } from '@xylightdev/svelte-hero-icons'
 export async function load({ url, fetch, route }) {
   const cursor = url.searchParams.get('cursor') as string | undefined
 
-  const sort: SortType =
-    (url.searchParams.get('sort') as SortType) || settings.defaultSort.sort
+  const sort: PostSortType =
+    (url.searchParams.get('sort') as PostSortType) || settings.defaultSort.sort
   const listingType: ListingType =
     (url.searchParams.get('type') as ListingType) || settings.defaultSort.feed
 
@@ -30,7 +30,7 @@ export async function load({ url, fetch, route }) {
   })
 
   return {
-    feed: new ReactiveState((await awaitIfServer(feedData)).data),
+    feed: (await awaitIfServer(feedData)).data,
     filters: new ReactiveState({
       sort: sort,
       type_: listingType,

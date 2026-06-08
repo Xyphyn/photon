@@ -4,7 +4,7 @@
   import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
   import { Button, modal } from 'mono-svelte'
   import { onMount } from 'svelte'
-  import { bestImageURL, postLink } from '../helpers'
+  import { bestImageURL, postLink } from '../post-helpers'
 
   interface Props {
     post: Post
@@ -46,22 +46,12 @@
   <picture class="max-h-[60vh]">
     {#each ['webp'] as format}
       <source
-        srcset="{bestImageURL(
-          post,
-          false,
-          512,
-          format as 'avif' | 'webp',
-        )} 512w, {bestImageURL(
+        srcset="{bestImageURL(post, false, 512, format as 'avif' | 'webp')} 512w, {bestImageURL(
           post,
           false,
           768,
           format as 'avif' | 'webp',
-        )} 768w, {bestImageURL(
-          post,
-          false,
-          1024,
-          format as 'avif' | 'webp',
-        )} 1024w"
+        )} 768w, {bestImageURL(post, false, 1024, format as 'avif' | 'webp')} 1024w"
         media="(min-width: 0px)"
         type="image/{format}"
       />

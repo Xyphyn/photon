@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getClient } from '$lib/api/client.svelte'
-  import type { CommentView, PostView } from '$lib/api/types'
+  import { client, getClient } from '$lib/api/client.svelte'
+  import type { CommentView } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
@@ -10,31 +10,24 @@
   import MultiSelect from '$lib/ui/form/Switch.svelte'
   import { Button, Modal, Option, Select, Switch, toast } from 'mono-svelte'
   import { Fire, Trash } from 'svelte-hero-icons/dist'
-  import { preventDefault, run } from 'svelte/legacy'
+  import { preventDefault } from 'svelte/legacy'
   import Comment from '../comment/Comment.svelte'
-  import { isCommentView, isPostView } from '../legacy/item'
+  import { isPostView } from '../legacy/item'
   import { Post } from '../post'
+  import { PostModel } from '../post/post.svelte'
   import { removalTemplate } from './moderation'
 
   interface Props {
     open: boolean
-    item?: PostView | CommentView | undefined
+    item?: PostModel | CommentView | undefined
     purge?: boolean
   }
 
-  let {
-    open = $bindable(),
-    item = $bindable(undefined),
-    purge = false,
-  }: Props = $props()
+  let { open = $bindable(), item = $bindable(undefined), purge = false }: Props = $props()
 
   let reason = $state('')
-  let commentReason: boolean = $state(
-    settings.moderation.defaultRemoveAction != null,
-  )
-  let privateMessage: boolean = $state(
-    settings.moderation.defaultRemoveAction == 'message',
-  )
+  let commentReason: boolean = $state(settings.moderation.defaultRemoveAction != null)
+  let privateMessage: boolean = $state(settings.moderation.defaultRemoveAction == 'message')
   let loading = $state(false)
   let preset = $state(settings.moderation.presets[0]?.content ?? '')
 
@@ -45,21 +38,14 @@
   })
 
   let removed = $derived(
-    item
-      ? isCommentView(item)
-        ? item.comment.removed
-        : item.post.removed
-      : false,
+    item ? (item instanceof PostModel ? item.post.removed : item.comment.removed) : false,
   )
 
   const getReplyReason = (reason: string, preset: string) => {
     if (!item) return `no template`
 
     return removalTemplate(preset, {
-      communityLink: `!${fullCommunityName(
-        item!.community.name,
-        item!.community.actor_id,
-      )}`,
+      communityLink: `!${fullCommunityName(item!.community.name, item!.community.ap_id)}`,
       postTitle: item.post.name,
       reason: reason,
       username: item.creator.name,
@@ -79,14 +65,14 @@
 
     try {
       if (purge) {
-        if (isCommentView(item)) {
-          await getClient(undefined, fetch).purgeComment({
-            comment_id: item.comment.id,
+        if (item instanceof PostModel) {
+          await client().purgePost({
+            post_id: item.post.id,
             reason: reason,
           })
         } else {
-          await getClient(undefined, fetch).purgePost({
-            post_id: item.post.id,
+          await client().purgeComment({
+            comment_id: item.comment.id,
             reason: reason,
           })
         }
@@ -114,9 +100,8 @@
           await getClient()
             .createPrivateMessage({
               content: replyReason,
-              recipient_id: isCommentView(item)
-                ? item.comment.creator_id
-                : item.post.creator_id,
+              recipient_id:
+                item instanceof PostModel ? item.post.creator_id : item.comment.creator_id,
             })
             .catch(() => {
               toast({
@@ -129,7 +114,7 @@
             .createComment({
               content: replyReason,
               post_id: item.post.id,
-              parent_id: isCommentView(item) ? item.comment.id : undefined,
+              parent_id: item instanceof PostModel ? undefined : item.comment.id,
             })
             .catch(() => {
               toast({
@@ -140,21 +125,21 @@
         }
       }
 
-      if (isCommentView(item)) {
-        await getClient().removeComment({
-          comment_id: item.comment.id,
-          removed: !removed,
-          reason: reason || undefined,
-        })
-        item.comment.removed = !removed
-      } else if (isPostView(item)) {
-        await getClient().removePost({
+      if (item instanceof PostModel) {
+        await client().removePost({
           post_id: item.post.id,
           removed: !removed,
-          reason: reason || undefined,
+          reason: reason,
         })
 
         item.post.removed = !removed
+      } else if (isPostView(item)) {
+        await client().removeComment({
+          comment_id: item.comment.id,
+          removed: !removed,
+          reason: reason,
+        })
+        item.comment.removed = !removed
       }
 
       open = false
@@ -172,7 +157,7 @@
     reason = ''
   }
 
-  run(() => {
+  $effect(() => {
     if (item) {
       resetText()
     }
@@ -188,11 +173,10 @@
       : $t('moderation.removeSubmission.title')}
 >
   {#if item}
-    <form
-      onsubmit={preventDefault(remove)}
-      class="flex flex-col gap-4 list-none"
-    >
-      {#if isCommentView(item)}
+    <form onsubmit={preventDefault(remove)} class="flex flex-col gap-4 list-none">
+      {#if item instanceof PostModel}
+        <Post actions={false} post={item} />
+      {:else}
         <Comment
           node={{
             children: [],
@@ -201,16 +185,9 @@
           }}
           actions={false}
         />
-      {:else if isPostView(item)}
-        <Post actions={false} post={item} />
       {/if}
 
-      <MarkdownEditor
-        rows={3}
-        label="Reason"
-        placeholder="Optional"
-        bind:value={reason}
-      />
+      <MarkdownEditor rows={3} label="Reason" placeholder="Optional" bind:value={reason} />
 
       {#if !removed}
         <Switch bind:checked={commentReason}>
@@ -226,11 +203,7 @@
             ]}
             bind:selected={privateMessage}
           />
-          <MarkdownEditor
-            bind:value={replyReason}
-            placeholder={replyReason}
-            rows={3}
-          >
+          <MarkdownEditor bind:value={replyReason} placeholder={replyReason} rows={3}>
             {#snippet customLabel()}
               <div class="flex justify-between items-end mb-1">
                 {$t('comment.reply')}

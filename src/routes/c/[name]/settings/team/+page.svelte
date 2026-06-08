@@ -88,15 +88,11 @@
   {#snippet item(moderator)}
     <div class="flex items-center gap-2 justify-between">
       <div class="flex gap-2 items-center">
-        <Avatar
-          width={28}
-          url={moderator.moderator.avatar}
-          alt={moderator.moderator.name}
-        />
+        <Avatar width={28} url={moderator.moderator.avatar} alt={moderator.moderator.name} />
         <div class="flex flex-col gap-0">
           {moderator.moderator.display_name ?? moderator.moderator.name}
           <span class="text-xs text-slate-600 dark:text-zinc-400">
-            {new URL(moderator.moderator.actor_id).hostname}
+            {new URL(moderator.moderator.ap_id).hostname}
           </span>
         </div>
       </div>
@@ -135,7 +131,7 @@
 >
   <div class="w-full">
     <UserAutocomplete
-      listing_type="All"
+      listing_type="all"
       onselect={(p) => {
         if (p) formData.newModerator = p.id
       }}

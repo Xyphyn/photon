@@ -12,7 +12,7 @@
   async function unblock(id: number) {
     if (!data.person_blocks) return
     data.person_blocks.splice(
-      data.person_blocks.findIndex((i) => i.person.id == id),
+      data.person_blocks.findIndex((i) => i.id == id),
       1,
     )
 
@@ -26,11 +26,11 @@
 {#if data.person_blocks && data.person_blocks?.length > 0}
   <ItemList
     items={data.person_blocks.map((i) => ({
-      id: i.target.id,
-      name: i.target.name,
-      avatar: i.target.avatar,
-      url: userLink(i.target),
-      instance: new URL(i.target.actor_id).hostname,
+      id: i.id,
+      name: i.name,
+      avatar: i.avatar,
+      url: userLink(i),
+      instance: new URL(i.ap_id).hostname,
       circle: true,
     }))}
     link={false}
@@ -43,12 +43,7 @@
         color="primary"
         icon={ArrowUturnUp}
       />
-      <Button
-        title="Unblock"
-        size="square-md"
-        onclick={() => unblock(block.id)}
-        icon={Trash}
-      />
+      <Button title="Unblock" size="square-md" onclick={() => unblock(block.id)} icon={Trash} />
     {/snippet}
   </ItemList>
 {:else}

@@ -1,11 +1,17 @@
 <script lang="ts">
+  // TODO make community form use
   import { goto } from '$app/navigation'
   import { client, site } from '$lib/api/client.svelte'
+  import type { CommunityVisibility } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
-  import ImageInputUpload from '$lib/ui/form/ImageInputUpload.svelte'
+  import { communityLink } from '$lib/app/util.svelte'
+  import { uploadStrategy } from '$lib/ui/form/files/file-upload.svelte'
+  import FileUpload from '$lib/ui/form/files/FileUpload.svelte'
+  import FreeTextInput from '$lib/ui/form/FreeTextInput.svelte'
+  import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { Header } from '$lib/ui/layout'
   import {
     Badge,
@@ -20,8 +26,7 @@
     TextInput,
     toast,
   } from 'mono-svelte'
-  import { GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons/dist'
-  import { addSubscription } from '../user'
+  import { DocumentPlus, GlobeAlt, Icon, MapPin, Plus } from 'svelte-hero-icons/dist'
 
   interface Props {
     /**
@@ -37,7 +42,7 @@
       nsfw: boolean
       postsLockedToModerators: boolean
       submitting: boolean
-      visibility: 'Public' | 'LocalOnly'
+      visibility: CommunityVisibility
       languages?: number[]
     }
     formtitle?: import('svelte').Snippet
@@ -52,43 +57,39 @@
       nsfw: false,
       postsLockedToModerators: false,
       submitting: false,
-      visibility: 'Public',
+      visibility: 'public',
       languages: undefined,
     }),
     formtitle,
   }: Props = $props()
 
-  let formData = $state(passedFormData)
+  let form = $state(passedFormData)
 
   async function submit() {
     if (!profile.current?.jwt) return
-    if ((!edit && formData.name == '') || formData.displayName == '') return
+    if ((!edit && form.name == '') || form.displayName == '') return
 
-    formData.submitting = true
+    form.submitting = true
 
     try {
       const res = edit
         ? await client().editCommunity({
-            title: formData.displayName,
-            description: formData.sidebar,
-            nsfw: formData.nsfw,
-            posting_restricted_to_mods: formData.postsLockedToModerators,
-            icon: formData.icon,
-            banner: formData.banner,
+            title: form.displayName,
+            summary: form.sidebar,
+            nsfw: form.nsfw,
+            posting_restricted_to_mods: form.postsLockedToModerators,
             community_id: edit,
-            visibility: formData.visibility,
-            discussion_languages: formData.languages,
+            visibility: form.visibility,
+            discussion_languages: form.languages,
           })
         : await client().createCommunity({
-            name: formData.name,
-            title: formData.displayName,
-            description: formData.sidebar,
-            nsfw: formData.nsfw,
-            posting_restricted_to_mods: formData.postsLockedToModerators,
-            icon: formData.icon,
-            banner: formData.banner,
-            visibility: formData.visibility,
-            discussion_languages: formData.languages,
+            name: form.name,
+            title: form.displayName,
+            summary: form.sidebar,
+            nsfw: form.nsfw,
+            posting_restricted_to_mods: form.postsLockedToModerators,
+            visibility: form.visibility,
+            discussion_languages: form.languages,
           })
 
       toast({
@@ -117,16 +118,9 @@
             ],
           }
         }
-
-        addSubscription(res.community_view.community, true)
       }
 
-      if (!edit)
-        goto(
-          `/c/${res.community_view.community.name}@${
-            new URL(res.community_view.community.actor_id).hostname
-          }`,
-        )
+      if (!edit) goto(communityLink(res.community_view.community))
     } catch (err) {
       toast({
         content: errorMessage(err as string),
@@ -134,7 +128,7 @@
       })
     }
 
-    formData.submitting = false
+    form.submitting = false
   }
 </script>
 
@@ -148,43 +142,117 @@
   {#if formtitle}{@render formtitle()}{:else}
     <Header>{$t('form.post.community')}</Header>
   {/if}
-  <TextInput
-    required
-    label={$t('form.name')}
-    bind:value={formData.name}
-    oninput={() => {
-      formData.name = formData.name.toLowerCase().replaceAll(' ', '_')
-    }}
-    disabled={edit != undefined}
-  />
-  <TextInput
-    required
-    label={$t('form.profile.displayName')}
-    bind:value={formData.displayName}
-  />
-  <div class="flex flex-row gap-4 flex-wrap *:flex-1">
-    <ImageInputUpload
-      bind:imageUrl={formData.icon}
-      label={$t('routes.admin.config.icon')}
-    />
-    <ImageInputUpload
-      bind:imageUrl={formData.banner}
-      label={$t('routes.admin.config.banner')}
-    />
-  </div>
-  <MarkdownEditor
-    previewButton
-    label={$t('routes.admin.config.sidebar')}
-    bind:value={formData.sidebar}
-  />
 
-  <Switch bind:checked={formData.nsfw}>{$t('post.badges.nsfw')}</Switch>
-  <Switch bind:checked={formData.postsLockedToModerators}>
-    Only moderators can post
-  </Switch>
-  <Select label="Visibility" class="w-max" bind:value={formData.visibility}>
-    <Option icon={GlobeAlt} value="Public">Public</Option>
-    <Option icon={MapPin} value="LocalOnly">Local Only</Option>
+  <Material color="uniform" padding="xl" rounding="3xl" class="space-y-4">
+    <div class="relative overflow-hidden rounded-t-[inherit] -m-6 mask-b-from-0 h-32 @lg:h-48 z-0">
+      <FileUpload
+        upload={edit
+          ? (file: File) => client().uploadCommunityBanner({ id: edit }, { image: file })
+          : uploadStrategy.default}
+        preview={form.banner}
+        onupload={(res) => (form.banner = res)}
+        remove={edit ? () => client().deleteCommunityBanner({ id: edit }) : async () => {}}
+        onremove={() => (form.banner = undefined)}
+      >
+        {#snippet target(toggle)}
+          <button
+            onclick={toggle}
+            type="button"
+            class="cursor-pointer h-full btn-secondary border-none! w-full"
+          >
+            {#if form.banner}
+              <img
+                src={form.banner}
+                class="w-full object-cover h-full bg-white dark:bg-zinc-900 pointer-events-none z-0"
+                height="192"
+                alt="User banner"
+              />
+            {/if}
+            <div class="grid place-items-center z-10 absolute inset-0">
+              <Icon src={DocumentPlus} size="32" solid />
+            </div>
+          </button>
+        {/snippet}
+      </FileUpload>
+    </div>
+    <div class="relative w-max -mt-8 dark">
+      <Button
+        class="absolute -bottom-2 -right-2 z-10 pointer-events-none"
+        rounding="pill"
+        size="square-lg"
+        elevation="medium"
+      >
+        <Icon src={DocumentPlus} size="24" solid class="text-zinc-400" />
+      </Button>
+      <FileUpload
+        upload={edit
+          ? (file: File) => client().uploadCommunityIcon({ id: edit }, { image: file })
+          : uploadStrategy.default}
+        preview={form.icon}
+        onupload={(res) => (form.icon = res)}
+        remove={edit ? () => client().deleteCommunityIcon({ id: edit }) : async () => {}}
+        onremove={() => (form.icon = undefined)}
+      >
+        {#snippet target(toggle)}
+          <button onclick={toggle} type="button" class="cursor-pointer">
+            <Avatar
+              width={72}
+              url={form.icon}
+              alt={form.name}
+              circle={false}
+              class={['relative hover:brightness-90 rounded-3xl!']}
+            />
+          </button>
+        {/snippet}
+      </FileUpload>
+    </div>
+    <h2 class={['text-2xl flex flex-row']}>
+      <FreeTextInput
+        required
+        bind:value={form.displayName}
+        class="w-max tracking-tight font-medium"
+        minlength={3}
+        onchange={() => {
+          form.displayName = form.displayName?.replace('\n', '')
+        }}
+        placeholder="Community"
+        label={$t('form.profile.displayName')}
+      />
+    </h2>
+    <TextInput
+      required
+      bind:value={form.name}
+      class="w-max"
+      minlength={3}
+      oninput={() => {
+        form.name = form.name?.replace('\n', '').replace(' ', '_').toLowerCase()
+      }}
+      placeholder={$t('form.name')}
+      label={$t('form.name')}
+    >
+      {#snippet prefix()}
+        !
+      {/snippet}
+      {#snippet suffix()}
+        <div class="pr-2">
+          @{profile.current.instance}
+        </div>
+      {/snippet}
+    </TextInput>
+
+    <MarkdownEditor
+      images={false}
+      bind:value={form.sidebar}
+      label={$t('form.profile.bio')}
+      previewButton
+    />
+  </Material>
+
+  <Switch bind:checked={form.nsfw}>{$t('post.badges.nsfw')}</Switch>
+  <Switch bind:checked={form.postsLockedToModerators}>Only moderators can post</Switch>
+  <Select label="Visibility" class="w-max" bind:value={form.visibility}>
+    <Option icon={GlobeAlt} value="public">Public</Option>
+    <Option icon={MapPin} value="local_only">Local Only</Option>
   </Select>
 
   <div class="space-y-1">
@@ -201,29 +269,24 @@
                 </Badge>
               </button>
             {/snippet}
-            {#each site.data.all_languages.filter((l) => !formData.languages?.includes(l.id)) as language (language.id)}
+            {#each site.data.all_languages.filter((l) => !form.languages?.includes(l.id)) as language (language.id)}
               <MenuButton
-                class="min-h-[16px] py-0"
+                class="min-h-4 py-0"
                 onclick={() => {
-                  formData.languages = [
-                    ...(formData.languages ?? []),
-                    language.id,
-                  ]
+                  form.languages = [...(form.languages ?? []), language.id]
                 }}
               >
                 {language.name}
               </MenuButton>
             {/each}
           </Menu>
-          {#each formData.languages ?? [] as languageId, index (languageId)}
-            {@const language = site.data.all_languages.find(
-              (l) => l.id == languageId,
-            )}
+          {#each form.languages ?? [] as languageId, index (languageId)}
+            {@const language = site.data.all_languages.find((l) => l.id == languageId)}
             <button
               type="button"
               class="hover:brightness-150 transition-all"
               onclick={() => {
-                formData.languages?.splice(index, 1)
+                form.languages?.splice(index, 1)
               }}
             >
               <Badge class="cursor-pointer">{language?.name}</Badge>
@@ -239,8 +302,8 @@
     color="primary"
     size="lg"
     class="mt-auto"
-    loading={formData.submitting}
-    disabled={formData.submitting}
+    loading={form.submitting}
+    disabled={form.submitting}
   >
     {edit ? $t('common.save') : $t('form.submit')}
   </Button>

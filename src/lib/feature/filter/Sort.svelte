@@ -31,12 +31,7 @@
     class?: string
   }
 
-  let {
-    selected = $bindable(),
-    navigate = true,
-    class: clazz = '',
-    ...rest
-  }: Props = $props()
+  let { selected = $bindable(), navigate = true, class: clazz = '', ...rest }: Props = $props()
 
   let sort: string = $state(selected?.startsWith('Top') ? 'TopAll' : selected)
   const setSelected = () => (selected = sort)
@@ -58,32 +53,32 @@
         {$t('filter.sort.label')}
       </span>
     {/snippet}
-    <Option value="Active" icon={ArrowTrendingUp}>
+    <Option value="active" icon={ArrowTrendingUp}>
       {$t('filter.sort.active')}
     </Option>
-    <Option value="Hot" icon={Fire}>
+    <Option value="hot" icon={Fire}>
       {$t('filter.sort.hot')}
     </Option>
-    <Option value="Scaled" icon={Scale}>
+    <Option value="scaled" icon={Scale}>
       {$t('filter.sort.scaled')}
     </Option>
-    <Option value="TopAll" icon={Trophy}>
+    <Option value="top" icon={Trophy}>
       {$t('filter.sort.top.label')}
     </Option>
-    <Option value="New" icon={Star}>
+    <Option value="new" icon={Star}>
       {$t('filter.sort.new')}
     </Option>
     {#if !(profile.client instanceof PiefedClient)}
-      <Option value="Old" icon={Clock}>
+      <Option value="old" icon={Clock}>
         {$t('filter.sort.old')}
       </Option>
-      <Option value="Controversial" icon={ArrowTrendingDown}>
+      <Option value="controversial" icon={ArrowTrendingDown}>
         {$t('filter.sort.controversial')}
       </Option>
-      <Option value="MostComments" icon={ChatBubbleOvalLeft}>
+      <Option value="most_comments" icon={ChatBubbleOvalLeft}>
         {$t('filter.sort.mostcomments')}
       </Option>
-      <Option value="NewComments" icon={ChatBubbleLeftRight}>
+      <Option value="new_comments" icon={ChatBubbleLeftRight}>
         {$t('filter.sort.newcomments')}
       </Option>
     {/if}
