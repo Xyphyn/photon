@@ -42,14 +42,18 @@ def capture(browser, shot):
     )
 
     page = context.new_page()
-    page.goto(f"{SITE}{shot['path']}", wait_until="domcontentloaded")
 
-    try:
-        page.wait_for_selector(shot["wait"], timeout=30000)
-        page.wait_for_load_state("networkidle", timeout=15000)
-        page.evaluate("document.fonts.ready")
-    except PlaywrightTimeoutError:
-        pass
+    # sometimes it stalls idk
+    for _ in range(3):
+        page.goto(f"{SITE}{shot['path']}", wait_until="domcontentloaded")
+
+        try:
+            page.wait_for_selector(shot["wait"], state="visible", timeout=20000)
+            page.wait_for_load_state("networkidle", timeout=15000)
+            page.evaluate("document.fonts.ready")
+            break
+        except PlaywrightTimeoutError:
+            continue
 
     page.wait_for_timeout(1500)
     page.screenshot(path=str(OUT_DIR / shot["out"]))
