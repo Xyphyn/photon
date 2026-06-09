@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state'
   import { PiefedClient } from '$lib/api/piefed/adapter'
+  import { type ListingType } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
@@ -10,32 +11,31 @@
     ChartBar,
     GlobeAmericas,
     Icon,
+    LightBulb,
     MapPin,
     Newspaper,
     ShieldCheck,
   } from 'svelte-hero-icons/dist'
 
-  interface Props extends SelectProps<string> {
+  interface Props extends Omit<SelectProps<string>, 'onchange'> {
     selected: string
     navigate?: boolean
     changeDefault?: boolean
     showLabel?: boolean
+    onchange?: (v: ListingType) => void
   }
 
-  let {
-    selected = $bindable(),
-    navigate = true,
-    showLabel = true,
-    children,
-    ...rest
-  }: Props = $props()
+  let { navigate = false, showLabel = true, children, onchange, ...rest }: Props = $props()
+
+  let value = $derived(rest.selected)
 </script>
 
 <Select
   {...rest}
-  bind:value={selected}
-  onchange={() => {
-    if (navigate) searchParam(page.url, 'type', selected, 'page', 'cursor')
+  bind:value
+  onchange={(v) => {
+    if (navigate) searchParam(page.url, 'type', v!, 'page', 'cursor')
+    onchange?.(value as ListingType)
   }}
 >
   {#snippet customLabel()}
@@ -55,8 +55,11 @@
     </Option>
   {/if}
   <Option value="local" icon={MapPin}>{$t('filter.location.local')}</Option>
-  <Option value="subscribed" disabled={profile.current?.jwt == undefined} icon={Newspaper}>
+  <Option value="subscribed" disabled={!profile.current?.jwt} icon={Newspaper}>
     {$t('filter.location.subscribed')}
+  </Option>
+  <Option value="suggested" disabled={!profile.current.jwt} icon={LightBulb}>
+    {$t('filter.location.suggested')}
   </Option>
   <Option value="moderator_view" disabled={!profile.isMod()} icon={ShieldCheck}>
     {$t('filter.location.moderator')}

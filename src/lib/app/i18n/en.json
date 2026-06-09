@@ -73,7 +73,8 @@
             "subscribed": "Subscriptions",
             "moderator": "Moderator",
             "global": "Global",
-            "popular": "Popular"
+            "popular": "Popular",
+            "suggested": "Suggested"
         },
         "sort": {
             "label": "Sort",
@@ -100,8 +101,12 @@
             "old": "Old",
             "controversial": "Controversial",
             "scaled": "Scaled",
-            "mostcomments": "Most Comments",
-            "newcomments": "New Replies"
+            "mostcomments": "Most comments",
+            "newcomments": "New replies",
+            "posts": "Most posts",
+            "subscribers": "Most subscribers",
+            "nameAsc": "Name (ascending)",
+            "nameDes": "Name (descending)"
         },
         "view": {
             "label": "View",

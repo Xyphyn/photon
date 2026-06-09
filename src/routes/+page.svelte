@@ -24,16 +24,17 @@
     data.feed instanceof Promise ? [] : data.feed.items,
     (p) => repos.posts.get(p),
   )
+  let params = $derived(data.params)
 
   $effect.pre(() => {
     if (data.feed instanceof Promise) {
-      data.feed.then((feed) => listing.add(feed.items))
+      data.feed.then((feed) => (listing.items = feed.items.map(listing.from)))
     }
   })
 
   $effect(() => {
-    if (data.filters.value.sort) settings.defaultSort.sort = data.filters.value.sort
-    if (data.filters.value.type_) settings.defaultSort.feed = data.filters.value.type_
+    if (params.sort) settings.defaultSort.sort = params.sort
+    if (params.type_) settings.defaultSort.feed = params.type_
   })
 
   const FeedComponent = $derived(
@@ -52,8 +53,14 @@
   {#snippet extended()}
     <form class="contents" method="get" action={page.url.pathname}>
       <div class="flex flex-row gap-2 max-w-full flex-wrap">
-        <Location name="type" navigate bind:selected={data.filters.value.type_!} />
-        <Sort placement="bottom" name="sort" navigate bind:selected={data.filters.value.sort!} />
+        <Location name="type" navigate selected={params.type_} />
+        <Sort
+          placement="bottom"
+          name="sort"
+          navigate
+          selected={params.sort}
+          period={params.period}
+        />
         <ViewSelect placement="bottom" />
 
         <noscript>
