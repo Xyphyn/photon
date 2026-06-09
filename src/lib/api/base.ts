@@ -112,7 +112,6 @@ export abstract class BaseClient {
   abstract getMyUser(): Promise<types.MyUserInfo>
   // TODO should unify these reports probably
   abstract createPostReport(form: types.CreatePostReport): Promise<types.PostReportResponse>
-  abstract resolvePostReport(form: types.ResolvePostReport): Promise<types.PostReportResponse>
   abstract listReports(
     form: types.ListReports,
   ): Promise<types.PagedResponse<types.ReportCombinedView>>
@@ -137,9 +136,6 @@ export abstract class BaseClient {
   abstract createCommentReport(
     form: types.CreateCommentReport,
   ): Promise<types.CommentReportResponse>
-  abstract resolveCommentReport(
-    form: types.ResolveCommentReport,
-  ): Promise<types.CommentReportResponse>
   abstract createPrivateMessage(
     form: types.CreatePrivateMessage,
   ): Promise<types.PrivateMessageResponse>
@@ -149,9 +145,6 @@ export abstract class BaseClient {
   ): Promise<types.PrivateMessageResponse>
   abstract createPrivateMessageReport(
     form: types.CreatePrivateMessageReport,
-  ): Promise<types.PrivateMessageReportResponse>
-  abstract resolvePrivateMessageReport(
-    form: types.ResolvePrivateMessageReport,
   ): Promise<types.PrivateMessageReportResponse>
   abstract register(form: types.Register): Promise<types.LoginResponse>
   abstract login(form: types.Login): Promise<types.LoginResponse>
@@ -234,6 +227,17 @@ export abstract class BaseClient {
   abstract markNotificationAsRead(
     form: types.MarkNotificationAsRead,
   ): Promise<types.SuccessResponse>
+
+  abstract resolvePostReport(form: types.ResolvePostReport): Promise<types.PostReportResponse>
+  abstract resolvePrivateMessageReport(
+    form: types.ResolvePrivateMessageReport,
+  ): Promise<types.PrivateMessageReportResponse>
+  abstract resolveCommentReport(
+    form: types.ResolveCommentReport,
+  ): Promise<types.CommentReportResponse>
+  abstract resolveCommunityReport(
+    form: types.ResolveCommunityReport,
+  ): Promise<types.CommunityReportResponse>
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
   abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
   abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>

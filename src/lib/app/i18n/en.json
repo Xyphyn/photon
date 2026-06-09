@@ -116,7 +116,8 @@
         "inbox": {
             "messages": "Messages",
             "replies": "Replies",
-            "mentions": "Mentions"
+            "mentions": "Mentions",
+            "modActions": "Modlogs"
         }
     },
     "form": {
@@ -350,7 +351,7 @@
         },
         "inbox": {
             "title": "Inbox",
-            "markAsRead": "Mark All Read",
+            "markAsRead": "Mark all read",
             "empty": {
                 "title": "No new notifications",
                 "description": "Messages, replies, and mentions will appear here."
@@ -358,7 +359,23 @@
             "item": {
                 "reply": "{{user}} replied to you in {{post}}",
                 "mention": "{{user}} mentioned you in {{post}}",
-                "message": "{{user}} messaged {{recipient}}"
+                "message": "{{user}} messaged {{recipient}}",
+                "modActions": {
+                  "moderator": "A **{{community}}** moderator",
+                  "mod_ban_from_community": "{{moderator}} **banned you**",
+                  "mod_ban_from_community_inverse": "{{moderator}} **unbanned you**",
+                  "mod_add_to_community": "{{moderator}} **promoted you to moderator**",
+                  "mod_add_to_community_inverse": "{{moderator}} **demoted you as moderator**",
+                  "mod_remove_post": "{{moderator}} **removed your post**",
+                  "mod_remove_post_inverse": "{{moderator}} **restored your post**",
+                  "mod_remove_comment": "{{moderator}} **removed your comment**",
+                  "mod_remove_comment_inverse": "{{moderator}} **restored your comment**",
+                  "mod_lock_post": "{{moderator}} **locked your post**",
+                  "mod_lock_post_inverse": "{{moderator}} **unlocked your post**",
+                  "mod_lock_comment": "{{moderator}} **locked your comment**",
+                  "mod_lock_comment_inverse": "{{moderator}} **unlocked your comment**",
+                  "mod_lock_warn_comment": "{{moderator}} **warned you**"
+                }
             },
             "messages": {
                 "conversation": "This is the beginning of your conversation with {{user}}",

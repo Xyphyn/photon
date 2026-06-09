@@ -2,41 +2,44 @@
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
   import { client } from '$lib/api/client.svelte'
-  import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
-  import { searchParam } from '$lib/app/util.svelte'
+  import { loader, searchParam } from '$lib/app/util.svelte'
+  import { Listing } from '$lib/feature/feeds/listing.svelte.js'
   import { InboxItemModel } from '$lib/feature/inbox/inbox-item.svelte.js'
   import InboxItem from '$lib/feature/inbox/InboxItem.svelte'
   import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import type { NotificationType } from 'lemmy-js-client'
   import { Button, Option, Select } from 'mono-svelte'
   import { ArrowPath, Check, Funnel, Icon, Inbox } from 'svelte-hero-icons/dist'
 
   let { data } = $props()
 
-  let inbox = $derived(data.inbox.items)
-  let params = $derived(data.params.value)
+  let listing = $derived(new Listing(data.inbox.items, (i) => new InboxItemModel(i)))
+  let params = $derived(data.params)
 
-  let markingAsRead = $state(false)
+  let loading = $state(false)
 
-  async function markAllAsRead() {
-    if (!profile.current?.user) {
-      goto('/login')
-      return
-    }
+  const markAllAsRead = () =>
+    loader(
+      (v) => (loading = v),
+      () => client().markAllNotificationsAsRead(),
+      () => {
+        goto(page.url, {
+          invalidateAll: true,
+        }).then(() => {
+          loading = false
+        })
+      },
+    )
 
-    markingAsRead = true
-
-    await client().markAllNotificationsAsRead()
-
-    profile.inbox.notifications.inbox = 0
-
-    goto(page.url, {
-      invalidateAll: true,
-    }).then(() => {
-      markingAsRead = false
-    })
+  const unreadColors: Record<NotificationType, string> = {
+    mention: 'bg-blue-300/10! dark:bg-blue-300/10!',
+    reply: 'bg-blue-300/10! dark:bg-blue-300/5!',
+    mod_action: 'bg-green-300/10! dark:bg-green-300/5!',
+    private_message: 'bg-blue-300/10! dark:bg-orange-300/5!',
+    subscribed: 'bg-yellow-300/10! dark:bg-yellow-300/5!',
   }
 </script>
 
@@ -51,7 +54,7 @@
     <div class="flex gap-2 tracking-normal items-end">
       <Select
         class="relative"
-        bind:value={() => params.unreadOnly.toString(), (v) => (params.unreadOnly = v == 'true')}
+        bind:value={() => params.unreadOnly.toString(), (v) => (params.unreadOnly = v == 'false')}
         onchange={() =>
           searchParam(page.url, 'unreadOnly', params.unreadOnly ? 'true' : 'false', 'page')}
       >
@@ -67,8 +70,8 @@
       <div class="flex-1"></div>
       <Button
         onclick={markAllAsRead}
-        loading={markingAsRead}
-        disabled={markingAsRead || inbox.length == 0}
+        {loading}
+        disabled={loading || listing.items.length == 0}
         color="primary"
         icon={Check}
         size="lg"
@@ -85,7 +88,7 @@
   {/snippet}
 </Header>
 
-{#if !inbox || (inbox.length ?? 0) == 0}
+{#if listing.items.length == 0}
   <Placeholder
     icon={Inbox}
     title={$t('routes.inbox.empty.title')}
@@ -94,10 +97,9 @@
   />
 {:else}
   <CommonList size="md">
-    {#each inbox as item}
-      {@const inboxItem = new InboxItemModel(item)}
-      <li class={[!inboxItem.read && 'bg-blue-300/10! dark:bg-blue-500/5!']}>
-        <InboxItem item={inboxItem} />
+    {#each listing.items as item}
+      <li class={[!item.read && unreadColors[item.notification.kind]]}>
+        <InboxItem {item} />
       </li>
     {/each}
   </CommonList>

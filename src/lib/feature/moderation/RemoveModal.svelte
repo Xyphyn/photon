@@ -10,9 +10,8 @@
   import MultiSelect from '$lib/ui/form/Switch.svelte'
   import { Button, Modal, Option, Select, Switch, toast } from 'mono-svelte'
   import { Fire, Trash } from 'svelte-hero-icons/dist'
-  import { preventDefault } from 'svelte/legacy'
   import Comment from '../comment/Comment.svelte'
-  import { isPostView } from '../legacy/item'
+  import { CommentModel } from '../comment/comment.svelte'
   import { Post } from '../post'
   import { PostModel } from '../post/post.svelte'
   import { removalTemplate } from './moderation'
@@ -133,7 +132,7 @@
         })
 
         item.post.removed = !removed
-      } else if (isPostView(item)) {
+      } else if (item instanceof CommentModel) {
         await client().removeComment({
           comment_id: item.comment.id,
           removed: !removed,
@@ -173,14 +172,20 @@
       : $t('moderation.removeSubmission.title')}
 >
   {#if item}
-    <form onsubmit={preventDefault(remove)} class="flex flex-col gap-4 list-none">
+    <form
+      onsubmit={(e) => {
+        e.preventDefault()
+        remove()
+      }}
+      class="flex flex-col gap-4 list-none"
+    >
       {#if item instanceof PostModel}
         <Post actions={false} post={item} />
       {:else}
         <Comment
           node={{
             children: [],
-            comment_view: item,
+            comment: new CommentModel(item),
             depth: 1,
           }}
           actions={false}

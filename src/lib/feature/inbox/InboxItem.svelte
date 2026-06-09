@@ -18,8 +18,8 @@
     PaperAirplane,
     ShieldCheck,
   } from 'svelte-hero-icons/dist'
-  import ModlogItemCard from '../../../routes/modlog/item/ModlogItemCard.svelte'
   import { CommentModel } from '../comment/comment.svelte'
+  import { repos } from '../feeds/repo.svelte'
   import { PostItem } from '../post'
   import { PostModel } from '../post/post.svelte'
   import type { InboxItemModel } from './inbox-item.svelte'
@@ -60,9 +60,7 @@
     {item.notification.read ? $t('post.actions.more.markUnread') : $t('post.actions.more.markRead')}
   </Button>
   <Button
-    href={item.data.type_ == 'private_message'
-      ? `/inbox/messages/${item.data.creator.id}`
-      : `/comment/${item.notification.comment_id}`}
+    href={item.link}
     size="sm"
     rounding="pill"
     class="shrink-0"
@@ -78,6 +76,8 @@
       <div class="relative">
         {#if item.data.type_ == 'comment' || item.data.type_ == 'post' || item.data.type_ == 'private_message'}
           <Avatar url={item.data.creator.avatar} width={28} alt={item.data.creator.name} />
+        {:else}
+          <Avatar url={item.data.target_community?.icon} circle={false} width={28} alt="" />
         {/if}
         <Material
           color="uniform"
@@ -118,6 +118,19 @@
               })}
               noStyle
             />
+          {:else if item.data.type_ == 'mod_action'}
+            <Markdown
+              inline
+              source={$t(
+                `routes.inbox.item.modActions.${item.data.modlog.kind + (item.data.modlog.is_revert ? '_inverse' : '')}`,
+                {
+                  moderator: $t('routes.inbox.item.modActions.moderator', {
+                    community: item.data.target_community?.name,
+                  }),
+                },
+              )}
+              noStyle
+            />
           {/if}
         </div>
         <div class="text-xs text-slate-600 dark:text-zinc-400">
@@ -149,7 +162,51 @@
     {:else if item.data.type_ == 'private_message'}
       <PrivateMessage message={item.data} meta={false} />
     {:else if item.data.type_ == 'mod_action'}
-      <ModlogItemCard item={item.data.modlog} />
+      <div class="flex flex-col gap-2">
+        {#if item.data.target_comment || item.data.target_post}
+          <Material>
+            {#if item.data.target_comment}
+              <CommentItem
+                community={false}
+                class="py-0!"
+                comment={new CommentModel({
+                  comment: item.data.target_comment,
+                  community: item.data.target_community!,
+                  post: item.data.target_post!,
+                  creator_banned: false,
+                  creator_banned_from_community: false,
+                  can_mod: false,
+                  tags: [],
+                  creator: item.data.target_person!,
+                  creator_is_admin: false,
+                  creator_is_moderator: false,
+                })}
+              />
+            {:else if item.data.target_post}
+              <PostItem
+                post={repos.posts.get({
+                  post: item.data.target_post,
+                  community: item.data.target_community!,
+                  creator: item.data.target_person!,
+                  can_mod: false,
+                  creator_banned: false,
+                  creator_banned_from_community: false,
+                  creator_is_admin: false,
+                  creator_is_moderator: false,
+                  tags: [],
+                })}
+                view="compact"
+                class="py-0!"
+              />
+            {/if}
+          </Material>
+        {/if}
+        {#if item.data.modlog.reason}
+          <p class="italic ml-2">
+            {item.data.modlog.reason}
+          </p>
+        {/if}
+      </div>
     {/if}
   {/snippet}
 </Expandable>

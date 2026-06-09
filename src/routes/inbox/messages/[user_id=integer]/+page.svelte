@@ -100,6 +100,7 @@
       creator_id: Number(creator.person_view.person.id),
       limit: 50,
       page_cursor: cursor,
+      type_: 'private_message',
     })
 
     const mapped = res.items.map((i) => {

@@ -5,66 +5,64 @@
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
   import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import { Listing } from '$lib/feature/feeds/listing.svelte'
   import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import ProgressBar from '$lib/ui/info/ProgressBar.svelte'
   import { CommonList, Header, Pageination } from '$lib/ui/layout'
-  import { Button, Material, Option, Select, Spinner, toast } from 'mono-svelte'
-  import { tick } from 'svelte'
-  import {
-    Check,
-    Funnel,
-    Icon,
-    ShieldCheck,
-    XMark,
-  } from 'svelte-hero-icons/dist'
+  import { Button, Option, Select, Spinner, toast } from 'mono-svelte'
+  import { Check, Funnel, Icon, ShieldCheck, XMark } from 'svelte-hero-icons/dist'
   import Report from './Report.svelte'
 
   let { data = $bindable() } = $props()
 
+  let listing = $derived(new Listing(data.items, (i) => i))
+  let params = $derived(data.params)
+
   let batch = $state({
     progress: -1,
   })
+
   async function markAllAsResolved() {
-    if (!data.items?.value) return
+    if (!listing.items) return
     batch.progress = 0
 
     await Promise.all(
-      data.items?.value.map((report) => {
-        report.map((r) => {
-          switch (r.type) {
-            case 'comment': {
-              const promise = client().resolveCommentReport({
-                report_id: r.id,
-                resolved: true,
-              })
-              promise.then(
-                () => (batch.progress += 1 / data.items?.value!.length),
-              )
-              return promise
-            }
-            case 'post': {
-              const promise = client().resolvePostReport({
-                report_id: r.id,
-                resolved: true,
-              })
-              promise.then(
-                () => (batch.progress += 1 / data.items?.value!.length),
-              )
-              return promise
-            }
-            case 'message': {
-              const promise = client().resolvePrivateMessageReport({
-                report_id: r.id,
-                resolved: true,
-              })
-              promise.then(
-                () => (batch.progress += 1 / data.items?.value!.length),
-              )
-              return promise
-            }
+      listing.items.map((r) => {
+        switch (r.type_) {
+          case 'comment': {
+            const promise = client().resolveCommentReport({
+              report_id: r.comment_report.id,
+              resolved: true,
+            })
+            promise.then(() => (batch.progress += 1 / listing.items.length))
+            return promise
           }
-        })
+          case 'post': {
+            const promise = client().resolvePostReport({
+              report_id: r.post_report.id,
+              resolved: true,
+            })
+            promise.then(() => (batch.progress += 1 / listing.items.length))
+            return promise
+          }
+          case 'private_message': {
+            const promise = client().resolvePrivateMessageReport({
+              report_id: r.private_message_report.id,
+              resolved: true,
+            })
+            promise.then(() => (batch.progress += 1 / listing.items.length))
+            return promise
+          }
+          case 'community': {
+            const promise = client().resolveCommunityReport({
+              report_id: r.community_report.id,
+              resolved: true,
+            })
+            promise.then(() => (batch.progress += 1 / listing.items.length))
+            return promise
+          }
+        }
       }),
     )
 
@@ -78,13 +76,10 @@
 <Header pageHeader>
   {$t('routes.moderation.title')}
   {#snippet extended()}
-    <div class="flex flex-row gap-2 flex-wrap items-end">
+    <div class="flex flex-row gap-2 flex-wrap items-end tracking-normal">
       <Select
-        bind:value={data.type.value}
-        onchange={async () => {
-          await tick()
-          searchParam(page.url, 'type', data.type.value, 'page')
-        }}
+        bind:value={() => params.unreadOnly.toString(), (v) => (params.unreadOnly = v == 'false')}
+        onchange={() => searchParam(page.url, 'unreadOnly', params.unreadOnly.toString(), 'page')}
       >
         {#snippet customLabel()}
           <span class="flex items-center gap-1">
@@ -92,12 +87,12 @@
             {$t('filter.filter')}
           </span>
         {/snippet}
-        <Option value="all">{$t('filter.location.all')}</Option>
-        <Option value="unread">{$t('filter.unread')}</Option>
+        <Option value="false">{$t('filter.location.all')}</Option>
+        <Option value="true">{$t('filter.unread')}</Option>
       </Select>
       <Button
         loading={batch.progress >= 0}
-        disabled={batch.progress >= 0 || data.items.value?.length == 0}
+        disabled={batch.progress >= 0 || listing.items.length == 0}
         onclick={markAllAsResolved}
         size="lg"
         class="ml-auto"
@@ -107,26 +102,19 @@
         {$t('routes.moderation.markAll')}
       </Button>
     </div>
-    {#if data.filters.community}
+    {#if params.community}
       <ul class="font-normal flex flex-col gap-2 mt-2">
         <li>
           <span class="text-sm text-slate-600 dark:text-zinc-400">
             {$t('form.post.community')}
           </span>
-          {#await client().getCommunity({ id: data.filters.community })}
+          {#await client().getCommunity({ id: params.community })}
             <Spinner width={24} />
           {:then community}
-            <a
-              class="inline"
-              aria-label={$t('common.remove')}
-              href="?community="
-            >
+            <a class="inline" aria-label={$t('common.remove')} href="?community=">
               <Icon src={XMark} size="16" micro class="inline" />
             </a>
-            <CommunityLink
-              class="w-max inline"
-              community={community.community_view.community}
-            />
+            <CommunityLink class="w-max inline" community={community.community_view.community} />
           {/await}
         </li>
       </ul>
@@ -136,39 +124,26 @@
 {#if batch.progress > 0}
   <ProgressBar progress={batch.progress} />
 {/if}
-{#if data.items?.value && data.items?.value.length > 0}
+{#if listing.items && listing.items.length > 0}
   <CommonList size="lg">
-    {#each data.items.value ?? [] as item}
-      <svelte:element
-        this={item.length == 1 ? 'li' : 'div'}
-        class="z-0 relative"
-      >
-        <Material
-          rounding={item.length == 1 ? 'none' : '2xl'}
-          color={item.length == 1 ? 'none' : 'distinct'}
-          padding={item.length == 1 ? 'none' : 'md'}
-          class={['space-y-2 w-full z-10 relative']}
-        >
-          <Report {item} />
-        </Material>
-        {#if item.length > 1}
-          <Material
-            padding="none"
-            rounding="none"
-            color="uniform"
-            class="-mt-1 rounded-b-2xl w-[97%] h-6 opacity-70 left-1/2 -translate-x-1/2 -z-10 relative"
-          ></Material>
-        {/if}
-      </svelte:element>
+    {#each listing.items ?? [] as item}
+      <li class="z-0 relative space-y-2 w-full">
+        <Report {item} />
+      </li>
     {/each}
   </CommonList>
-  <Fixate placement="bottom">
-    <Pageination
-      page={data.page}
-      href={(current) => `?page=${current}`}
-      hasMore={data.items.value.length >= 20}
-    />
-  </Fixate>
+  {#if params.next != null && params.prev != null}
+    <Fixate placement="bottom">
+      <Pageination
+        cursor={{
+          next: params.next,
+          back: params.prev,
+        }}
+        href={(cursor) => `?cursor=${cursor}`}
+        hasMore={params.next != null}
+      />
+    </Fixate>
+  {/if}
 {:else}
   <div class="h-full grid place-items-center">
     <Placeholder

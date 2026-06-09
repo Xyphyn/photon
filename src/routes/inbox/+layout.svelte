@@ -20,6 +20,10 @@
       name: $t('filter.inbox.mentions'),
     },
     {
+      href: '/inbox?type=mod_action',
+      name: $t('filter.inbox.modActions'),
+    },
+    {
       href: '/inbox/messages',
       name: $t('filter.inbox.messages'),
     },

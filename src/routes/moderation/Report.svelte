@@ -1,98 +1,88 @@
 <script lang="ts">
-  import { getClient } from '$lib/api/client.svelte'
+  import { client } from '$lib/api/client.svelte'
+  import type { ReportCombinedView } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
+  import { CommentModel } from '$lib/feature/comment/comment.svelte'
   import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte'
   import PrivateMessage from '$lib/feature/inbox/PrivateMessage.svelte'
-  import type { ReportView } from '$lib/feature/moderation/report'
   import { PostItem } from '$lib/feature/post'
   import UserLink from '$lib/feature/user/UserLink.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
-  import { Badge, Button, Label, Material, Modal, toast } from 'mono-svelte'
+  import { Button, Label, Material, toast } from 'mono-svelte'
   import { CheckBadge } from 'svelte-hero-icons/dist'
 
   interface Props {
-    item: ReportView[]
+    item: ReportCombinedView
   }
 
-  let { item: items = $bindable() }: Props = $props()
+  let { item }: Props = $props()
 
-  // TODO more strict type enforcing, this hack is not good
-  const item = items[0]
+  let resolved = $derived.by(() => {
+    switch (item.type_) {
+      case 'comment':
+        return item.comment_report.resolved
+      case 'post':
+        return item.post_report.resolved
+      case 'private_message':
+        return item.private_message_report.resolved
+      case 'community':
+        return item.community_report.resolved
+    }
+  })
+  let loading = $state(false)
 
-  let resolving = $state(false)
   async function resolve() {
-    if (!profile.current?.jwt || !profile.current.user) return
-    resolving = true
+    loading = true
 
     try {
-      switch (item.type) {
+      switch (item.type_) {
         case 'comment': {
-          await Promise.all(
-            items.map(async (i) =>
-              getClient()
-                .resolveCommentReport({
-                  report_id: i.id,
-                  resolved: !i.resolved,
-                })
-                .then((res) => {
-                  i.resolved = res.comment_report_view.comment_report.resolved
-                  i.resolver = res.comment_report_view.resolver
-                  profile.inbox.notifications.reports += i.resolved ? -1 : 1
-                }),
-            ),
-          )
+          await client()
+            .resolveCommentReport({
+              report_id: item.comment_report.id,
+              resolved: !resolved,
+            })
+            .then((res) => {
+              item.resolver = res.comment_report_view.resolver
+              profile.inbox.notifications.reports += item.resolver != null ? -1 : 1
+            })
 
           break
         }
         case 'post': {
-          await Promise.all(
-            items.map(async (i) =>
-              getClient()
-                .resolvePostReport({
-                  report_id: i.id,
-                  resolved: !i.resolved,
-                })
-                .then((res) => {
-                  i.resolved = res.post_report_view.post_report.resolved
-
-                  i.resolver = res.post_report_view.resolver
-
-                  profile.inbox.notifications.reports += i.resolved ? -1 : 1
-                }),
-            ),
-          )
+          await client()
+            .resolvePostReport({
+              report_id: item.post_report.id,
+              resolved: !resolved,
+            })
+            .then((res) => {
+              item.resolver = res.post_report_view.resolver
+              profile.inbox.notifications.reports += item.resolver != null ? -1 : 1
+            })
 
           break
         }
-        case 'message': {
-          await Promise.all(
-            items.map(async (i) =>
-              getClient()
-                .resolvePrivateMessageReport({
-                  report_id: i.id,
-                  resolved: !i.resolved,
-                })
-                .then((res) => {
-                  i.resolved =
-                    res.private_message_report_view.private_message_report.resolved
-
-                  i.resolver = res.private_message_report_view.resolver
-
-                  profile.inbox.notifications.reports += i.resolved ? -1 : 1
-                }),
-            ),
-          )
+        case 'private_message': {
+          await client()
+            .resolvePrivateMessageReport({
+              report_id: item.private_message_report.id,
+              resolved: !resolved,
+            })
+            .then((res) => {
+              item.resolver = res.private_message_report_view.resolver
+              profile.inbox.notifications.reports += item.resolver != null ? -1 : 1
+            })
 
           break
         }
       }
 
+      resolved = !resolved
       toast({
-        content: item.resolved
-          ? $t('toast.resolveReport')
-          : $t('toast.unresolveReport'),
+        content: !resolved ? $t('toast.resolveReport') : $t('toast.unresolveReport'),
         type: 'success',
       })
     } catch (err) {
@@ -102,67 +92,21 @@
       })
     }
 
-    resolving = false
+    loading = false
   }
-
-  let usersModal = $state(false)
-  let reasonsModal = $state(false)
 </script>
 
-<Modal title="Report from" bind:open={usersModal}>
-  <div class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800">
-    {#each items as item}
-      <UserLink avatar={false} user={item.creator} class="py-1" />
-    {/each}
-  </div>
-</Modal>
-
-<Modal title={$t('moderation.reason')} bind:open={reasonsModal}>
-  <div class="flex flex-col divide-y divide-slate-200 dark:divide-zinc-800">
-    {#each items as item}
-      <div class="py-2">
-        <UserLink avatar={false} user={item.creator} class="py-1 block" />
-        <blockquote
-          class="italic text-sm pl-4 border-l-2 border-slate-300 dark:border-zinc-700"
-        >
-          {item.reason}
-        </blockquote>
-      </div>
-    {/each}
-  </div>
-</Modal>
-
 <div class={['flex flex-row flex-wrap gap-4']}>
-  {#if item.type == 'comment' || item.type == 'post'}
+  {#if item.type_ == 'comment' || item.type_ == 'post'}
     <div class="flex flex-col gap-1.5">
       <span class="text-xs font-medium">{$t('form.post.community')}</span>
       <a
-        href="?community={item.item.community.id}"
+        href="?community={item.community.id}"
         class="flex items-center gap-1 font-medium hover:underline"
       >
-        <Avatar
-          circle={false}
-          url={item.item.community.icon}
-          alt={item.item.community.name}
-          width={24}
-        />
-        {item.item.community.title}
+        <Avatar circle={false} url={item.community.icon} alt={item.community.name} width={24} />
+        {item.community.title}
       </a>
-    </div>
-  {/if}
-  {#if items.length > 1}
-    <button
-      onclick={() => (usersModal = !usersModal)}
-      class="flex-1 text-2xl font-medium hover:underline cursor-pointer text-left w-max"
-    >
-      {items.length}x
-    </button>
-  {:else}
-    <div class="flex flex-col gap-1.5">
-      <span class="text-xs font-medium">Report from</span>
-      <span class="font-bold">
-        <UserLink avatar user={item.creator} />
-      </span>
     </div>
   {/if}
 
@@ -170,29 +114,25 @@
   <Button
     onclick={resolve}
     class="h-max self-end"
-    loading={resolving}
-    disabled={resolving}
-    rounding="pill"
-    size="sm"
-    color={item.resolved ? 'secondary' : 'primary'}
+    {loading}
+    disabled={loading}
+    color={resolved ? 'secondary' : 'primary'}
     icon={CheckBadge}
   >
-    {!item.resolved
-      ? $t('routes.moderation.resolve')
-      : $t('routes.moderation.unresolve')}
+    {!resolved ? $t('routes.moderation.resolve') : $t('routes.moderation.unresolve')}
   </Button>
 </div>
 
-<Material rounding="xl" color="uniform" class="dark:bg-zinc-950">
-  {#if item.type == 'comment'}
-    <CommentItem comment={item.item} class="p-0!" />
-  {:else if item.type == 'post'}
-    <PostItem post={item.item} />
-  {:else if item.type == 'message'}
+<Material rounding="xl" color="uniform" class="dark:bg-zinc-950 mx-2">
+  {#if item.type_ == 'comment'}
+    <CommentItem comment={new CommentModel({ ...item, can_mod: true })} class="p-0!" />
+  {:else if item.type_ == 'post'}
+    <PostItem post={repos.posts.get({ ...item, can_mod: true })} />
+  {:else if item.type_ == 'private_message'}
     <PrivateMessage
       message={{
-        creator: item.reportee,
-        private_message: item.item,
+        creator: item.creator,
+        private_message: item.private_message,
         recipient: item.creator,
       }}
     />
@@ -205,16 +145,16 @@
       {$t('routes.moderation.reason')}
     </Label>
     <p>
-      {item.reason}
+      {#if item.type_ == 'post'}
+        {item.post_report.reason}
+      {:else if item.type_ == 'comment'}
+        {item.comment_report.reason}
+      {:else if item.type_ == 'private_message'}
+        {item.private_message_report.reason}
+      {:else if item.type_ == 'community'}
+        {item.community_report.reason}
+      {/if}
     </p>
-    {#if items.length > 1}
-      <button
-        class="cursor-pointer"
-        onclick={() => (reasonsModal = !reasonsModal)}
-      >
-        <Badge class="w-max my-1">+{items.length - 1}</Badge>
-      </button>
-    {/if}
   </div>
   <div class="flex-1"></div>
   {#if item.resolver}
