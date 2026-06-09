@@ -16,6 +16,16 @@
     <img alt="Photon communities page on mobile" src="screenshots/mobile-light.png" width="300">
 </picture>
 
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="screenshots/settings-dark.png">
+    <img alt="Photon app settings" src="screenshots/settings-light.png" width="100%">
+</picture>
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="screenshots/settings-mobile-dark.png">
+    <img alt="Photon app settings on mobile" src="screenshots/settings-mobile-light.png" width="300">
+</picture>
+
 </details>
 
 # Photon

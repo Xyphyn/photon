@@ -18,6 +18,10 @@ SCREENSHOTS = [
     {"out": "cozy-dark.png", "path": "/", "width": 1280, "height": 800, "scheme": "dark", "view": "cozy", "wait": "article"},
     {"out": "mobile-light.png", "path": "/explore/communities", "width": 390, "height": 844, "scheme": "light", "mobile": True, "wait": "a[href^='/c/']"},
     {"out": "mobile-dark.png", "path": "/explore/communities", "width": 390, "height": 844, "scheme": "dark", "mobile": True, "wait": "a[href^='/c/']"},
+    {"out": "settings-light.png", "path": "/settings/app", "width": 1280, "height": 800, "scheme": "light", "wait": "input"},
+    {"out": "settings-dark.png", "path": "/settings/app", "width": 1280, "height": 800, "scheme": "dark", "wait": "input"},
+    {"out": "settings-mobile-light.png", "path": "/settings/app", "width": 390, "height": 844, "scheme": "light", "mobile": True, "wait": "input"},
+    {"out": "settings-mobile-dark.png", "path": "/settings/app", "width": 390, "height": 844, "scheme": "dark", "mobile": True, "wait": "input"},
 ]
 
 
