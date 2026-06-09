@@ -1,13 +1,15 @@
 <script lang="ts">
-  import { page } from '$app/state'
-  import type { CommentView, PostView } from '$lib/api/types'
   import { t } from '$lib/app/i18n'
-  import { searchParam } from '$lib/app/util.svelte'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
+  import { CommentModel } from '$lib/feature/comment/comment.svelte.js'
   import CommentItem from '$lib/feature/comment/CommentItem.svelte'
+  import { Listing } from '$lib/feature/feeds/listing.svelte.js'
+  import { repos } from '$lib/feature/feeds/repo.svelte.js'
   import { PostItem } from '$lib/feature/post'
   import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList, Header, Pageination } from '$lib/ui/layout'
+  import SearchBar from '$lib/ui/layout/SearchBar.svelte'
   import { Option, Select } from 'mono-svelte'
   import {
     AdjustmentsHorizontal,
@@ -15,30 +17,30 @@
     Bookmark,
     ChatBubbleOvalLeft,
     Icon,
+    MagnifyingGlass,
     PencilSquare,
   } from 'svelte-hero-icons/dist'
 
   let { data } = $props()
 
-  let type = $state(data.type)!
-
-  const isComment = (item: CommentView | PostView): item is CommentView =>
-    'comment' in item
+  let listing = $derived(
+    new Listing(data.items, (i) => (i.type_ == 'post' ? repos.posts.get(i) : new CommentModel(i))),
+  )
+  let params = $derived(proxify(data.params))
+  let form = $state<HTMLFormElement>()
 </script>
 
 <svelte:head>
-  <title>{$t('routes.saved')}</title>
+  <title>{$t('routes.saved.title')}</title>
 </svelte:head>
 
 <Header pageHeader>
-  {$t('routes.saved')}
+  {$t('routes.saved.title')}
 
   {#snippet extended()}
-    <div class="flex items-center">
-      <Select
-        bind:value={type}
-        onchange={() => searchParam(page.url, 'type', type, 'page')}
-      >
+    <form method="get" action="/saved" class="contents" bind:this={form}>
+      <SearchBar bind:query={params.query} placeholder={$t('routes.saved.search')} />
+      <Select bind:value={params.type} onchange={() => form?.requestSubmit()}>
         {#snippet customLabel()}
           <div class="flex items-center gap-0.5">
             <Icon src={AdjustmentsHorizontal} size="15" mini />
@@ -55,21 +57,28 @@
           {$t('content.comments')}
         </Option>
       </Select>
-    </div>
+    </form>
   {/snippet}
 </Header>
 
-{#if !data.data || (data.data?.length ?? 0) == 0}
+{#if listing.items.length == 0 && params.query == null}
   <Placeholder
     icon={Bookmark}
-    title="No saved items"
-    description="Save posts or comments, and they'll be here to refer to them later."
+    title={$t('routes.saved.placeholder.title')}
+    description={$t('routes.saved.placeholder.description')}
+    class="my-auto"
+  />
+{:else if listing.items.length == 0}
+  <Placeholder
+    icon={MagnifyingGlass}
+    title={$t('routes.saved.noResults.title')}
+    description={$t('routes.saved.noResults.description')}
     class="my-auto"
   />
 {:else}
-  <CommonList items={data.data} size="lg">
+  <CommonList items={listing.items} size="lg">
     {#snippet item(item)}
-      {#if isComment(item)}
+      {#if item instanceof CommentModel}
         <CommentItem comment={item} />
       {:else}
         <PostItem post={item} />
@@ -77,10 +86,16 @@
     {/snippet}
   </CommonList>
 {/if}
-<Fixate placement="bottom">
-  <Pageination
-    hasMore={data.data.length == 40}
-    href={(page) => `?page=${page}`}
-    page={data.page}
-  />
-</Fixate>
+
+{#if params.next != null || params.prev != null}
+  <Fixate placement="bottom">
+    <Pageination
+      cursor={{
+        next: params.next,
+        back: params.prev,
+      }}
+      hasMore={params.next != null}
+      href={(cursor) => `?cursor=${cursor}`}
+    />
+  </Fixate>
+{/if}

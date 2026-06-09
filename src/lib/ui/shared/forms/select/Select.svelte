@@ -59,7 +59,7 @@
   })
 
   let {
-    value: passedValue = $bindable(),
+    value = $bindable(),
     placeholder = undefined,
     label = undefined,
     size = 'md',
@@ -75,8 +75,6 @@
     target: passedTarget,
     ...rest
   }: Props<T> = $props()
-
-  let value = $derived(passedValue)
 </script>
 
 {#snippet selectTarget(attachment: Attachment)}

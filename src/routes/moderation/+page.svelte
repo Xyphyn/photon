@@ -4,6 +4,7 @@
   import { client } from '$lib/api/client.svelte'
   import { t } from '$lib/app/i18n'
   import { searchParam } from '$lib/app/util.svelte'
+  import { proxify } from '$lib/app/util/reactivity.svelte'
   import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
   import { Listing } from '$lib/feature/feeds/listing.svelte'
   import Fixate from '$lib/ui/generic/Fixate.svelte'
@@ -17,7 +18,7 @@
   let { data = $bindable() } = $props()
 
   let listing = $derived(new Listing(data.items, (i) => i))
-  let params = $derived(data.params)
+  let params = $derived(proxify(data.params))
 
   let batch = $state({
     progress: -1,

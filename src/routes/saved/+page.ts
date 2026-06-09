@@ -1,43 +1,34 @@
 import { client } from '$lib/api/client.svelte'
-import type { CommentView, PostView } from '$lib/api/types'
+import type { PersonContentType } from '$lib/api/types'
 import { profile } from '$lib/app/auth'
+import { urlParam } from '$lib/app/util/params.js'
+import { feed } from '$lib/feature/feeds/feed.svelte.js'
 import { error } from '@sveltejs/kit'
 
-function getSavedItemPublished(item: PostView | CommentView) {
-  if ('comment' in item) {
-    return item.comment.published
-  } else {
-    return item.post.published
-  }
-}
-
-export async function load({ url, fetch }) {
+export async function load({ url, fetch, route }) {
   if (!profile.current.jwt) throw error(401)
 
-  const user =
-    profile.current.user ?? (await client({ func: fetch }).getSite()).my_user
+  const query = urlParam.optional(url, 'q')
+  const cursor = urlParam.optional(url, 'cursor')
+  const type = urlParam.string<PersonContentType>(url, 'type', 'all')
 
-  if (!user) throw error(401)
-
-  const page = Number(url.searchParams.get('page')) || 1
-  const type: 'comments' | 'posts' | 'all' =
-    (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
-
-  const { posts, comments } = await client({ func: fetch }).getPersonDetails({
-    saved_only: true,
+  const results = await feed(route.id, (params) =>
+    client({ func: fetch }).listPersonSaved(params),
+  ).load({
+    page_cursor: cursor,
+    type_: type,
     limit: 20,
-    page: page,
-    person_id: user?.local_user_view.person.id,
+    search_term: query,
   })
 
-  const everything = [
-    ...(type == 'posts' || type == 'all' ? posts : []),
-    ...(type == 'comments' || type == 'all' ? comments : []),
-  ].sort(
-    (a, b) =>
-      Date.parse(getSavedItemPublished(b)) -
-      Date.parse(getSavedItemPublished(a)),
-  )
-
-  return { page: page, data: everything, type: type }
+  return {
+    params: {
+      type,
+      cursor,
+      next: results.next_page,
+      prev: results.prev_page,
+      query: query,
+    },
+    items: results.items,
+  }
 }

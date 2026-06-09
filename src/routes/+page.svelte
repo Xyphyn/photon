@@ -4,6 +4,7 @@
   import { site } from '$lib/api/client.svelte'
   import { t } from '$lib/app/i18n'
   import { settings, SSR_ENABLED } from '$lib/app/settings.svelte'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import { Listing } from '$lib/feature/feeds/listing.svelte.js'
   import { repos } from '$lib/feature/feeds/repo.svelte.js'
   import Location from '$lib/feature/filter/Location.svelte'
@@ -24,7 +25,7 @@
     data.feed instanceof Promise ? [] : data.feed.items,
     (p) => repos.posts.get(p),
   )
-  let params = $derived(data.params)
+  let params = $derived(proxify(data.params))
 
   $effect.pre(() => {
     if (data.feed instanceof Promise) {

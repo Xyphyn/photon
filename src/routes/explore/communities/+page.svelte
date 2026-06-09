@@ -1,6 +1,7 @@
 <script lang="ts">
   import { navigating } from '$app/state'
   import { t } from '$lib/app/i18n'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
   import CommunityItemBig from '$lib/feature/community/CommunityItemBig.svelte'
   import { Listing } from '$lib/feature/feeds/listing.svelte.js'
@@ -17,7 +18,7 @@
 
   let { data } = $props()
   let listing = $derived(new Listing(data.communities, repos.communities.get))
-  let params = $derived(data.params)
+  let params = $derived(proxify(data.params))
 
   let showTop = $derived(
     (data.query ?? '' != '') && listing.items.length > 0 && params.prev == null,

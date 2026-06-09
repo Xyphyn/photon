@@ -2,9 +2,9 @@
   import type { Snippet } from 'svelte'
   import type { ClassValue } from 'svelte/elements'
   const sizeDelay: Record<'lg' | 'md' | 'sm' | 'xs', number> = {
-    lg: 120,
-    md: 80,
-    sm: 40,
+    lg: 50,
+    md: 30,
+    sm: 10,
     xs: 0,
   }
 
@@ -76,22 +76,14 @@
 
     @variant dark {
       border: 1px solid var(--color-zinc-900);
-      background-color: color-mix(
-        in oklab,
-        var(--color-zinc-925),
-        var(--color-zinc-900)
-      );
+      background-color: color-mix(in oklab, var(--color-zinc-925), var(--color-zinc-900));
 
       &:hover {
         background-color: var(--color-zinc-900);
       }
 
       &:active {
-        background-color: color-mix(
-          in oklab,
-          var(--color-zinc-900) 80%,
-          var(--color-zinc-925)
-        );
+        background-color: color-mix(in oklab, var(--color-zinc-900) 80%, var(--color-zinc-925));
       }
     }
 
@@ -112,18 +104,10 @@
       }
 
       &.selected {
-        background-color: color-mix(
-          in oklab,
-          var(--color-white),
-          var(--color-slate-50)
-        );
+        background-color: color-mix(in oklab, var(--color-white), var(--color-slate-50));
 
         @variant dark {
-          background-color: color-mix(
-            in oklab,
-            var(--color-zinc-900) 90%,
-            var(--color-zinc-800)
-          );
+          background-color: color-mix(in oklab, var(--color-zinc-900) 90%, var(--color-zinc-800));
         }
       }
     }
@@ -145,13 +129,13 @@
   }
 
   :global(.animate > *:only-child) {
-    animation: pop-in 1s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    animation: pop-in 800ms forwards cubic-bezier(0.19, 1, 0.22, 1);
     animation-delay: var(--delay, 0ms);
     opacity: 0;
   }
 
   :global(.animate:not(:has(> * + *))) {
-    animation: pop-in 1s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    animation: pop-in 800ms forwards cubic-bezier(0.19, 1, 0.22, 1);
     animation-delay: var(--delay, 0ms);
     opacity: 0;
   }

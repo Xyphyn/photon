@@ -10,6 +10,7 @@
   } from '$lib/api/types'
   import { t } from '$lib/app/i18n'
   import { searchParam, withParams } from '$lib/app/util.svelte'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import { CommentModel } from '$lib/feature/comment/comment.svelte.js'
   import CommentItem from '$lib/feature/comment/CommentItem.svelte'
   import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
@@ -40,7 +41,7 @@
   let { data } = $props()
 
   let results = $derived(data.results)
-  let params = $derived(data.params)
+  let params = $derived(proxify(data.params))
 
   let empty = $derived(
     results.comments.length == 0 &&

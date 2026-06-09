@@ -75,7 +75,7 @@
       {
         value: 'top',
         icon: Trophy,
-        name: $t('filter.sort.top'),
+        name: $t('filter.sort.top.label'),
       },
       {
         value: 'new',

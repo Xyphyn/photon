@@ -54,7 +54,7 @@
     <div class="flex gap-2 tracking-normal items-end">
       <Select
         class="relative"
-        bind:value={() => params.unreadOnly.toString(), (v) => (params.unreadOnly = v == 'false')}
+        bind:value={() => params.unreadOnly.toString(), (v) => (params.unreadOnly = v == 'true')}
         onchange={() =>
           searchParam(page.url, 'unreadOnly', params.unreadOnly ? 'true' : 'false', 'page')}
       >

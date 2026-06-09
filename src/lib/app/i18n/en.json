@@ -321,7 +321,18 @@
             "top": "Top results",
             "other": "Other results"
         },
-        "saved": "Saved",
+        "saved": {
+            "title": "Saved",
+            "search": "Search your saved items",
+            "placeholder": {
+              "title": "No saved items",
+              "description": "Save posts or comments, and they'll be placed here for future reference."
+            },
+            "noResults": {
+              "title": "No results",
+              "description": "You haven't saved anything that matches those filters."
+            }
+        },
         "post": {
             "crosspostCount": "Crossposts",
             "commentCount": "Comments",
