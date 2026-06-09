@@ -124,8 +124,8 @@
   </Header>
   <div class="flex flex-row flex-wrap gap-2">
     <Select
-      bind:value={params.type}
-      onchange={() => searchParam(page.url, 'type', params.type ?? '', 'page')}
+      value={params.type}
+      onchange={(v) => searchParam(page.url, 'type', v!, 'page')}
       class="w-48"
     >
       {#snippet customLabel()}
@@ -150,7 +150,7 @@
       <Option value="admin_purge_comment">Purge comment</Option>
     </Select>
 
-    <Select bind:value={view} class="w-36">
+    <Select value={view} onchange={(v) => (view = v!)} class="w-36">
       {#snippet customLabel()}
         <span class="flex gap-1 items-center">
           <Icon src={ViewColumns} size="15" mini />
@@ -221,7 +221,7 @@
             <tr class="rounded-t-lg overflow-hidden">
               <th>Time</th>
               <th>Moderator</th>
-              <th>Community</th>
+              <th>Location</th>
               <th>Action</th>
               <th>Reason</th>
               <th align="right">Content</th>

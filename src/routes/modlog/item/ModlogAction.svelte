@@ -155,7 +155,7 @@
   let actionData = $derived(getAction(action))
 </script>
 
-<Badge color={actionData.class} class="text-sm! px-3 w-max">
+<Badge color={actionData.class} class="w-max">
   {#snippet icon()}
     <Icon src={actionData.icon} size="16" micro class="inline shrink-0" />
   {/snippet}

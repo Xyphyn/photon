@@ -248,3 +248,8 @@ export function formatBytes(bytes: number, locale = 'en-US') {
     maximumFractionDigits: 2,
   }).format(value)
 }
+
+export function withParams(url: URL, ...params: { key: string; value: string }[]): URL {
+  params.forEach((param) => url.searchParams.set(param.key, param.value))
+  return url
+}

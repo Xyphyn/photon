@@ -16,7 +16,7 @@ export async function load({ url, fetch }) {
     func: fetch,
   }).getModlog({
     community_id: community,
-    limit: 20,
+    limit: 50,
     type_: type,
     page_cursor: cursor,
     mod_person_id: modId,

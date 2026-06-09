@@ -56,6 +56,8 @@
         avatarSize={20}
         community={item.target_community}
       />
+    {:else if item.target_instance}
+      {item.target_instance.domain}
     {/if}
   </td>
   <td>

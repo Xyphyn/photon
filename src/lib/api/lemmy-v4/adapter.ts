@@ -31,7 +31,7 @@ export function createLemmyClient(
 
           if (reqState && reqState.state !== 'success') {
             console.error(reqState)
-            throw new Error(reqState?.err?.name ?? 'Unknown error')
+            throw new Error(reqState?.err ?? 'Unknown error')
           }
 
           return reqState.data

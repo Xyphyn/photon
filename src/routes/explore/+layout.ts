@@ -1,16 +1,12 @@
-import type { CommunitySortType, ListingType } from '$lib/api/types'
+import { type CommunitySortType, type ListingType } from '$lib/api/types'
+import { urlParam } from '$lib/app/util/params.js'
 
 export function load({ url }) {
-  const sort = (url.searchParams.get('sort') as CommunitySortType) || 'active_daily'
-  const cursor = url.searchParams.get('cursor') || undefined
-  const query = url.searchParams.get('q') || ''
+  const sort = urlParam.string<CommunitySortType>(url, 'sort', 'active_daily')
+  const cursor = urlParam.optional(url, 'cursor')
+  const query = urlParam.string(url, 'q', '')
+  const period = urlParam.number(url, 'period')
+  const type = urlParam.string<ListingType>(url, 'type', 'all')
 
-  const type = (url.searchParams.get('type') as ListingType) || 'all'
-
-  return {
-    sort: sort,
-    cursor: cursor,
-    query: query,
-    type: type,
-  }
+  return { sort, cursor, query, type, period }
 }

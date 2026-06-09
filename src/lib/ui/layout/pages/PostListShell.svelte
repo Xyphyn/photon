@@ -38,7 +38,7 @@
     cursor = $bindable(),
     title,
     extended: passedExtended,
-    getParams,
+    getParams = $bindable(),
     client = $bindable(),
     header = true,
   }: Props = $props()

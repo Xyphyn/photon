@@ -44,7 +44,12 @@
 
         <div class="flex flex-row flex-wrap gap-4 items-center">
           <Location name="type" selected={data.type} onchange={() => form?.requestSubmit()} />
-          <Sort name="sort" selected={data.sort} onchange={() => form?.requestSubmit()} />
+          <Sort
+            type="community"
+            name="sort"
+            selected={data.sort}
+            onchange={() => form?.requestSubmit()}
+          />
         </div>
       </form>
     {/if}
