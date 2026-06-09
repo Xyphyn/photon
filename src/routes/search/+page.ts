@@ -1,75 +1,41 @@
-import { client, getClient } from '$lib/api/client.svelte'
-import { PiefedClient } from '$lib/api/piefed/adapter'
-import type { ListingType, SearchType, SortType } from '$lib/api/types'
-import { profile } from '$lib/app/auth'
-import { ReactiveState } from '$lib/app/util.svelte'
-import { getItemPublished } from '$lib/feature/legacy/item'
+import { client } from '$lib/api/client.svelte'
+import type { ListingType, SearchResponse, SearchType } from '$lib/api/types'
+import { urlParam } from '$lib/app/util/params.js'
+import { feed } from '$lib/feature/feeds/feed.svelte.js'
 
-export async function load({ url, fetch }) {
-  const query = url.searchParams.get('q')
-  const page = Number(url.searchParams.get('page')) || 1
-  const community = Number(url.searchParams.get('community')) || undefined
-  const creator = Number(url.searchParams.get('creator')) || undefined
-  const sort = url.searchParams.get('sort') || 'New'
-  const type =
-    url.searchParams.get('type') ||
-    (profile.client instanceof PiefedClient ? 'Posts' : 'All')
-  const listing_type =
-    (url.searchParams.get('listing_type') as ListingType) || 'All'
+export async function load({ url, fetch, route }) {
+  const query = urlParam.string<string>(url, 'q', '')
+  const cursor = urlParam.optional(url, 'cursor')
+  const community = urlParam.number(url, 'community')
+  const creator = urlParam.number(url, 'creator')
+  const listing_type = urlParam.string<ListingType>(url, 'listing_type', 'all')
+  const type = urlParam.string<SearchType>(url, 'type', 'users')
 
-  if (query) {
-    const results = await client({ func: fetch }).search({
-      q: query,
-      community_id: community,
-      creator_id: creator,
-      limit: 20,
-      page: page,
-      sort: (sort as SortType) || 'TopAll',
-      listing_type: listing_type,
-      type_: type as SearchType,
-    })
-
-    const [posts, comments, users, communities] = [
-      results.posts,
-      results.comments,
-      results.users,
-      results.communities,
-    ]
-
-    const everything = [...posts, ...comments, ...users, ...communities]
-
-    if (sort == 'New') {
-      everything.sort(
-        (a, b) =>
-          new Date(getItemPublished(b)).getTime() -
-          new Date(getItemPublished(a)).getTime(),
-      )
-    }
-
-    return {
-      filters: new ReactiveState({
-        type: type,
-        sort: sort,
-        page: page,
-        query: query,
-      })!,
-      results: new ReactiveState(everything),
-      streamed: {
-        object: profile.current?.jwt
-          ? getClient(undefined, fetch).resolveObject({
-              q: query,
-            })
-          : undefined,
-      },
-    }
-  }
+  const results: SearchResponse = query
+    ? await feed(route.id, (params) => client({ func: fetch }).search(params)).load({
+        search_term: query,
+        community_id: community,
+        creator_id: creator,
+        limit: type == 'all' ? 2 : 20,
+        page_cursor: cursor,
+        listing_type: listing_type,
+        type_: type,
+      })
+    : {
+        comments: [],
+        communities: [],
+        multi_communities: [],
+        persons: [],
+        posts: [],
+      }
 
   return {
-    filters: new ReactiveState({
-      page: 1,
-      sort: sort,
+    params: {
       type: type,
+      next: results.next_page,
+      back: results.prev_page,
       query: query,
-    }),
+    },
+    results: results,
   }
 }

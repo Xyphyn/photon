@@ -1,7 +1,6 @@
 import { browser } from '$app/environment'
 import type {
   CommentView,
-  CommunitySortType,
   CommunityView,
   FeedView,
   GetComments,
@@ -10,9 +9,11 @@ import type {
   GetPersonDetailsResponse,
   GetPost,
   GetPosts,
-  ListingType,
+  ListCommunities,
   PagedResponse,
   PostView,
+  Search,
+  SearchResponse,
   TopicView,
 } from '$lib/api/types'
 import { profile } from '$lib/app/auth'
@@ -105,15 +106,7 @@ export interface FeedTypes {
       }
     },
   ]
-  '/explore/communities': [
-    {
-      type: ListingType
-      sort: CommunitySortType
-      query: string
-      cursor?: string
-    },
-    PagedResponse<CommunityView>,
-  ]
+  '/explore/communities': [ListCommunities, PagedResponse<CommunityView>]
   '/f/[id]': [
     GetPosts,
 
@@ -142,6 +135,7 @@ export interface FeedTypes {
     },
   ]
   '/profile/user': [GetPersonDetails, GetPersonDetailsResponse]
+  '/search': [Search, SearchResponse]
 }
 
 export const feeds = new SvelteMap<keyof FeedTypes, Feed<any, any>>()

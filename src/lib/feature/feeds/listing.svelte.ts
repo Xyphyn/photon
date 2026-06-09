@@ -4,9 +4,11 @@
 
 export class Listing<To, From> {
   items: To[]
-  from: (f: From) => To
 
-  constructor(items: From[], from: (f: From) => To) {
+  constructor(
+    items: From[],
+    public from: (f: From) => To,
+  ) {
     this.items = $state(items.map(from))
     this.from = from
   }
