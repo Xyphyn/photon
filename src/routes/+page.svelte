@@ -3,7 +3,8 @@
   import { page } from '$app/state'
   import { site } from '$lib/api/client.svelte'
   import { t } from '$lib/app/i18n'
-  import { settings, SSR_ENABLED } from '$lib/app/settings.svelte'
+  import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte.js'
+  import { settings } from '$lib/app/settings.svelte'
   import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import { Listing } from '$lib/feature/feeds/listing.svelte.js'
   import { repos } from '$lib/feature/feeds/repo.svelte.js'
@@ -45,7 +46,7 @@
 
 <svelte:head>
   <title>
-    {SSR_ENABLED && site.data ? site.data.site_view.site.name : $t('routes.frontpage.title')}
+    {LINKED_INSTANCE_URL && site.data ? site.data.site_view.site.name : 'Photon'}
   </title>
 </svelte:head>
 
