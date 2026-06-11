@@ -1,9 +1,9 @@
 import { client } from '$lib/api/client.svelte'
-import { ReactiveState } from '$lib/app/util.svelte'
+import { urlParam } from '$lib/app/util/params'
 
 export async function load({ fetch, url }) {
-  const page = Number(url.searchParams.get('page')) || 1
-  const type = url.searchParams.get('type') || 'unread'
+  const page = urlParam.number(url, 'page') || 1
+  const type = urlParam.string(url, 'type', 'unread')
 
   const res = await client({ func: fetch }).listRegistrationApplications({
     page: page,
@@ -13,7 +13,7 @@ export async function load({ fetch, url }) {
 
   return {
     page: page,
-    applications: new ReactiveState(res.registration_applications),
-    type: new ReactiveState(type),
+    applications: res.registration_applications,
+    type: type,
   }
 }

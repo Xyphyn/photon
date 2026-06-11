@@ -8,17 +8,21 @@
   import { ClipboardDocumentCheck, Funnel, Icon } from 'svelte-hero-icons/dist'
   import Application from './Application.svelte'
 
+  import { proxify } from '$lib/app/util/reactivity.svelte'
+
   let { data } = $props()
 
   let selectForm = $state<HTMLFormElement>()
+  let params = $derived(proxify({ type: data.type }))
+  let applications = $derived(proxify(data.applications))
 </script>
 
 <Header pageHeader>{$t('routes.admin.applications.title')}</Header>
 <form bind:this={selectForm} action="/admin/applications" class="w-max">
   <Select
-    bind:value={data.type.value}
+    bind:value={params.type}
     onchange={async () => {
-      searchParam(page.url, 'type', data.type.value, 'page')
+      searchParam(page.url, 'type', params.type, 'page')
     }}
   >
     {#snippet customLabel()}
@@ -31,9 +35,9 @@
     <Option value="unread">{$t('filter.unread')}</Option>
   </Select>
 </form>
-{#if data.applications?.value && data.applications?.value.length > 0}
+{#if applications && applications.length > 0}
   <CommonList>
-    {#each data.applications?.value as application (application.registration_application.id)}
+    {#each applications as application (application.registration_application.id)}
       <li
         class={application.creator_local_user.accepted_application
           ? 'material-success'
@@ -43,7 +47,7 @@
       </li>
     {/each}
   </CommonList>
-  {#if data.applications?.value.length >= 40}
+  {#if applications.length >= 40}
     <div class="mt-auto">
       <Pageination page={data.page} href={(page) => `?page=${page}`} />
     </div>

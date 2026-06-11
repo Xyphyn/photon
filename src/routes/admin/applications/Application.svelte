@@ -95,7 +95,7 @@
   <div class="flex flex-col gap-2">
     <span class="text-slate-600 dark:text-zinc-400 text-xs">
       <RelativeDate
-        date={publishedToDate(application.registration_application.published)}
+        date={publishedToDate(application.registration_application.published_at)}
       />
     </span>
 

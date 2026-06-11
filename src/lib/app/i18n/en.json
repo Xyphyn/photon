@@ -430,12 +430,13 @@
                 "sidebar": "Sidebar",
                 "icon": "Icon",
                 "banner": "Banner",
-                "downvotesEnabled": "Enable downvotes",
                 "nsfwEnabled": "Enable NSFW",
+                "contentWarning": "Content warning",
                 "registration": {
                     "label": "Registration mode",
                     "open": "Open",
                     "application": "Require application",
+                    "invitation": "Require invitation",
                     "closed": "Closed"
                 },
                 "applicationQuestion": "Application question",
@@ -444,18 +445,26 @@
                 "emailAdminsOnApplication": "Email admins on receiving new applications",
                 "emailAdminsOnReport": "Email admins on receiving new reports",
                 "listingType": {
-                    "label": "Listing Type",
+                    "label": "Default listing type",
                     "all": "All",
                     "local": "Local"
                 },
+                "postSortType": "Default post sort",
+                "commentSortType": "Default comment sort",
+                "postListingMode": "Default post listing mode",
+                "votes": {
+                    "title": "Voting",
+                    "postUpvotes": "Post upvotes",
+                    "postDownvotes": "Post downvotes",
+                    "commentUpvotes": "Comment upvotes",
+                    "commentDownvotes": "Comment downvotes"
+                },
                 "private": "Private instance",
-                "hideModlogModNames": "Hide modlog mod names",
                 "slurFilter": "Slur filter regex",
                 "federation": "Federation enabled",
-                "federationDebug": "Federation debug mode",
-                "captcha": {
-                    "enabled": "CAPTCHA enabled"
-                }
+                "federationSignedFetch": "Sign outgoing federation fetches",
+                "oauthRegistration": "Allow OAuth auto-registration",
+                "emailNotificationsDisabled": "Disable email notifications"
             },
             "applications": {
                 "title": "Applications",

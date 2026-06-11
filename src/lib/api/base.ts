@@ -196,6 +196,24 @@ export abstract class BaseClient {
   abstract getFederatedInstances(
     form: types.GetFederatedInstances,
   ): Promise<types.PagedResponse<types.FederatedInstanceView>>
+  abstract adminBlockInstance(
+    form: types.AdminBlockInstanceParams,
+  ): Promise<types.SuccessResponse>
+  abstract adminAllowInstance(
+    form: types.AdminAllowInstanceParams,
+  ): Promise<types.SuccessResponse>
+  abstract createTagline(
+    form: types.CreateTagline,
+  ): Promise<types.TaglineResponse>
+  abstract editTagline(
+    form: types.EditTagline,
+  ): Promise<types.TaglineResponse>
+  abstract deleteTagline(
+    form: types.DeleteTagline,
+  ): Promise<types.SuccessResponse>
+  abstract listTaglines(
+    form: types.ListTaglines,
+  ): Promise<types.PagedResponse<types.Tagline>>
   abstract userBlockInstanceCommunities(
     form: types.UserBlockInstanceCommunitiesParams,
   ): Promise<types.SuccessResponse>

@@ -3,8 +3,8 @@
   import type { ClassValue } from 'svelte/elements'
   const sizeDelay: Record<'lg' | 'md' | 'sm' | 'xs', number> = {
     lg: 50,
-    md: 30,
-    sm: 10,
+    md: 50,
+    sm: 50,
     xs: 0,
   }
 

@@ -3,6 +3,7 @@
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import UserLink from '$lib/feature/user/UserLink.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
@@ -10,16 +11,14 @@
   import { Button, toast } from 'mono-svelte'
   import { Icon, Plus, QuestionMarkCircle, Trash } from 'svelte-hero-icons/dist'
 
-  let { data: pageData } = $props()
-  let data = $state(pageData)
+  let { data } = $props()
+
+  let admins = $derived(proxify(data.site.admins))
 
   let newAdmin = $state<number>(),
     adding: boolean = $state(false)
 
-  async function removeAdmin(
-    id: number,
-    confirm: boolean,
-  ): Promise<void | number> {
+  async function removeAdmin(id: number, confirm: boolean): Promise<void | number> {
     if (!confirm)
       return toast({
         content: $t('toast.removeAdminWarning'),
@@ -34,7 +33,7 @@
         person_id: id,
       })
 
-      data.site.admins = res.admins
+      admins = res.admins
       toast({
         content: $t('toast.removeAdmin'),
         type: 'success',
@@ -51,14 +50,14 @@
 <Header pageHeader>{$t('routes.admin.team.title')}</Header>
 {#if data.site}
   <ul>
-    {#if data.site.admins.length <= 0}
+    {#if admins.length <= 0}
       <Placeholder
         icon={QuestionMarkCircle}
         title={$t('routes.admin.team.empty.title')}
         description={$t('routes.admin.team.empty.description')}
       />
     {:else}
-      <CommonList items={data.site?.admins ?? []}>
+      <CommonList items={admins}>
         {#snippet item(admin)}
           <div class="flex items-center justify-between">
             <UserLink avatar showInstance={false} user={admin.person} />
@@ -92,17 +91,14 @@
         type: 'success',
       })
 
-      if (data.site) data.site.admins = res.admins
+      admins = res.admins
 
       newAdmin = undefined
       adding = false
     }}
   >
     <div class="w-full">
-      <UserAutocomplete
-        listing_type="All"
-        onselect={(p) => (newAdmin = p?.id)}
-      />
+      <UserAutocomplete listing_type="all" onselect={(p) => (newAdmin = p?.id)} />
     </div>
     <Button
       loading={adding}

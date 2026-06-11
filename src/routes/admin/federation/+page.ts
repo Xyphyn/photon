@@ -1,8 +1,13 @@
-import { getClient } from '$lib/api/client.svelte'
-import { ReactiveState } from '$lib/app/util.svelte'
+import { client } from '$lib/api/client.svelte'
 
 export async function load({ fetch }) {
-  const instances = await getClient(undefined, fetch).getFederatedInstances()
+  const [blocked, allowed] = await Promise.all([
+    client({ func: fetch }).getFederatedInstances({ kind: 'blocked', limit: 1000 }),
+    client({ func: fetch }).getFederatedInstances({ kind: 'allowed', limit: 1000 }),
+  ])
 
-  return { instances: new ReactiveState({ ...instances.federated_instances }) }
+  return {
+    blocked: blocked.items.map((i) => i.instance),
+    allowed: allowed.items.map((i) => i.instance),
+  }
 }

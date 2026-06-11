@@ -1,7 +1,6 @@
 import { browser } from '$app/environment'
 import { goto } from '$app/navigation'
 import { env } from '$env/dynamic/public'
-import { client } from '$lib/api/client.svelte'
 import type { Community, Person } from '$lib/api/types'
 import { toast } from 'mono-svelte'
 import { SvelteURL } from 'svelte/reactivity'
@@ -66,24 +65,6 @@ export const DOMAIN_REGEX =
   /^(http(s)?:\/\/)?((?!-)[A-Za-z0-9-]{1,63}\.)+[A-Za-z]{2,63}(:[0-9]{0,5})?$/g
 export const DOMAIN_REGEX_FORMS =
   '(http(s)?://)?((?!-)[A-Za-z0-9]{1,63}.)+[A-Za-z]{2,63}(:[0-9]{0,5})?'
-
-export async function uploadImage(
-  image: File | null | undefined,
-  instance: string,
-  jwt: string,
-): Promise<string | undefined> {
-  if (!image) return
-
-  const formData = new FormData()
-  formData.append('images[]', image)
-
-  const res = await client({ auth: jwt, instanceURL: instance }).uploadImage({
-    image: image,
-  })
-
-  if (res.url) return res.url
-  else throw new Error(`Failed to upload image. ${res.msg}`)
-}
 
 export const instanceToURL = (input: string) =>
   input.startsWith('http://') || input.startsWith('https://') ? input : `https://${input}`

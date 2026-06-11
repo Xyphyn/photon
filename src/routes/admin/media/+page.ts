@@ -1,16 +1,17 @@
 import { client } from '$lib/api/client.svelte'
-import { profile } from '$lib/app/auth'
-import { ReactiveState } from '$lib/app/util.svelte'
+import { urlParam } from '$lib/app/util/params'
 
 export async function load({ fetch, url }) {
-  const { jwt } = profile.current
+  const cursor = urlParam.optional(url, 'cursor')
 
-  const page = Number(url.searchParams.get('page')) || 1
-
-  const res = await client({ func: fetch, auth: jwt }).listAllMedia({
+  const res = await client({ func: fetch }).adminListMedia({
     limit: 20,
-    page: page,
+    page_cursor: cursor,
   })
 
-  return { images: new ReactiveState(res.images) }
+  return {
+    images: res.items,
+    next: res.next_page,
+    prev: res.prev_page,
+  }
 }
