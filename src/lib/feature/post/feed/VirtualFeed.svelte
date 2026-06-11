@@ -11,7 +11,7 @@
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import type { PostView } from 'lemmy-js-client'
   import { Button, Material, Spinner } from 'mono-svelte'
-  import { onDestroy, onMount, untrack } from 'svelte'
+  import { onDestroy, untrack } from 'svelte'
   import {
     ArchiveBox,
     ArrowTopRightOnSquare,
@@ -20,6 +20,7 @@
     Icon,
   } from 'svelte-hero-icons/dist'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import type { Attachment } from 'svelte/attachments'
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
@@ -101,48 +102,34 @@
     }
   }
 
-  const callback: IntersectionObserverCallback = (entries, observer) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return
+  const observer = browser
+    ? new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return
 
-      const element = entry.target as HTMLElement
-      const id = element.getAttribute('data-index')
+            const element = entry.target as HTMLElement
+            const id = element.getAttribute('data-index')
 
-      if (!id) return
+            if (!id) return
 
-      lastSeen = Number(id)
+            lastSeen = Number(id)
 
-      observer.unobserve(element)
-    })
+            observer?.unobserve(element)
+          })
+        },
+        {
+          threshold: 0.5,
+        },
+      )
+    : null
+
+  const intersectionAttach: Attachment = (node) => {
+    observer?.observe(node)
+    return () => {
+      observer?.unobserve(node)
+    }
   }
-
-  onMount(() => {
-    const observer = new IntersectionObserver(callback, {
-      threshold: 0.5,
-    })
-
-    const observePost = (node: Node) => {
-      if (node instanceof HTMLElement && node.classList.contains('post-container'))
-        observer.observe(node)
-    }
-
-    const unobservePost = (node: Node) => {
-      if (node instanceof HTMLElement && node.classList.contains('post-container'))
-        observer.unobserve(node)
-    }
-
-    document.querySelectorAll('.post-container').forEach(observePost)
-
-    const feed = document.getElementById('feed')
-    if (!feed) return
-
-    new MutationObserver((mutations) => {
-      mutations.forEach(({ addedNodes, removedNodes }) => {
-        addedNodes.forEach(observePost)
-        removedNodes.forEach(unobservePost)
-      })
-    }).observe(feed, { childList: true, subtree: false })
-  })
 
   $effect(() => {
     if (listComp) {
@@ -158,6 +145,7 @@
 
   onDestroy(() => {
     abortLoad?.abort()
+    observer?.disconnect()
   })
 </script>
 
@@ -185,6 +173,7 @@
         estimatedHeight={settings.view == 'cozy' ? 500 : 150}
         bind:restore={virtualList}
         bind:this={listComp}
+        initialScrollIndex={lastSeen}
       >
         {#snippet item(row)}
           <!--god svelte is gonna make me lose it-->
@@ -194,6 +183,7 @@
               : { opacity: 1, duration: 0 }}
             data-index={row}
             class={['relative post-container', row < 7 && '']}
+            {@attach intersectionAttach}
           >
             <!--TODO make my component isolation not abysmal-->
             <Post
