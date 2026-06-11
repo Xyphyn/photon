@@ -104,7 +104,12 @@
     bind:posts
     bind:lastSeen={() => client.lastSeen ?? 0, (v) => (client.lastSeen = v)}
     bind:params={getParams}
-    virtualList={{ itemHeights: client?.itemHeights ?? [] }}
+    bind:virtualList={
+      () => ({ itemHeights: client.itemHeights ?? [] }),
+      (v) => {
+        if (v) client.itemHeights = v.itemHeights
+      }
+    }
   />
   <svelte:element
     this={settings.infiniteScroll && !settings.posts.noVirtualize

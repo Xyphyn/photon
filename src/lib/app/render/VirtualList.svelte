@@ -20,6 +20,7 @@
     useWindow?: boolean
     height?: number
     itemContainer?: string
+    initialScrollIndex?: number
   }
 
   let {
@@ -33,6 +34,7 @@
     useWindow = true,
     height = 0,
     itemContainer = 'div',
+    initialScrollIndex = 0,
     ...rest
   }: Props = $props()
 
@@ -80,7 +82,23 @@
     return cumulation
   })
 
-  let scrollY = $state(0)
+  let isRestoring = untrack(() => initialScrollIndex > 0)
+  let initialScrollY = untrack(() => {
+    if (isRestoring && initialScrollIndex < itemHeights.length) {
+      let sum = 0
+      for (let i = 0; i < initialScrollIndex; i++) {
+        sum += itemHeights[i] || estimatedHeight
+      }
+
+      const targetPx = sum - (initialOffset || 0)
+      if (targetPx >= 0) {
+        return targetPx
+      }
+    }
+    return 0
+  })
+
+  let scrollY = $state(initialScrollY)
   let viewportHeight = $state(0)
   let visibleItems = $state<{ index: number; offset: number }[]>([])
 
@@ -206,6 +224,10 @@
       })
 
       untrack(() => {
+        if (initialScrollIndex && initialScrollIndex > 0) {
+          scrollToIndex(initialScrollIndex, useWindow)
+          isRestoring = false
+        }
         visibleItems = updateVisibleItems()
         initialRender = false
       })
@@ -217,7 +239,13 @@
   bind:scrollY={
     () => (useWindow ? scrollY : 0),
     (v) => {
-      if (useWindow) scrollY = v
+      if (useWindow) {
+        if (isRestoring) {
+          if (v === 0) return
+          isRestoring = false
+        }
+        scrollY = v
+      }
     }
   }
 />
@@ -225,7 +253,8 @@
 <div
   bind:this={virtualListEl}
   style="position: relative; height: {height ||
-    cumulativeItemHeights[visibleItems?.[visibleItems.length - 1]?.index]}px;"
+    cumulativeItemHeights[items.length - 1] ||
+    0}px;"
   {...rest}
   id="feed"
   onscroll={() => {
@@ -246,6 +275,11 @@
       {@render itemSnippet(item.index)}
     </svelte:element>
   {/each}
+  <div
+    style="height: {(cumulativeItemHeights[items.length - 1] || 0) -
+      (cumulativeItemHeights[visibleItems?.[visibleItems.length - 1]?.index] ||
+        0)}px; border: 0 !important;"
+  ></div>
 </div>
 {#if settings.debugInfo}
   <Expandable>
