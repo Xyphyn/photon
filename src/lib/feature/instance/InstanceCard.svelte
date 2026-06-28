@@ -15,13 +15,14 @@
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView
+    links?: boolean
     taglines?: Tagline[]
     admins?: PersonView[]
     version?: string
     class?: ClassValue
   }
 
-  let { site, taglines, admins, version, class: clazz = '' }: Props = $props()
+  let { site, taglines, links, admins, version, class: clazz = '' }: Props = $props()
 </script>
 
 <aside class={['w-full text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm', clazz]}>
@@ -31,7 +32,11 @@
     banner={site.site.banner || null}
     compact="always"
     avatarCircle={false}
-  />
+  >
+    {#snippet nameDetail()}
+      {site.instance.domain}
+    {/snippet}
+  </EntityHeader>
   <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
       <Markdown
@@ -40,12 +45,14 @@
       />
     {/if}
 
-    <EndPlaceholder size="xs" margin="sm">
-      {$t('nav.menu.instance')}
-    </EndPlaceholder>
-    <SidebarButton href="/modlog" label={$t('routes.modlog.title')} icon={Newspaper} />
-    <SidebarButton href="/legal" label={$t('routes.legal.title')} icon={BuildingOffice} />
-    <SidebarButton href="/instances" label={$t('routes.instances')} icon={ServerStack} />
+    {#if links}
+      <EndPlaceholder size="xs" margin="sm">
+        {$t('nav.menu.instance')}
+      </EndPlaceholder>
+      <SidebarButton href="/modlog" label={$t('routes.modlog.title')} icon={Newspaper} />
+      <SidebarButton href="/legal" label={$t('routes.legal.title')} icon={BuildingOffice} />
+      <SidebarButton href="/instances" label={$t('routes.instances')} icon={ServerStack} />
+    {/if}
 
     <EndPlaceholder size="xs" margin="sm">
       {$t('cards.site.stats')}

@@ -201,12 +201,14 @@ export async function loader<T>(
   setLoading: (v: boolean) => void,
   fn: () => Promise<T>,
   final?: () => void,
+  error?: (e: Error) => void,
 ) {
   setLoading(true)
   try {
     return await fn()
   } catch (e) {
     toast({ content: errorMessage(e), type: 'error' })
+    error?.(e as Error)
   } finally {
     final?.()
     setLoading(false)

@@ -9,7 +9,7 @@ export async function load({ url, fetch, route }) {
   const community = urlParam.number(url, 'community')
   const creator = urlParam.number(url, 'creator')
   const listing_type = urlParam.string<ListingType>(url, 'listing_type', 'all')
-  const type = urlParam.string<SearchType>(url, 'type', 'users')
+  const type = urlParam.string<SearchType>(url, 'type', 'all')
 
   const results: SearchResponse = query
     ? await feed(route.id, (params) => client({ func: fetch }).search(params)).load({

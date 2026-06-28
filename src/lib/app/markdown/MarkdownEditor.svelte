@@ -270,7 +270,7 @@
       {/if}
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit z-0 border-0 rounded-none ring-0! focus:ring-transparent! transition-none! resize-none"
+        class="bg-inherit z-0 border-x-0 rounded-none! ring-0! focus:ring-transparent! transition-none! resize-none"
         bind:value
         bind:element={textArea}
         onkeydown={(e) => {
@@ -287,7 +287,7 @@
         }}
         oninput={adjustHeight}
         onpaste={(e) => {
-          if (!e.clipboardData?.files) return
+          if (!e.clipboardData?.files || e.clipboardData.files.length == 0) return
           uploadComponent?.prefill(e.clipboardData?.files)
         }}
         {rows}

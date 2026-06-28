@@ -21,6 +21,7 @@
     height?: number
     itemContainer?: string
     initialScrollIndex?: number
+    children?: Snippet
   }
 
   let {
@@ -35,6 +36,7 @@
     height = 0,
     itemContainer = 'div',
     initialScrollIndex = 0,
+    children,
     ...rest
   }: Props = $props()
 
@@ -117,10 +119,7 @@
     }
   })
 
-  function findFirstVisibleIndex(
-    scrollTop: number,
-    cumulativeHeights: number[],
-  ): number {
+  function findFirstVisibleIndex(scrollTop: number, cumulativeHeights: number[]): number {
     let low = 0
     let high = cumulativeHeights.length - 1
     let mid = 0
@@ -155,8 +154,7 @@
       const height = itemHeights[i] || estimatedHeight
       offset += height
 
-      if (offset > scrollTop + viewportHeight + overscan * estimatedHeight)
-        break
+      if (offset > scrollTop + viewportHeight + overscan * estimatedHeight) break
 
       i++
     }
@@ -252,9 +250,7 @@
 
 <div
   bind:this={virtualListEl}
-  style="position: relative; height: {height ||
-    cumulativeItemHeights[items.length - 1] ||
-    0}px;"
+  style="position: relative; height: {height || cumulativeItemHeights[items.length - 1] || 0}px;"
   {...rest}
   id="feed"
   onscroll={() => {
@@ -280,6 +276,7 @@
       (cumulativeItemHeights[visibleItems?.[visibleItems.length - 1]?.index] ||
         0)}px; border: 0 !important;"
   ></div>
+  {@render children?.()}
 </div>
 {#if settings.debugInfo}
   <Expandable>
@@ -290,13 +287,12 @@
       Virtual list debug info
 
       List items: {items.length}
-      Rendering items: {visibleItems?.length} ({visibleItems?.[0]
-        ?.index} - {visibleItems?.[visibleItems?.length - 1]?.index})
+      Rendering items: {visibleItems?.length} ({visibleItems?.[0]?.index} - {visibleItems?.[
+        visibleItems?.length - 1
+      ]?.index})
       Viewport height: {viewportHeight}
       Current scroll position: {scrollY}
-      Container height: {cumulativeItemHeights[
-        visibleItems?.[visibleItems?.length - 1]?.index
-      ]}
+      Container height: {cumulativeItemHeights[visibleItems?.[visibleItems?.length - 1]?.index]}
       Overscan: {overscan}
       Guess item height: {estimatedHeight}
       Bumpscosity: {Math.floor(Math.random() * 5000)}

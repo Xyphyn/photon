@@ -1,30 +1,22 @@
 <script lang="ts">
-  import { page } from '$app/state'
   import { t } from '$lib/app/i18n'
-  import { searchParam } from '$lib/app/util.svelte'
+  import { proxify } from '$lib/app/util/reactivity.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { CommonList, Header, Pageination } from '$lib/ui/layout'
   import { Option, Select } from 'mono-svelte'
   import { ClipboardDocumentCheck, Funnel, Icon } from 'svelte-hero-icons/dist'
   import Application from './Application.svelte'
 
-  import { proxify } from '$lib/app/util/reactivity.svelte'
-
   let { data } = $props()
 
   let selectForm = $state<HTMLFormElement>()
-  let params = $derived(proxify({ type: data.type }))
+  let params = $derived(proxify(data.params))
   let applications = $derived(proxify(data.applications))
 </script>
 
 <Header pageHeader>{$t('routes.admin.applications.title')}</Header>
 <form bind:this={selectForm} action="/admin/applications" class="w-max">
-  <Select
-    bind:value={params.type}
-    onchange={async () => {
-      searchParam(page.url, 'type', params.type, 'page')
-    }}
-  >
+  <Select name="type" bind:value={params.type} onchange={() => selectForm?.requestSubmit()}>
     {#snippet customLabel()}
       <span class="flex items-center gap-1">
         <Icon src={Funnel} size="15" mini />
@@ -38,18 +30,20 @@
 {#if applications && applications.length > 0}
   <CommonList>
     {#each applications as application (application.registration_application.id)}
-      <li
-        class={application.creator_local_user.accepted_application
-          ? 'material-success'
-          : 'material-error'}
-      >
+      <li class={application.creator_local_user.accepted_application ? 'material-success' : ''}>
         <Application {application} />
       </li>
     {/each}
   </CommonList>
-  {#if applications.length >= 40}
+  {#if params.next != null}
     <div class="mt-auto">
-      <Pageination page={data.page} href={(page) => `?page=${page}`} />
+      <Pageination
+        cursor={{
+          next: params.next,
+          back: params.prev,
+        }}
+        href={(cursor) => `?cursor=${cursor}`}
+      />
     </div>
   {/if}
 {:else}
