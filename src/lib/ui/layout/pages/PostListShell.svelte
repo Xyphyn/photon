@@ -70,10 +70,10 @@
         <form class="" method="get" action={page.url.pathname}>
           <div class="flex flex-row gap-2">
             {#if filters.location}
-              <Location name="type" navigate bind:selected={filters.location} />
+              <Location name="type" navigate selected={filters.location} />
             {/if}
             {#if filters.sort}
-              <Sort placement="bottom" name="sort" navigate bind:selected={filters.sort} />
+              <Sort placement="bottom" name="sort" navigate selected={filters.sort} />
             {/if}
             <ViewSelect placement="bottom" />
 
