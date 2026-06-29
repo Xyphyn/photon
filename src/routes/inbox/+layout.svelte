@@ -12,12 +12,16 @@
       name: $t('filter.location.all'),
     },
     {
-      href: '/inbox?type=replies',
+      href: '/inbox?type=reply',
       name: $t('filter.inbox.replies'),
     },
     {
-      href: '/inbox?type=mentions',
+      href: '/inbox?type=mention',
       name: $t('filter.inbox.mentions'),
+    },
+    {
+      href: '/inbox?type=mod_action',
+      name: $t('filter.inbox.modActions'),
     },
     {
       href: '/inbox/messages',

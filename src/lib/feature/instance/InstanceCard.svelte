@@ -10,38 +10,33 @@
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import SidebarButton from '$lib/ui/sidebar/SidebarButton.svelte'
   import { Badge, Expandable, Popover } from 'mono-svelte'
-  import {
-    BuildingOffice,
-    Icon,
-    Newspaper,
-    ServerStack,
-  } from 'svelte-hero-icons/dist'
+  import { BuildingOffice, Icon, Newspaper, ServerStack } from 'svelte-hero-icons/dist'
   import type { ClassValue, HTMLAttributes } from 'svelte/elements'
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     site: SiteView
+    links?: boolean
     taglines?: Tagline[]
     admins?: PersonView[]
     version?: string
     class?: ClassValue
   }
 
-  let { site, taglines, admins, version, class: clazz = '' }: Props = $props()
+  let { site, taglines, links, admins, version, class: clazz = '' }: Props = $props()
 </script>
 
-<aside
-  class={[
-    'w-full text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm',
-    clazz,
-  ]}
->
+<aside class={['w-full text-slate-600 dark:text-zinc-400 flex flex-col gap-4 text-sm', clazz]}>
   <EntityHeader
     name={site.site.name}
     avatar={site.site.icon}
     banner={site.site.banner || null}
     compact="always"
     avatarCircle={false}
-  />
+  >
+    {#snippet nameDetail()}
+      {site.instance.domain}
+    {/snippet}
+  </EntityHeader>
   <div class="flex flex-col gap-1">
     {#if taglines && taglines.length > 0}
       <Markdown
@@ -50,50 +45,28 @@
       />
     {/if}
 
-    <EndPlaceholder size="xs" margin="sm">
-      {$t('nav.menu.instance')}
-    </EndPlaceholder>
-    <SidebarButton
-      href="/modlog"
-      label={$t('routes.modlog.title')}
-      icon={Newspaper}
-    />
-    <SidebarButton
-      href="/legal"
-      label={$t('routes.legal.title')}
-      icon={BuildingOffice}
-    />
-    <SidebarButton
-      href="/instances"
-      label={$t('routes.instances')}
-      icon={ServerStack}
-    />
+    {#if links}
+      <EndPlaceholder size="xs" margin="sm">
+        {$t('nav.menu.instance')}
+      </EndPlaceholder>
+      <SidebarButton href="/modlog" label={$t('routes.modlog.title')} icon={Newspaper} />
+      <SidebarButton href="/legal" label={$t('routes.legal.title')} icon={BuildingOffice} />
+      <SidebarButton href="/instances" label={$t('routes.instances')} icon={ServerStack} />
+    {/if}
 
     <EndPlaceholder size="xs" margin="sm">
       {$t('cards.site.stats')}
     </EndPlaceholder>
     <div class="flex flex-row gap-4 flex-wrap px-3">
-      <LabelStat
-        label={$t('content.users')}
-        content={site.counts.users.toString()}
-        formatted
-      />
-      <LabelStat
-        label={$t('content.posts')}
-        content={site.counts.posts.toString()}
-        formatted
-      />
-      <LabelStat
-        label={$t('content.comments')}
-        content={site.counts.comments.toString()}
-        formatted
-      />
+      <LabelStat label={$t('content.users')} content={site.local_site.users} formatted />
+      <LabelStat label={$t('content.posts')} content={site.local_site.posts} formatted />
+      <LabelStat label={$t('content.comments')} content={site.local_site.comments} formatted />
       <Popover openOnHover placement="bottom-end">
         {#snippet target(attachment)}
           <button class="text-left cursor-pointer" {@attach attachment}>
             <LabelStat
               label={$t('cards.community.activeDay')}
-              content={site.counts.users_active_day.toString()}
+              content={site.local_site.users_active_day}
               formatted
             />
           </button>
@@ -101,24 +74,24 @@
         <div class="flex flex-row gap-4 flex-wrap px-3">
           <LabelStat
             label={$t('filter.sort.top.time.week')}
-            content={site.counts.users_active_week.toString()}
+            content={site.local_site.users_active_week}
             formatted
           />
           <LabelStat
             label={$t('filter.sort.top.time.month')}
-            content={site.counts.users_active_month.toString()}
+            content={site.local_site.users_active_month}
             formatted
           />
           <LabelStat
             label={$t('filter.sort.top.time.6months')}
-            content={site.counts.users_active_half_year.toString()}
+            content={site.local_site.users_active_half_year}
             formatted
           />
         </div>
       </Popover>
       <LabelStat
         label={$t('content.communities')}
-        content={site.counts.communities.toString()}
+        content={site.local_site.communities.toString()}
         formatted
       />
     </div>
@@ -133,7 +106,7 @@
             {$t('cards.site.about')}
           </span>
         {/snippet}
-        <Markdown source={site.site.description} />
+        <Markdown source={site.site.summary} />
         <div class="my-4"></div>
         <Markdown source={site.site.sidebar} />
 
@@ -160,7 +133,7 @@
               name: i.person.display_name || i.person.name,
               url: userLink(i.person),
               avatar: i.person.avatar,
-              instance: new URL(i.person.actor_id).hostname,
+              instance: new URL(i.person.ap_id).hostname,
             }))}
           />
         </Expandable>

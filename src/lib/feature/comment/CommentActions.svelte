@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { CommentView } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
@@ -15,16 +14,16 @@
     ShieldCheck,
     Trash,
   } from 'svelte-hero-icons/dist'
-  import { deleteItem, save } from '../legacy/contentview'
   import CommentModerationMenu from '../moderation/CommentModerationMenu.svelte'
   import { report } from '../moderation/moderation'
   import CommentVote from './CommentVote.svelte'
+  import type { CommentModel } from './comment.svelte'
 
   interface Props {
-    comment: CommentView
+    comment: CommentModel
     replying?: boolean
     disabled?: boolean
-    onedit?: (comment: CommentView) => void
+    onedit?: (comment: CommentModel) => void
   }
 
   let {
@@ -41,12 +40,7 @@
     settings.posts.reverseActions && 'flex-row-reverse',
   ]}
 >
-  <CommentVote
-    upvotes={comment.counts.upvotes}
-    downvotes={comment.counts.downvotes}
-    vote={comment.my_vote}
-    comment={comment.comment}
-  />
+  <CommentVote {comment} />
   <Button
     color="tertiary"
     rounding="pill"
@@ -104,10 +98,7 @@
         </MenuButton>
       {/if}
       <MenuButton
-        onclick={async () => {
-          if (profile.current?.jwt)
-            comment.saved = await save(comment, !comment.saved)
-        }}
+        onclick={() => comment.save(!comment.saved)}
         icon={comment.saved ? BookmarkSlash : Bookmark}
       >
         {comment.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
@@ -115,13 +106,7 @@
       {#if profile.current?.user && profile.current.jwt && profile.current.user.local_user_view.person.id == comment.creator.id}
         <MenuButton
           color="danger-subtle"
-          onclick={async () => {
-            if (profile.current?.jwt)
-              comment.comment.deleted = await deleteItem(
-                comment,
-                !comment.comment.deleted,
-              )
-          }}
+          onclick={() => comment.delete(!comment.deleted)}
           icon={Trash}
         >
           {comment.comment.deleted
@@ -130,11 +115,7 @@
         </MenuButton>
       {/if}
       {#if profile.current.jwt && profile.current.user?.local_user_view.person.id != comment.creator.id}
-        <MenuButton
-          onclick={() => report(comment)}
-          color="danger-subtle"
-          icon={Flag}
-        >
+        <MenuButton onclick={() => report(comment)} color="danger-subtle" icon={Flag}>
           {$t('moderation.report')}
         </MenuButton>
       {/if}

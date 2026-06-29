@@ -6,9 +6,10 @@
 
   interface Props {
     query?: string | null
+    placeholder?: string
   }
 
-  let { query = $bindable() }: Props = $props()
+  let { query = $bindable(), placeholder }: Props = $props()
 
   let searchElement = $state<HTMLInputElement>()
 </script>
@@ -18,7 +19,7 @@
     bind:value={query}
     bind:element={searchElement}
     name="q"
-    placeholder={$t('routes.search.query')}
+    placeholder={placeholder ?? $t('routes.search.query')}
     size="lg"
     class="flex-1 rounded-full! h-full text-base!"
   />

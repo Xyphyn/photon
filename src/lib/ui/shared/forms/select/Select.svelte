@@ -3,19 +3,14 @@
   import { buttonSize } from 'mono-svelte/button/Button.svelte'
   import { type Snippet, setContext, tick } from 'svelte'
   import type { Placement } from 'svelte-floating-ui/dom'
-  import {
-    CheckCircle,
-    ChevronUpDown,
-    Icon,
-    type IconSource,
-  } from 'svelte-hero-icons/dist'
+  import { CheckCircle, ChevronUpDown, Icon, type IconSource } from 'svelte-hero-icons/dist'
   import type { Attachment } from 'svelte/attachments'
   import type { ClassValue, HTMLSelectAttributes } from 'svelte/elements'
 
-  interface Props<T> extends Omit<HTMLSelectAttributes, 'size'> {
-    value?: T | string | undefined
-    placeholder?: string | undefined
-    label?: string | undefined
+  interface Props<T> extends Omit<Omit<HTMLSelectAttributes, 'size'>, 'onchange'> {
+    value?: T | string
+    placeholder?: string
+    label?: string
     size?: 'md' | 'sm'
     id?: string
     class?: ClassValue
@@ -38,7 +33,7 @@
     >
     target?: Snippet<[Attachment]>
     oncontextmenu?: HTMLSelectAttributes['oncontextmenu']
-    onchange?: HTMLSelectAttributes['onchange']
+    onchange?: (value?: T | string) => void
     placement?: Placement
   }
 
@@ -47,7 +42,7 @@
 
 <script lang="ts" generics="T">
   let open = $state(false)
-  let element: HTMLSelectElement | undefined = $state()
+  let element = $state<HTMLSelectElement>()
 
   interface SelectContext {
     options: {
@@ -64,7 +59,7 @@
   })
 
   let {
-    value = $bindable(undefined),
+    value = $bindable(),
     placeholder = undefined,
     label = undefined,
     size = 'md',
@@ -107,7 +102,7 @@
           e.preventDefault()
           open = !open
         }}
-        {onchange}
+        onchange={() => onchange?.(value)}
         {oncontextmenu}
         {placeholder}
       >
@@ -140,7 +135,7 @@
         onclick={async () => {
           value = option.value
           await tick()
-          element?.dispatchEvent(new Event('change', { bubbles: true }))
+          onchange?.(option.value)
         }}
         size="custom"
         disabled={option.disabled}
@@ -149,25 +144,14 @@
           'min-h-0! py-1 hover:bg-slate-100 dark:hover:bg-zinc-800',
           option.value == value &&
             'bg-slate-100 dark:bg-zinc-800 text-primary-900 dark:text-primary-100 font-medium',
-          option.disabled &&
-            'pointer-events-none text-slate-600 dark:text-zinc-400',
+          option.disabled && 'pointer-events-none text-slate-600 dark:text-zinc-400',
           option.isLabel && 'text-xs mt-2',
         ]}
       >
         {#if option.value == value}
-          <Icon
-            src={CheckCircle}
-            size="16"
-            micro
-            class="text-primary-900 dark:text-primary-100"
-          />
+          <Icon src={CheckCircle} size="16" micro class="text-primary-900 dark:text-primary-100" />
         {:else if option.icon}
-          <Icon
-            src={option.icon}
-            size="16"
-            micro
-            class="text-slate-600 dark:text-zinc-400"
-          />
+          <Icon src={option.icon} size="16" micro class="text-slate-600 dark:text-zinc-400" />
         {/if}
         {@html option.label}
       </MenuButton>

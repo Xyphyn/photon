@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { Listing } from '$lib/feature/feeds/listing.svelte.js'
   import { publishedToDate } from '$lib/ui/util/date'
   import { Material } from 'mono-svelte'
   import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
   import { UAParser } from 'ua-parser-js'
 
   let { data } = $props()
+  let listing = $derived(new Listing(data.tokens.logins, (i) => i))
 </script>
 
 <Material
@@ -30,7 +32,7 @@
       class="divide-y *:h-14 divide-slate-200 dark:divide-zinc-800 bg-white dark:bg-zinc-950
       "
     >
-      {#each data.tokens as token (token)}
+      {#each listing.items as token (token)}
         {@const ua = new UAParser(token.user_agent).getResult()}
         <tr class="divide-x *:px-3 divide-slate-200 dark:divide-zinc-800">
           <td>
@@ -43,7 +45,7 @@
           </td>
 
           <td align="right">
-            <RelativeDate date={publishedToDate(token.published)} />
+            <RelativeDate date={publishedToDate(token.published_at)} />
           </td>
         </tr>
       {/each}

@@ -38,13 +38,7 @@
   aria-label={$t('aria.element.pageHeader')}
 >
   {#if children}
-    <h1
-      class={[
-        sizes[size],
-        'flex gap-2 w-full tracking-tight font-medium',
-        clazz,
-      ]}
-    >
+    <h1 class={[sizes[size], 'flex gap-2 w-full tracking-tight font-medium', clazz]}>
       {@render children?.()}
     </h1>
   {/if}

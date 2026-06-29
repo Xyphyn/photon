@@ -9,10 +9,13 @@ import type {
   GetPersonDetailsResponse,
   GetPost,
   GetPosts,
-  ListCommunitiesResponse,
-  ListingType,
+  ListCommunities,
+  ListPersonSaved,
+  PagedResponse,
+  PostCommentCombinedView,
   PostView,
-  SortType,
+  Search,
+  SearchResponse,
   TopicView,
 } from '$lib/api/types'
 import { profile } from '$lib/app/auth'
@@ -21,6 +24,9 @@ import { SvelteMap } from 'svelte/reactivity'
 
 type FetchFn<P, R> = (params: P) => R
 
+/*
+ * The Feed class has a terrible name, and is responsible for caching data on certain routes.
+ */
 export class Feed<Params, Response> {
   #data = $state<Response>()
   #fetch: FetchFn<Params, Response>
@@ -53,10 +59,8 @@ export class Feed<Params, Response> {
 export interface FeedTypes {
   '/': [
     GetPosts,
-    {
-      posts: PostView[]
-      next_page?: string
-      params: GetPosts & { page_cursor: string }
+    PagedResponse<PostView> & {
+      params: GetPosts
       client: {
         itemHeights?: (number | null)[]
         lastSeen?: number
@@ -69,11 +73,11 @@ export interface FeedTypes {
       posts: PostView[]
       community: GetCommunityResponse
       next_page?: string
-      params: GetPosts & { page_cursor: string }
+      params: GetPosts
       client: { itemHeights?: (number | null)[]; lastSeen?: number }
     },
   ]
-  '/u/[name]': [GetPersonDetails, { data: GetPersonDetailsResponse }]
+  '/u/[name]': [GetPersonDetails, GetPersonDetailsResponse]
   '/post/[instance]/[id=integer]': [
     {
       posts: GetPost
@@ -104,15 +108,7 @@ export interface FeedTypes {
       }
     },
   ]
-  '/explore/communities': [
-    {
-      type: ListingType
-      sort: SortType
-      query: string
-      page: number
-    },
-    ListCommunitiesResponse,
-  ]
+  '/explore/communities': [ListCommunities, PagedResponse<CommunityView>]
   '/f/[id]': [
     GetPosts,
 
@@ -141,6 +137,8 @@ export interface FeedTypes {
     },
   ]
   '/profile/user': [GetPersonDetails, GetPersonDetailsResponse]
+  '/search': [Search, SearchResponse]
+  '/saved': [ListPersonSaved, PagedResponse<PostCommentCombinedView>]
 }
 
 export const feeds = new SvelteMap<keyof FeedTypes, Feed<any, any>>()

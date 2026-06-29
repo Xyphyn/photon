@@ -1,46 +1,38 @@
 import { client } from '$lib/api/client.svelte'
-import type { SortType } from '$lib/api/types'
-import { ReactiveState } from '$lib/app/util.svelte'
-import { getItemPublished } from '$lib/feature/legacy/item'
+import { feed } from '$lib/feature/feeds/feed.svelte.js'
+import type { PostSortType } from 'lemmy-js-client'
 
-export async function load({ params, url, fetch }) {
-  const page = Number(url.searchParams.get('page')) || 1
+export async function load({ params, url, fetch, route }) {
+  const cursor = url.searchParams.get('cursor') || undefined
   const type: 'comments' | 'posts' | 'all' =
     (url.searchParams.get('type') as 'comments' | 'posts' | 'all') || 'all'
-  const sort: SortType = (url.searchParams.get('sort') as SortType) || 'New'
+  const sort: PostSortType = (url.searchParams.get('sort') as PostSortType) || 'new'
 
-  const user = await client({ func: fetch }).getPersonDetails({
-    limit: 20,
-    page: page,
+  const user = await feed(
+    route.id,
+    async (p) => await client({ func: fetch }).getPersonDetails(p),
+  ).load({
     username: params.name,
-    sort: sort,
   })
 
-  const items = [...user.posts, ...user.comments]
-
-  if (sort == 'TopAll') {
-    items.sort(
-      (a, b) =>
-        b.counts.upvotes -
-        b.counts.downvotes -
-        (a.counts.upvotes - a.counts.downvotes),
-    )
-  } else if (sort == 'New') {
-    items.sort(
-      (a, b) =>
-        Date.parse(getItemPublished(b)) - Date.parse(getItemPublished(a)),
-    )
-  }
+  // TODO you can probably cache the posts in the feed as well
+  const content = await client({ func: fetch }).listPersonContent({
+    person_id: user.person_view.person.id,
+    limit: 20,
+    type_: type,
+    page_cursor: cursor,
+  })
 
   return {
-    filters: new ReactiveState({
+    params: {
       type: type,
-      page: page,
       sort: sort,
       limit: 20,
-    }),
-    person_view: new ReactiveState(user.person_view),
-    moderates: new ReactiveState(user.moderates),
-    items: new ReactiveState(items),
+      next: content.next_page,
+      prev: content.prev_page,
+    },
+    person_view: user.person_view,
+    moderates: user.moderates,
+    items: content.items,
   }
 }

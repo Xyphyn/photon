@@ -39,10 +39,7 @@
 
 <a
   {...rest}
-  class={[
-    'items-center inline-flex flex-row gap-2 hover:underline max-w-full min-w-0',
-    clazz,
-  ]}
+  class={['items-center inline-flex flex-row gap-2 hover:underline max-w-full min-w-0', clazz]}
   href={communityLink(community)}
   data-sveltekit-preload-data="tap"
 >
@@ -60,7 +57,7 @@
           class="text-slate-500 dark:text-zinc-500 font-normal
           instance-text shrink {instanceClass || ''}"
         >
-          @{new URL(community.actor_id).hostname}
+          @{new URL(community.ap_id).hostname}
         </span>
       {/if}
     </span>
@@ -68,12 +65,7 @@
   {#if badges}
     {#if badges.nsfw}
       <span title={$t('post.badges.nsfw')}>
-        <Icon
-          src={ExclamationTriangle}
-          size="14"
-          micro
-          class="text-red-600 dark:text-red-400"
-        />
+        <Icon src={ExclamationTriangle} size="14" micro class="text-red-600 dark:text-red-400" />
       </span>
     {/if}
   {/if}

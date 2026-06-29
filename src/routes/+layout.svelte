@@ -6,11 +6,7 @@
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings } from '$lib/app/settings.svelte'
   import { getDefaultColors } from '$lib/app/theme/presets'
-  import {
-    inDarkColorScheme,
-    rgbToHex,
-    theme,
-  } from '$lib/app/theme/theme.svelte'
+  import { inDarkColorScheme, rgbToHex, theme } from '$lib/app/theme/theme.svelte'
   import InstanceCard from '$lib/feature/instance/InstanceCard.svelte'
   import Moderation from '$lib/feature/moderation/Moderation.svelte'
   import ExpandableImage from '$lib/ui/generic/ExpandableImage.svelte'
@@ -41,11 +37,7 @@
   onMount(() => {
     if (browser) {
       if (window.location.hash == 'main') {
-        history.replaceState(
-          null,
-          '',
-          window.location.toString().replace('#main', ''),
-        )
+        history.replaceState(null, '', window.location.toString().replace('#main', ''))
       }
       document.body.querySelector('.loader')?.classList.add('hidden')
     }
@@ -54,11 +46,7 @@
   if (browser) {
     $effect(() => {
       if (settings) {
-        document.documentElement.classList.remove(
-          'font--inter',
-          'font--sans',
-          'font--system',
-        )
+        document.documentElement.classList.remove('font--inter', 'font--sans', 'font--system')
         document.documentElement.classList.add(
           // i should be fired for nested ternaries
           settings.font == 'inter'
@@ -86,10 +74,7 @@
   $effect(() => {
     if (navigating.to) {
       clearTimeout(nprogressTimeout)
-      nprogressTimeout = setTimeout(
-        () => nProgress.start(),
-        200,
-      ) as unknown as number
+      nprogressTimeout = setTimeout(() => nProgress.start(), 200) as unknown as number
     } else {
       if (nprogressTimeout > -1) {
         clearTimeout(nprogressTimeout)
@@ -112,10 +97,7 @@
     />
     {#if LINKED_INSTANCE_URL}
       <link rel="icon" href={site.data?.site_view?.site.icon} />
-      <meta
-        name="description"
-        content={site.data?.site_view?.site.description}
-      />
+      <meta name="description" content={site.data?.site_view?.site.summary} />
     {:else}
       <meta name="description" content="A sleek client for Lemmy" />
     {/if}
@@ -155,16 +137,21 @@
     <!--strange issue, proabably to do with dynamic components-->
     <!--the {#if} branch for InstanceCard is getting rendered even if site.data is null, causing crashes-->
     {#key site.data}
-      {#if page.data.slots?.sidebar?.component}
-        {@const SvelteComponent = page.data.slots.sidebar.component}
-        <SvelteComponent
-          {...page.data.slots.sidebar.props}
-          class={[c, 'p-3 sm:p-6']}
-        />
+      {#if page.data.slots?.sidebar}
+        {#await page.data.slots.sidebar.props}
+          <div class="h-64 w-full grid place-items-center">
+            <Spinner width={32} />
+          </div>
+        {:then props}
+          {@const SvelteComponent = page.data.slots.sidebar.component}
+          {#if SvelteComponent}
+            <SvelteComponent {...props} class={[c, 'p-3 sm:p-6']} />
+          {/if}
+        {/await}
       {:else if site.data?.site_view}
         <InstanceCard
           site={site.data.site_view}
-          taglines={site.data.taglines}
+          taglines={site.data.tagline}
           admins={site.data.admins}
           version={site.data.version}
           class={[c, 'p-3 sm:p-6']}

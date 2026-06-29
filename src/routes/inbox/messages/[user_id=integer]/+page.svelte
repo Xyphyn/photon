@@ -1,32 +1,42 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { client } from '$lib/api/client.svelte'
-  import type { PrivateMessageResponse } from '$lib/api/types'
+  import type {
+    Notification,
+    NotificationView,
+    PrivateMessageResponse,
+    PrivateMessageView,
+  } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { settings } from '$lib/app/settings.svelte'
+  import { Listing } from '$lib/feature/feeds/listing.svelte'
   import { report } from '$lib/feature/moderation/moderation'
   import UserLink from '$lib/feature/user/UserLink.svelte'
   import { Header } from '$lib/ui/layout'
   import { publishedToDate } from '$lib/ui/util/date'
   import { Button, Material, TextInput, toast } from 'mono-svelte'
   import { onDestroy, onMount, tick } from 'svelte'
-  import {
-    ArrowLeft,
-    ChevronUp,
-    Icon,
-    Minus,
-    PaperAirplane,
-    Plus,
-  } from 'svelte-hero-icons/dist'
+  import { ArrowLeft, ChevronUp, Icon, Minus, PaperAirplane, Plus } from 'svelte-hero-icons/dist'
   import { flip } from 'svelte/animate'
   import { backOut, expoOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
   import Message from './Message.svelte'
 
   let { data } = $props()
+
+  let messages = $derived(
+    new Listing<{ data: PrivateMessageView; notification: Notification }, NotificationView>(
+      data.messages.items,
+      (i) => {
+        if (i.data.type_ != 'private_message') throw new TypeError('Invalid data type received')
+        return i as { data: PrivateMessageView; notification: Notification }
+      },
+    ),
+  )
+  let creator = $derived(data.creator)
 
   let textbox = $state({
     message: '',
@@ -35,9 +45,7 @@
 
   let chatWindow = $state<HTMLDivElement>()
 
-  async function sendMessage(
-    message: string,
-  ): Promise<PrivateMessageResponse | undefined> {
+  async function sendMessage(message: string): Promise<PrivateMessageResponse | undefined> {
     if (message == '') return
 
     textbox.loading = true
@@ -45,7 +53,7 @@
     try {
       const res = await client().createPrivateMessage({
         content: message,
-        recipient_id: data.creator.value.person_view.person.id,
+        recipient_id: creator.person_view.person.id,
       })
 
       textbox.loading = false
@@ -62,7 +70,7 @@
   }
 
   $effect(() => {
-    if (browser && data.message.value && chatWindow) {
+    if (browser && messages && chatWindow) {
       tick().then(() =>
         chatWindow?.scrollTo({
           top: chatWindow.scrollHeight,
@@ -78,55 +86,57 @@
       private_message_id: id,
     })
 
-    data.message.value = {
-      private_messages: data.message.value.private_messages.toSpliced(
-        data.message.value.private_messages.findLastIndex(
-          (i) => i.private_message.id == id,
-        ),
-        1,
-      ),
-    }
+    messages.items.splice(
+      messages.items.findLastIndex((i) => i.data.private_message.id == id),
+      1,
+    )
   }
 
   let interval: number = -1
-  let page: number = 1
+  let cursor: string | undefined
 
-  async function loadMore(page: number = 1) {
-    const res = await client().getPrivateMessages({
-      creator_id: Number(data.creator.value.person_view.person.id),
+  async function loadMore(cursor?: string) {
+    const res = await client().listNotifications({
+      creator_id: Number(creator.person_view.person.id),
       limit: 50,
-      page: page,
+      page_cursor: cursor,
+      type_: 'private_message',
     })
 
-    const messageSet = new Set(
-      data.message!.value.private_messages.map((i) => i.private_message.id),
-    )
-    const newMessages = res.private_messages.filter(
-      (i) => !messageSet.has(i.private_message.id),
-    )
+    const mapped = res.items.map((i) => {
+      if (i.data.type_ != 'private_message')
+        throw new Error('Received items that were not messages')
 
-    data.message.value.private_messages.push(...newMessages)
-    data.message.value.private_messages.sort(
+      return i as NotificationView & { data: PrivateMessageView }
+    })
+
+    const messageSet = new Set(mapped.map((i) => i.data.private_message.id))
+    const newMessages = mapped.filter((i) => !messageSet.has(i.data.private_message.id))
+
+    messages.add(newMessages)
+    messages.items.sort(
       (a, b) =>
-        publishedToDate(b.private_message.published).getTime() -
-        publishedToDate(a.private_message.published).getTime(),
+        publishedToDate(b.data.private_message.published_at).getTime() -
+        publishedToDate(a.data.private_message.published_at).getTime(),
     )
 
     markRead()
+
+    return res
   }
 
   async function markRead() {
-    data.message.value.private_messages
+    messages.items
       .filter(
         (i) =>
-          !i.private_message.read &&
-          i.private_message.creator_id !=
-            profile.current.user?.local_user_view.person.id,
+          !i.notification.read &&
+          i.data.private_message.creator_id != profile.current.user?.local_user_view.person.id,
       )
       .forEach((i) =>
-        client().markPrivateMessageAsRead({
-          private_message_id: i.private_message.id,
+        client().markNotificationAsRead({
+          notification_id: i.notification.id,
           read: true,
+          type_: 'private_message',
         }),
       )
   }
@@ -146,7 +156,7 @@
 <svelte:head>
   <title>
     {$t('routes.inbox.messages.indicator', {
-      user: data.creator.value.person_view.person.name,
+      user: creator.person_view.person.name,
     })}
   </title>
 </svelte:head>
@@ -155,13 +165,8 @@
   {$t('filter.inbox.messages')}
   {#snippet extended()}
     <div class="flex flex-wrap gap-4">
-      <Button
-        size="square-md"
-        href="."
-        title={$t('common.back')}
-        icon={ArrowLeft}
-      ></Button>
-      <UserLink avatar user={data.creator.value.person_view.person} />
+      <Button size="square-md" href="." title={$t('common.back')} icon={ArrowLeft}></Button>
+      <UserLink avatar user={creator.person_view.person} />
     </div>
   {/snippet}
 </Header>
@@ -178,14 +183,14 @@
       <p class="mx-auto mt-auto text-slate-400 dark:text-zinc-600 text-center">
         {$t('routes.inbox.messages.conversation', {
           user:
-            data.creator.value.person_view.person.name +
+            creator.person_view.person.name +
             '@' +
-            new URL(data.creator.value.person_view.person.actor_id).hostname,
+            new URL(creator.person_view.person.ap_id).hostname,
         })}
       </p>
-      {#if data.message.value.private_messages.length % data.limit == 0}
+      {#if messages.items.length % data.limit == 0}
         <Button
-          onclick={() => loadMore(++page)}
+          onclick={() => loadMore(cursor).then((res) => (cursor = res.next_page))}
           color="ghost"
           size="square-md"
           title={$t('common.next')}
@@ -193,36 +198,31 @@
           class="mx-auto"
         />
       {/if}
-      {#each data.message.value.private_messages.toReversed() as private_message, index (private_message.private_message.id)}
-        {@const messages = data.message.value.private_messages.toReversed()}
+      {#each messages.items.toReversed() as private_message, index (private_message.data.private_message.id)}
+        {@const m = messages.items.toReversed()}
         {@const showTimestamp =
           index == 0 ||
-          new Date(private_message.private_message.published).getTime() -
-            new Date(messages[index - 1].private_message.published).getTime() >
+          new Date(private_message.notification.published_at).getTime() -
+            new Date(m[index - 1].notification.published_at).getTime() >
             5 * 60 * 1000}
 
         <div
-          class={private_message.creator.id ==
-          data.creator.value.person_view.person.id
+          class={private_message.data.creator.id == creator.person_view.person.id
             ? 'self-start'
             : 'self-end'}
           in:fly|global={{
             duration: 700,
             easing: backOut,
-            delay:
-              index < messages.length - 15
-                ? 0
-                : data.message.value.private_messages.length * 50 - index * 50,
+            delay: index < m.length - 15 ? 0 : m.length * 50 - index * 50,
             y: -12,
           }}
           animate:flip={{ duration: 500, easing: expoOut }}
         >
           <Message
-            ondelete={() => deleteMessage(private_message.private_message.id)}
-            onreport={() => report(private_message)}
-            message={private_message}
-            primary={private_message.creator.id !=
-              data.creator.value.person_view.person.id}
+            ondelete={() => deleteMessage(private_message.data.private_message.id)}
+            onreport={() => report(private_message.data)}
+            message={private_message.data}
+            primary={private_message.data.creator.id != creator.person_view.person.id}
             {showTimestamp}
           />
         </div>
@@ -230,81 +230,81 @@
     </ul>
   </div>
 </Material>
-{#await data.message.value then message}
-  <div class="sticky bottom-4 p-4">
-    <form
-      class={[
-        'flex w-full',
-        'border-slate-200 dark:border-zinc-800',
-        'p-2 gap-2 backdrop-blur-xl',
-        'bg-white/50 dark:bg-zinc-950/50 border rounded-2xl',
-        settings.messages.fullMarkdown
-          ? 'flex flex-col'
-          : 'flex-row h-14 items-center',
-      ]}
-      onsubmit={async (e) => {
-        e.preventDefault()
+<div class="sticky bottom-4 p-4">
+  <form
+    class={[
+      'flex w-full',
+      'border-slate-200 dark:border-zinc-800',
+      'p-2 gap-2 backdrop-blur-xl',
+      'bg-white/50 dark:bg-zinc-950/50 border rounded-2xl',
+      settings.messages.fullMarkdown ? 'flex flex-col' : 'flex-row h-14 items-center',
+    ]}
+    onsubmit={async (e) => {
+      e.preventDefault()
 
-        const res = await sendMessage(textbox.message)
-        if (!res) return
+      const res = await sendMessage(textbox.message)
+      if (!res) return
 
-        data.message.value = {
-          private_messages: [
-            res.private_message_view,
-            ...message.private_messages,
-          ],
-        }
+      messages.items.unshift(
+        messages.from({
+          data: { ...res.private_message_view, type_: 'private_message' },
+          notification: {
+            ...res.private_message_view.private_message,
+            creator_id: res.private_message_view.creator.id,
+            id: -1,
+            kind: 'private_message',
+            read: true,
+            recipient_id: res.private_message_view.recipient.id,
+          },
+        }),
+      )
 
-        textbox.message = ''
-      }}
-    >
+      textbox.message = ''
+    }}
+  >
+    {#if settings.messages.fullMarkdown}
+      <MarkdownEditor
+        previewButton={false}
+        bind:value={textbox.message}
+        class="flex-1 rounded-xl"
+      />
+    {:else}
+      <Button
+        onclick={() => (settings.messages.fullMarkdown = true)}
+        size="custom"
+        class="h-9 w-9"
+        rounding="xl"
+      >
+        <Icon src={Plus} mini size="18" />
+      </Button>
+      <TextInput bind:value={textbox.message} class="rounded-xl! h-full flex-1 dark:bg-zinc-925!" />
+    {/if}
+
+    <div class="flex flex-row gap-2">
       {#if settings.messages.fullMarkdown}
-        <MarkdownEditor
-          previewButton={false}
-          bind:value={textbox.message}
-          class="flex-1 rounded-xl"
-        />
-      {:else}
         <Button
-          onclick={() => (settings.messages.fullMarkdown = true)}
+          onclick={() => (settings.messages.fullMarkdown = false)}
           size="custom"
           class="h-9 w-9"
           rounding="xl"
         >
-          <Icon src={Plus} mini size="18" />
+          <Icon src={Minus} mini size="18" />
         </Button>
-        <TextInput
-          bind:value={textbox.message}
-          class="rounded-xl! h-full flex-1 dark:bg-zinc-925!"
-        />
       {/if}
-
-      <div class="flex flex-row gap-2">
-        {#if settings.messages.fullMarkdown}
-          <Button
-            onclick={() => (settings.messages.fullMarkdown = false)}
-            size="custom"
-            class="h-9 w-9"
-            rounding="xl"
-          >
-            <Icon src={Minus} mini size="18" />
-          </Button>
-        {/if}
-        <Button
-          title={$t('common.send')}
-          size="custom"
-          rounding="xl"
-          class="aspect-square h-9 flex-1"
-          color="primary"
-          submit
-          loading={textbox.loading}
-          disabled={textbox.loading}
-          icon={PaperAirplane}
-        ></Button>
-      </div>
-    </form>
-  </div>
-{/await}
+      <Button
+        title={$t('common.send')}
+        size="custom"
+        rounding="xl"
+        class="aspect-square h-9 flex-1"
+        color="primary"
+        submit
+        loading={textbox.loading}
+        disabled={textbox.loading}
+        icon={PaperAirplane}
+      ></Button>
+    </div>
+  </form>
+</div>
 
 <style>
   #chat-window {

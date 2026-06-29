@@ -22,6 +22,19 @@
 
 Photon is a web app for the fediverse with helpful features and a nice UX.
 
+> [!NOTE]
+> When cloning this repo, you must clone submodules as well:
+>
+> ```sh
+> git clone https://github.com/xyphyn/photon --recursive
+> ```
+>
+> If you've already cloned the repo, run:
+>
+> ```sh
+> git submodule update --init --recursive
+> ```
+
 Jump to:
 
 - [Self-hosting](#self-hosting)

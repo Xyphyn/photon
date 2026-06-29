@@ -1,13 +1,10 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { page } from '$app/state'
-  import type {
-    GetPosts,
-    ListingType,
-    PostView,
-    SortType,
-  } from '$lib/api/types'
+  import type { GetPosts, ListingType, PostSortType, PostView } from '$lib/api/types'
   import { settings } from '$lib/app/settings.svelte'
+  import { Listing } from '$lib/feature/feeds/listing.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte'
   import Location from '$lib/feature/filter/Location.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
   import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
@@ -23,7 +20,7 @@
     cursor?: string
     params: {
       location?: ListingType
-      sort?: SortType
+      sort?: PostSortType
     }
     title?: string
     extended?: Snippet
@@ -41,24 +38,24 @@
     cursor = $bindable(),
     title,
     extended: passedExtended,
-    getParams,
+    getParams = $bindable(),
     client = $bindable(),
     header = true,
   }: Props = $props()
+
+  let listing = new Listing(posts, (p) => repos.posts.get(p))
 
   $effect(() => {
     if (filters.sort) settings.defaultSort.sort = filters.sort
   })
 
-  let filters = $state({
+  let filters = $derived({
     location: params.location,
     sort: params.sort,
   })
 
   const FeedComponent = $derived(
-    settings.infiniteScroll && browser && !settings.posts.noVirtualize
-      ? VirtualFeed
-      : PostFeed,
+    settings.infiniteScroll && browser && !settings.posts.noVirtualize ? VirtualFeed : PostFeed,
   )
 </script>
 
@@ -73,24 +70,15 @@
         <form class="" method="get" action={page.url.pathname}>
           <div class="flex flex-row gap-2">
             {#if filters.location}
-              <Location name="type" navigate bind:selected={filters.location} />
+              <Location name="type" navigate selected={filters.location} />
             {/if}
             {#if filters.sort}
-              <Sort
-                placement="bottom"
-                name="sort"
-                navigate
-                bind:selected={filters.sort}
-              />
+              <Sort placement="bottom" name="sort" navigate selected={filters.sort} />
             {/if}
             <ViewSelect placement="bottom" />
 
             <noscript>
-              <Button
-                class="self-end h-[34px] aspect-square"
-                size="custom"
-                submit
-              >
+              <Button class="self-end h-8.5 aspect-square" size="custom" submit>
                 <Icon src={ArrowRight} size="16" micro />
               </Button>
             </noscript>
@@ -101,9 +89,10 @@
   {/if}
 
   <FeedComponent
-    bind:posts
+    posts={listing.items}
     bind:lastSeen={() => client.lastSeen ?? 0, (v) => (client.lastSeen = v)}
     bind:params={getParams}
+    onLoadMore={(items) => posts.push(...items)}
     bind:virtualList={
       () => ({ itemHeights: client.itemHeights ?? [] }),
       (v) => {
@@ -112,15 +101,12 @@
     }
   />
   <svelte:element
-    this={settings.infiniteScroll && !settings.posts.noVirtualize
-      ? 'noscript'
-      : 'div'}
+    this={settings.infiniteScroll && !settings.posts.noVirtualize ? 'noscript' : 'div'}
     class="mt-auto flex flex-col"
   >
     <Pageination
       cursor={{ next: cursor }}
-      href={(page) =>
-        typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`}
+      href={(page) => (typeof page == 'number' ? `?page=${page}` : `?cursor=${page}`)}
       back={false}
     />
   </svelte:element>

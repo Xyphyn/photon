@@ -2,40 +2,29 @@ import { client } from '$lib/api/client.svelte'
 import { feed } from '$lib/feature/feeds/feed.svelte.js'
 
 export async function load({ fetch, parent }) {
-  const { page, query, sort, type, typeInstance } = await parent()
+  const { cursor, query, sort, type, period } = await parent()
 
-  const feedData = await feed('/explore/communities', async (params) =>
-    params.query != ''
-      ? await client({ func: fetch, instanceURL: typeInstance }).search({
-          limit: 40,
-          page: params.page,
-          sort: params.sort,
-          type_: 'Communities',
-          listing_type: params.type,
-          q: params.query,
-        })
-      : await client({
-          func: fetch,
-          instanceURL: typeInstance,
-        }).listCommunities({
-          limit: 40,
-          page: params.page,
-          sort: params.sort,
-          type_: params.type,
-          show_nsfw: true,
-        }),
+  const feedData = await feed(
+    '/explore/communities',
+    async (params) => await client({ func: fetch }).listCommunities(params),
   ).load({
-    page,
-    query,
+    page_cursor: cursor,
+    search_term: query,
     sort,
-    type,
+    type_: type,
+    time_range_seconds: period,
+    limit: 50,
   })
 
   return {
-    communities: feedData.communities,
-    type: type,
-    sort: sort,
-    query: query,
-    page: page,
+    communities: feedData.items,
+    params: {
+      type: type,
+      sort: sort,
+      query: query,
+      next: feedData.next_page,
+      prev: feedData.prev_page,
+      period: period,
+    },
   }
 }

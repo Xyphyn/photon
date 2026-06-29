@@ -3,12 +3,7 @@
   import { settings } from '$lib/app/settings.svelte'
   import { Option, Select } from 'mono-svelte'
   import { type SelectProps } from 'mono-svelte/forms/select/Select.svelte'
-  import {
-    Bars3,
-    Icon,
-    RectangleGroup,
-    ViewColumns,
-  } from 'svelte-hero-icons/dist'
+  import { Bars3, Icon, RectangleGroup, ViewColumns } from 'svelte-hero-icons/dist'
 
   interface Props extends SelectProps<string> {
     showLabel?: boolean

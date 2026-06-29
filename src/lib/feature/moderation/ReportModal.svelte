@@ -1,10 +1,6 @@
 <script lang="ts">
-  import { getClient } from '$lib/api/client.svelte'
-  import type {
-    CommentView,
-    PostView,
-    PrivateMessageView,
-  } from '$lib/api/types'
+  import { client } from '$lib/api/client.svelte'
+  import type { PrivateMessageView } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
@@ -13,28 +9,18 @@
   import ButtonGroup from 'mono-svelte/button/ButtonGroup.svelte'
   import { Plus } from 'svelte-hero-icons/dist'
   import { preventDefault, run } from 'svelte/legacy'
+  import { CommentModel } from '../comment/comment.svelte'
   import CommentItem from '../comment/CommentItem.svelte'
   import PrivateMessage from '../inbox/PrivateMessage.svelte'
+  import { PostModel } from '../post/post.svelte'
   import PostItem from '../post/PostItem.svelte'
 
   interface Props {
     open: boolean
-    item?: PostView | CommentView | PrivateMessageView | undefined
+    item?: PostModel | CommentModel | PrivateMessageView | undefined
   }
 
   let { open = $bindable(), item = $bindable() }: Props = $props()
-
-  const isComment = (
-    item: PostView | CommentView | PrivateMessageView,
-  ): item is CommentView => 'comment' in item
-
-  const isPost = (
-    item: PostView | CommentView | PrivateMessageView,
-  ): item is PostView => !isComment(item) && 'post' in item
-
-  const isPrivateMessage = (
-    item: PostView | CommentView | PrivateMessageView,
-  ): item is PrivateMessageView => !isComment(item) && 'private_message' in item
 
   let loading = $state(false)
   let reason = $state('')
@@ -44,18 +30,18 @@
     loading = true
 
     try {
-      if (isComment(item)) {
-        await getClient().createCommentReport({
+      if (item instanceof CommentModel) {
+        await client().createCommentReport({
           comment_id: item.comment.id,
           reason: reason,
         })
-      } else if (isPost(item)) {
-        await getClient().createPostReport({
+      } else if (item instanceof PostModel) {
+        await client().createPostReport({
           post_id: item.post.id,
           reason: reason,
         })
-      } else if (isPrivateMessage(item)) {
-        await getClient().createPrivateMessageReport({
+      } else {
+        await client().createPrivateMessageReport({
           private_message_id: item.private_message.id,
           reason: reason,
         })
@@ -85,21 +71,16 @@
   <form class="flex flex-col gap-4" onsubmit={preventDefault(report)}>
     {#if item}
       <div class="pointer-events-none list-none">
-        {#if isComment(item)}
+        {#if item instanceof CommentModel}
           <CommentItem actions={false} comment={item} />
-        {:else if isPost(item)}
+        {:else if item instanceof PostModel}
           <PostItem post={item} />
         {:else}
           <PrivateMessage message={item} />
         {/if}
       </div>
     {/if}
-    <MarkdownEditor
-      required
-      rows={4}
-      label={$t('moderation.reason')}
-      bind:value={reason}
-    />
+    <MarkdownEditor required rows={4} label={$t('moderation.reason')} bind:value={reason} />
     <ButtonGroup orientation="horizontal" class="flex flex-wrap">
       <Button
         onclick={() => (reason = $t('moderation.reportModal.presets.spam'))}
@@ -109,8 +90,7 @@
         {$t('moderation.reportModal.presets.spam')}
       </Button>
       <Button
-        onclick={() =>
-          (reason = $t('moderation.reportModal.presets.rules.content'))}
+        onclick={() => (reason = $t('moderation.reportModal.presets.rules.content'))}
         disabled={reason.startsWith(
           $t('moderation.reportModal.presets.rules.content').slice(0, -3),
         )}

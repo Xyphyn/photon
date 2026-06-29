@@ -7,10 +7,12 @@
   import { settings } from '$lib/app/settings.svelte'
   import { searchParam } from '$lib/app/util.svelte'
   import CommunityLink from '$lib/feature/community/CommunityLink.svelte'
+  import { Listing } from '$lib/feature/feeds/listing.svelte'
   import { postLink } from '$lib/feature/post'
   import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import UserLink from '$lib/feature/user/UserLink.svelte'
   import ObjectAutocomplete from '$lib/ui/form/ObjectAutocomplete.svelte'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import { Header, Pageination } from '$lib/ui/layout'
   import { Button, Option, Select, Spinner } from 'mono-svelte'
@@ -24,7 +26,10 @@
   import ModlogItemCard from './item/ModlogItemCard.svelte'
   import ModlogItemTable from './item/ModlogItemTable.svelte'
 
-  let { data = $bindable() } = $props()
+  let { data } = $props()
+
+  let listing = $derived(new Listing(data.modlog, (i) => i))
+  let params = $derived(data.params)
 
   let view = $state(
     `${
@@ -35,8 +40,7 @@
   )
 
   $effect(() => {
-    settings.modlogCardView =
-      view == 'true' ? true : view == 'false' ? false : undefined
+    settings.modlogCardView = view == 'true' ? true : view == 'false' ? false : undefined
   })
 </script>
 
@@ -67,7 +71,7 @@
             <div class="text-sm text-slate-600 dark:text-zinc-400">
               {$t('routes.admin.applications.user')}
             </div>
-            {#await client().getPersonDetails( { person_id: data.params.user, limit: 1 }, )}
+            {#await client().getPersonDetails({ person_id: data.params.user })}
               <Spinner width={24} />
             {:then person}
               <UserLink class="inline" user={person.person_view.person} />
@@ -80,7 +84,7 @@
               <!--TODO add translation key-->
               Moderator
             </div>
-            {#await client().getPersonDetails( { person_id: data.params.moderator, limit: 1 }, )}
+            {#await client().getPersonDetails({ person_id: data.params.moderator })}
               <Spinner width={24} />
             {:then person}
               <UserLink class="inline" user={person.person_view.person} />
@@ -95,10 +99,7 @@
             {#await client().getPost({ id: data.params.post })}
               <Spinner width={24} />
             {:then post}
-              <a
-                class="hover:underline block"
-                href={postLink(post.post_view.post)}
-              >
+              <a class="hover:underline block" href={postLink(post.post_view.post)}>
                 {post.post_view.post.name}
               </a>
             {/await}
@@ -112,10 +113,7 @@
             {#await client().getComment({ id: data.params.comment })}
               <Spinner width={24} />
             {:then comment}
-              <a
-                class="hover:underline block"
-                href="/comment/{data.params.comment}"
-              >
+              <a class="hover:underline block" href="/comment/{data.params.comment}">
                 {comment.comment_view.comment.content.slice(1, 200)}...
               </a>
             {/await}
@@ -126,8 +124,8 @@
   </Header>
   <div class="flex flex-row flex-wrap gap-2">
     <Select
-      bind:value={data.type}
-      onchange={() => searchParam(page.url, 'type', data.type, 'page')}
+      value={params.type}
+      onchange={(v) => searchParam(page.url, 'type', v!, 'page')}
       class="w-48"
     >
       {#snippet customLabel()}
@@ -136,25 +134,23 @@
           Type
         </span>
       {/snippet}
-      <Option value="All">All</Option>
-      <Option value="ModRemovePost">Remove post</Option>
-      <Option value="ModLockPost">Lock post</Option>
-      <Option value="ModFeaturePost">Feature post</Option>
-      <Option value="ModRemoveComment">Remove comment</Option>
-      <Option value="ModRemoveCommunity">Remove community</Option>
-      <Option value="ModBanFromCommunity">Ban from community</Option>
-      <Option value="ModAddCommunity">Add moderator</Option>
-      <Option value="ModTransferCommunity">Transfer community</Option>
-      <Option value="ModAdd">Add admin</Option>
-      <Option value="ModBan">Ban admin</Option>
-      <Option value="ModHideCommunity">Hide community</Option>
-      <Option value="AdminPurgePerson">Purge user</Option>
-      <Option value="AdminPurgeCommunity">Purge community</Option>
-      <Option value="AdminPurgePost">Purge post</Option>
-      <Option value="AdminPurgeComment">Purge comment</Option>
+      <Option value="all">All</Option>
+      <Option value="mod_remove_post">Remove post</Option>
+      <Option value="mod_lock_post">Lock post</Option>
+      <Option value="mod_feature_post">Feature post</Option>
+      <Option value="mod_remove_comment">Remove comment</Option>
+      <Option value="admin_remove_community">Remove community</Option>
+      <Option value="mod_ban_from_community">Ban from community</Option>
+      <Option value="mod_add_to_community">Add moderator</Option>
+      <Option value="admin_add">Add admin</Option>
+      <Option value="admin_ban">Ban admin</Option>
+      <Option value="admin_purge_person">Purge user</Option>
+      <Option value="admin_purge_community">Purge community</Option>
+      <Option value="admin_purge_post">Purge post</Option>
+      <Option value="admin_purge_comment">Purge comment</Option>
     </Select>
 
-    <Select bind:value={view} class="w-36">
+    <Select value={view} onchange={(v) => (view = v!)} class="w-36">
       {#snippet customLabel()}
         <span class="flex gap-1 items-center">
           <Icon src={ViewColumns} size="15" mini />
@@ -169,54 +165,32 @@
   <div class="flex flex-col md:flex-row md:items-center gap-2 w-full">
     <ObjectAutocomplete
       placeholder="Filter by community"
-      listing_type="All"
       showWhenEmpty={true}
       label="Community"
       q={page.url.searchParams.get('community') ? 'Selected' : ''}
-      onselect={(e) =>
-        searchParam(
-          page.url,
-          'community',
-          e?.community.id.toString() ?? '',
-          'page',
-        )}
+      onselect={(e) => searchParam(page.url, 'community', e?.community.id.toString() ?? '', 'page')}
     />
     <UserAutocomplete
       instance={page.url.searchParams.get('instance') || undefined}
       placeholder="Filter by user"
-      listing_type="All"
       showWhenEmpty={true}
       label="User"
-      q={page.url.searchParams.get('user')
-        ? (data.filters.user ?? 'Selected')
-        : ''}
-      onselect={(e) =>
-        searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
+      q={data.params.user ? 'Selected' : ''}
+      onselect={(e) => searchParam(page.url, 'user', e?.id.toString() ?? '', 'page')}
     />
     {#if profile.isAdmin}
       <UserAutocomplete
         placeholder="Filter by moderator"
-        listing_type="All"
+        listing_type="all"
         showWhenEmpty={true}
         label="Moderator"
-        q={page.url.searchParams.get('mod_id')
-          ? (data.filters.moderator ?? 'Selected')
-          : ''}
-        onselect={(e) =>
-          searchParam(page.url, 'mod_id', e?.id.toString() ?? '', 'page')}
+        q={data.params.moderator ? 'Selected' : ''}
+        onselect={(e) => searchParam(page.url, 'mod_id', e?.id.toString() ?? '', 'page')}
       />
     {/if}
     <Button
       onclick={() => {
-        searchParam(
-          page.url,
-          '',
-          '',
-          'user',
-          'moderator',
-          'community',
-          'instance',
-        )
+        searchParam(page.url, '', '', 'user', 'moderator', 'community', 'instance')
       }}
       size="custom"
       class="self-end shrink-0 h-8.5 aspect-square"
@@ -225,18 +199,16 @@
       <Icon src={XMark} size="16" mini />
     </Button>
   </div>
-  {#if data.modlog && data.modlog.length > 0}
+  {#if listing.items.length > 0}
     {#if settings.modlogCardView ?? !window.matchMedia('(min-width: 1600px)').matches}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {#each data.modlog as modlog (modlog)}
+        {#each listing.items as modlog (modlog)}
           <ModlogItemCard item={modlog} />
         {/each}
       </div>
     {:else}
       <div style="width:100%; overflow-x: auto;" class="table-container">
-        <table
-          class="table overflow-x-auto table-fixed relative w-full min-w-2xl"
-        >
+        <table class="table overflow-x-auto table-fixed relative w-full min-w-2xl">
           <colgroup>
             <col style="width: 10.6%;" />
             <col style="width: 16.6%;" />
@@ -249,25 +221,20 @@
             <tr class="rounded-t-lg overflow-hidden">
               <th>Time</th>
               <th>Moderator</th>
-              <th>Community</th>
+              <th>Location</th>
               <th>Action</th>
               <th>Reason</th>
               <th align="right">Content</th>
             </tr>
           </thead>
           <tbody class="text-sm divide-y divide-slate-200 dark:divide-zinc-800">
-            {#each data.modlog as modlog (modlog)}
+            {#each listing.items as modlog (modlog)}
               <ModlogItemTable item={modlog} />
             {/each}
           </tbody>
         </table>
       </div>
     {/if}
-    <Pageination
-      page={data.page}
-      hasMore={data.params.hasMore}
-      href={(page) => `?page=${page}`}
-    />
   {:else}
     <Placeholder
       title="No results"
@@ -276,6 +243,18 @@
     />
   {/if}
 </div>
+{#if params.next != null || params.prev != null}
+  <Fixate placement="bottom">
+    <Pageination
+      cursor={{
+        back: params.prev,
+        next: params.next,
+      }}
+      hasMore={params.next != null}
+      href={(cursor) => `?cursor=${cursor}`}
+    />
+  </Fixate>
+{/if}
 
 <style>
   @reference '../../app.css';

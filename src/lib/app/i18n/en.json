@@ -73,7 +73,8 @@
             "subscribed": "Subscriptions",
             "moderator": "Moderator",
             "global": "Global",
-            "popular": "Popular"
+            "popular": "Popular",
+            "suggested": "Suggested"
         },
         "sort": {
             "label": "Sort",
@@ -100,8 +101,12 @@
             "old": "Old",
             "controversial": "Controversial",
             "scaled": "Scaled",
-            "mostcomments": "Most Comments",
-            "newcomments": "New Replies"
+            "mostcomments": "Most comments",
+            "newcomments": "New replies",
+            "posts": "Most posts",
+            "subscribers": "Most subscribers",
+            "nameAsc": "Name (ascending)",
+            "nameDes": "Name (descending)"
         },
         "view": {
             "label": "View",
@@ -116,7 +121,8 @@
         "inbox": {
             "messages": "Messages",
             "replies": "Replies",
-            "mentions": "Mentions"
+            "mentions": "Mentions",
+            "modActions": "Modlogs"
         }
     },
     "form": {
@@ -195,12 +201,12 @@
         "signup": {
             "title": "Sign Up",
             "description": "Choose the server your account's information will be hosted on.",
-            "info": "You can access all content across the Fediverse regardless of your account's server, it is generally okay to pick any of the following.",
+            "info": "You can access all content across the Fediverse, regardless of your account's server.",
             "chooseInstance": "Choose a server",
             "recommended": "Recommended",
             "application": {
                 "label": "Application",
-                "info": "To join this server, you must fill out this application, and wait to be accepted. You will receive an email if your application is accepted.",
+                "info": "This server requires that you submit an application. An admin must review it before your account is activated.",
                 "notice": "Your signup is now pending. Once an administrator reviews it, you will receive an email if it was accepted. You then can log in."
             },
             "closed": {
@@ -213,7 +219,14 @@
                 "description": "Check your inbox for a verification link. Once you've clicked it, press the button below.",
                 "submit": "I've verified my email",
                 "error": "Your email has not been verified."
-            }
+            },
+            "pickForMe": "Choose for me",
+            "stages": {
+                "info": "This server has its own terms of service and privacy policy. By pressing 'next' and signing up, you agree to these terms.",
+                "captcha": "Solve the CAPTCHA to verify you're not a bot."
+            },
+            "next": "Next",
+            "registering": "Registering..."
         },
         "description": "Description",
         "time": {
@@ -315,7 +328,18 @@
             "top": "Top results",
             "other": "Other results"
         },
-        "saved": "Saved",
+        "saved": {
+            "title": "Saved",
+            "search": "Search your saved items",
+            "placeholder": {
+              "title": "No saved items",
+              "description": "Save posts or comments, and they'll be placed here for future reference."
+            },
+            "noResults": {
+              "title": "No results",
+              "description": "You haven't saved anything that matches those filters."
+            }
+        },
         "post": {
             "crosspostCount": "Crossposts",
             "commentCount": "Comments",
@@ -350,7 +374,7 @@
         },
         "inbox": {
             "title": "Inbox",
-            "markAsRead": "Mark All Read",
+            "markAsRead": "Mark all read",
             "empty": {
                 "title": "No new notifications",
                 "description": "Messages, replies, and mentions will appear here."
@@ -358,7 +382,23 @@
             "item": {
                 "reply": "{{user}} replied to you in {{post}}",
                 "mention": "{{user}} mentioned you in {{post}}",
-                "message": "{{user}} messaged {{recipient}}"
+                "message": "{{user}} messaged {{recipient}}",
+                "modActions": {
+                  "moderator": "A **{{community}}** moderator",
+                  "mod_ban_from_community": "{{moderator}} **banned you**",
+                  "mod_ban_from_community_inverse": "{{moderator}} **unbanned you**",
+                  "mod_add_to_community": "{{moderator}} **promoted you to moderator**",
+                  "mod_add_to_community_inverse": "{{moderator}} **demoted you as moderator**",
+                  "mod_remove_post": "{{moderator}} **removed your post**",
+                  "mod_remove_post_inverse": "{{moderator}} **restored your post**",
+                  "mod_remove_comment": "{{moderator}} **removed your comment**",
+                  "mod_remove_comment_inverse": "{{moderator}} **restored your comment**",
+                  "mod_lock_post": "{{moderator}} **locked your post**",
+                  "mod_lock_post_inverse": "{{moderator}} **unlocked your post**",
+                  "mod_lock_comment": "{{moderator}} **locked your comment**",
+                  "mod_lock_comment_inverse": "{{moderator}} **unlocked your comment**",
+                  "mod_lock_warn_comment": "{{moderator}} **warned you**"
+                }
             },
             "messages": {
                 "conversation": "This is the beginning of your conversation with {{user}}",
@@ -397,12 +437,13 @@
                 "sidebar": "Sidebar",
                 "icon": "Icon",
                 "banner": "Banner",
-                "downvotesEnabled": "Enable downvotes",
                 "nsfwEnabled": "Enable NSFW",
+                "contentWarning": "Content warning",
                 "registration": {
                     "label": "Registration mode",
                     "open": "Open",
                     "application": "Require application",
+                    "invitation": "Require invitation",
                     "closed": "Closed"
                 },
                 "applicationQuestion": "Application question",
@@ -411,18 +452,26 @@
                 "emailAdminsOnApplication": "Email admins on receiving new applications",
                 "emailAdminsOnReport": "Email admins on receiving new reports",
                 "listingType": {
-                    "label": "Listing Type",
+                    "label": "Default listing type",
                     "all": "All",
                     "local": "Local"
                 },
+                "postSortType": "Default post sort",
+                "commentSortType": "Default comment sort",
+                "postListingMode": "Default post listing mode",
+                "votes": {
+                    "title": "Voting",
+                    "postUpvotes": "Post upvotes",
+                    "postDownvotes": "Post downvotes",
+                    "commentUpvotes": "Comment upvotes",
+                    "commentDownvotes": "Comment downvotes"
+                },
                 "private": "Private instance",
-                "hideModlogModNames": "Hide modlog mod names",
                 "slurFilter": "Slur filter regex",
                 "federation": "Federation enabled",
-                "federationDebug": "Federation debug mode",
-                "captcha": {
-                    "enabled": "CAPTCHA enabled"
-                }
+                "federationSignedFetch": "Sign outgoing federation fetches",
+                "oauthRegistration": "Allow OAuth auto-registration",
+                "emailNotificationsDisabled": "Disable email notifications"
             },
             "applications": {
                 "title": "Applications",
@@ -698,7 +747,8 @@
         "download": "Download",
         "attach": "Attach file",
         "info": "Info",
-        "continue": "Continue"
+        "continue": "Continue",
+        "processing": "Processing..."
     },
     "message": {
         "success": "Success",

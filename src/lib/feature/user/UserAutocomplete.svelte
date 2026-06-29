@@ -22,7 +22,6 @@
   let {
     q = $bindable(''),
     instance = undefined,
-    listing_type = 'Subscribed',
     showWhenEmpty = false,
     hideOwnUser = false,
     label,
@@ -36,13 +35,11 @@
   search={async (q) => {
     const users = (
       await getClient(instance).search({
-        q: q || ' ',
-        type_: 'Users',
+        search_term: q || ' ',
+        type_: 'users',
         limit: 20,
-        listing_type: listing_type,
-        sort: 'TopAll',
       })
-    ).users.map((c) => c.person)
+    ).persons.map((c) => c.person)
 
     if (hideOwnUser) {
       const myself = profile.current.user?.local_user_view.person.id
@@ -50,7 +47,7 @@
     }
     return users
   }}
-  extractName={(c) => `${c.name}@${new URL(c.actor_id).hostname}`}
+  extractName={(c) => `${c.name}@${new URL(c.ap_id).hostname}`}
   bind:query={q}
   {label}
   {...rest}
@@ -76,7 +73,7 @@
         <div class="flex flex-col text-left">
           <span>{item.name}</span>
           <span class="text-xs opacity-80">
-            {new URL(item.actor_id).hostname}
+            {new URL(item.ap_id).hostname}
           </span>
         </div>
       </MenuButton>

@@ -29,12 +29,6 @@
   import MdTableHead from './renderers/table/MdTableHead.svelte'
   import MdTableRow from './renderers/table/MdTableRow.svelte'
 
-  function preprocess(src: string) {
-    return src
-      .replaceAll(/\[([^\]]*)\]\(\s*javascript:[^)]*\)/gim, '*link removed*')
-      .replaceAll(/^\s*\[[^\]]+\]:\s*javascript:.*$/gim, '*link removed*')
-  }
-
   marked.setOptions({
     gfm: true,
     breaks: false,
@@ -148,16 +142,13 @@
     noStyle: noStyle,
   })
 
-  let tokens = $derived(marked.lexer(preprocess(source)))
+  let tokens = $derived(marked.lexer(source))
 </script>
 
 <svelte:element
   this={inline ? 'div' : 'article'}
   dir="auto"
-  class={[
-    !noStyle && 'wrap-break-word space-y-4 leading-normal font-reading',
-    clazz,
-  ]}
+  class={[!noStyle && 'wrap-break-word space-y-4 leading-normal font-reading', clazz]}
   {style}
 >
   <MdTree {tokens} renderers={inline ? inlineRenderers : renderers} />

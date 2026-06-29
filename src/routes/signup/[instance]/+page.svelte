@@ -1,342 +1,220 @@
 <script lang="ts">
   import { goto } from '$app/navigation'
   import { page } from '$app/state'
-  import type { ClientType } from '$lib/api/base.js'
-  import { getClient } from '$lib/api/client.svelte'
-  import type { GetCaptchaResponse } from '$lib/api/types'
-  import { profile } from '$lib/app/auth'
-  import { errorMessage } from '$lib/app/error'
+  import { errorMessage } from '$lib/app/error.js'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
-  import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
-  import ErrorContainer, {
-    clearErrorScope,
-    pushError,
-  } from '$lib/ui/info/ErrorContainer.svelte'
-  import Placeholder from '$lib/ui/info/Placeholder.svelte'
-  import { Header } from '$lib/ui/layout'
-  import {
-    Button,
-    Label,
-    Material,
-    Spinner,
-    Switch,
-    TextArea,
-    TextInput,
-    toast,
-  } from 'mono-svelte'
-  import {
-    ArrowLeft,
-    ArrowPath,
-    AtSymbol,
-    Envelope,
-    ExclamationTriangle,
-    Icon,
-    Key,
-    Plus,
-    QuestionMarkCircle,
-    XCircle,
-  } from 'svelte-hero-icons/dist'
+  import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
+  import { loader } from '$lib/app/util.svelte.js'
+  import InstanceCard from '$lib/feature/instance/InstanceCard.svelte'
+  import Fixate from '$lib/ui/generic/Fixate.svelte'
+  import ErrorContainer, { pushError } from '$lib/ui/info/ErrorContainer.svelte'
+  import Header from '$lib/ui/layout/pages/Header.svelte'
+  import { Badge, Button, Material, TextInput, TextLoader, toast } from 'mono-svelte'
+  import { ArrowPath, AtSymbol, Envelope, ExclamationTriangle, Key } from 'svelte-hero-icons/dist'
+  import { expoOut } from 'svelte/easing'
+  import { fly } from 'svelte/transition'
+  import { SignupForm } from './signup-form.svelte.js'
 
   let { data } = $props()
 
-  let stage = $state<'signup' | 'verify' | 'application'>('signup')
-
-  const instance = page.params.instance
-  let captchaRequired = data.site_view.local_site.captcha_enabled
-  let email: string | undefined = $state('')
-
-  $effect(() => {
-    if (email == '') email = undefined
-  })
-
-  let username = $state(''),
-    password = $state(''),
-    passwordVerify = $state(''),
-    captcha = $state<GetCaptchaResponse>(),
-    verifyCaptcha = $state<string>(),
-    application = $state(''),
-    submitting = $state(false),
-    honeypot = $state<string>(),
-    nsfw = $state(false),
-    verifying = $state(false)
-
-  const instanceType: ClientType = $state({ name: 'lemmy', baseUrl: '/api/v3' })
-
-  const getCaptcha = async () =>
-    (captcha = await getClient(instance, fetch).getCaptcha())
-
-  let captchaAudio = $derived(
-    captcha?.ok?.wav ? `data:audio/wav;base64,${captcha.ok.wav}` : '',
-  )
-
-  async function submit() {
-    clearErrorScope(page.url.pathname)
-    submitting = true
-
-    try {
-      const res = await getClient(instance, fetch).register({
-        username: username,
-        email: email,
-        password: password,
-        password_verify: passwordVerify,
-        show_nsfw: nsfw,
-        answer: application,
-        captcha_answer: verifyCaptcha,
-        captcha_uuid: captcha?.ok?.uuid,
-        honeypot,
-      })
-
-      const registrationMode = data.site_view.local_site.registration_mode
-
-      if (res?.jwt) {
-        await profile.add(res.jwt, page.params.instance!, instanceType)
-
-        toast({ content: $t('toast.logIn'), type: 'success' })
+  const register = () =>
+    loader(
+      (v) => (signup.loading = v),
+      async () =>
+        signup.stage == 'waitVerify'
+          ? await signup.submit('verify')
+          : await signup.submit('register'),
+      () => {
         goto('/')
-      } else if (
-        res.verify_email_sent ||
-        registrationMode == 'RequireApplication'
-      ) {
-        if (res.verify_email_sent) return (stage = 'verify')
-
-        if (registrationMode == 'RequireApplication')
-          return (stage = 'application')
-      } else {
-        throw new Error($t('toast.failSignup'))
-      }
-
-      toast({
-        content: $t('toast.successSignup'),
-        type: 'success',
-      })
-    } catch (err) {
-      pushError({
-        scope: page.url.pathname,
-        message: errorMessage(err as string),
-      })
-    }
-    submitting = false
-  }
-
-  async function verifiedEmail() {
-    verifying = true
-    clearErrorScope(page.url.pathname)
-    try {
-      const res = await getClient(instance, fetch).login({
-        username_or_email: username,
-        password: password,
-      })
-
-      if (res.jwt) {
-        await profile.add(res.jwt, data.instance, instanceType)
-        goto('/')
-      } else if (res.verify_email_sent) {
+        toast({
+          content: $t('toast.successSignup'),
+          type: 'success',
+        })
+      },
+      (e) =>
         pushError({
           scope: page.url.pathname,
-          message: $t('form.signup.verify.error'),
-        })
-      } else {
-        stage = 'application'
-      }
-    } catch (err) {
-      pushError({
-        scope: page.url.pathname,
-        message: errorMessage(err as string),
-      })
-    }
-    verifying = false
-  }
+          message: errorMessage(e),
+        }),
+    )
+
+  let signup = $derived(new SignupForm(page.params.instance!, data, register))
+  let site = $derived(data.site_view)
+  let captchaAudio = $derived(
+    signup.captcha?.ok?.wav ? `data:audio/wav;base64,${signup.captcha?.ok.wav}` : '',
+  )
 </script>
 
 <svelte:head>
   <title>{$t('account.signup')}</title>
 </svelte:head>
 
-<div class="flex flex-col md:flex-row flex-1/2 gap-8 h-full max-w-6xl mx-auto">
-  {#if stage == 'signup'}
-    <form
-      class="flex flex-col gap-4 h-full w-full flex-2/3"
-      onsubmit={(e) => {
-        e.preventDefault()
-        submit()
-      }}
-    >
-      <Button href="/accounts" class=" mb-4 w-max">
-        <Icon src={ArrowLeft} size="16" micro />
-        {$t('common.back')}
-      </Button>
-      <Header>
-        {$t('form.signup.title')}
-        {#snippet extended()}
-          <div class="md:hidden">
-            <EntityHeader
-              name={data.site_view.site.name}
-              avatar={data.site_view.site.icon}
-              banner={data.site_view.site.banner || null}
-              compact="always"
-              avatarCircle={false}
-            />
-          </div>
-        {/snippet}
-      </Header>
-      <ErrorContainer scope={page.url.pathname} />
-
-      {#if data.site_view.local_site.registration_mode != 'Closed'}
-        <div class="flex flex-col md:flex-row gap-2 *:flex-1">
-          <TextInput
-            bind:value={email}
-            label={$t('form.email')}
-            required={data.site_view.local_site.require_email_verification}
-            type="email"
-            icon={Envelope}
-            size="md"
-          />
-          <TextInput
-            bind:value={username}
-            label={$t('form.username')}
-            required
-            icon={AtSymbol}
-          />
-        </div>
-        <div class="flex flex-col md:flex-row *:flex-1 gap-2">
-          <TextInput
-            bind:value={password}
-            label={$t('form.password')}
-            required
-            type="password"
-            icon={Key}
-          />
-          <TextInput
-            bind:value={passwordVerify}
-            label={$t('form.confirmPassword')}
-            required
-            type="password"
-            icon={Key}
-          />
-        </div>
-        {#if data.site_view.local_site.registration_mode == 'RequireApplication'}
-          <Material rounding="2xl" color="warning" icon={ExclamationTriangle}>
-            {$t('form.signup.application.info')}
-          </Material>
-          <Material rounding="2xl" color="info">
-            {#if data.site_view.local_site.application_question}
-              <Markdown
-                source={data.site_view.local_site.application_question}
-              />
-            {/if}
-          </Material>
-          <TextArea
-            label={$t('form.signup.application.label')}
-            required
-            bind:value={application}
-          />
-        {/if}
-        {#if captchaRequired}
-          <Label class="block -mb-3 font-medium text-sm">Captcha</Label>
-          <Material rounding="2xl">
-            <div class="flex flex-col gap-4">
-              {#await getCaptcha()}
-                <Spinner width={32} />
-              {:then}
-                {#if captcha?.ok}
-                  <img
-                    src="data:image/png;base64,{captcha.ok.png}"
-                    alt="Captcha"
-                    class="w-max"
-                  />
-                  <audio controls src={captchaAudio}></audio>
-                {:else}
-                  <Material
-                    class="flex gap-2 dark:text-yellow-200 text-yellow-800 bg-yellow-500/20"
-                  >
-                    <Icon src={QuestionMarkCircle} mini size="24" />
-                    No captcha was returned
-                  </Material>
-                {/if}
-              {:catch err}
-                <ErrorContainer message={errorMessage(err)} />
-              {/await}
-              <Button onclick={() => getCaptcha()} size="square-md">
-                <Icon src={ArrowPath} size="16" mini />
-              </Button>
-              <TextInput required bind:value={verifyCaptcha} />
-            </div>
-          </Material>
-        {/if}
-        <Switch bind:checked={nsfw}>{$t('form.profile.showNSFW')}</Switch>
-        <input type="dn" name="honeypot" bind:value={honeypot} class="hidden" />
-        <Button
-          submit
-          color="primary"
-          size="lg"
-          loading={submitting}
-          disabled={submitting}
-          class="mt-auto"
-        >
-          {$t('form.submit')}
-        </Button>
-      {:else}
-        <div class="my-auto">
-          <Placeholder
-            icon={XCircle}
-            title={$t('form.signup.closed.title')}
-            description={$t('form.signup.closed.description')}
-          >
-            <Button icon={Plus} href="/signup">
-              {$t('form.signup.closed.anotherInstance')}
-            </Button>
-          </Placeholder>
-        </div>
-      {/if}
-    </form>
-  {:else if stage == 'verify'}
-    <div class="flex-2/3 flex flex-col h-full justify-center gap-8">
-      <ErrorContainer scope={page.url.pathname} />
-      <h2 class="font-medium text-3xl">{$t('toast.verifyEmail')}</h2>
-      <form
-        onsubmit={(e) => {
-          e.preventDefault()
-          verifiedEmail()
-        }}
-        class="flex items-center gap-2"
-      >
-        <Button
-          loading={verifying}
-          disabled={verifying}
-          submit
-          color="primary"
-          rounding="pill"
-          class="self-start"
-        >
-          {$t('form.signup.verify.submit')}
-        </Button>
-        <Button href="/signup" rounding="pill">
-          <Icon src={ArrowLeft} size="16" micro />
-          {$t('common.back')}
-        </Button>
-      </form>
-    </div>
-  {:else if stage == 'application'}
-    <div class="flex-2/3 flex flex-col h-full justify-center gap-8">
-      <h2 class="font-medium text-3xl">
-        {$t('form.signup.application.notice')}
-      </h2>
-      <Button href="/signup" rounding="pill">
-        <Icon src={ArrowLeft} size="16" micro />
-        {$t('common.back')}
-      </Button>
-    </div>
-  {/if}
-  <div class="flex-1/2 flex flex-col gap-2 max-md:hidden">
-    <div class=" w-full sticky top-0">
-      <EntityHeader
-        name={data.site_view.site.name}
-        avatar={data.site_view.site.icon}
-        banner={data.site_view.site.banner || null}
-        avatarCircle={false}
-        bio={data.site_view.site.sidebar}
+{#snippet infoPage()}
+  <div class="signup-form-page max-w-xl w-full relative">
+    {$t('form.signup.stages.info')}
+    <Material color="info" rounding="2xl" padding="none" class="max-h-full min-h-0">
+      <Markdown
+        source={site.local_site.legal_information}
+        class="text-base min-h-0 overflow-auto h-full p-6"
       />
-    </div>
+    </Material>
+
+    <Fixate placement="bottom">
+      <Button onclick={() => signup.next()} size="lg" color="primary" class="w-full">
+        {$t('form.signup.next')}
+      </Button>
+    </Fixate>
+  </div>
+{/snippet}
+{#snippet credentialsPage()}
+  <form onsubmit={() => signup.next()} class="signup-form-page max-w-xl w-full">
+    <TextInput
+      bind:value={signup.form.email}
+      label={$t('form.email')}
+      required={site.local_site.email_verification_required}
+      type="email"
+      icon={Envelope}
+      size="md"
+    />
+    <TextInput
+      bind:value={signup.form.username}
+      label={$t('form.username')}
+      required
+      icon={AtSymbol}
+      minlength={3}
+      maxlength={32}
+    >
+      {#snippet suffix()}
+        <div class="my-auto text-sm h-full items-center px-2 hidden md:flex">
+          @{signup.instance}
+        </div>
+      {/snippet}
+    </TextInput>
+    <TextInput
+      bind:value={signup.form.password}
+      label={$t('form.password')}
+      required
+      type="password"
+      icon={Key}
+      minlength={8}
+      maxlength={72}
+    />
+    <TextInput
+      label={$t('form.confirmPassword')}
+      required
+      type="password"
+      icon={Key}
+      minlength={8}
+      maxlength={72}
+      pattern={signup.form.password}
+    />
+    <Button submit size="lg" color="primary" class="mt-auto">
+      {$t('form.signup.next')}
+    </Button>
+  </form>
+{/snippet}
+{#snippet captchaPage()}
+  <form onsubmit={() => signup.next()} class="signup-form-page max-w-2xl">
+    <Material class="overflow-hidden flex flex-col justify-between w-full h-96">
+      {#await signup.refreshCaptcha()}
+        <TextLoader>Loading captcha...</TextLoader>
+      {:then captcha}
+        <img src="data:image/png;base64,{captcha.ok?.png}" alt="CAPTCHA" class="-m-4" />
+        <div class="flex gap-2 items-center">
+          <audio>
+            <source src={captchaAudio} />
+          </audio>
+          <Button size="square-md" icon={ArrowPath} onclick={() => signup}></Button>
+        </div>
+      {/await}
+    </Material>
+    <TextInput label="CAPTCHA" placeholder="A82NIA" bind:value={signup.form.captcha} required />
+  </form>
+{/snippet}
+{#snippet submittedPage()}
+  <div class="signup-form-page flex justify-center items-center">
+    <h2>
+      <TextLoader class="text-3xl!">
+        {$t('form.signup.registering')}
+      </TextLoader>
+    </h2>
+  </div>
+{/snippet}
+{#snippet applicationPage()}
+  <form onsubmit={() => signup.next()} class="signup-form-page max-w-xl w-full">
+    <Material color="warning" icon={ExclamationTriangle} rounding="2xl">
+      {$t('form.signup.application.info')}
+    </Material>
+    <Material color="info" rounding="2xl">
+      {site.local_site.application_question}
+    </Material>
+    <MarkdownEditor
+      bind:value={signup.form.application}
+      required
+      label={$t('form.signup.application.label')}
+      placeholder={site.local_site.application_question}
+      tools={false}
+      previewButton={false}
+      rows={4}
+    />
+    <Button submit size="lg" color="primary" class="mt-auto">
+      {$t('form.signup.next')}
+    </Button>
+  </form>
+{/snippet}
+{#snippet waitVerifyPage()}{/snippet}
+{#snippet waitApplicationPage()}{/snippet}
+<div
+  class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-x divide-slate-200 dark:divide-zinc-800 min-h-0 w-full h-full"
+>
+  <div class="p-16 overflow-auto md:max-h-screen">
+    <InstanceCard {site} />
+  </div>
+  <div
+    class="flex flex-col gap-4 p-16 bg-slate-50 dark:bg-zinc-925 col-span-2 max-h-full overflow-auto"
+  >
+    <Badge class="w-max text-base! px-3">
+      {signup.stages.findIndex((i) => i == signup.stage) + 1} / {signup.stages.length}
+    </Badge>
+    <Header>
+      {$t('form.signup.title')}
+      {#snippet extended()}
+        <ErrorContainer scope={page.url.pathname} />
+      {/snippet}
+    </Header>
+
+    {#key signup.stage}
+      <div
+        in:fly={{ duration: 300, y: 8, easing: expoOut, delay: 300 }}
+        out:fly={{ duration: 300, y: 8, easing: expoOut }}
+        class="flex-1 h-full"
+      >
+        {#if signup.stage == 'info'}
+          {@render infoPage()}
+        {:else if signup.stage == 'credentials'}
+          {@render credentialsPage()}
+        {:else if signup.stage == 'captcha'}
+          {@render captchaPage()}
+        {:else if signup.stage == 'application'}
+          {@render applicationPage()}
+        {:else if signup.stage == 'submitted'}
+          {@render submittedPage()}
+        {:else if signup.stage == 'waitVerify'}
+          {@render waitVerifyPage()}
+        {:else if signup.stage == 'waitApplication'}
+          {@render waitApplicationPage()}
+        {/if}
+      </div>
+    {/key}
   </div>
 </div>
+
+<style>
+  .signup-form-page {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+    height: 100%;
+  }
+</style>

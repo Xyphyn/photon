@@ -30,7 +30,7 @@
 
   async function subscribe(
     id: number | undefined = community?.community.id,
-    subscribed: SubscribedType | undefined = community?.subscribed,
+    subscribed: SubscribedType | undefined = ,
   ) {
     if (!profile.current?.jwt) return
     if (!id || !subscribed) return

@@ -792,6 +792,12 @@ const methods: MethodDefinitions = {
   editSite: 'unsupported',
   deleteImage: 'unsupported',
   listMedia: 'unsupported',
+  adminBlockInstance: 'unsupported',
+  adminAllowInstance: 'unsupported',
+  createTagline: 'unsupported',
+  editTagline: 'unsupported',
+  deleteTagline: 'unsupported',
+  listTaglines: 'unsupported',
 } satisfies MethodDefinitions
 
 export const PiefedClientConstants = {

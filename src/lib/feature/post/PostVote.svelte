@@ -1,23 +1,22 @@
 <script lang="ts" module>
-  export const voteColor = (vote: number) =>
-    vote == 1
+  export const voteColor = (upvoted: boolean) =>
+    upvoted === true
       ? `btn-primary border-0! border border-transparent`
-      : vote == -1
+      : upvoted === false
         ? `bg-red-500 text-slate-50 dark:bg-red-400 dark:text-zinc-900`
         : ''
 
   export const shouldShowVoteColor = (
-    vote: number,
+    upvoted: boolean | undefined,
     type: 'upvotes' | 'downvotes',
   ): string =>
-    (vote == -1 && type == 'downvotes') || (vote == 1 && type == 'upvotes')
-      ? voteColor(vote)
+    (upvoted === false && type == 'downvotes') || (upvoted === true && type == 'upvotes')
+      ? voteColor(upvoted)
       : ''
 </script>
 
 <script lang="ts">
   import { site } from '$lib/api/client.svelte'
-  import type { Post } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
@@ -27,89 +26,65 @@
   import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons/dist'
   import { backOut } from 'svelte/easing'
   import { fly } from 'svelte/transition'
-  import { vote as voteItem } from '../legacy/contentview'
+  import type { PostModel } from './post.svelte'
 
   interface Props {
-    post: Post
-    vote?: number
-    score: number
-    upvotes: number
-    downvotes: number
+    post: PostModel
     showCounts?: boolean
-    children?: import('svelte').Snippet<[{ vote?: number; score?: number }]>
   }
 
-  let {
-    post = $bindable(),
-    vote = $bindable(),
-    score = $bindable(),
-    upvotes = $bindable(),
-    downvotes = $bindable(),
-    showCounts = true,
-    children,
-  }: Props = $props()
+  let { post = $bindable(), showCounts = true }: Props = $props()
 
-  const castVote = async (newVote: number) => {
+  // These are redefined rather than directly taken from PostModel
+  // to allow for optimistic UI updates. $derived's can be overriden.
+  let upvotes = $derived(post.post.upvotes)
+  let downvotes = $derived(post.post.downvotes)
+  let myVote = $derived(post.myVote)
+  let voteRatio = $derived(Math.floor(((upvotes ?? 0) / ((upvotes ?? 0) + (downvotes ?? 0))) * 100))
+
+  async function castVote(newVote: 'upvoted' | 'downvoted' | 'none') {
     if (navigator.vibrate) navigator.vibrate(1)
     if (!profile.current?.jwt) {
       toast({ content: $t('toast.loginVoteGate'), type: 'warning' })
       return
     }
 
-    switch (vote ?? 0) {
-      case 0:
+    // post.myVote == current vote
+    switch (post.myVote) {
+      case 'none':
         // nothing was removed
-        if (newVote == 1) upvotes++
-        else downvotes++
+        if (newVote == 'upvoted') upvotes++
+        else if (newVote == 'downvoted') downvotes++
         break
-      case 1:
-        // removed an upvote
+      case 'upvoted':
         upvotes--
-        if (newVote == -1) downvotes++
+        if (newVote == 'downvoted') downvotes++
         break
-      case -1:
-        // removed a downvote
+      case 'downvoted':
         downvotes--
-        if (newVote == 1) upvotes++
+        if (newVote == 'upvoted') upvotes++
         break
     }
 
-    vote = newVote
-
-    voteItem(post, newVote)
-      .then((res) => ({ upvotes, downvotes, score } = res))
-      .catch((e) => {
-        toast({ content: errorMessage(e), type: 'error' })
-      })
+    myVote = newVote
+    post.vote(newVote).catch((e) => toast({ content: errorMessage(e), type: 'error' }))
   }
 </script>
 
-{#snippet voteButton(
-  votes: number,
-  target: 'upvote' | 'downvote',
-  vote?: number,
-)}
-  {@const targetNum = target == 'upvote' ? 1 : -1}
+{#snippet voteButton(votes: number, target: boolean, myVote?: boolean)}
   <button
-    onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
+    onclick={() => castVote(myVote == target ? 'none' : target === true ? 'upvoted' : 'downvoted')}
     class={[
       'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2 first:border-r-0! first:rounded-l-[inherit] last:rounded-r-[inherit]',
       'last:flex-row-reverse',
-      vote == targetNum
-        ? shouldShowVoteColor(
-            vote,
-            target == 'upvote' ? 'upvotes' : 'downvotes',
-          )
+      myVote === target
+        ? shouldShowVoteColor(myVote, target === true ? 'upvotes' : 'downvotes')
         : 'btn-secondary',
     ]}
-    aria-pressed={vote == targetNum}
-    aria-label={$t(
-      target == 'upvote'
-        ? 'post.actions.vote.upvote'
-        : 'post.actions.vote.downvote',
-    )}
+    aria-pressed={myVote === target}
+    aria-label={$t(target === true ? 'post.actions.vote.upvote' : 'post.actions.vote.downvote')}
   >
-    <Icon src={target == 'upvote' ? ChevronUp : ChevronDown} size="20" micro />
+    <Icon src={target === true ? ChevronUp : ChevronDown} size="20" micro />
     {#if showCounts}
       <div class="grid text-sm z-20">
         {#key votes}
@@ -117,10 +92,9 @@
             style="grid-column: 1; grid-row: 1;"
             in:fly={{ duration: 400, y: -10, easing: backOut }}
             out:fly={{ duration: 400, y: 10, easing: backOut }}
-            aria-label={$t(
-              target == 'upvote' ? 'aria.vote.upvotes' : 'aria.vote.downvotes',
-              { default: votes },
-            )}
+            aria-label={$t(target === true ? 'aria.vote.upvotes' : 'aria.vote.downvotes', {
+              default: votes,
+            })}
           >
             <FormattedNumber number={votes ?? 0} />
           </span>
@@ -130,24 +104,27 @@
   </button>
 {/snippet}
 
-{#if children}{@render children({ vote, score })}{:else}
-  {@const voteRatio = Math.floor(
-    ((upvotes ?? 0) / ((upvotes ?? 0) + (downvotes ?? 0))) * 100,
+<div
+  class={[
+    'rounded-xl h-full font-medium flex relative overflow-hidden',
+    voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
+  ]}
+  aria-label={$t('aria.vote.group')}
+  style="--vote-ratio: {voteRatio}%;"
+>
+  {@render voteButton(
+    upvotes,
+    true,
+    myVote == 'upvoted' ? true : myVote == 'downvoted' ? false : undefined,
   )}
-  <div
-    class={[
-      'rounded-xl h-full font-medium flex relative overflow-hidden',
-      voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
-    ]}
-    aria-label={$t('aria.vote.group')}
-    style="--vote-ratio: {voteRatio}%;"
-  >
-    {@render voteButton(upvotes, 'upvote', vote)}
-    {#if site.data?.site_view.local_site.enable_downvotes ?? true}
-      {@render voteButton(downvotes, 'downvote', vote)}
-    {/if}
-  </div>
-{/if}
+  {#if site.data?.site_view.local_site.post_downvotes != 'disable'}
+    {@render voteButton(
+      downvotes,
+      false,
+      myVote == 'upvoted' ? true : myVote == 'downvoted' ? false : undefined,
+    )}
+  {/if}
+</div>
 
 <style>
   .vote-ratio {

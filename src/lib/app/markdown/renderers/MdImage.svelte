@@ -1,18 +1,12 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
-  import {
-    iframeType,
-    mediaType,
-    optimizeImageURL,
-    PostIframe,
-  } from '$lib/feature/post'
+  import { iframeType, mediaType, optimizeImageURL, PostIframe } from '$lib/feature/post'
   import { showImage } from '$lib/ui/generic/ExpandableImage.svelte'
   import { getContext } from 'svelte'
   import { ArrowDownTray, Icon } from 'svelte-hero-icons/dist'
 
   let loaded: boolean = $state(
-    (getContext('options') as { autoloadImages: boolean })?.autoloadImages ??
-      true,
+    (getContext('options') as { autoloadImages: boolean })?.autoloadImages ?? true,
   )
 
   interface Props {
@@ -40,6 +34,7 @@
       />
     {:else}
       <button
+        type="button"
         class="inline cursor-pointer bg-slate-200 dark:bg-zinc-900 rounded-[inherit]"
         onclick={() => showImage(optimizeImageURL(href, -1))}
       >
@@ -62,11 +57,7 @@
       class="w-40 h-40 flex flex-col justify-center items-center gap-4 p-2 group cursor-pointer"
       title={$t('common.download')}
     >
-      <Icon
-        src={ArrowDownTray}
-        size="24"
-        class="text-primary-900 dark:text-primary-100"
-      />
+      <Icon src={ArrowDownTray} size="24" class="text-primary-900 dark:text-primary-100" />
     </button>
   {/if}
 </div>

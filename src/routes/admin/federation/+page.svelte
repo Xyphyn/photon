@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { client, getClient } from '$lib/api/client.svelte'
+  import { client } from '$lib/api/client.svelte'
   import type { Instance } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { errorMessage } from '$lib/app/error'
@@ -27,7 +27,15 @@
   import { expoOut } from 'svelte/easing'
   import { preventDefault } from 'svelte/legacy'
 
-  let { data = $bindable() } = $props()
+  let { data } = $props()
+
+  let blockedList = $state<Instance[]>([])
+  let allowedList = $state<Instance[]>([])
+
+  $effect(() => {
+    blockedList = data.blocked
+    allowedList = data.allowed
+  })
 
   let blockInstance = $state({
       instance: '',
@@ -42,60 +50,45 @@
   async function moderateInstance(instance: string, blocked: boolean) {
     if (instance == '') return
     try {
-      if (
-        !profile.current?.jwt ||
-        !data.instances.value?.blocked ||
-        !data.instances.value?.allowed
-      )
-        return
+      if (!profile.current?.jwt) return
 
-      if (blocked) blockInstance.loading = true
-      else allowInstance.loading = true
-
-      const blockedInstances = data.instances.value.blocked.map((i) => i.domain)
-
-      const allowedInstances = data.instances.value.allowed.map((i) => i.domain)
-
-      if (blocked) blockedInstances.push(instance)
-      if (!blocked) allowedInstances.push(instance)
-
-      await getClient().editSite({
-        blocked_instances: blockedInstances,
-        allowed_instances: allowedInstances,
+      if (blocked) {
+        blockInstance.loading = true
+        await client().adminBlockInstance({ instance, block: true, reason: '' })
+        const res = await client().getFederatedInstances({ kind: 'blocked', limit: 1000 })
+        blockedList = res.items.map((i) => i.instance)
+        blockInstance.instance = ''
+      } else {
+        allowInstance.loading = true
+        await client().adminAllowInstance({ instance, allow: true, reason: '' })
+        const res = await client().getFederatedInstances({ kind: 'allowed', limit: 1000 })
+        allowedList = res.items.map((i) => i.instance)
+        allowInstance.instance = ''
+      }
+      toast({
+        content: $t('toast.updatedSite'),
+        type: 'success',
       })
-
-      const instances = await getClient().getFederatedInstances()
-
-      // @ts-expect-error goofy typing thing that i shouldnt have done
-      data.instances.value = instances.federated_instances
-
-      blockInstance.instance = ''
     } catch (err) {
       toast({
         content: errorMessage(err as string),
         type: 'error',
       })
+    } finally {
+      blockInstance.loading = false
+      allowInstance.loading = false
     }
-
-    blockInstance.loading = false
-    allowInstance.loading = false
   }
 
-  async function save() {
+  async function removeInstance(instance: Instance, blocked: boolean) {
     try {
-      if (!profile.current?.jwt || !data.instances.value?.blocked) return
-
-      saving = true
-
-      const blockedInstances = data.instances.value.blocked.map((i) => i.domain)
-      const allowedInstances = data.instances.value.allowed?.map(
-        (i) => i.domain,
-      )
-
-      await client().editSite({
-        allowed_instances: allowedInstances,
-        blocked_instances: blockedInstances,
-      })
+      if (blocked) {
+        await client().adminBlockInstance({ instance: instance.domain, block: false, reason: '' })
+        blockedList = blockedList.filter((i) => i.id !== instance.id)
+      } else {
+        await client().adminAllowInstance({ instance: instance.domain, allow: false, reason: '' })
+        allowedList = allowedList.filter((i) => i.id !== instance.id)
+      }
       toast({
         content: $t('toast.updatedSite'),
         type: 'success',
@@ -106,7 +99,6 @@
         type: 'error',
       })
     }
-    saving = false
   }
 
   let csv = $state<FileList | null>()
@@ -116,34 +108,32 @@
 
     const reader = new FileReader()
 
-    reader.onload = (e) => {
-      if (!data.instances.value?.blocked) throw new Error('Missing instance')
+    reader.onload = async (e) => {
       const content = e.target?.result
-      if (!content) toast({ content: $t('toast.failCSV'), type: 'warning' })
+      if (!content) return toast({ content: $t('toast.failCSV'), type: 'warning' })
 
       try {
-        const instances: Instance[] = []
-        const str = content?.toString()
-        if (!str) throw new Error('No content')
-
+        const str = content.toString()
         const lines = str.split(/\r?\n/).slice(1)
+        saving = true
 
         for (const line of lines) {
           if (line == '') continue
           const domain = line.split(',')[0]
-
-          const item: Instance = {
-            domain: domain,
-            id: Math.floor(Math.random() * 1000000),
-            published: new Date().toISOString(),
+          try {
+            await client().adminBlockInstance({ instance: domain, block: true, reason: '' })
+          } catch (err) {
+            console.error(`Failed to block ${domain}:`, err)
           }
-
-          instances.push(item)
         }
 
-        data.instances.value.blocked = instances
+        const res = await client().getFederatedInstances({ kind: 'blocked', limit: 1000 })
+        blockedList = res.items.map((i) => i.instance)
+        toast({ content: $t('toast.updatedSite'), type: 'success' })
       } catch {
         toast({ content: $t('toast.failCSV'), type: 'error' })
+      } finally {
+        saving = false
       }
     }
 
@@ -164,11 +154,8 @@
 
 <Header pageHeader class="font-bold text-2xl flex items-center justify-between">
   {$t('routes.admin.federation.title')}
-  <Button color="primary" onclick={save} loading={saving} disabled={saving}>
-    {$t('common.save')}
-  </Button>
 </Header>
-{#if data.site && data.instances.value?.blocked}
+{#if blockedList && allowedList}
   <FileInput preview={false} bind:files={csv}>
     {#snippet button()}
       <Button class="w-max" icon={Plus}>
@@ -205,8 +192,8 @@
             ? 'opacity-50'
             : ''}"
         >
-          {#if data.instances.value.blocked.length > 0}
-            {#each data.instances.value.blocked.toSorted( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
+          {#if blockedList.length > 0}
+            {#each blockedList.toSorted( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div
                 animate:flip={{ duration: 300, easing: expoOut }}
                 class="flex justify-between items-center first:pt-0 last:pb-0"
@@ -217,20 +204,13 @@
                     class="text-xs text-slate-600 dark:text-zinc-400 capitalize"
                   >
                     {instance.software ?? 'Unknown'} • <RelativeDate
-                      date={publishedToDate(instance.published)}
+                      date={publishedToDate(instance.published_at)}
                     />
                   </span>
                 </div>
                 <Button
                   size="square-md"
-                  onclick={() => {
-                    if (!data.instances.value?.blocked) return
-
-                    data.instances.value.blocked =
-                      data.instances.value?.blocked.filter(
-                        (i) => i.id != instance.id,
-                      )
-                  }}
+                  onclick={() => removeInstance(instance, true)}
                   icon={XMark}
                 ></Button>
               </div>
@@ -248,7 +228,7 @@
     <div class="md:flex-1 w-full max-h-168 flex flex-col gap-2">
       <h2 class="font-bold text-lg flex items-center space-x-1">
         <span>{$t('routes.admin.federation.allowed')}</span>
-        {#if allowInstance.instance || !(data.instances.value.allowed?.length == 0)}
+        {#if allowInstance.instance || !(allowedList.length == 0)}
           <Popover openOnHover placement="bottom-end">
             {#snippet target(attachment)}
               <Icon
@@ -286,8 +266,8 @@
       </form>
       <Material class="h-full overflow-auto" color="uniform" rounding="2xl">
         <ul class="*:py-3 dark:divide-zinc-800!">
-          {#if data.instances.value.allowed && (data?.instances?.value?.allowed?.length ?? 0) > 0}
-            {#each data.instances.value.allowed.toSorted( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
+          {#if allowedList && allowedList.length > 0}
+            {#each allowedList.toSorted( (b, a) => b.domain.localeCompare(a.domain), ) as instance (instance.id)}
               <div
                 animate:flip={{ duration: 300, easing: expoOut }}
                 class="flex justify-between items-center first:pt-0 last:pb-0"
@@ -298,20 +278,13 @@
                     class="text-xs text-slate-600 dark:text-zinc-400 capitalize"
                   >
                     {instance.software ?? 'Unknown'} • <RelativeDate
-                      date={publishedToDate(instance.published)}
+                      date={publishedToDate(instance.published_at)}
                     />
                   </span>
                 </div>
                 <Button
                   size="square-md"
-                  onclick={() => {
-                    if (!data.instances.value?.allowed) return
-
-                    data.instances.value.allowed =
-                      data.instances.value?.allowed.filter(
-                        (i) => i.id != instance.id,
-                      )
-                  }}
+                  onclick={() => removeInstance(instance, false)}
                   icon={XMark}
                 ></Button>
               </div>
