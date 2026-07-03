@@ -196,22 +196,16 @@
     }
 
     .btn-primary {
-      border: 1px solid transparent;
-      background: radial-gradient(
-        circle at 20% 0%,
-        var(--color-primary-800),
-        var(--color-primary-900)
-      );
-      background-size: 110% 110% !important;
+      border: 1px solid var(--color-primary-900);
+      background: linear-gradient(to bottom, var(--color-primary-800), var(--color-primary-900));
+      box-shadow: 0px 1.5px 0px 0px var(--color-slate-500) inset;
       color: var(--color-slate-50);
 
       @variant dark {
-        background: radial-gradient(
-          circle at center right,
-          var(--color-primary-200),
-          var(--color-primary-100)
-        );
+        border-color: var(--color-primary-200);
+        background: linear-gradient(to bottom, var(--color-primary-100), var(--color-primary-200));
         color: var(--color-zinc-900);
+        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-white) / 100%) inset;
       }
 
       @variant hover {

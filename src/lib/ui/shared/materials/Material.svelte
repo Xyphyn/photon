@@ -86,12 +86,7 @@
   ]}
 >
   {#if icon}
-    <Icon
-      src={icon}
-      size="20"
-      mini
-      class="inline-block rounded-lg clear-both float-left mr-2"
-    />
+    <Icon src={icon} size="20" mini class="inline-block rounded-lg clear-both float-left mr-2" />
   {/if}
   {@render children?.()}
 </svelte:element>
@@ -110,9 +105,11 @@
       }
 
       @variant dark {
-        background-color: var(--color-zinc-900);
-        border-color: var(--color-zinc-800);
-        border-top-color: var(--color-zinc-700);
+        background: var(--color-zinc-900);
+        border-color: var(--color-zinc-950);
+        box-shadow:
+          0px 1.5px 0px 0px inset var(--color-zinc-700),
+          0px -1px 0px 0px inset var(--color-zinc-950);
 
         @variant hover {
           background-color: var(--color-zinc-925);
@@ -132,18 +129,19 @@
     }
 
     .material-distinct {
-      background-color: white;
+      background-color: --alpha(var(--color-slate-50) / 70%);
       border-width: 1px;
       border-color: var(--color-slate-200);
+      box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-white) / 90%) inset;
 
       @variant not-dark {
         border-bottom-color: var(--color-slate-300);
       }
 
       @variant dark {
-        background-color: var(--color-zinc-925);
-        border-color: var(--color-zinc-800);
-        border-top-color: var(--color-zinc-700);
+        background-color: --alpha(var(--color-zinc-925) / 70%);
+        border-color: --alpha(var(--color-black) / 30%);
+        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-zinc-800) / 80%) inset;
       }
     }
 
