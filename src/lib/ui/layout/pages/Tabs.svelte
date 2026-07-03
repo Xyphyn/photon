@@ -28,9 +28,7 @@
 
   let matchType = $derived<('search' | 'pathname')[]>(
     routes.map((i) =>
-      new URL(`https://example.com${i.href}`)?.search != ''
-        ? 'search'
-        : 'pathname',
+      new URL(`https://example.com${i.href}`)?.search != '' ? 'search' : 'pathname',
     ),
   )
 
@@ -42,9 +40,9 @@
     // me on 2025/10/9: no shi buh
     const usePathname = !routes.some(
       (i) =>
-        new Set(
-          new URL(`https://example.com${i.href}`).searchParams.values(),
-        ).intersection(currentSearch).size > 0,
+        new Set(new URL(`https://example.com${i.href}`).searchParams.values()).intersection(
+          currentSearch,
+        ).size > 0,
     )
 
     const hasSearchParam = hrefSearch.intersection(currentSearch).size > 0
@@ -57,8 +55,8 @@
 
 <nav
   class={[
-    'tab-bar',
-    style == 'header' ? 'bar-header' : 'gap-2',
+    'tab-bar rounded-full',
+    style == 'header' ? 'bar-header material-distinct' : 'gap-2',
     margin && 'my-2',
     margin && style == 'subpage' && 'mb-3',
     clazz,
@@ -92,6 +90,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-items: center;
     flex-wrap: wrap;
     z-index: 20;
 
@@ -101,11 +100,11 @@
   }
 
   .tab-bar.bar-header {
-    padding: calc(var(--spacing));
+    padding: calc(var(--spacing) * 1.5);
     gap: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
     justify-content: center;
-    margin-left: calc(var(--spacing) * -3);
-    margin-right: calc(var(--spacing) * -3);
+    margin-left: auto;
+    margin-right: auto;
     margin-top: calc(var(--spacing) * -1);
 
     @variant sm {
@@ -143,7 +142,7 @@
       }
     }
     padding: calc(var(--spacing)) calc(var(--spacing) * 3);
-    border-radius: var(--radius-xl);
+    border-radius: 999px;
     font-weight: var(--font-weight-medium);
     transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 75ms;
     z-index: 0;
@@ -154,7 +153,7 @@
       background-color: var(--color-slate-100);
       @variant dark {
         color: var(--color-zinc-100);
-        background-color: var(--color-zinc-800);
+        background-color: var(--color-zinc-900);
       }
     }
   }
