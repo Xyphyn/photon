@@ -244,6 +244,12 @@ export abstract class BaseClient {
   abstract resolveCommunityReport(
     form: types.ResolveCommunityReport,
   ): Promise<types.CommunityReportResponse>
+  abstract listMultiCommunities(
+    form: types.ListMultiCommunities,
+  ): Promise<types.PagedResponse<types.MultiCommunityView>>
+  abstract followMultiCommunity(
+    form: types.FollowMultiCommunity,
+  ): Promise<types.MultiCommunityResponse>
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
   abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
   abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>

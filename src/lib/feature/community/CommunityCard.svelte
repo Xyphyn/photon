@@ -78,7 +78,7 @@
     Tag,
   } from 'svelte-hero-icons/dist'
   import CommunityFlair from './CommunityFlair.svelte'
-  import type { CommunityModel } from './community.svelte'
+  import type { CommunityModel } from './community-model.svelte'
 
   interface Props {
     community: CommunityModel

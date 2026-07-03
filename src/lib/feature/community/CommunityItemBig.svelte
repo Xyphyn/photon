@@ -18,7 +18,7 @@
   } from 'svelte-hero-icons/dist'
   import { optimizeImageURL } from '../post'
   import CommunityCard from './CommunityCard.svelte'
-  import type { CommunityModel } from './community.svelte'
+  import type { CommunityModel } from './community-model.svelte'
 
   interface Props {
     community: CommunityModel

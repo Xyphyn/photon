@@ -1,6 +1,6 @@
 import { browser } from '$app/environment'
 import type { CommunityView, PostView } from '$lib/api/types'
-import { CommunityModel } from '../community/community.svelte'
+import { CommunityModel } from '../community/community-model.svelte'
 import { PostModel } from '../post/post.svelte'
 
 // The Repository stores client-side cache for uhh

@@ -305,15 +305,21 @@
             "descriptionWithGuest": "You aren't logged in. You can log in, sign up, or add a new guest account here."
         },
         "explore": {
-            "title": "Explore",
-            "feeds": "Feeds",
-            "topics": "Topics"
+            "title": "Explore"
         },
         "communities": {
             "title": "Communities",
             "trending": "Trending",
             "search": {
                 "placeholder": "Search for a new community"
+            }
+        },
+        "feeds": {
+            "title": "Feeds",
+            "feed": {
+              "item": "Feed",
+              "description1": "{{count:number;}} {{count; 1:community; default:communities;}}",
+              "description2": "by {{author}}"
             }
         },
         "search": {

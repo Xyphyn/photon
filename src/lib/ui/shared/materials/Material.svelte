@@ -86,12 +86,7 @@
   ]}
 >
   {#if icon}
-    <Icon
-      src={icon}
-      size="20"
-      mini
-      class="inline-block rounded-lg clear-both float-left mr-2"
-    />
+    <Icon src={icon} size="20" mini class="inline-block rounded-lg clear-both float-left mr-2" />
   {/if}
   {@render children?.()}
 </svelte:element>

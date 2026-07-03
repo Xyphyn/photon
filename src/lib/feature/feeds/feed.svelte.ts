@@ -10,7 +10,9 @@ import type {
   GetPost,
   GetPosts,
   ListCommunities,
+  ListMultiCommunities,
   ListPersonSaved,
+  MultiCommunityView,
   PagedResponse,
   PostCommentCombinedView,
   PostView,
@@ -139,6 +141,7 @@ export interface FeedTypes {
   '/profile/user': [GetPersonDetails, GetPersonDetailsResponse]
   '/search': [Search, SearchResponse]
   '/saved': [ListPersonSaved, PagedResponse<PostCommentCombinedView>]
+  '/explore/feeds': [ListMultiCommunities, PagedResponse<MultiCommunityView>]
 }
 
 export const feeds = new SvelteMap<keyof FeedTypes, Feed<any, any>>()

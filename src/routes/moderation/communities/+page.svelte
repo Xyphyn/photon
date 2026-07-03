@@ -1,7 +1,7 @@
 <script lang="ts">
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
-  import { CommunityModel } from '$lib/feature/community/community.svelte'
+  import { CommunityModel } from '$lib/feature/community/community-model.svelte'
   import CommunityItem from '$lib/feature/community/CommunityItem.svelte'
   import { CommonList, Header } from '$lib/ui/layout'
   import { Button, Spinner } from 'mono-svelte'

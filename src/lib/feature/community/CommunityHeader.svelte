@@ -25,7 +25,7 @@
   } from 'svelte-hero-icons/dist'
   import { blockInstance, purgeCommunity } from './CommunityCard.svelte'
   import CommunityFlair from './CommunityFlair.svelte'
-  import { CommunityModel } from './community.svelte'
+  import { CommunityModel } from './community-model.svelte'
 
   interface Props {
     community: Community

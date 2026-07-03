@@ -1,6 +1,6 @@
 import { client } from '$lib/api/client.svelte'
 import { profile } from '$lib/app/auth'
-import type { CommunityView } from 'lemmy-js-client'
+import type { CommunityView, MultiCommunityView } from 'lemmy-js-client'
 
 export class CommunityModel {
   data: CommunityView
@@ -61,5 +61,52 @@ export class CommunityModel {
         block: block,
       })
       .then((res) => (this.data = res.community_view))
+  }
+}
+
+export class MultiCommunityModel {
+  data: MultiCommunityView
+
+  constructor(init: MultiCommunityView) {
+    this.data = $state(init)
+  }
+
+  get multi() {
+    return this.data.multi
+  }
+
+  get author() {
+    return this.data.owner
+  }
+
+  // TODO this could be optimized along with CommunityModel's, by making a HashMap on startup.
+  // so that we don't loop over every multi-community for every multi community rendered.
+  get subscribed() {
+    return (
+      profile.current.user?.multi_community_follows.findIndex((i) => i.multi.id == this.multi.id) !=
+      -1
+    )
+  }
+
+  async subscribe(subscribe: boolean = !this.subscribed) {
+    const res = await client()
+      .followMultiCommunity({
+        multi_community_id: this.multi.id,
+        follow: subscribe,
+      })
+      .then((res) => (this.data = res.multi_community_view))
+
+    if (profile.current.user) {
+      if (subscribe) {
+        profile.current.user.multi_community_follows.push(res)
+      } else {
+        const idx = profile.current.user.multi_community_follows.findIndex(
+          (i) => i.multi.id == this.multi.id,
+        )
+        if (idx != -1) profile.current.user.follows.splice(idx, 1)
+      }
+    }
+
+    return res
   }
 }

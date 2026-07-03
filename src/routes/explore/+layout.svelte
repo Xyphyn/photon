@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/state'
-  import { client } from '$lib/api/client.svelte'
   import { t } from '$lib/app/i18n'
   import Location from '$lib/feature/filter/Location.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
@@ -12,24 +11,18 @@
   let form = $state<HTMLFormElement>()
 </script>
 
-{#if client().getTopics && client().getFeeds}
-  <Tabs
-    routes={[
-      {
-        href: '/explore/communities',
-        name: $t('routes.communities.title'),
-      },
-      {
-        href: '/explore/feeds',
-        name: $t('routes.explore.feeds'),
-      },
-      {
-        href: '/explore/topics',
-        name: $t('routes.explore.topics'),
-      },
-    ]}
-  ></Tabs>
-{/if}
+<Tabs
+  routes={[
+    {
+      href: '/explore/communities',
+      name: $t('routes.communities.title'),
+    },
+    {
+      href: '/explore/feeds',
+      name: $t('routes.feeds.title'),
+    },
+  ]}
+></Tabs>
 
 <svelte:head>
   <title>{$t('routes.explore.title')}</title>
@@ -39,6 +32,20 @@
   {$t('routes.explore.title')}
   {#snippet extended()}
     {#if page.route.id == '/explore/communities'}
+      <form method="get" action={page.url.pathname} class="contents" bind:this={form}>
+        <SearchBar bind:query={search} />
+
+        <div class="flex flex-row flex-wrap gap-4 items-center">
+          <Location name="type" selected={data.type} onchange={() => form?.requestSubmit()} />
+          <Sort
+            type="community"
+            name="sort"
+            selected={data.sort}
+            onchange={() => form?.requestSubmit()}
+          />
+        </div>
+      </form>
+    {:else if page.route.id == '/explore/feeds'}
       <form method="get" action={page.url.pathname} class="contents" bind:this={form}>
         <SearchBar bind:query={search} />
 
