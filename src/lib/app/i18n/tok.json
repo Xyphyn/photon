@@ -326,9 +326,11 @@
             "setTheme": "o kepeken e kule ante",
             "contextual": "lon ni",
             "setColorTo": "o kepeken e tenpo suno {{default}}",
-            "setThemeTo": "o kepeken e kule {{default}}"
+            "setThemeTo": "o kepeken e kule {{default}}",
+            "goto": "o tawa **{{default}}**"
         },
-        "notifications": "sin"
+        "notifications": "sin",
+        "home": "tomo"
     },
     "filter": {
         "sort": {
