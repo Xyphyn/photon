@@ -159,7 +159,7 @@
         "profile": {
             "displayName": "Nombre para mostrar",
             "bio": "Biografía",
-            "avatar": "Ávatar",
+            "avatar": "Imagen de perfil",
             "matrix": "Nombre de usuario de Matrix",
             "showNSFW": "Mostrar contenido NSFW",
             "scores": "Mostrar puntajes",
@@ -248,7 +248,7 @@
         "profile": {
             "user": "Usuario",
             "blocks": {
-                "title": "Bloqueado",
+                "title": "Bloqueos",
                 "empty": {
                     "user": {
                         "title": "Sin usuarios bloqueados",
@@ -881,7 +881,7 @@
             },
             "displayName": {
                 "title": "Usar el nombre para mostrar",
-                "description": "Muestra los nombres para mostrar de los usuarios en lugar de sus nombres verdaderos."
+                "description": "Mostrar los nombres para mostrar de los usuarios en lugar de sus nombres reales."
             },
             "limitLayoutWidth": {
                 "title": "Limitar el ancho del contenido",
@@ -922,7 +922,7 @@
                     "hide": "Ocultar",
                     "show": "Mostrar"
                 },
-                "description": "Tomar los textos encerrados en [paréntesis cuadradas] y convertirlos en etiquetas sobre las que podrá hacer clic y realizar una búsqueda."
+                "description": "Tomar los textos en [paréntesis cuadradas] y convertirlos en etiquetas sobre las que podrás hacer clic y realizar una búsqueda."
             },
             "title": "Aplicación",
             "reverseActions": {
@@ -960,7 +960,7 @@
         "lemmy": {
             "showHiddenPosts": {
                 "title": "Mostrar publicaciones ocultas",
-                "description": "Mostrar las publicaciones que ha ocultado manualmente."
+                "description": "Mostrar las publicaciones que has ocultado manualmente."
             },
             "compactFeatured": {
                 "description": "Mostrar las publicaciones destacadas en forma compacta.",
@@ -968,11 +968,11 @@
             },
             "markReadPosts": {
                 "title": "Marcar las publicaciones como leídas",
-                "description": "Marca una publicación como leída cuando hace clic sobre ella."
+                "description": "Marcar las publicaciones como leídas al visitarlas."
             },
             "fadeReadPosts": {
                 "title": "Desvanecer las publicaciones leídas",
-                "description": "Desvanece el título de las publicaciones que has leído"
+                "description": "Desvanecer el título de las publicaciones que has leído"
             },
             "instances": {
                 "title": "Mostrar identificadores de servidor",
@@ -1019,7 +1019,7 @@
                 "title": "No virtualizar las fuentes",
                 "description": "Al virtualizar solo se generan las publicaciones visibles, incrementando el rendimiento drásticamente. Deshabilita la virtualización si tienes problemas de rendimiento. Esto deshabilitará el desplazamiento infinito."
             },
-            "title": "Otro"
+            "title": "Otros"
         },
         "tablet": "Tablet",
         "account": {
