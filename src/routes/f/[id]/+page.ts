@@ -1,41 +1,37 @@
-import { client } from '$lib/api/client.svelte'
-import type { SortType } from '$lib/api/types'
+import { client } from '$lib/api/client.svelte.js'
+import type { PostSortType } from '$lib/api/types'
 import { settings } from '$lib/app/settings.svelte'
-import { feed } from '$lib/feature/feeds/feed.svelte'
-import { error } from '@sveltejs/kit'
+import { urlParam } from '$lib/app/util/params.js'
+import { feed } from '$lib/feature/feeds/feed.svelte.js'
 
-export async function load({ url, fetch, route, params }) {
-  const piefed = client({ func: fetch })
-
-  if (!piefed.getFeeds) error(404, 'unsupported')
-
-  const sort: SortType =
-    (url.searchParams.get('sort') as SortType) || settings.defaultSort.sort
-
-  const cursor = url.searchParams.get('cursor') as string | undefined
+export async function load({ params, fetch, url, route }) {
+  const cursor = urlParam.optional(url, 'cursor')
+  const sort = urlParam.string<PostSortType>(url, 'sort', settings.defaultSort.sort)
+  const period = urlParam.number(url, 'period')
 
   const feedData = await feed(route.id, async (p) => {
-    const piefedFeedData = piefed.getFeeds!({ include_communities: true }).then(
-      (i) => i.feeds.find((j) => j.id == p.feed_id),
-    )
-
-    const postPromise = piefed.getPosts(p)
+    const postPromise = client({ func: fetch }).getPosts(p)
+    const communityPromise = client({ func: fetch }).getMultiCommunity({
+      name: p.multi_community_name,
+    })
 
     return {
-      posts: (await postPromise).posts,
+      multi: await communityPromise,
+      posts: (await postPromise).items,
       next_page: (await postPromise).next_page,
-      feed: piefedFeedData,
       params: { ...p, page_cursor: (await postPromise).next_page },
       client: {},
     }
   }).load({
-    page_cursor: cursor,
+    multi_community_name: params.id,
     sort: sort,
-    type_: 'All',
     limit: 20,
-    show_hidden: settings.posts.showHidden,
-    feed_id: Number(params.id),
+    type_: 'all',
+    page_cursor: cursor,
+    time_range_seconds: period,
   })
 
-  return feedData
+  return {
+    ...feedData,
+  }
 }

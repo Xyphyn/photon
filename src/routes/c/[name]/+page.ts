@@ -1,15 +1,15 @@
 import { client } from '$lib/api/client.svelte'
 import { settings } from '$lib/app/settings.svelte'
+import { urlParam } from '$lib/app/util/params.js'
 import CommunityCard from '$lib/feature/community/CommunityCard.svelte'
 import { feed } from '$lib/feature/feeds/feed.svelte'
 import { repos } from '$lib/feature/feeds/repo.svelte.js'
 import type { PostSortType } from 'lemmy-js-client'
 
 export async function load({ params, fetch, url, route }) {
-  const cursor: string | undefined = url.searchParams.get('cursor') as string | undefined
-
-  const sort: PostSortType =
-    (url.searchParams.get('sort') as PostSortType) || settings.defaultSort.sort
+  const cursor = urlParam.optional(url, 'cursor')
+  const sort = urlParam.string<PostSortType>(url, 'sort', settings.defaultSort.sort)
+  const period = urlParam.number(url, 'period')
 
   const feedData = await feed(route.id, async (p) => {
     const postPromise = client({ func: fetch }).getPosts(p)
@@ -28,7 +28,9 @@ export async function load({ params, fetch, url, route }) {
     community_name: params.name,
     sort: sort,
     limit: 20,
+    type_: 'all',
     page_cursor: cursor,
+    time_range_seconds: period,
   })
 
   return {

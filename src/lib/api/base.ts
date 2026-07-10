@@ -250,6 +250,19 @@ export abstract class BaseClient {
   abstract followMultiCommunity(
     form: types.FollowMultiCommunity,
   ): Promise<types.MultiCommunityResponse>
+  abstract getMultiCommunity(
+    form: types.GetMultiCommunity,
+  ): Promise<types.GetMultiCommunityResponse>
+  abstract editMultiCommunity(form: types.EditMultiCommunity): Promise<types.MultiCommunityResponse>
+  abstract createMultiCommunity(
+    form: types.CreateMultiCommunity,
+  ): Promise<types.MultiCommunityResponse>
+  abstract createMultiCommunityEntry(
+    form: types.CreateOrDeleteMultiCommunityEntry,
+  ): Promise<types.CommunityResponse>
+  abstract deleteMultiCommunityEntry(
+    form: types.CreateOrDeleteMultiCommunityEntry,
+  ): Promise<types.SuccessResponse>
   abstract setFlair?(form: types.SetPersonFlair): Promise<types.PersonView>
   abstract getFeeds?(form: types.GetFeeds): Promise<types.GetFeedsResponse>
   abstract getTopics?(form: types.GetTopics): Promise<types.GetTopicsResponse>

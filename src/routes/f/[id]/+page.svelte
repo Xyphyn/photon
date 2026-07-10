@@ -1,33 +1,29 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
   import { communityLink } from '$lib/app/util.svelte'
-  import type { FeedTypes } from '$lib/feature/feeds/feed.svelte'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import EntityHeader from '$lib/ui/generic/EntityHeader.svelte'
   import ItemList from '$lib/ui/generic/ItemList.svelte'
   import { PostListShell } from '$lib/ui/layout'
-  import { Expandable, Spinner } from 'mono-svelte'
+  import { Expandable } from 'mono-svelte'
   import { SvelteURL } from 'svelte/reactivity'
 
-  interface Props {
-    data: FeedTypes['/f/[id]'][1]
-  }
+  let { data } = $props()
 
-  let { data = $bindable() }: Props = $props()
-
-  let title = $state('Loading...')
-  data.feed.then((i) => (title = i?.title ?? ''))
+  let posts = $derived(proxify(data.posts))
+  let community = $derived(data.multi.multi_community_view)
 </script>
 
 <svelte:head>
   <title>
-    {title}
+    {community.multi.title ?? community.multi.name}
   </title>
 </svelte:head>
 
 <PostListShell
-  posts={data.posts}
-  cursor={data.next_page}
-  client={data.client}
+  bind:posts
+  bind:cursor={data.next_page}
+  bind:client={data.client}
   getParams={data.params}
   params={{
     sort: data.params.sort!,
@@ -35,39 +31,30 @@
 >
   {#snippet extended()}
     <div class="min-h-56 grid place-items-center">
-      {#await data.feed}
-        <Spinner width={32} />
-      {:then feed}
-        {#if feed}
-          <EntityHeader
-            class="w-full relative flex flex-col"
-            compact="always"
-            avatarCircle={false}
-            name={feed.title}
-            avatar={feed.icon}
-          >
-            {#snippet nameDetail()}
-              <p class="text-lg">{feed.name}</p>
-            {/snippet}
-            {#if feed.communities}
-              <Expandable>
-                {#snippet title()}
-                  {$t('content.communities')}
-                {/snippet}
-                <ItemList
-                  items={feed.communities.map((i) => ({
-                    id: i.id,
-                    name: i.title,
-                    url: communityLink(i),
-                    avatar: i.icon,
-                    instance: new SvelteURL(i.actor_id).hostname,
-                  }))}
-                />
-              </Expandable>
-            {/if}
-          </EntityHeader>
-        {/if}
-      {/await}
+      <EntityHeader
+        class="w-full relative flex flex-col"
+        compact="always"
+        avatarCircle={false}
+        name={community.multi.title ?? community.multi.name}
+      >
+        {#snippet nameDetail()}
+          <p class="text-lg">{community.multi.name}</p>
+        {/snippet}
+        <Expandable class="tracking-normal">
+          {#snippet title()}
+            {$t('content.communities')}
+          {/snippet}
+          <ItemList
+            items={data.multi.communities.map((i) => ({
+              id: i.community.id,
+              name: i.community.title ?? i.community.name,
+              url: communityLink(i.community),
+              avatar: i.community.icon,
+              instance: new SvelteURL(i.community.ap_id).hostname,
+            }))}
+          />
+        </Expandable>
+      </EntityHeader>
     </div>
   {/snippet}
 </PostListShell>

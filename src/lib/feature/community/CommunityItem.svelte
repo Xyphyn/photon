@@ -77,8 +77,7 @@
             community.community.visibility == 'private',
         }
       : {
-          deleted: community.multi,
-          local: community.multi.local,
+          deleted: community.multi.deleted,
         },
   )
 </script>
@@ -111,22 +110,24 @@
         <Icon src={MapPin} class="text-green-500 inline" micro size="14" />
       </span>
     {/if}
-    <Button
-      rounding="xl"
-      color="ghost"
-      onclick={() =>
-        modal({
-          title:
-            community instanceof CommunityModel
-              ? $t('form.post.community')
-              : $t('routes.feeds.feed.item'),
-          snippet: communityInfo,
-        })}
-      aria-label={$t('common.info')}
-      size="square-md"
-    >
-      <Icon src={InformationCircle} size="16" mini />
-    </Button>
+    {#if community instanceof CommunityModel}
+      <Button
+        rounding="xl"
+        color="ghost"
+        onclick={() =>
+          modal({
+            title:
+              community instanceof CommunityModel
+                ? $t('form.post.community')
+                : $t('routes.feeds.feed.item'),
+            snippet: communityInfo,
+          })}
+        aria-label={$t('common.info')}
+        size="square-md"
+      >
+        <Icon src={InformationCircle} size="16" mini />
+      </Button>
+    {/if}
     <Button
       disabled={subscribing || !profile.current?.jwt}
       loading={subscribing}

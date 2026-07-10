@@ -43,7 +43,7 @@
     header = true,
   }: Props = $props()
 
-  let listing = new Listing(posts, (p) => repos.posts.get(p))
+  let listing = $state(new Listing(posts, (p) => repos.posts.get(p)))
 
   $effect(() => {
     if (filters.sort) settings.defaultSort.sort = filters.sort

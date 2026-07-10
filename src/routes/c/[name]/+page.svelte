@@ -5,6 +5,7 @@
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { setSessionStorage } from '$lib/app/session'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import CommunityHeader from '$lib/feature/community/CommunityHeader.svelte'
   import { repos } from '$lib/feature/feeds/repo.svelte.js'
   import { resumables } from '$lib/feature/legacy/item'
@@ -15,6 +16,7 @@
 
   let { data } = $props()
 
+  let posts = $derived(proxify(data.posts))
   let community = $derived(repos.communities.get(data.community.community_view))
 
   onMount(() => {
@@ -47,7 +49,7 @@
 </svelte:head>
 
 <PostListShell
-  bind:posts={data.posts}
+  bind:posts
   bind:cursor={data.next_page}
   bind:client={data.client}
   getParams={data.params}

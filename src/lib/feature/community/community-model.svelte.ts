@@ -103,7 +103,7 @@ export class MultiCommunityModel {
         const idx = profile.current.user.multi_community_follows.findIndex(
           (i) => i.multi.id == this.multi.id,
         )
-        if (idx != -1) profile.current.user.follows.splice(idx, 1)
+        if (idx != -1) profile.current.user.multi_community_follows.splice(idx, 1)
       }
     }
 
