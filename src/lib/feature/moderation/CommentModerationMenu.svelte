@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { CommentView } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { Menu, MenuButton, MenuDivider } from 'mono-svelte'
@@ -14,11 +13,11 @@
     Trash,
   } from 'svelte-hero-icons/dist'
   import type { Attachment } from 'svelte/attachments'
-  import { isCommentView } from '../legacy/item'
-  import { ban, feature, remove, viewVotes } from './moderation'
+  import type { CommentModel } from '../comment/comment.svelte'
+  import { ban, remove, viewVotes } from './moderation'
 
   interface Props {
-    item: CommentView
+    item: CommentModel
     target: Snippet<[Attachment]>
   }
 
@@ -35,21 +34,16 @@
       {/if}
     </MenuDivider>
     <MenuButton color="danger-subtle" onclick={() => remove(item)} icon={Trash}>
-      {#if isCommentView(item)}
-        {item.comment.removed
-          ? $t('moderation.restore')
-          : $t('moderation.remove')}
-      {/if}
+      {item.comment.removed ? $t('moderation.restore') : $t('moderation.remove')}
     </MenuButton>
     {#if profile.current?.user && profile.current.user?.local_user_view.person.id != item.creator.id}
       <!--Comment made by someone else-->
       <MenuButton
         color="danger-subtle"
-        onclick={() =>
-          ban(item.creator_banned_from_community, item.creator, item.community)}
+        onclick={() => ban(item.data.creator_banned_from_community, item.creator, item.community)}
         icon={ShieldExclamation}
       >
-        {item.creator_banned_from_community
+        {item.data.creator_banned_from_community
           ? $t('moderation.ban.unbanFromCommunity')
           : $t('moderation.ban.banFromCommunity')}
       </MenuButton>
@@ -57,21 +51,10 @@
       <!--Comment made by self-->
       <MenuButton
         color="success-subtle"
-        onclick={async () => {
-          if (!profile.current.jwt) return
-          item.comment = (
-            await feature(
-              !item.comment.distinguished,
-              item.comment,
-              profile.current.jwt,
-            )
-          ).comment_view.comment
-        }}
+        onclick={() => item.feature(!item.comment.distinguished)}
         icon={Megaphone}
       >
-        {item.comment.distinguished
-          ? $t('moderation.unfeature')
-          : $t('moderation.feature')}
+        {item.comment.distinguished ? $t('moderation.unfeature') : $t('moderation.feature')}
       </MenuButton>
     {/if}
 
@@ -91,11 +74,7 @@
 
   {#if profile.isAdmin}
     <MenuDivider showLabel>{$t('admin.label')}</MenuDivider>
-    <MenuButton
-      color="danger-subtle"
-      onclick={() => remove(item, true)}
-      icon={Fire}
-    >
+    <MenuButton color="danger-subtle" onclick={() => remove(item, true)} icon={Fire}>
       {$t('admin.purge')}
     </MenuButton>
   {/if}

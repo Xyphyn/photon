@@ -1,6 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
   import CommunityHeader from '$lib/feature/community/CommunityHeader.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte'
   import { ban } from '$lib/feature/moderation/moderation'
   import UserAutocomplete from '$lib/feature/user/UserAutocomplete.svelte'
   import Switch from '$lib/ui/form/Switch.svelte'
@@ -8,26 +9,25 @@
   import { Button, Expandable, Material, Spinner } from 'mono-svelte'
   import ModlogItemCard from '../../../modlog/item/ModlogItemCard.svelte'
 
-  let banFromCommunity = $state(false)
-
   let { data } = $props()
+
+  let banFromCommunity = $state(false)
+  let community = $derived(repos.communities.get(data.community.community_view))
 </script>
 
 <Header pageHeader>
   {#snippet extended()}
     <CommunityHeader
-      community={data.community.community_view.community}
-      counts={data.community.community_view.counts}
+      community={community.community}
+      counts
       moderators={data.community.moderators}
-      subscribed={data.community.community_view.subscribed}
+      subscribed={community.subscribed}
       banner={false}
     />
   {/snippet}
 </Header>
 
-<div
-  class="flex flex-col *:py-2 divide-y divide-slate-200 dark:divide-zinc-800"
->
+<div class="flex flex-col *:py-2 divide-y divide-slate-200 dark:divide-zinc-800">
   <Expandable>
     {#snippet title()}
       {$t('routes.moderation.manage.modlogs')}
@@ -40,18 +40,17 @@
       {#await data.modlog}
         <Spinner width={24} />
       {:then log}
-        {#each log as modLog}
+        {#each log.items as modLog}
           <ModlogItemCard item={modLog} />
         {/each}
         <div
-          class="sticky -bottom-4 pb-4 w-full flex items-center bg-gradient-to-b from-white/0 to-white dark:from-zinc-950/0 dark:to-zinc-950"
+          class="sticky -bottom-4 pb-4 w-full flex items-center bg-linear-to-b from-white/0 to-white dark:from-zinc-950/0 dark:to-zinc-950"
         >
           <Button
             color="primary"
             rounding="pill"
             class="mx-auto"
-            href="/modlog?community={data.community.community_view.community
-              .id}"
+            href="/modlog?community={data.community.community_view.community.id}"
           >
             {$t('form.post.readMore')}
           </Button>
@@ -68,10 +67,7 @@
     <div class="flex flex-col gap-4">
       <Switch
         options={[false, true]}
-        optionNames={[
-          $t('routes.moderation.manage.ban'),
-          $t('routes.moderation.manage.unban'),
-        ]}
+        optionNames={[$t('routes.moderation.manage.ban'), $t('routes.moderation.manage.unban')]}
         bind:selected={banFromCommunity}
       />
       <UserAutocomplete
@@ -79,7 +75,7 @@
           if (!p) return
           ban(banFromCommunity, p, data.community.community_view.community)
         }}
-        listing_type="All"
+        listing_type="all"
       />
     </div>
   </Expandable>

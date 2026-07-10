@@ -13,11 +13,7 @@
   import { publishedToDate } from '$lib/ui/util/date'
   import { Button, Modal } from 'mono-svelte'
   import RelativeDate from 'mono-svelte/util/RelativeDate.svelte'
-  import {
-    ChatBubbleOvalLeftEllipsis,
-    Icon,
-    Inbox,
-  } from 'svelte-hero-icons/dist'
+  import { ChatBubbleOvalLeftEllipsis, Icon, Inbox } from 'svelte-hero-icons/dist'
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
@@ -50,22 +46,16 @@
     })
   }
 
-  function conversationPreviews(
-    conversations: PrivateMessageView[],
-  ): ConversationPreview[] {
-    const deduplicated = filterDuplicates(conversations, (i) =>
-      getOtherPartyId(i),
-    )
+  function conversationPreviews(conversations: PrivateMessageView[]): ConversationPreview[] {
+    const deduplicated = filterDuplicates(conversations, (i) => getOtherPartyId(i))
 
     return deduplicated
       .filter((c) => c.creator.id != c.recipient.id) // you messaged yourself
       .map((i) => ({
         user:
-          i.creator.id != profile.current.user?.local_user_view.person.id
-            ? i.creator
-            : i.recipient,
+          i.creator.id != profile.current.user?.local_user_view.person.id ? i.creator : i.recipient,
         message: {
-          date: publishedToDate(i.private_message.published),
+          date: publishedToDate(i.private_message.published_at),
           last_sender: i.creator.id,
           content: i.private_message.content,
         },
@@ -82,7 +72,7 @@
 
 <Modal bind:open={searchModal.open} title={$t('routes.inbox.messages.start')}>
   <UserAutocomplete
-    listing_type="All"
+    listing_type="all"
     hideOwnUser={true}
     onselect={(u) => {
       if (!u) return
@@ -127,24 +117,20 @@
     {/each}
   </div>
 {:then res}
-  {@const conversations = res.private_messages}
+  {@const conversations = res.items.map((i) => {
+    if (i.data.type_ != 'private_message') throw new Error('Loaded items that were not messsages')
+    return i.data
+  })}
   {@const previews = conversationPreviews(conversations)}
 
   {#if previews.length == 0}
-    <Placeholder
-      title={$t('routes.inbox.messages.empty.title')}
-      icon={Inbox}
-      class="my-auto"
-    >
+    <Placeholder title={$t('routes.inbox.messages.empty.title')} icon={Inbox} class="my-auto">
       {@render startChat?.()}
     </Placeholder>
   {/if}
   <CommonList items={previews}>
     {#snippet item(preview)}
-      <a
-        href="/inbox/messages/{preview.user.id}"
-        class="flex flex-row items-center gap-2"
-      >
+      <a href="/inbox/messages/{preview.user.id}" class="flex flex-row items-center gap-2">
         <Avatar url={preview.user.avatar} alt={preview.user.name} width={32} />
         <div class="flex flex-col w-full overflow-hidden">
           <div class="font-medium">{preview.user.name}</div>
@@ -169,11 +155,11 @@
     {/snippet}
   </CommonList>
 
-  {#if res.private_messages.length == 50 || data.page != 1}
+  {#if res.next_page != null || res.prev_page != null}
     <Fixate placement="bottom">
       <Pageination
-        page={data.page}
-        hasMore={res.private_messages.length == 50}
+        cursor={{ next: res.next_page, back: res.prev_page }}
+        hasMore={res.next_page != null}
         href={(current) => `/inbox/messages?page=${current}`}
       />
     </Fixate>

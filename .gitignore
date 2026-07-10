@@ -20,3 +20,4 @@ test-results
 
 # Used for automated screenshot workflow
 .github/__pycache__/
+.zed

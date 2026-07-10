@@ -5,7 +5,9 @@
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { setSessionStorage } from '$lib/app/session'
+  import { proxify } from '$lib/app/util/reactivity.svelte.js'
   import CommunityHeader from '$lib/feature/community/CommunityHeader.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte.js'
   import { resumables } from '$lib/feature/legacy/item'
   import { PostListShell } from '$lib/ui/layout'
   import { Badge, Button, Note } from 'mono-svelte'
@@ -14,15 +16,17 @@
 
   let { data } = $props()
 
+  let posts = $derived(proxify(data.posts))
+  let community = $derived(repos.communities.get(data.community.community_view))
+
   onMount(() => {
-    if (browser)
-      setSessionStorage('lastSeenCommunity', data.community.community_view)
+    if (browser) setSessionStorage('lastSeenCommunity', community.data)
 
     resumables.add({
-      name: data.community.community_view.community.title,
+      name: community.community.name,
       type: 'community',
       url: page.url.toString(),
-      avatar: data.community.community_view.community.icon,
+      avatar: community.community.icon,
     })
   })
 
@@ -36,22 +40,16 @@
 </script>
 
 <svelte:head>
-  <title>{data.community.community_view.community.title}</title>
+  <title>{community.community.title}</title>
 
-  <meta
-    name="og:title"
-    content={data.community.community_view.community.title}
-  />
-  {#if data.community.community_view.community.description}
-    <meta
-      name="og:description"
-      content={data.community.community_view.community.description}
-    />
+  <meta name="og:title" content={community.community.title} />
+  {#if community.community.summary}
+    <meta name="og:description" content={community.community.summary} />
   {/if}
 </svelte:head>
 
 <PostListShell
-  bind:posts={data.posts}
+  bind:posts
   bind:cursor={data.next_page}
   bind:client={data.client}
   getParams={data.params}
@@ -61,16 +59,15 @@
 >
   {#snippet extended()}
     <CommunityHeader
-      bind:community={data.community.community_view.community}
-      bind:subscribed={data.community.community_view.subscribed}
-      blocked={data.community.community_view.blocked}
+      bind:community={community.community}
+      bind:subscribed={community.subscribed}
+      blocked={community.blocked}
       moderators={data.community.moderators}
-      counts={data.community.community_view.counts}
       class="w-full relative"
       compact="lg"
       avatarCircle={false}
     />
-    {#if data.community.community_view.blocked}
+    {#if community.blocked}
       <Note>You've blocked this community.</Note>
     {/if}
     {#if profile.current.user}

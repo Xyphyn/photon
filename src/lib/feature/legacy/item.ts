@@ -30,47 +30,31 @@ export type Result =
 
 export function getItemPublished(item: Result) {
   // reports... why
-  if ('post_report' in item) return item.post_report.published
-  if ('comment_report' in item) return item.comment_report.published
-  if ('private_message_report' in item)
-    return item.private_message_report.published
+  if ('post_report' in item) return item.post_report.published_at
+  if ('comment_report' in item) return item.comment_report.published_at
+  if ('private_message_report' in item) return item.private_message_report.published_at
 
   // others
-  if ('private_message' in item) return item.private_message.published
-  if ('comment' in item) return item.comment.published
-  else if ('post' in item) return item.post.published
+  if ('private_message' in item) return item.private_message.published_at
+  if ('comment' in item) return item.comment.published_at
+  else if ('post' in item) return item.post.published_at
 
-  if ('person' in item) return item.person.published
-  if ('community' in item) return item.community.published
+  if ('person' in item) return item.person.published_at
+  if ('community' in item) return item.community.published_at
 
   return ''
 }
 
-export const isPostView = (item: Result): item is PostView =>
-  'post' in item && !('comment' in item)
-
-export const isPost = (item: Result): item is Post =>
-  'name' in item && !('content' in item)
-
-export const isCommentView = (item: Result): item is CommentView =>
-  'comment' in item
-
+export const isPostView = (item: Result): item is PostView => 'post' in item && !('comment' in item)
+export const isPost = (item: Result): item is Post => 'name' in item && !('content' in item)
+export const isCommentView = (item: Result): item is CommentView => 'comment' in item
 export const isComment = (item: Result): item is Comment => 'content' in item
-
-export const isCommunityView = (item: Result): item is CommunityView =>
-  'community' in item
-
+export const isCommunityView = (item: Result): item is CommunityView => 'community' in item
 export const isUser = (item: Result): item is PersonView => 'person' in item
-
-export const isPostReport = (item: Result): item is PostReportView =>
-  'post_report' in item
-
-export const isCommentReport = (item: Result): item is CommentReportView =>
-  'comment_report' in item
-
-export const isPrivateMessageReport = (
-  item: Result,
-): item is PrivateMessageReportView => 'private_message_report' in item
+export const isPostReport = (item: Result): item is PostReportView => 'post_report' in item
+export const isCommentReport = (item: Result): item is CommentReportView => 'comment_report' in item
+export const isPrivateMessageReport = (item: Result): item is PrivateMessageReportView =>
+  'private_message_report' in item
 
 export interface ResumableItem {
   url: string
@@ -93,8 +77,7 @@ function resumableStore(limit: number = 10) {
     update,
     add: (item: ResumableItem) => {
       update((resumables) => {
-        if (resumables.find((i) => JSON.stringify(i) == JSON.stringify(item)))
-          return resumables
+        if (resumables.find((i) => JSON.stringify(i) == JSON.stringify(item))) return resumables
         resumables.unshift(item)
         if (resumables.length > limit) resumables.pop()
         return resumables

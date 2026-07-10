@@ -82,11 +82,7 @@
     ]}
   >
     {#if prefix || icon}
-      <div
-        class={[
-          'rounded-xl rounded-r-none text-slate-600 dark:text-zinc-400 pl-3',
-        ]}
-      >
+      <div class={['rounded-xl rounded-r-none text-slate-600 dark:text-zinc-400 pl-3']}>
         {#if prefix}
           {@render prefix?.()}
         {:else if icon}
@@ -114,11 +110,7 @@
       ]}
     />
     {#if suffix}
-      <div
-        class={[
-          'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400 h-full',
-        ]}
-      >
+      <div class={['rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400 h-full']}>
         {@render suffix?.()}
       </div>
     {/if}
@@ -141,16 +133,8 @@
 
   .text-input-sections {
     border: 1px solid var(--color-slate-200);
-    border-top-color: color-mix(
-      in oklab,
-      var(--color-slate-200),
-      var(--color-slate-300)
-    );
-    background: linear-gradient(
-      to top,
-      var(--color-white),
-      var(--color-slate-100)
-    );
+    border-top-color: color-mix(in oklab, var(--color-slate-200), var(--color-slate-300));
+    background: linear-gradient(to top, var(--color-white), var(--color-slate-100));
     border-radius: var(--radius-xl);
     display: flex;
     flex-direction: row;
@@ -163,11 +147,7 @@
       background: linear-gradient(
         to bottom,
         var(--color-zinc-900),
-        color-mix(
-          in oklab,
-          var(--color-zinc-800) 50%,
-          var(--color-zinc-900) 50%
-        )
+        color-mix(in oklab, var(--color-zinc-800) 50%, var(--color-zinc-900) 50%)
       );
     }
 

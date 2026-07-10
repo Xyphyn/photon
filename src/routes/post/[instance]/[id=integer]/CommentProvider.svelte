@@ -5,9 +5,10 @@
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
+  import { buildCommentsTree } from '$lib/feature/comment/comment-tree.svelte'
+  import { CommentModel } from '$lib/feature/comment/comment.svelte'
   import CommentForm from '$lib/feature/comment/CommentForm.svelte'
   import CommentListVirtualizer from '$lib/feature/comment/CommentListVirtualizer.svelte'
-  import { buildCommentsTree } from '$lib/feature/comment/comments.svelte'
   import CommentTree from '$lib/feature/comment/CommentTree.svelte'
   import { postLink } from '$lib/feature/post'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
@@ -64,13 +65,33 @@
   })
 </script>
 
+{#snippet actionBar()}
+  <div class="gap-2 flex items-center">
+    <Select size="md" bind:value={settings.defaultSort.comments} onchange={onupdate}>
+      <Option icon={Fire} value="hot">{$t('filter.sort.hot')}</Option>
+      <Option icon={Trophy} value="top">
+        {$t('filter.sort.top.label')}
+      </Option>
+      <Option icon={Star} value="new">{$t('filter.sort.new')}</Option>
+      <Option icon={Clock} value="old">
+        {$t('filter.sort.old')}
+      </Option>
+      <Option icon={ArrowTrendingDown} value="controversial">
+        {$t('filter.sort.controversial')}
+      </Option>
+    </Select>
+    <Button size="custom" class="h-8.5 w-8.5" rounding="xl" onclick={onupdate} icon={ArrowPath}
+    ></Button>
+  </div>
+{/snippet}
+
 {#if profile.current?.jwt}
   {#if !commenting}
     <EndPlaceholder border={false}>
       <Button
         color="primary"
         rounding="xl"
-        disabled={(post.post.locked || post.banned_from_community) &&
+        disabled={(post.post.locked || post.creator_banned_from_community) &&
           !(profile.isAdmin || profile.isMod(post.community))}
         onclick={() => (commenting = true)}
       >
@@ -79,43 +100,18 @@
       </Button>
 
       {#snippet action()}
-        <div class="gap-2 flex items-center">
-          <Select
-            size="md"
-            bind:value={settings.defaultSort.comments}
-            onchange={onupdate}
-          >
-            <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
-            <Option icon={Trophy} value="Top">
-              {$t('filter.sort.top.label')}
-            </Option>
-            <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
-            <Option icon={Clock} value="Old">
-              {$t('filter.sort.old')}
-            </Option>
-            <Option icon={ArrowTrendingDown} value="Controversial">
-              {$t('filter.sort.controversial')}
-            </Option>
-          </Select>
-          <Button
-            size="custom"
-            class="h-8.5 w-8.5"
-            rounding="xl"
-            onclick={onupdate}
-            icon={ArrowPath}
-          ></Button>
-        </div>
+        {@render actionBar()}
       {/snippet}
     </EndPlaceholder>
   {:else}
     <CommentForm
       postId={post.post.id}
-      oncomment={(comment) => {
+      oncomment={(res) => {
         tree.unshift({
           children: [],
           depth: 1,
           expanded: true,
-          comment_view: comment.comment_view,
+          comment: new CommentModel(res.comment_view),
         })
       }}
       onfocus={() => (commenting = true)}
@@ -129,32 +125,7 @@
 {/if}
 
 {#if commenting || !profile.current.jwt}
-  <div class="gap-2 flex items-center">
-    <Select
-      size="md"
-      bind:value={settings.defaultSort.comments}
-      onchange={onupdate}
-    >
-      <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
-      <Option icon={Trophy} value="Top">
-        {$t('filter.sort.top.label')}
-      </Option>
-      <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
-      <Option icon={Clock} value="Old">
-        {$t('filter.sort.old')}
-      </Option>
-      <Option icon={ArrowTrendingDown} value="Controversial">
-        {$t('filter.sort.controversial')}
-      </Option>
-    </Select>
-    <Button
-      size="custom"
-      class="h-8.5 w-8.5"
-      rounding="xl"
-      onclick={onupdate}
-      icon={ArrowPath}
-    ></Button>
-  </div>
+  {@render actionBar()}
 {/if}
 
 {#snippet allCommentsPlaceholder()}
@@ -184,12 +155,10 @@
   >
     <Icon src={PlusCircle} size="16" micro />
     {$t('comment.more', {
-      comments: tree[0].comment_view.comment.path.split('.').length - 2,
+      comments: tree[0].comment.comment.path.split('.').length - 2,
     })}
   </Button>
-  <div
-    class="border-l h-4 -mb-5 ml-2.5 border-slate-200 dark:border-zinc-800"
-  ></div>
+  <div class="border-l h-4 -mb-5 ml-2.5 border-slate-200 dark:border-zinc-800"></div>
 {/if}
 {#if virtualize}
   <CommentListVirtualizer post={post.post} nodes={tree} scrollTo={focus} />

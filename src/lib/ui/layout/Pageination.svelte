@@ -32,10 +32,7 @@
       const newParams = new SvelteURLSearchParams(href)
 
       current.delete(Array.from(newParams.keys())[0])
-      current.append(
-        Array.from(newParams.entries())[0][0],
-        Array.from(newParams.entries())[0][1],
-      )
+      current.append(Array.from(newParams.entries())[0][0], Array.from(newParams.entries())[0][1])
 
       return `?${current.toString()}`
     } else return href
@@ -46,9 +43,9 @@
   <nav
     aria-label={$t('aria.pagination.nav')}
     class={[
-      'flex flex-row gap-2 items-center justify-center bg-white dark:bg-zinc-950',
-      'border border-slate-200 dark:border-zinc-800 rounded-full overflow-hidden w-max mx-auto p-0.5',
-      'shadow-md',
+      'flex flex-row gap-4 items-center justify-center',
+      'rounded-full overflow-hidden w-max mx-auto p-1',
+      'material-distinct',
     ]}
   >
     {#if children}
@@ -57,7 +54,7 @@
       </span>
       <hr class="border-slate-200 dark:border-zinc-800 flex-1" />
     {/if}
-    {#if back}
+    {#if back || cursor?.back}
       <Button
         href={customHref(href?.(cursor?.back ?? page - 1))}
         color="tertiary"
@@ -66,8 +63,7 @@
         rounding="pill"
         size="custom"
         class="text-inherit dark:text-inherit p-1"
-        disabled={(cursor?.back == undefined && cursor?.next != undefined) ||
-          page <= 1}
+        disabled={cursor?.back == undefined && page <= 1}
       >
         {#snippet suffix()}
           <Icon src={ChevronLeft} size="24" mini />

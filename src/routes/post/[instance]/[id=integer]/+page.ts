@@ -4,14 +4,9 @@ import { client } from '$lib/api/client.svelte'
 import { PiefedClient } from '$lib/api/piefed/adapter.js'
 import { profile } from '$lib/app/auth'
 import { settings } from '$lib/app/settings.svelte'
-import { ReactiveState } from '$lib/app/util.svelte'
 import CommunityCard from '$lib/feature/community/CommunityCard.svelte'
-import {
-  Feed,
-  feed,
-  feeds,
-  type FeedTypes,
-} from '$lib/feature/feeds/feed.svelte'
+import { feed } from '$lib/feature/feeds/feed.svelte'
+import { repos } from '$lib/feature/feeds/repo.svelte.js'
 
 function buildContext(thread?: string) {
   let parentId: number | undefined
@@ -32,24 +27,6 @@ function buildContext(thread?: string) {
   return { parentId, showContext, max_depth, focus: thread?.split('.').at(-1) }
 }
 
-async function findInFeed(id: '/' | '/c/[name]' | '/f/[id]', postId: string) {
-  // this never actually loads anything
-  if (id == '/') {
-    return (feeds.get(id) as Feed<FeedTypes['/'][0], FeedTypes['/'][1]>)
-      ?.peek()
-      ?.posts.find((i) => i.post.id.toString() == postId)
-  } else {
-    return (
-      feeds.get(id) as Feed<
-        FeedTypes['/c/[name]'][0],
-        FeedTypes['/c/[name]'][1]
-      >
-    )
-      ?.peek()
-      ?.posts.find((i) => i.post.id.toString() == postId)
-  }
-}
-
 export async function load({ params, url, route }) {
   if (profile.current.instance != params.instance) {
     goto(resolve('/post/[instance]/[id=integer]/confirm', params), {
@@ -58,12 +35,7 @@ export async function load({ params, url, route }) {
   }
 
   // TODO use Lemmy profile default settings
-  const sort = settings?.defaultSort?.comments ?? 'Hot'
-
-  const cachedPost =
-    (await findInFeed('/', params.id)) ??
-    (await findInFeed('/c/[name]', params.id)) ??
-    (await findInFeed('/f/[id]', params.id))
+  const sort = settings?.defaultSort?.comments ?? 'hot'
 
   const {
     parentId,
@@ -82,7 +54,7 @@ export async function load({ params, url, route }) {
 
     return {
       post: post,
-      comments: commentPromise.then((i) => i.comments),
+      comments: commentPromise.then((i) => i.items),
       meta: postPromise.then((i) => ({
         community_view: i.community_view,
         cross_posts: i.cross_posts,
@@ -93,36 +65,32 @@ export async function load({ params, url, route }) {
     }
   })
 
-  const loaded = new ReactiveState(
-    await feedData.load({
-      comments: {
-        post_id: Number(params.id),
-        type_: 'All',
-        max_depth:
-          profile.client instanceof PiefedClient ? max_depth - 1 : max_depth,
-        saved_only: false,
-        sort: sort,
-        parent_id: parentId,
-        limit: 10000000000,
-      },
-      posts: { id: Number(params.id) },
-      preload: cachedPost,
-      thread: {
-        showContext: showContext,
-        focus: focus,
-        singleThread: parentId != null,
-      },
-    }),
-  )
+  const loaded = await feedData.load({
+    comments: {
+      post_id: Number(params.id),
+      type_: 'all',
+      max_depth: profile.client instanceof PiefedClient ? max_depth - 1 : max_depth,
+      sort: sort,
+      parent_id: parentId,
+      limit: 10000000000,
+    },
+    posts: { id: Number(params.id) },
+    preload: repos.posts.peek(Number(params.id))?.data,
+    thread: {
+      showContext: showContext,
+      focus: focus,
+      singleThread: parentId != null,
+    },
+  })
 
   return {
-    data: loaded,
+    ...loaded,
     slots: {
       sidebar: {
         component: CommunityCard,
-        props: {
-          community_view: loaded.value.meta.then((i) => i.community_view),
-        },
+        props: loaded.meta.then((i) => ({
+          community: repos.communities.get(i.community_view),
+        })),
       },
     },
   }

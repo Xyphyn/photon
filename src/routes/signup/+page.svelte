@@ -21,27 +21,27 @@
   import { t } from '$lib/app/i18n'
   import { DEFAULT_INSTANCE_URL } from '$lib/app/instance.svelte'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
+  import { loader } from '$lib/app/util.svelte'
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { CommonList, Header } from '$lib/ui/layout'
   import { Button, Note, TextInput, toast } from 'mono-svelte'
   import { onMount } from 'svelte'
-  import { ArrowLeft, CheckCircle, Icon } from 'svelte-hero-icons/dist'
-  import { preventDefault } from 'svelte/legacy'
+  import { ArrowLeft } from 'svelte-hero-icons/dist'
 
   let selectedInstance: string = $state('')
-  let validating: boolean = $state(false)
   let placeholder = $state(DEFAULT_INSTANCE_URL)
 
-  let instances: Instance[] | undefined = $state(undefined)
+  let validating = $state(false)
+  let loading = $state(false)
+
+  let instances = $state<Instance[]>([])
 
   onMount(async () => {
     try {
       const recommended = env.PUBLIC_RECOMMENDED_INSTANCES?.split(',')
 
       const res: Instance[] = (
-        (await fetch(`https://servers.infra.phtn.app?limit=50`).then((r) =>
-          r.json(),
-        )) as Instance[]
+        (await fetch(`https://servers.infra.phtn.app?limit=50`).then((r) => r.json())) as Instance[]
       )
         .filter((i: Instance) => i.fed)
         .sort((a: Instance, b: Instance) => b.score - a.score)
@@ -68,28 +68,43 @@
       })
     }
   })
+
+  const pick = (instance?: string) =>
+    loader(
+      (v) => (instance != null ? (validating = v) : (loading = v)),
+      async () => {
+        if (!instances) return
+        if (!instance)
+          selectedInstance =
+            instances[Math.floor(Math.random() * Math.max(5, instances.length))].baseurl
+
+        if (await validateInstance(selectedInstance.trim())) {
+          goto(`/signup/${encodeURIComponent(selectedInstance)}`)
+        } else {
+          throw new Error($t('toast.failInstanceURL'))
+        }
+      },
+    )
 </script>
 
 <svelte:head>
   <title>{$t('form.signup.title')}</title>
 </svelte:head>
 
-<div class="mx-auto max-w-xl flex flex-col gap-4 my-auto h-max w-full">
-  <Button href="/accounts" class="mb-4 w-max" rounding="pill">
-    <Icon src={ArrowLeft} size="16" micro />
+<div class="mx-auto max-w-xl flex flex-col gap-4 my-auto w-full max-h-full p-8 sm:py-16">
+  <Button href="/accounts" class="mb-4 w-max" icon={ArrowLeft}>
     {$t('common.back')}
   </Button>
   <Header>{$t('form.signup.title')}</Header>
   <p>{$t('form.signup.description')}</p>
   <Note>{$t('form.signup.info')}</Note>
-  {#if instances}
+  <div class="list-container flex-1 min-h-full flex flex-col">
     <CommonList>
       <VirtualList
         items={instances}
         useWindow={false}
-        height={384}
         estimatedHeight={50}
-        class="overflow-auto overflow-x-hidden w-full min-w-0 min-h-96"
+        class="h-full! overflow-auto overflow-x-hidden w-full min-w-0"
         itemContainer="li"
       >
         {#snippet item(i)}
@@ -97,64 +112,38 @@
           <button
             onclick={() => (selectedInstance = instance.baseurl ?? '')}
             class={[
-              'flex flex-row items-center text-left gap-2 w-full cursor-pointer rounded-[inherit]',
-              instance.recommended && 'material-success',
+              'flex flex-row items-center text-left w-full cursor-pointer rounded-[inherit] gap-4',
             ]}
           >
             <Avatar
               width={32}
               url={instance.icon}
               alt={instance.name}
+              circle={false}
               class="shrink-0"
             />
             <div class="flex flex-col max-h-full w-full">
-              <div
-                class="font-medium text-base whitespace-nowrap text-ellipsis flex"
-              >
+              <div class="font-medium text-base whitespace-nowrap text-ellipsis flex">
                 <span>
                   {instance.name}
-                </span>
-                <span class="text-slate-500 dark:text-zinc-500 ml-auto">
-                  {instance.baseurl}
                 </span>
               </div>
 
               <p
-                class="overflow-hidden overflow-ellipsis w-full text-sm text-slate-600 dark:text-zinc-400"
+                class="overflow-hidden text-ellipsis w-full text-sm text-slate-600 dark:text-zinc-500"
               >
                 {instance.desc}
               </p>
-              {#if instance.recommended}
-                <p class="text-xs inline-flex items-center gap-1">
-                  <Icon src={CheckCircle} size="14" micro class="inline" />
-                  {$t('form.signup.recommended')}
-                </p>
-              {/if}
             </div>
           </button>
         {/snippet}
+        <div
+          class="sticky bottom-0 bg-linear-to-b from-slate-25/0 to-slate-25 dark:from-zinc-925/0 dark:to-zinc-925 h-16"
+        ></div>
       </VirtualList>
     </CommonList>
-  {/if}
-  <form
-    class="flex flex-col gap-4"
-    onsubmit={preventDefault(async () => {
-      if (selectedInstance != '') {
-        validating = true
-
-        if (await validateInstance(selectedInstance.trim())) {
-          goto(`/signup/${encodeURIComponent(selectedInstance)}`)
-        } else {
-          toast({
-            content: $t('toast.failInstanceURL'),
-            type: 'error',
-          })
-        }
-
-        validating = false
-      }
-    })}
-  >
+  </div>
+  <form class="flex flex-col gap-4">
     <TextInput
       bind:value={selectedInstance}
       label={$t('form.signup.chooseInstance')}
@@ -165,13 +154,25 @@
       }}
     />
     <Button
+      onclick={() => pick(selectedInstance)}
       submit
       color="primary"
       size="lg"
       loading={validating}
-      disabled={validating}
     >
       {$t('form.submit')}
     </Button>
+    <Button onclick={() => pick()} color="secondary" size="lg" {loading}>
+      {$t('form.signup.pickForMe')}
+    </Button>
   </form>
 </div>
+
+<style>
+  .list-container :global(ul) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    min-height: 0;
+  }
+</style>

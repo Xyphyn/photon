@@ -1,7 +1,8 @@
 <script lang="ts">
-  import ImageAttachForm from '$lib/ui/form/ImageAttachForm.svelte'
+  import { uploadStrategy } from '$lib/ui/form/files/file-upload.svelte'
+  import FileUpload from '$lib/ui/form/files/FileUpload.svelte'
   import MultiSelect from '$lib/ui/form/Switch.svelte'
-  import { Button, Label, Modal, TextArea } from 'mono-svelte'
+  import { Button, Label, TextArea } from 'mono-svelte'
   import type { TextAreaProps } from 'mono-svelte/forms/TextArea.svelte'
   import { tick } from 'svelte'
   import {
@@ -19,70 +20,6 @@
   import type { ClassValue } from 'svelte/elements'
   import { t } from '../i18n'
   import Markdown from './Markdown.svelte'
-
-  let textArea: HTMLTextAreaElement | undefined = $state()
-
-  function replaceTextAtIndices(
-    str: string,
-    startIndex: number,
-    endIndex: number,
-    replacement: string,
-  ) {
-    return str.substring(0, startIndex) + replacement + str.substring(endIndex)
-  }
-
-  function wrapSelection(start: string, end: string) {
-    if (!textArea) return
-    const startPos = textArea.selectionStart
-    const endPos = textArea.selectionEnd
-
-    const substring = textArea.value.substring(startPos, endPos)
-    let newText = `${start}${substring}${end}`
-
-    textArea.value = replaceTextAtIndices(
-      textArea.value,
-      startPos,
-      endPos,
-      newText,
-    )
-
-    textArea.focus()
-    textArea.selectionStart = startPos + start.length
-    textArea.selectionEnd = endPos + start.length
-
-    value = textArea.value
-  }
-
-  let uploadingImage = $state(false)
-  let image = $state<FileList | null | undefined>(null)
-
-  const shortcuts = {
-    b: () => wrapSelection('**', '**'),
-    i: () => wrapSelection('*', '*'),
-    s: () => wrapSelection('~~', '~~'),
-    h: () => wrapSelection('\n# ', ''),
-    k: () => wrapSelection('[](', ')'),
-  }
-
-  async function adjustHeight() {
-    await tick()
-    if (textArea) {
-      textArea.style.height = 'auto' // Reset height to auto to calculate new height
-      textArea.style.height = `${textArea.scrollHeight}px` // Set height to the scrollHeight
-    }
-  }
-
-  function handleKeydown(
-    event: KeyboardEvent & {
-      currentTarget: EventTarget & HTMLTextAreaElement
-    },
-  ) {
-    if (event.ctrlKey && event.key === 'Enter') {
-      event.preventDefault()
-      const form = textArea?.closest('form')
-      if (form) form.requestSubmit() // Automatically submits the form
-    }
-  }
 
   interface Props extends TextAreaProps {
     images?: boolean
@@ -116,23 +53,67 @@
     ...rest
   }: Props = $props()
 
+  let textArea = $state<HTMLTextAreaElement>()
+  let uploadComponent = $state<{ prefill: (file: FileList) => void }>()
+
+  function replaceTextAtIndices(
+    str: string,
+    startIndex: number,
+    endIndex: number,
+    replacement: string,
+  ) {
+    return str.substring(0, startIndex) + replacement + str.substring(endIndex)
+  }
+
+  function wrapSelection(start: string, end: string) {
+    if (!textArea) return
+    const startPos = textArea.selectionStart
+    const endPos = textArea.selectionEnd
+
+    const substring = textArea.value.substring(startPos, endPos)
+    let newText = `${start}${substring}${end}`
+
+    textArea.value = replaceTextAtIndices(textArea.value, startPos, endPos, newText)
+
+    textArea.focus()
+    textArea.selectionStart = startPos + start.length
+    textArea.selectionEnd = endPos + start.length
+
+    value = textArea.value
+  }
+
+  const shortcuts = {
+    b: () => wrapSelection('**', '**'),
+    i: () => wrapSelection('*', '*'),
+    s: () => wrapSelection('~~', '~~'),
+    h: () => wrapSelection('\n# ', ''),
+    k: () => wrapSelection('[](', ')'),
+  }
+
+  async function adjustHeight() {
+    await tick()
+    if (textArea) {
+      textArea.style.height = 'auto' // Reset height to auto to calculate new height
+      textArea.style.height = `${textArea.scrollHeight}px` // Set height to the scrollHeight
+    }
+  }
+
+  function handleKeydown(
+    event: KeyboardEvent & {
+      currentTarget: EventTarget & HTMLTextAreaElement
+    },
+  ) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      event.preventDefault()
+      const form = textArea?.closest('form')
+      if (form) form.requestSubmit() // Automatically submits the form
+    }
+  }
+
   $effect(() => {
     if (!previewing && value) adjustHeight()
   })
 </script>
-
-{#if uploadingImage && images}
-  <Modal title={$t('form.post.uploadImage')} bind:open={uploadingImage}>
-    <ImageAttachForm
-      bind:image
-      onupload={(e) => {
-        e.forEach((i) => {
-          wrapSelection(`![](${i})\n\n`, '')
-        })
-      }}
-    />
-  </Modal>
-{/if}
 
 <div>
   {#if label || customLabel}
@@ -146,18 +127,14 @@
   {/if}
   <div
     class={[
-      'flex flex-col border border-slate-200 border-b-slate-300 dark:border-zinc-800',
-      'focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300 dark:ring-zinc-700',
-      'bg-white dark:bg-zinc-950',
-      'rounded-2xl overflow-hidden transition-colors shadow-xs',
+      'focus-within:ring-3 ring-slate-300 dark:ring-zinc-700',
+      'markdown-editor',
       label && 'mt-1',
       clazz,
     ]}
   >
     {#if previewing}
-      <div
-        class="p-5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950 min-h-48"
-      >
+      <div class="p-5 overflow-auto text-sm resize-y bg-white dark:bg-zinc-950 min-h-48">
         <Markdown source={beforePreview(value)} />
       </div>
     {:else}
@@ -242,8 +219,7 @@
             <Icon src={CodeBracket} micro size="15" />
           </Button>
           <Button
-            onclick={() =>
-              wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
+            onclick={() => wrapSelection('::: spoiler <spoiler title>\n', '\n:::')}
             title="Spoiler"
             size="custom"
             class="w-8 h-8"
@@ -276,21 +252,23 @@
             </span>
           </Button>
           {#if images}
-            <Button
-              onclick={() => (uploadingImage = !uploadingImage)}
-              title="Image"
-              size="custom"
-              class="w-8 h-8"
-              rounding="lg"
+            <FileUpload
+              upload={uploadStrategy.default}
+              onupload={(res) => wrapSelection('![](', `${res})`)}
+              bind:this={uploadComponent}
             >
-              <Icon src={Photo} size="15" micro />
-            </Button>
+              {#snippet target(toggle)}
+                <Button onclick={toggle} title="Image" size="custom" class="w-8 h-8" rounding="lg">
+                  <Icon src={Photo} size="15" micro />
+                </Button>
+              {/snippet}
+            </FileUpload>
           {/if}
         </div>
       {/if}
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit z-0 border-0 rounded-none ring-0! focus:ring-transparent! transition-none! resize-none"
+        class="z-0 focus:ring-transparent! transition-none! resize-none"
         bind:value
         bind:element={textArea}
         onkeydown={(e) => {
@@ -305,14 +283,11 @@
             }
           }
         }}
+        unstyled
         oninput={adjustHeight}
         onpaste={(e) => {
-          if (!e.clipboardData?.files) return
-          const files = Array.from(e.clipboardData.files)
-          if (files[0]?.type.startsWith('image/')) {
-            image = e.clipboardData.files as FileList
-            uploadingImage = true
-          }
+          if (!e.clipboardData?.files || e.clipboardData.files.length == 0) return
+          uploadComponent?.prefill(e.clipboardData?.files)
         }}
         {rows}
         {...rest}
@@ -320,9 +295,7 @@
     {/if}
 
     {#if previewButton}
-      <div
-        class="p-2 flex flex-row items-center w-full bg-slate-50 border-t border-slate-200 dark:border-zinc-900 dark:bg-zinc-925 gap-1"
-      >
+      <div class="p-2 flex flex-row items-center w-full gap-1">
         {#if previewButton}
           <MultiSelect
             bind:selected={previewing}
@@ -335,3 +308,38 @@
     {/if}
   </div>
 </div>
+
+<style>
+  @reference '../../../app.css';
+
+  .markdown-editor {
+    --primary-box-shadow: 0px -1px 0px 0px --alpha(var(--color-slate-900) / 20%) inset;
+    --ring-box-shadow: 0px 0px 0px 2px --alpha(var(--color-primary-900) / 30%);
+
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-slate-200);
+    box-shadow: var(--primary-box-shadow);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    font-size: var(--text-sm);
+    background-color: var(--color-white);
+    transition: all 150ms var(--ease-cubic);
+
+    @variant dark {
+      --primary-box-shadow: 0px 1.5px 0px 0px inset --alpha(var(--color-zinc-800) / 100%);
+      --ring-box-shadow: 0px 0px 0px 2px --alpha(var(--color-primary-100) / 30%);
+      background: linear-gradient(to bottom, var(--color-zinc-925) 25%, var(--color-zinc-900));
+      border-color: --alpha(var(--color-black) / 20%);
+    }
+
+    &:focus-within {
+      box-shadow: var(--primary-box-shadow), var(--ring-box-shadow);
+      border-color: var(--color-primary-900);
+
+      @variant dark {
+        border-color: var(--color-primary-100);
+      }
+    }
+  }
+</style>

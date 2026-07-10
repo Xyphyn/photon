@@ -15,19 +15,11 @@
     showTimestamp?: boolean
   }
 
-  let {
-    message,
-    primary = false,
-    ondelete,
-    onreport,
-    showTimestamp = true,
-  }: Props = $props()
+  let { message, primary = false, ondelete, onreport, showTimestamp = true }: Props = $props()
 </script>
 
 <div
-  class="group relative w-full flex gap-1 items-center {primary
-    ? 'flex-row-reverse'
-    : 'flex-row'}"
+  class="group relative w-full flex gap-1 items-center {primary ? 'flex-row-reverse' : 'flex-row'}"
   style="max-width: min(80vw,24rem)"
 >
   <div>
@@ -46,7 +38,7 @@
     {#if showTimestamp}
       <RelativeDate
         class="text-xs block -mt-0.5 ml-1 text-slate-600 dark:text-zinc-400"
-        date={publishedToDate(message.private_message.published)}
+        date={publishedToDate(message.private_message.published_at)}
       />
     {/if}
   </div>
@@ -64,19 +56,11 @@
       </Button>
     {/snippet}
     {#if primary}
-      <MenuButton
-        color="danger-subtle"
-        onclick={() => ondelete?.(true)}
-        icon={Trash}
-      >
+      <MenuButton color="danger-subtle" onclick={() => ondelete?.(true)} icon={Trash}>
         {$t('post.actions.more.delete')}
       </MenuButton>
     {:else}
-      <MenuButton
-        color="danger-subtle"
-        onclick={() => onreport?.(true)}
-        icon={Flag}
-      >
+      <MenuButton color="danger-subtle" onclick={() => onreport?.(true)} icon={Flag}>
         {$t('moderation.report')}
       </MenuButton>
     {/if}

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { t } from '$lib/app/i18n'
-  import { fullCommunityName } from '$lib/app/util.svelte'
+  import { communityLink } from '$lib/app/util.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte'
   import { Tabs } from '$lib/ui/layout'
   import type { PageData } from './$types'
 
@@ -11,41 +12,29 @@
 
   let { data, children }: Props = $props()
 
-  let communityUrl = $derived(
-    `/c/${fullCommunityName(
-      data.community.value.community_view.community.name,
-      data.community.value.community_view.community.actor_id,
-    )}`,
-  )
+  let community = $derived(repos.communities.get(data.community.community_view))
+  let link = $derived(communityLink(community.community))
 </script>
 
 <svelte:head>
-  <title>{data.community.value.community_view.community.title}</title>
+  <title>{community.community.title}</title>
 
-  <meta
-    name="og:title"
-    content={data.community.value.community_view.community.title}
-  />
-  {#if data.community.value.community_view.community.description}
-    <meta
-      name="og:description"
-      content={data.community.value.community_view.community.description}
-    />
+  <meta name="og:title" content={community.community.title} />
+  {#if community.community.summary}
+    <meta name="og:description" content={community.community.summary} />
   {/if}
 </svelte:head>
 
-<div class="flex flex-col gap-4 h-full">
-  <Tabs
-    routes={[
-      {
-        href: `${communityUrl}/settings`,
-        name: $t('routes.community.settings.settings'),
-      },
-      {
-        href: `${communityUrl}/settings/team`,
-        name: $t('routes.community.settings.team'),
-      },
-    ]}
-  ></Tabs>
-  {@render children?.()}
-</div>
+<Tabs
+  routes={[
+    {
+      href: `${link}/settings`,
+      name: $t('routes.community.settings.settings'),
+    },
+    {
+      href: `${link}/settings/team`,
+      name: $t('routes.community.settings.team'),
+    },
+  ]}
+></Tabs>
+{@render children?.()}

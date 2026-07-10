@@ -1,39 +1,40 @@
 <script lang="ts">
   import { browser } from '$app/environment'
   import { client } from '$lib/api/client.svelte'
-  import type { GetPosts, PostView } from '$lib/api/types'
+  import type { GetPosts } from '$lib/api/types'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import { settings } from '$lib/app/settings.svelte'
+  import { repos } from '$lib/feature/feeds/repo.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
+  import type { PostView } from 'lemmy-js-client'
   import { Button, Material, Spinner } from 'mono-svelte'
   import { onDestroy, untrack } from 'svelte'
-  import type { Attachment } from 'svelte/attachments'
   import {
     ArchiveBox,
-    ArrowsPointingOut,
     ArrowTopRightOnSquare,
     ChevronDoubleUp,
     ExclamationTriangle,
     Icon,
   } from 'svelte-hero-icons/dist'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import type { Attachment } from 'svelte/attachments'
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import { Post } from '..'
-  import { filterPost, type FilteredItem } from '../filters.svelte'
-  import { ReactiveState } from '$lib/app/util.svelte'
+  import { PostModel } from '../post.svelte'
 
   interface Props {
-    posts: PostView[]
+    posts: PostModel[]
     params: GetPosts
     virtualList?: { itemHeights: (number | null)[] }
     lastSeen?: number
     community?: boolean
     children?: import('svelte').Snippet
+    onLoadMore?: (items: PostView[]) => void
   }
 
   let {
@@ -42,15 +43,9 @@
     virtualList = $bindable(),
     lastSeen = $bindable(0),
     community = false,
+    onLoadMore,
     children,
   }: Props = $props()
-
-  let filteredPosts: FilteredItem[] = $derived(
-    posts.map((post) => ({
-      id: post.post.id,
-      action: filterPost(post),
-    })),
-  )
 
   let listEl = $state<HTMLUListElement>()
   let listComp = $state<{
@@ -78,8 +73,7 @@
       loading = true
 
       const newPosts = await client({
-        func: (input, init) =>
-          fetch(input, { ...init, signal: abortLoad.signal }),
+        func: (input, init) => fetch(input, { ...init, signal: abortLoad.signal }),
       })
         .getPosts(params)
         .catch((e) => {
@@ -88,17 +82,18 @@
 
       error = null
 
-      hasMore = newPosts.posts.length != 0
+      hasMore = newPosts.items.length != 0
 
       params.page_cursor = newPosts.next_page
 
-      posts.push(
-        ...newPosts.posts.filter((post) => {
-          if (seenIds.has(post.post.id)) return false
-          seenIds.add(post.post.id)
-          return true
-        }),
-      )
+      // this filter was added because some duplicate posts were appearing. I don't know if this is still happening
+      const fresh = newPosts.items.filter((post) => {
+        if (seenIds.has(post.post.id)) return false
+        seenIds.add(post.post.id)
+        return true
+      })
+      posts.push(...fresh.map(repos.posts.get))
+      onLoadMore?.(fresh)
 
       loading = false
     } catch (e) {
@@ -163,12 +158,7 @@
           title={$t('routes.frontpage.empty.title')}
           description={$t('routes.frontpage.empty.description')}
         >
-          <Button
-            href="/communities"
-            rounding="pill"
-            color="primary"
-            icon={ArrowTopRightOnSquare}
-          >
+          <Button href="/communities" rounding="pill" color="primary" icon={ArrowTopRightOnSquare}>
             {$t('nav.communities')}
           </Button>
         </Placeholder>
@@ -187,48 +177,25 @@
       >
         {#snippet item(row)}
           <!--god svelte is gonna make me lose it-->
-          {@const filter = new ReactiveState(filteredPosts[row])}
           <li
             in:fly={row < 7
               ? { duration: 800, easing: expoOut, y: 24, delay: row * 50 }
               : { opacity: 1, duration: 0 }}
             data-index={row}
-            class={[
-              'relative post-container',
-              filter.value.action == 'hide' && 'hidden',
-              row < 7 && '',
-            ]}
+            class={['relative post-container', row < 7 && '']}
             {@attach intersectionAttach}
           >
             <!--TODO make my component isolation not abysmal-->
-            {#if filter.value.action == 'none'}
-              <Post
-                bind:post={posts[row]}
-                hideCommunity={community}
-                view={(posts[row].post.featured_community ||
-                  posts[row].post.featured_local) &&
-                settings.posts.compactFeatured
-                  ? 'compact'
-                  : settings.view}
-                onhide={() => removePost(posts[row].post.id)}
-                class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
-              ></Post>
-            {:else if filter.value.action == 'minimize'}
-              <Button
-                onclick={() => {
-                  filteredPosts[row].action = 'none'
-                  filter.value.action = 'none'
-                  listComp?.rerender()
-                }}
-                color="tertiary"
-                rounding="none"
-                icon={ArrowsPointingOut}
-                class="text-slate-400 dark:text-zinc-600 w-full"
-                size="xs"
-              >
-                {$t('settings.lemmy.contentFilter.minimized')}
-              </Button>
-            {/if}
+            <Post
+              bind:post={posts[row]}
+              hideCommunity={community}
+              view={(posts[row].post.featured_community || posts[row].post.featured_local) &&
+              settings.posts.compactFeatured
+                ? 'compact'
+                : settings.view}
+              onhide={() => removePost(posts[row].post.id)}
+              class="px-3 sm:px-6 hover:bg-slate-100/30 hover:dark:bg-zinc-900/30 transition-colors"
+            />
           </li>
         {/snippet}
       </VirtualList>
@@ -247,12 +214,7 @@
           />
           {errorMessage(error)}
         </div>
-        <Button
-          color="primary"
-          {loading}
-          disabled={loading}
-          onclick={() => loadMore()}
-        >
+        <Button color="primary" {loading} disabled={loading} onclick={() => loadMore()}>
           {$t('message.retry')}
         </Button>
       </Material>
@@ -265,8 +227,7 @@
         <EndPlaceholder>
           {$t('routes.frontpage.endFeed', {
             community_name:
-              params.community_name ??
-              'Lemmy. There are no more posts. You saw them all.',
+              params.community_name ?? 'Lemmy. There are no more posts. You saw them all.',
           })}
           {#snippet action()}
             <Button color="tertiary" icon={ChevronDoubleUp}>

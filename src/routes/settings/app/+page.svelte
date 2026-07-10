@@ -2,6 +2,7 @@
   import { env } from '$env/dynamic/public'
   import { locale, t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
+  import Location from '$lib/feature/filter/Location.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
   import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
   import Link from '$lib/ui/form/Link.svelte'
@@ -24,7 +25,6 @@
     DocumentText,
     EyeSlash,
     Fire,
-    GlobeAmericas,
     Heart,
     Icon,
     Language,
@@ -109,20 +109,14 @@
         {$t('settings.app.lang.auto')}
       </Option>
       {#each localeMap.entries() as [key, value]}
-        <Option
-          data-label={key == 'placeholder'}
-          disabled={key == 'placeholder'}
-          value={key}
-        >
+        <Option data-label={key == 'placeholder'} disabled={key == 'placeholder'} value={key}>
           {value.name}
         </Option>
       {/each}
     </Select>
   </Setting>
   {#if $locale == 'he' || $locale == 'ar'}
-    <ToggleSetting
-      bind:checked={settings.useRtl}
-      title={$t('settings.app.lang.useRtl.title')}
+    <ToggleSetting bind:checked={settings.useRtl} title={$t('settings.app.lang.useRtl.title')}
     ></ToggleSetting>
   {/if}
   <Setting icon={ViewColumns}>
@@ -151,23 +145,16 @@
       class="flex flex-row flex-wrap
       flex-1 gap-2 w-full lg:w-max max-w-full lg:self-end"
     >
-      <Select bind:value={settings.defaultSort.feed}>
-        {#snippet customLabel()}
-          <div class="flex items-center gap-1">
-            <Icon src={GlobeAmericas} size="16" mini />
-            {$t('filter.location.label')}
-          </div>
-        {/snippet}
-        <Option value="All">{$t('filter.location.all')}</Option>
-        <Option value="Local">{$t('filter.location.local')}</Option>
-        <Option value="Subscribed">
-          {$t('filter.location.subscribed')}
-        </Option>
-        <Option value="Moderator">
-          {$t('filter.location.moderator')}
-        </Option>
-      </Select>
-      <Sort bind:selected={settings.defaultSort.sort} navigate={false} />
+      <Location
+        selected={settings.defaultSort.feed}
+        onchange={(v) => (settings.defaultSort.feed = v)}
+        navigate={false}
+      />
+      <Sort
+        selected={settings.defaultSort.sort}
+        onchange={(v) => (settings.defaultSort.sort = v.sort)}
+        navigate={false}
+      />
       <Select bind:value={settings.defaultSort.comments}>
         {#snippet customLabel()}
           <div class="flex items-center gap-1">
@@ -176,13 +163,13 @@
           </div>
         {/snippet}
 
-        <Option icon={Fire} value="Hot">{$t('filter.sort.hot')}</Option>
-        <Option icon={Trophy} value="Top">
+        <Option icon={Fire} value="hot">{$t('filter.sort.hot')}</Option>
+        <Option icon={Trophy} value="top">
           {$t('filter.sort.top.label')}
         </Option>
-        <Option icon={Star} value="New">{$t('filter.sort.new')}</Option>
-        <Option icon={Clock} value="Old">{$t('filter.sort.old')}</Option>
-        <Option icon={ArrowTrendingDown} value="Controversial">
+        <Option icon={Star} value="new">{$t('filter.sort.new')}</Option>
+        <Option icon={Clock} value="old">{$t('filter.sort.old')}</Option>
+        <Option icon={ArrowTrendingDown} value="controversial">
           {$t('filter.sort.controversial')}
         </Option>
       </Select>
@@ -231,10 +218,7 @@
     {/snippet}
     <Switch
       options={[true, false]}
-      optionNames={[
-        $t('settings.app.thumbnailSide.left'),
-        $t('settings.app.thumbnailSide.right'),
-      ]}
+      optionNames={[$t('settings.app.thumbnailSide.left'), $t('settings.app.thumbnailSide.right')]}
       bind:selected={settings.leftAlign}
     />
   </Setting>

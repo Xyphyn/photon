@@ -1,5 +1,5 @@
-<script lang="ts" module>
-  import type { Community, Person, SubscribedType } from '$lib/api/types'
+<script lang="ts">
+  import type { Community, CommunityTagsView, Person } from '$lib/api/types'
   import { profile } from '$lib/app/auth'
   import { t } from '$lib/app/i18n'
   import Markdown from '$lib/app/markdown/Markdown.svelte'
@@ -7,9 +7,7 @@
   import Avatar from '$lib/ui/generic/Avatar.svelte'
   import { publishedToDate } from '$lib/ui/util/date'
   import { Badge, Material, modal, Popover } from 'mono-svelte'
-  import RelativeDate, {
-    formatRelativeDate,
-  } from 'mono-svelte/util/RelativeDate.svelte'
+  import RelativeDate, { formatRelativeDate } from 'mono-svelte/util/RelativeDate.svelte'
   import {
     type IconSource,
     Bookmark,
@@ -36,57 +34,11 @@
     | 'locked'
     | 'moderator'
     | 'admin'
-  export interface Tag {
-    content: string
-    color?: string
-    icon?: IconSource | null
-    textColor?: string
-    type: 'flair' | 'custom'
-  }
 
-  export const textToTag: Map<string, Tag> = new Map<string, Tag>([
-    ['OC', { content: 'OC', color: '#03A8F240', type: 'custom' }],
-    ['NSFL', { content: 'NSFL', color: '#ff000040', type: 'custom' }],
-    ['CW', { content: 'CW', color: '#ff000040', type: 'custom' }],
-  ])
-
-  export const parseTags = (
-    title?: string,
-  ): { tags: Tag[]; title?: string } => {
-    if (!title) return { tags: [] }
-
-    let extracted: Tag[] = []
-
-    const newTitle = title
-      .toString()
-      .replace(/^(\[.[^\]]+\])|(\[.[^\]]+\])$/g, (match) => {
-        const contents = match.split(',').map((part: string) => part.trim())
-
-        contents
-          .map((i) => i.replaceAll(/(\[|\])/g, ''))
-          .forEach((content: string) => {
-            extracted.push(
-              textToTag.get(content) ?? {
-                content: content,
-                type: 'custom',
-              },
-            )
-          })
-        return ''
-      })
-
-    return {
-      tags: extracted,
-      title: newTitle,
-    }
-  }
-</script>
-
-<script lang="ts">
   interface Props {
     community?: Community
     showCommunity?: boolean
-    subscribed?: SubscribedType
+    subscribed?: boolean
     user?: Person
     published?: Date
     title?: string
@@ -96,7 +48,7 @@
     view?: View
     // Badges
     badges?: Record<BadgeType, boolean>
-    tags?: Tag[]
+    tags?: CommunityTagsView
     style?: string
     titleClass?: string
     extraBadges?: import('svelte').Snippet
@@ -215,10 +167,7 @@
         >
           {#if community.nsfw && settings.nsfwBlur}
             <div
-              style="width: {view == 'compact' ? 24 : 32}; height: {view ==
-              'compact'
-                ? 24
-                : 32}"
+              style="width: {view == 'compact' ? 24 : 32}; height: {view == 'compact' ? 24 : 32}"
               class="bg-red-400 rounded-xl"
             ></div>
           {:else}
@@ -233,7 +182,7 @@
         </button>
       {/snippet}
       {#snippet popover(open)}
-        {#if open && community && subscribed}
+        {#if open && community}
           <Material
             color="uniform"
             rounding="2xl"
@@ -242,7 +191,7 @@
             data-autoclose="false"
           >
             {#await import('../community/CommunityHeader.svelte') then { default: CommunityHeader }}
-              <CommunityHeader {community} {subscribed} />
+              <CommunityHeader {community} subscribed={subscribed ?? false} />
             {/await}
           </Material>
         {/if}
@@ -311,42 +260,27 @@
     {/if}
   </div>
   <div
-    class="flex flex-row min-sm:justify-end items-center self-center flex-wrap gap-2 *:shrink-0 badges min-sm:ml-2"
+    class="flex flex-row sm:justify-end items-center self-center flex-wrap gap-2 *:shrink-0 badges sm:ml-2"
     style="grid-area: badges;"
   >
     {#if tags}
       {#each tags as tag}
-        {@const href =
-          tag.type == 'flair'
-            ? null
-            : `/search?community=${community?.id}&q=[${tag.content}]&type=Posts`}
-        <svelte:element
-          this={href ? 'a' : 'div'}
-          {href}
+        <div
           class="hover:brightness-110"
-          style="{tag.color ? `--tag-color: ${tag.color};` : ''} {tag.textColor
-            ? `--tag-text-color: ${tag.textColor}`
-            : ''}"
+          style={tag.color ? `--tag-color: var(--${tag.color});` : ''}
         >
           <Badge class={tag.color ? 'badge-tag-color' : ''}>
             {#snippet icon()}
-              {#if tag.icon}
-                <Icon src={tag.icon} micro size="14" />
-              {:else if tag === undefined}
-                <Icon src={Tag} micro size="14" />
-              {/if}
+              <Icon src={Tag} micro size="14" />
             {/snippet}
-            {tag.content}
+            {tag.display_name ?? tag.name}
           </Badge>
-        </svelte:element>
+        </div>
       {/each}
     {/if}
     {#each Object.keys(badges)
-      // filter by ones that are true
       .filter((i) => badges[i as BadgeType] == true)
-      // get from predetermined map
       .map((i) => badgeToData.get(i as BadgeType))
-      // remove null
       .filter((i) => i != undefined) as badge}
       <Badge label={badge.label} color={badge.color} allowIconOnly>
         {#snippet icon()}
@@ -375,11 +309,7 @@
       rel={useAttachedUrl ? 'noopener noreferrer' : undefined}
       class="inline-block hover:underline hover:text-primary-900 dark:hover:text-primary-100 transition-colors"
     >
-      <Markdown
-        inline
-        source={title}
-        class={view != 'compact' ? '' : 'leading-[1.3]'}
-      />
+      <Markdown inline source={title} class={view != 'compact' ? '' : 'leading-[1.3]'} />
     </a>
   </h3>
 {:else}
@@ -431,18 +361,5 @@
   :global(.badge-tag-color) {
     background-color: var(--tag-color, #fff) !important;
     color: var(--tag-text-color, #000) !important;
-
-    @variant dark {
-      background-color: color-mix(
-        in oklab,
-        #222,
-        var(--tag-color, #fff)
-      ) !important;
-      color: color-mix(
-        in oklab,
-        #fff 80%,
-        var(--tag-text-color, #fff)
-      ) !important;
-    }
   }
 </style>

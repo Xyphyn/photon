@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { CommentView } from '$lib/api/types'
   import { t } from '$lib/app/i18n'
   import { publishedToDate } from '$lib/ui/util/date'
   import { Button } from 'mono-svelte'
@@ -7,9 +6,10 @@
   import type { ClassValue } from 'svelte/elements'
   import { PostMeta } from '../post'
   import Comment from './Comment.svelte'
+  import type { CommentModel } from './comment.svelte'
 
   interface Props {
-    comment: CommentView
+    comment: CommentModel
     community?: boolean
     meta?: boolean
     class?: string
@@ -40,11 +40,10 @@
             moderator: false,
             saved: false,
             deleted: comment.post.deleted,
-            featured:
-              comment.post.featured_community || comment.post.featured_local,
+            featured: comment.post.featured_community || comment.post.featured_local,
             locked: comment.post.locked,
           }}
-          published={publishedToDate(comment.comment.published)}
+          published={publishedToDate(comment.comment.published_at)}
           community={community ? comment.community : undefined}
           title={comment.post.name}
           id={comment.post.id}
@@ -64,7 +63,7 @@
     </div>
   {/if}
   <Comment
-    node={{ children: [], comment_view: comment, depth: 1, expanded: true }}
+    node={{ children: [], comment: comment, depth: 1, expanded: true }}
     replying={false}
     {meta}
     {actions}

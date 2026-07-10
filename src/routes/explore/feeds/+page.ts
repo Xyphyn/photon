@@ -1,15 +1,35 @@
 import { client } from '$lib/api/client.svelte'
-import { ReactiveState } from '$lib/app/util.svelte'
-import { error } from '@sveltejs/kit'
+import { urlParam } from '$lib/app/util/params'
+import { feed } from '$lib/feature/feeds/feed.svelte.js'
+import type { MultiCommunityListingType, MultiCommunitySortType } from 'lemmy-js-client'
 
-export async function load({ fetch }) {
-  const piefed = client({ func: fetch })
+export async function load({ fetch, parent, route, url }) {
+  const { cursor, query, period } = await parent()
 
-  if (!piefed.getFeeds) error(404, 'unsupported')
+  const sort = urlParam.string<MultiCommunitySortType>(url, 'sort', 'subscribers')
+  const type = urlParam.string<MultiCommunityListingType>(url, 'type', 'all')
 
-  const feeds = await piefed.getFeeds({ include_communities: false })
+  const feedData = await feed(
+    route.id,
+    async (params) => await client({ func: fetch }).listMultiCommunities(params),
+  ).load({
+    page_cursor: cursor,
+    search_term: query,
+    sort,
+    type_: type,
+    time_range_seconds: period,
+    limit: 50,
+  })
 
   return {
-    feeds: new ReactiveState(feeds.feeds),
+    feeds: feedData.items,
+    params: {
+      type: type,
+      sort: sort,
+      query: query,
+      next: feedData.next_page,
+      prev: feedData.prev_page,
+      period: period,
+    },
   }
 }

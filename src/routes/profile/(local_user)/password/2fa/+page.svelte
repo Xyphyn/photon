@@ -12,9 +12,7 @@
   let { data } = $props()
 
   let totpLink = $state<string>()
-  let totpEnabled = $state(
-    data.my_user?.local_user_view.local_user.totp_2fa_enabled,
-  )
+  let totpEnabled = $state(data.local_user_view.local_user.totp_2fa_enabled)
 
   let verify_totp = $state('')
 
@@ -31,7 +29,7 @@
       }
 
       if (update) {
-        await client().updateTotp({
+        await client().editTotp({
           enabled: enabled,
           totp_token: verify_totp,
         })
@@ -54,21 +52,12 @@
 </script>
 
 <div class="w-full flex flex-col h-full">
-  <Modal
-    dismissable={false}
-    bind:open={openModal}
-    title={$t('form.profile.2fa.2fa')}
-  >
+  <Modal dismissable={false} bind:open={openModal} title={$t('form.profile.2fa.2fa')}>
     {#if totpLink && !totpEnabled}
       <Material rounding="2xl" color="uniform" class="">
         <svg use:qr={{ data: totpLink, logo: '/img/logo-background.svg' }} />
       </Material>
-      <TextInput
-        disabled
-        type="password"
-        value={totpLink}
-        label={$t('form.profile.2fa.totp')}
-      >
+      <TextInput disabled type="password" value={totpLink} label={$t('form.profile.2fa.totp')}>
         {#snippet suffix()}
           <button
             class="contents"
@@ -118,11 +107,7 @@
         icon={Key}
         title={$t('form.profile.2fa.enabled')}
       >
-        <Button
-          onclick={() => twofa(false, false)}
-          rounding="pill"
-          color="primary"
-        >
+        <Button onclick={() => twofa(false, false)} rounding="pill" color="primary">
           {$t('common.disable')}
         </Button>
       </Placeholder>
@@ -132,11 +117,7 @@
         icon={Key}
         title={$t('form.profile.2fa.disabled')}
       >
-        <Button
-          onclick={() => twofa(true, false)}
-          rounding="pill"
-          color="primary"
-        >
+        <Button onclick={() => twofa(true, false)} rounding="pill" color="primary">
           {$t('form.setup')}
         </Button>
       </Placeholder>

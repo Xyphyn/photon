@@ -17,12 +17,7 @@
     banned: boolean
   }
 
-  let {
-    open = $bindable(false),
-    user: item = $bindable(),
-    community,
-    banned,
-  }: Props = $props()
+  let { open = $bindable(false), user: item = $bindable(), community, banned }: Props = $props()
 
   let reason = $state('')
   let deleteData = $state(false)
@@ -57,17 +52,17 @@
           ban: !banned,
           community_id: community.id,
           person_id: item.id,
-          reason: reason || undefined,
-          remove_data: deleteData,
-          expires: date,
+          reason: reason,
+          remove_or_restore_data: deleteData,
+          expires_at: date,
         })
       } else {
         await client().banPerson({
           ban: !banned,
           person_id: item.id,
-          reason: reason || undefined,
-          remove_data: deleteData,
-          expires: date,
+          reason: reason,
+          remove_or_restore_data: deleteData,
+          expires_at: date,
         })
       }
 
@@ -77,8 +72,6 @@
         content: banned ? $t('toast.unbannedUser') : $t('toast.bannedUser'),
         type: 'success',
       })
-
-      item.banned = !banned
     } catch (err) {
       toast({
         content: errorMessage(err),
@@ -90,10 +83,7 @@
   }
 </script>
 
-<Modal
-  bind:open
-  title={banned ? $t('moderation.ban.unbanning') : $t('moderation.ban.banning')}
->
+<Modal bind:open title={banned ? $t('moderation.ban.unbanning') : $t('moderation.ban.banning')}>
   {#if item}
     <form
       class="flex flex-col gap-4"
@@ -109,11 +99,7 @@
       {#if community}
         <CommunityLink {community} avatar />
       {/if}
-      <MarkdownEditor
-        required
-        bind:value={reason}
-        label={$t('moderation.reason')}
-      />
+      <MarkdownEditor required bind:value={reason} label={$t('moderation.reason')} />
       {#if !banned}
         <Switch bind:checked={deleteData}>
           {$t('moderation.ban.deleteData')}

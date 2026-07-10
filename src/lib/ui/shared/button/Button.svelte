@@ -26,7 +26,7 @@
       'text-green-500 dark:text-green-400 hover:bg-green-500 hover:dark:bg-green-400 hover:text-inherit!',
     'warning-subtle':
       'text-yellow-500 dark:text-yellow-400 hover:bg-yellow-500 hover:dark:bg-yellow-400 hover:text-inherit!',
-    'blue-subtle': `text-blue-500 dark:text-yellow-400 hover:bg-blue-500 hover:dark:bg-blue-400 hover:text-inherit!`,
+    'blue-subtle': `text-blue-500 dark:text-blue-400 hover:bg-blue-500 hover:dark:bg-blue-400 hover:text-inherit!`,
 
     none: '',
   }
@@ -140,11 +140,7 @@
     buttonWeight[weight],
     buttonGap[gap],
     (disabled || loading) && 'btn-disabled',
-    alignment == 'center'
-      ? 'origin-center'
-      : alignment == 'left'
-        ? 'origin-left'
-        : 'origin-right',
+    alignment == 'center' ? 'origin-center' : alignment == 'left' ? 'origin-left' : 'origin-right',
     clazz,
   ]}
   type={submit ? 'submit' : 'button'}
@@ -196,22 +192,16 @@
     }
 
     .btn-primary {
-      border: 1px solid transparent;
-      background: radial-gradient(
-        circle at 20% 0%,
-        var(--color-primary-800),
-        var(--color-primary-900)
-      );
-      background-size: 110% 110% !important;
+      border: 1px solid var(--color-primary-900);
+      background: linear-gradient(to bottom, var(--color-primary-800), var(--color-primary-900));
+      box-shadow: 0px 1.5px 0px 0px var(--color-slate-500) inset;
       color: var(--color-slate-50);
 
       @variant dark {
-        background: radial-gradient(
-          circle at center right,
-          var(--color-primary-200),
-          var(--color-primary-100)
-        );
+        border-color: var(--color-primary-200);
+        background: linear-gradient(to bottom, var(--color-primary-100), var(--color-primary-200));
         color: var(--color-zinc-900);
+        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-white) / 100%) inset;
       }
 
       @variant hover {
@@ -235,40 +225,19 @@
       background-color: var(--color-white);
 
       @variant dark {
-        border: 1px solid
-          color-mix(
-            in oklab,
-            var(--color-zinc-800) 80%,
-            var(--color-zinc-900) 20%
-          );
+        border: 1px solid color-mix(in oklab, var(--color-zinc-800) 80%, var(--color-zinc-900) 20%);
         background: linear-gradient(
           to bottom,
-          color-mix(
-            in oklab,
-            var(--color-zinc-800) 50%,
-            var(--color-zinc-900) 50%
-          ),
+          color-mix(in oklab, var(--color-zinc-800) 50%, var(--color-zinc-900) 50%),
           var(--color-zinc-900)
         );
-        border-top-color: color-mix(
-          in oklab,
-          var(--color-zinc-700) 50%,
-          var(--color-zinc-800) 50%
-        );
+        border-top-color: color-mix(in oklab, var(--color-zinc-700) 50%, var(--color-zinc-800) 50%);
       }
 
       @variant hover {
-        background: color-mix(
-          in oklab,
-          var(--color-white),
-          var(--color-slate-50)
-        );
+        background: color-mix(in oklab, var(--color-white), var(--color-slate-50));
         @variant dark {
-          background: color-mix(
-            in oklab,
-            var(--color-zinc-925),
-            var(--color-zinc-900)
-          );
+          background: color-mix(in oklab, var(--color-zinc-925), var(--color-zinc-900));
         }
       }
 
@@ -300,14 +269,17 @@
     }
 
     .btn-danger {
-      /*  border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white */
-
-      background-color: var(--color-red-600);
+      background: linear-gradient(to bottom, var(--color-red-400), var(--color-red-500));
+      border: 1px solid var(--color-red-600);
+      box-shadow:
+        0px 1.5px 0px 0px inset --alpha(var(--color-red-50) / 50%),
+        0px -1px 0px 0px inset --alpha(var(--color-red-900) / 50%);
       color: var(--color-white);
 
       @variant dark {
-        background-color: var(--color-red-400);
+        background: linear-gradient(to bottom, var(--color-red-300), var(--color-red-400));
         color: var(--color-black);
+        border: 1px solid var(--color-red-900);
       }
 
       @variant hover {

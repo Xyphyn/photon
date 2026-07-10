@@ -1,9 +1,10 @@
 import type { Comment, CommentView } from '$lib/api/types'
 import { t } from '$lib/app/i18n'
 import { SvelteMap } from 'svelte/reactivity'
+import { CommentModel } from './comment.svelte'
 
 export interface CommentNodeI {
-  comment_view: CommentView
+  comment: CommentModel
   children: Array<CommentNodeI>
   depth: number
   loading?: boolean
@@ -17,9 +18,7 @@ function getCommentParentId(comment?: Comment): number | undefined {
   // remove the 0
   split?.shift()
 
-  return split && split.length > 1
-    ? Number(split.at(split.length - 2))
-    : undefined
+  return split && split.length > 1 ? Number(split.at(split.length - 2)) : undefined
 }
 
 function getDepthFromComment(comment?: Comment): number | undefined {
@@ -42,7 +41,7 @@ export function buildCommentsTree(
       comment_view.comment.content = `*Removed by Moderator — [${t.get('routes.modlog.title')}](/modlog?comment=${comment_view.comment.id})*`
     }
     const node: CommentNodeI = {
-      comment_view,
+      comment: new CommentModel(comment_view),
       children: [],
       depth: depth,
       expanded: true,
@@ -81,12 +80,9 @@ export function buildCommentsTree(
   return tree
 }
 
-export function searchCommentTree(
-  tree: CommentNodeI[],
-  id: number,
-): CommentNodeI | undefined {
+export function searchCommentTree(tree: CommentNodeI[], id: number): CommentNodeI | undefined {
   for (const node of tree) {
-    if (node.comment_view.comment.id === id) {
+    if (node.comment.comment.id === id) {
       return node
     }
 
@@ -108,7 +104,7 @@ export function insertCommentIntoTree(
 ) {
   // Building a fake node to be used for later
   const node: CommentNodeI = {
-    comment_view: cv,
+    comment: new CommentModel(cv),
     children: [],
     depth: 0,
   }
