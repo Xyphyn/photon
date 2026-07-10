@@ -1,6 +1,5 @@
 import { LemmyHttp } from 'lemmy-js-client-v3'
 import type { BaseClient, ClientType } from '../base'
-import { fromGetPosts, toListingType } from './rewrite'
 
 export const LemmyClientConstants = {
   password: { minLength: 8, maxLength: 60 },
@@ -17,31 +16,6 @@ export function createLemmyClient(
 
   const overrides: Partial<BaseClient> = {
     type: { name: 'lemmy', baseUrl: '/api/v3' } as ClientType,
-
-    async search(params) {
-      return await client.search({
-        ...params,
-        listing_type: toListingType(params.listing_type),
-      } as any)
-    },
-
-    async listCommunities(params) {
-      return await client.listCommunities({
-        ...params,
-        type_: toListingType(params.type_),
-      } as any)
-    },
-
-    async getPosts(params) {
-      return (await client.getPosts(fromGetPosts(params) as any)) as any
-    },
-
-    async getComments(params) {
-      return await client.getComments({
-        ...params,
-        type_: toListingType(params.type_),
-      } as any)
-    },
   }
 
   return new Proxy(overrides as BaseClient, {

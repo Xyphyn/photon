@@ -29,11 +29,7 @@
 
 <svelte:element
   this={element}
-  class={[
-    sizes[size],
-    'tab-button',
-    selected ? 'btn-primary' : 'btn-secondary',
-  ]}
+  class={[sizes[size], 'tab-button', selected && 'material-distinct']}
   onclick={href ? undefined : onselect}
   {disabled}
   {href}
@@ -47,11 +43,38 @@
 
   .tab-button {
     font-size: var(--text-sm);
-    border-radius: var(--radius-xl);
+    border-radius: 9999px;
     font-weight: var(--font-weight-medium);
-    transition: all 75ms var(--default-transition-timing-function);
     position: relative;
-    box-shadow: var(--shadow-xs);
     cursor: pointer;
+    padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 3.5);
+
+    &:hover {
+      background-color: --alpha(var(--color-slate-300) / 40%);
+      @variant dark {
+        background-color: --alpha(var(--color-zinc-700) / 50%);
+      }
+    }
+
+    &:active {
+      background-color: --alpha(var(--color-slate-400) / 40%);
+      @variant dark {
+        background-color: --alpha(var(--color-zinc-800) / 50%);
+      }
+    }
+  }
+
+  .tab-button-selected {
+    background-color: --alpha(var(--color-slate-300) / 40%);
+    @variant dark {
+      background-color: --alpha(var(--color-zinc-700) / 50%);
+    }
+
+    &:hover {
+      background-color: --alpha(var(--color-zinc-400) / 40%);
+      @variant dark {
+        background-color: --alpha(var(--color-zinc-600) / 50%);
+      }
+    }
   }
 </style>

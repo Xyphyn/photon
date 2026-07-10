@@ -43,9 +43,9 @@
   <nav
     aria-label={$t('aria.pagination.nav')}
     class={[
-      'flex flex-row gap-2 items-center justify-center bg-white dark:bg-zinc-950',
-      'border border-slate-200 dark:border-zinc-800 rounded-full overflow-hidden w-max mx-auto p-0.5',
-      'shadow-md',
+      'flex flex-row gap-4 items-center justify-center',
+      'rounded-full overflow-hidden w-max mx-auto p-1',
+      'material-distinct',
     ]}
   >
     {#if children}

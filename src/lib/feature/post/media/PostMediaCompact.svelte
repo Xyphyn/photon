@@ -59,7 +59,7 @@
     <div
       class={[
         'relative overflow-hidden rounded-2xl max-h-full h-full',
-        'border border-slate-200 dark:border-zinc-800 hover-scale-effect bg-slate-200 dark:bg-zinc-900',
+        'btn-secondary hover-scale-effect',
       ]}
     >
       {#if post.post.thumbnail_url || post.mediaType == 'image'}
@@ -105,7 +105,7 @@
         ])}
         <div
           class={[
-            'bg-slate-100 dark:bg-zinc-900 w-full h-full rounded-xl grid place-items-center',
+            ' w-full h-full rounded-xl grid place-items-center',
             'text-slate-600 dark:text-zinc-400',
           ]}
         >
