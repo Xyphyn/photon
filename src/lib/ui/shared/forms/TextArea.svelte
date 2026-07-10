@@ -68,7 +68,6 @@
     </Label>
   {/if}
   <div class={[!unstyled && 'text-area-container', clazz]}>
-    e button danger style)
     <textarea
       {id}
       {placeholder}
