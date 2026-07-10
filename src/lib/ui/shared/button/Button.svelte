@@ -294,14 +294,17 @@
     }
 
     .btn-danger {
-      /*  border border-red-500 bg-red-500 hover:text-red-500 hover:bg-transparent text-white */
-
-      background-color: var(--color-red-600);
+      background: linear-gradient(to bottom, var(--color-red-400), var(--color-red-500));
+      border: 1px solid var(--color-red-600);
+      box-shadow:
+        0px 1.5px 0px 0px inset --alpha(var(--color-red-50) / 50%),
+        0px -1px 0px 0px inset --alpha(var(--color-red-900) / 50%);
       color: var(--color-white);
 
       @variant dark {
-        background-color: var(--color-red-400);
+        background: linear-gradient(to bottom, var(--color-red-300), var(--color-red-400));
         color: var(--color-black);
+        border: 1px solid var(--color-red-900);
       }
 
       @variant hover {

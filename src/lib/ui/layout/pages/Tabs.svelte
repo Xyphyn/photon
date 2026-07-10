@@ -56,7 +56,7 @@
 <nav
   class={[
     'tab-bar rounded-full',
-    style == 'header' ? 'bar-header material-distinct' : 'gap-2',
+    style == 'header' ? 'bar-header material-uniform' : 'gap-2',
     margin && 'my-2',
     margin && style == 'subpage' && 'mb-3',
     clazz,
@@ -71,7 +71,7 @@
     {#if style == 'header'}
       <a
         href={buildUrl(currentRoute, route.href)}
-        class={['tab-item ', selected && 'tab-selected']}
+        class={['tab-item ', selected && 'material-distinct tab-selected']}
       >
         {route.name}
       </a>
@@ -100,8 +100,8 @@
   }
 
   .tab-bar.bar-header {
-    padding: calc(var(--spacing) * 1.5);
-    gap: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+    padding: calc(var(--spacing) * 0.5);
+    gap: calc(var(--spacing) * 1) calc(var(--spacing) * 1);
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -112,27 +112,6 @@
     }
   }
 
-  .tab-selected {
-    position: relative;
-    color: var(--color-primary-900);
-
-    @variant dark {
-      color: var(--color-primary-100);
-    }
-
-    @variant hover {
-      cursor: default !important;
-    }
-  }
-
-  .tab-selected::before {
-    content: '';
-    position: absolute;
-    inset: calc(var(--spacing) * -1) calc(var(--spacing) * -3);
-    z-index: -10;
-    border-radius: 9999px;
-  }
-
   .tab-item {
     &:not(.tab-selected) {
       color: var(--color-slate-500);
@@ -140,11 +119,11 @@
       @variant dark {
         color: var(--color-zinc-500);
       }
+      border: 1px solid transparent;
     }
-    padding: calc(var(--spacing)) calc(var(--spacing) * 3);
+    padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 4);
     border-radius: 999px;
     font-weight: var(--font-weight-medium);
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 75ms;
     z-index: 0;
     flex-shrink: 0;
 

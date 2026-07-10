@@ -86,7 +86,12 @@
   ]}
 >
   {#if icon}
-    <Icon src={icon} size="20" mini class="inline-block rounded-lg clear-both float-left mr-2" />
+    <Icon
+      src={icon}
+      size="20"
+      mini
+      class="inline-block rounded-lg clear-both float-left mr-2"
+    />
   {/if}
   {@render children?.()}
 </svelte:element>
@@ -130,8 +135,7 @@
 
     .material-distinct {
       background-color: --alpha(var(--color-slate-50) / 70%);
-      border-width: 1px;
-      border-color: var(--color-slate-200);
+      border: 1px solid var(--color-slate-200);
       box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-white) / 90%) inset;
 
       @variant not-dark {
@@ -139,9 +143,13 @@
       }
 
       @variant dark {
-        background-color: --alpha(var(--color-zinc-925) / 70%);
-        border-color: --alpha(var(--color-black) / 30%);
-        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-zinc-800) / 80%) inset;
+        background: linear-gradient(
+          to bottom,
+          var(--color-zinc-800),
+          var(--color-zinc-900)
+        );
+        border-color: oklab(0.2 0 00%);
+        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-zinc-700) / 80%) inset;
       }
     }
 
@@ -160,12 +168,10 @@
     }
 
     .material-uniform {
-      background-color: white;
       border-width: 1px;
       border-color: var(--color-slate-200);
 
       @variant dark {
-        background-color: var(--color-zinc-950);
         border-color: var(--color-zinc-900);
       }
     }
