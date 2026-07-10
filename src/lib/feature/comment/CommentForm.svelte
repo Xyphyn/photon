@@ -8,7 +8,7 @@
   import MarkdownEditor from '$lib/app/markdown/MarkdownEditor.svelte'
   import { placeholders } from '$lib/app/util.svelte'
   import { Button, Menu, MenuButton, toast } from 'mono-svelte'
-  import { Icon, Language, XMark } from 'svelte-hero-icons/dist'
+  import { ArrowUp, Icon, Language, XMark } from 'svelte-hero-icons/dist'
   import type { ClassValue, HTMLTextareaAttributes } from 'svelte/elements'
 
   interface Props extends Omit<HTMLTextareaAttributes, 'oncancel'> {
@@ -141,11 +141,10 @@
       <div class="flex-1"></div>
       {#if actions}
         <Button
-          size="custom"
           title={$t('common.cancel')}
           onclick={() => oncancel?.(true)}
           color="tertiary"
-          class="w-8 h-8"
+          size="square-md"
           rounding="xl"
         >
           <Icon src={XMark} size="16" micro class="text-slate-600 dark:text-zinc-400" />
@@ -156,8 +155,12 @@
           rounding="xl"
           {loading}
           disabled={locked || loading || banned}
+          title={$t('form.submit')}
+          size="square-lg"
         >
-          {$t('form.submit')}
+          {#snippet prefix()}
+            <Icon src={ArrowUp} size="20" mini />
+          {/snippet}
         </Button>
       {/if}
     </MarkdownEditor>

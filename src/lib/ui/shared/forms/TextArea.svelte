@@ -21,6 +21,7 @@
     id?: string
     rows?: number
     element?: HTMLTextAreaElement | undefined
+    unstyled?: boolean
     class?: ClassValue
     customLabel?: import('svelte').Snippet
     suffix?: import('svelte').Snippet
@@ -45,6 +46,7 @@
     id = generateID(),
     rows = 4,
     element = $bindable(),
+    unstyled = false,
     class: clazz = '',
     customLabel,
     suffix,
@@ -65,7 +67,8 @@
       {@render customLabel?.()}
     </Label>
   {/if}
-  <div class="text-area-container {clazz}">
+  <div class={[!unstyled && 'text-area-container', clazz]}>
+    e button danger style)
     <textarea
       {id}
       {placeholder}
@@ -77,8 +80,9 @@
       {...rest}
       class={[
         sizeClass[size],
-        borderClass,
-        'text-area focus:ring-2 ring-slate-800/50 dark:ring-zinc-200/50 transition-all peer',
+        'text-area transition-all peer',
+        !unstyled && borderClass,
+        !unstyled && 'focus:ring-2 ring-slate-800/50 dark:ring-zinc-200/50',
         suffix && 'rounded-b-none border-b-0',
         clazz,
       ]}
@@ -127,11 +131,6 @@
   }
 
   .text-area {
-    /*focus:border-slate-800 dark:focus:border-zinc-200 bg-white dark:bg-zinc-950
-  focus:outline-hidden
-  transition-all text-sm w-full disabled:bg-slate-100
-		disabled:cursor-not-allowed dark:disabled:bg-zinc-900 invalid:border-red-500!
-		peer invalid:text-red-500 z-10*/
     border-radius: inherit;
     width: 100%;
 

@@ -2,9 +2,9 @@ import { browser } from '$app/environment'
 import type {
   CommentView,
   CommunityView,
-  FeedView,
   GetComments,
   GetCommunityResponse,
+  GetMultiCommunityResponse,
   GetPersonDetails,
   GetPersonDetailsResponse,
   GetPost,
@@ -113,12 +113,11 @@ export interface FeedTypes {
   '/explore/communities': [ListCommunities, PagedResponse<CommunityView>]
   '/f/[id]': [
     GetPosts,
-
     {
       posts: PostView[]
+      multi: GetMultiCommunityResponse
       next_page?: string
-      params: GetPosts & { page_cursor: string }
-      feed: Promise<FeedView | undefined>
+      params: GetPosts
       client: {
         itemHeights?: (number | null)[]
         lastSeen?: number

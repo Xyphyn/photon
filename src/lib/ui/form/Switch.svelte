@@ -44,7 +44,7 @@
 </script>
 
 <fieldset
-  class="flex items-center gap-1 w-max max-w-full z-0 relative overflow-auto"
+  class="flex items-center gap-1 w-max max-w-full z-0 p-0.5 relative overflow-auto border border-slate-200 dark:border-zinc-800 rounded-full"
 >
   {#each options as option, index}
     <label>
@@ -56,11 +56,7 @@
         id="{id}-{option?.toString()}"
         class="hidden"
       />
-      <TabButton
-        selected={selectedIndex == index}
-        disabled={disabled[index]}
-        element="div"
-      >
+      <TabButton selected={selectedIndex == index} disabled={disabled[index]} element="div">
         {optionNames[index] || option}
       </TabButton>
     </label>

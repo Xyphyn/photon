@@ -28,9 +28,7 @@
 
   let matchType = $derived<('search' | 'pathname')[]>(
     routes.map((i) =>
-      new URL(`https://example.com${i.href}`)?.search != ''
-        ? 'search'
-        : 'pathname',
+      new URL(`https://example.com${i.href}`)?.search != '' ? 'search' : 'pathname',
     ),
   )
 
@@ -42,9 +40,9 @@
     // me on 2025/10/9: no shi buh
     const usePathname = !routes.some(
       (i) =>
-        new Set(
-          new URL(`https://example.com${i.href}`).searchParams.values(),
-        ).intersection(currentSearch).size > 0,
+        new Set(new URL(`https://example.com${i.href}`).searchParams.values()).intersection(
+          currentSearch,
+        ).size > 0,
     )
 
     const hasSearchParam = hrefSearch.intersection(currentSearch).size > 0
@@ -57,8 +55,8 @@
 
 <nav
   class={[
-    'tab-bar',
-    style == 'header' ? 'bar-header' : 'gap-2',
+    'tab-bar rounded-full',
+    style == 'header' ? 'bar-header material-uniform' : 'gap-2',
     margin && 'my-2',
     margin && style == 'subpage' && 'mb-3',
     clazz,
@@ -73,7 +71,7 @@
     {#if style == 'header'}
       <a
         href={buildUrl(currentRoute, route.href)}
-        class={['tab-item ', selected && 'tab-selected']}
+        class={['tab-item ', selected && 'material-distinct tab-selected']}
       >
         {route.name}
       </a>
@@ -92,6 +90,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-items: center;
     flex-wrap: wrap;
     z-index: 20;
 
@@ -101,37 +100,16 @@
   }
 
   .tab-bar.bar-header {
-    padding: calc(var(--spacing));
-    gap: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+    padding: calc(var(--spacing) * 0.5);
+    gap: calc(var(--spacing) * 1) calc(var(--spacing) * 1);
     justify-content: center;
-    margin-left: calc(var(--spacing) * -3);
-    margin-right: calc(var(--spacing) * -3);
+    margin-left: auto;
+    margin-right: auto;
     margin-top: calc(var(--spacing) * -1);
 
     @variant sm {
       justify-content: start;
     }
-  }
-
-  .tab-selected {
-    position: relative;
-    color: var(--color-primary-900);
-
-    @variant dark {
-      color: var(--color-primary-100);
-    }
-
-    @variant hover {
-      cursor: default !important;
-    }
-  }
-
-  .tab-selected::before {
-    content: '';
-    position: absolute;
-    inset: calc(var(--spacing) * -1) calc(var(--spacing) * -3);
-    z-index: -10;
-    border-radius: 9999px;
   }
 
   .tab-item {
@@ -141,11 +119,11 @@
       @variant dark {
         color: var(--color-zinc-500);
       }
+      border: 1px solid transparent;
     }
-    padding: calc(var(--spacing)) calc(var(--spacing) * 3);
-    border-radius: var(--radius-xl);
+    padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 4);
+    border-radius: 999px;
     font-weight: var(--font-weight-medium);
-    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 75ms;
     z-index: 0;
     flex-shrink: 0;
 
@@ -154,7 +132,7 @@
       background-color: var(--color-slate-100);
       @variant dark {
         color: var(--color-zinc-100);
-        background-color: var(--color-zinc-800);
+        background-color: var(--color-zinc-900);
       }
     }
   }

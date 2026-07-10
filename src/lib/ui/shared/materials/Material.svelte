@@ -105,9 +105,11 @@
       }
 
       @variant dark {
-        background-color: var(--color-zinc-900);
-        border-color: var(--color-zinc-800);
-        border-top-color: var(--color-zinc-700);
+        background: var(--color-zinc-900);
+        border-color: var(--color-zinc-950);
+        box-shadow:
+          0px 1.5px 0px 0px inset var(--color-zinc-700),
+          0px -1px 0px 0px inset var(--color-zinc-950);
 
         @variant hover {
           background-color: var(--color-zinc-925);
@@ -127,18 +129,22 @@
     }
 
     .material-distinct {
-      background-color: white;
-      border-width: 1px;
-      border-color: var(--color-slate-200);
+      background-color: --alpha(var(--color-slate-50) / 70%);
+      border: 1px solid var(--color-slate-200);
+      box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-white) / 90%) inset;
 
       @variant not-dark {
         border-bottom-color: var(--color-slate-300);
       }
 
       @variant dark {
-        background-color: var(--color-zinc-925);
-        border-color: var(--color-zinc-800);
-        border-top-color: var(--color-zinc-700);
+        background: linear-gradient(
+          to bottom,
+          var(--color-zinc-800),
+          var(--color-zinc-900)
+        );
+        border-color: oklab(0.2 0 00%);
+        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-zinc-700) / 80%) inset;
       }
     }
 
@@ -157,12 +163,10 @@
     }
 
     .material-uniform {
-      background-color: white;
       border-width: 1px;
       border-color: var(--color-slate-200);
 
       @variant dark {
-        background-color: var(--color-zinc-950);
         border-color: var(--color-zinc-900);
       }
     }

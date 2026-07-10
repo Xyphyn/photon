@@ -17,5 +17,7 @@ playwright-report
 test-results
 .vscode
 *TS.md
-.zed
+
+# Used for automated screenshot workflow
 .github/__pycache__/
+.zed

@@ -127,10 +127,8 @@
   {/if}
   <div
     class={[
-      'flex flex-col border border-slate-200 border-b-slate-300 dark:border-zinc-800',
-      'focus-within:border-primary-900 dark:focus-within:border-primary-100 focus-within:ring-3 ring-slate-300 dark:ring-zinc-700',
-      'bg-white dark:bg-zinc-950',
-      'rounded-2xl overflow-hidden transition-colors shadow-xs',
+      'focus-within:ring-3 ring-slate-300 dark:ring-zinc-700',
+      'markdown-editor',
       label && 'mt-1',
       clazz,
     ]}
@@ -270,7 +268,7 @@
       {/if}
       <!--Actual text area-->
       <TextArea
-        class="bg-inherit z-0 border-x-0 rounded-none! ring-0! focus:ring-transparent! transition-none! resize-none"
+        class="z-0 focus:ring-transparent! transition-none! resize-none"
         bind:value
         bind:element={textArea}
         onkeydown={(e) => {
@@ -285,6 +283,7 @@
             }
           }
         }}
+        unstyled
         oninput={adjustHeight}
         onpaste={(e) => {
           if (!e.clipboardData?.files || e.clipboardData.files.length == 0) return
@@ -296,9 +295,7 @@
     {/if}
 
     {#if previewButton}
-      <div
-        class="p-2 flex flex-row items-center w-full bg-slate-50 border-t border-slate-200 dark:border-zinc-900 dark:bg-zinc-925 gap-1"
-      >
+      <div class="p-2 flex flex-row items-center w-full gap-1">
         {#if previewButton}
           <MultiSelect
             bind:selected={previewing}
@@ -311,3 +308,38 @@
     {/if}
   </div>
 </div>
+
+<style>
+  @reference '../../../app.css';
+
+  .markdown-editor {
+    --primary-box-shadow: 0px -1px 0px 0px --alpha(var(--color-slate-900) / 20%) inset;
+    --ring-box-shadow: 0px 0px 0px 2px --alpha(var(--color-primary-900) / 30%);
+
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-slate-200);
+    box-shadow: var(--primary-box-shadow);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    font-size: var(--text-sm);
+    background-color: var(--color-white);
+    transition: all 150ms var(--ease-cubic);
+
+    @variant dark {
+      --primary-box-shadow: 0px 1.5px 0px 0px inset --alpha(var(--color-zinc-800) / 100%);
+      --ring-box-shadow: 0px 0px 0px 2px --alpha(var(--color-primary-100) / 30%);
+      background: linear-gradient(to bottom, var(--color-zinc-925) 25%, var(--color-zinc-900));
+      border-color: --alpha(var(--color-black) / 20%);
+    }
+
+    &:focus-within {
+      box-shadow: var(--primary-box-shadow), var(--ring-box-shadow);
+      border-color: var(--color-primary-900);
+
+      @variant dark {
+        border-color: var(--color-primary-100);
+      }
+    }
+  }
+</style>
