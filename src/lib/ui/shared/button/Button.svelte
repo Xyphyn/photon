@@ -21,7 +21,7 @@
     danger: 'btn-danger',
     ghost: 'btn-ghost',
     'danger-subtle':
-      'text-red-500 dark:text-red-400 hover:bg-red-500 hover:dark:bg-red-400 hover:text-inherit!',
+      'text-red-500 dark:text-red-400 hover:bg-red-500/15 hover:dark:bg-red-400/20',
     'success-subtle':
       'text-green-500 dark:text-green-400 hover:bg-green-500 hover:dark:bg-green-400 hover:text-inherit!',
     'warning-subtle':
@@ -183,8 +183,8 @@
       font-size: var(--text-sm);
       user-select: none;
       -webkit-user-select: none;
-
       transition: 75ms cubic-bezier(0.075, 0.82, 0.165, 1);
+      background-clip: padding-box;
 
       @variant hover {
         cursor: pointer;
@@ -196,16 +196,16 @@
     }
 
     .btn-primary {
-      border: 1px solid var(--color-primary-900);
-      background: linear-gradient(to bottom, var(--color-primary-800), var(--color-primary-900));
+      background-image: linear-gradient(to bottom, var(--color-primary-800), var(--color-primary-900));
       box-shadow: 0px 1.5px 0px 0px var(--color-slate-500) inset;
       color: var(--color-slate-50);
+      border: 1px solid var(--color-slate-900);
 
       @variant dark {
         border-color: var(--color-primary-200);
-        background: linear-gradient(to bottom, var(--color-primary-100), var(--color-primary-200));
+        background-image: linear-gradient(to bottom, var(--color-primary-100), var(--color-primary-200));
         color: var(--color-zinc-900);
-        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-white) / 100%) inset;
+        box-shadow: 0px 2.5px 0px -1px var(--color-white) inset;
       }
 
       @variant hover {
@@ -295,16 +295,17 @@
 
     .btn-danger {
       background: linear-gradient(to bottom, var(--color-red-400), var(--color-red-500));
-      border: 1px solid var(--color-red-600);
+      border: 1px solid var(--color-red-700);
       box-shadow:
         0px 1.5px 0px 0px inset --alpha(var(--color-red-50) / 50%),
         0px -1px 0px 0px inset --alpha(var(--color-red-900) / 50%);
       color: var(--color-white);
 
       @variant dark {
-        background: linear-gradient(to bottom, var(--color-red-300), var(--color-red-400));
+        background-image: linear-gradient(to bottom, var(--color-red-300), var(--color-red-400));
         color: var(--color-black);
-        border: 1px solid var(--color-red-900);
+        border-color: var(--color-red-900);
+        background-clip: padding-box;
       }
 
       @variant hover {

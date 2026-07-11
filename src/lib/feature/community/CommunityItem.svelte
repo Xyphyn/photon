@@ -21,6 +21,7 @@
   import Subscribe from '../../../routes/communities/Subscribe.svelte'
   import { addSubscription } from '../user'
   import CommunityCard from './CommunityCard.svelte'
+  import { settings } from '$lib/app/settings.svelte'
 
   interface Props {
     community: CommunityView
@@ -44,7 +45,7 @@
 {/snippet}
 
 <CommonItem
-  icon={community.community.icon}
+  icon={settings.nsfwBlur && community.community.nsfw ? undefined : community.community.icon}
   href="/c/{fullCommunityName(
     community.community.name,
     community.community.actor_id,

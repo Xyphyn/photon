@@ -134,21 +134,18 @@
     }
 
     .material-distinct {
-      background-color: --alpha(var(--color-slate-50) / 70%);
+      background-image: linear-gradient(to bottom, var(--color-white), var(--color-slate-50));
       border: 1px solid var(--color-slate-200);
-      box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-white) / 90%) inset;
-
-      @variant not-dark {
-        border-bottom-color: var(--color-slate-300);
-      }
+      box-shadow: 0px -2px 0px -1px --alpha(var(--color-slate-200) / 90%) inset;
+      background-clip: padding-box;
 
       @variant dark {
-        background: linear-gradient(
+        background-image: linear-gradient(
           to bottom,
           var(--color-zinc-800),
           var(--color-zinc-900)
         );
-        border-color: oklab(0.2 0 00%);
+        border-color: oklab(0.2 0 0%);
         box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-zinc-700) / 80%) inset;
       }
     }

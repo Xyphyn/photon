@@ -61,7 +61,7 @@
   }: Props = $props()
 </script>
 
-<div class={['text-input-container', clazz]}>
+<div class={['text-input-container ', clazz]}>
   {#if passedCustomLabel || label}
     <Label
       for={id}
@@ -133,6 +133,7 @@
     display: flex;
     flex-direction: column;
     gap: calc(var(--spacing) * 1);
+    min-width: 0;
 
     *:focus {
       outline: none;

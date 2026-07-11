@@ -150,110 +150,108 @@
   <title>{$t('account.login')}</title>
 </svelte:head>
 
-<div class="max-w-xl w-full mx-auto h-max my-auto">
-  <form
-    onsubmit={(e) => {
-      e.preventDefault()
-      logIn()
-    }}
-    class="flex flex-col gap-5"
-  >
-    <div class="flex flex-col">
-      {@render children?.()}
-      <Header>{$t('account.login')}</Header>
-      <ErrorContainer class="pt-2" scope={page.route.id} />
-    </div>
-    {#if form.client.name == 'piefed'}
-      <Note>
-        {$t('account.piefedGate')}
-      </Note>
-    {/if}
-    <div class="flex flex-row w-full items-center gap-2">
+<form
+  onsubmit={(e) => {
+    e.preventDefault()
+    logIn()
+  }}
+  class="flex flex-col gap-5 max-w-xl w-full mx-auto h-max my-auto"
+>
+  <div class="flex flex-col">
+    {@render children?.()}
+    <Header>{$t('account.login')}</Header>
+    <ErrorContainer class="pt-2" scope={page.route.id} />
+  </div>
+  {#if form.client.name == 'piefed'}
+    <Note>
+      {$t('account.piefedGate')}
+    </Note>
+  {/if}
+  <div class="flex items-center gap-2">
+    <TextInput
+      id="username"
+      bind:value={form.username}
+      label={$t('form.username')}
+      class="flex-1"
+      required
+    />
+    {#if !LINKED_INSTANCE_URL}
       <TextInput
-        id="username"
-        bind:value={form.username}
-        label={$t('form.username')}
+        id="instance_url"
+        placeholder={DEFAULT_INSTANCE_URL}
+        disabled={LINKED_INSTANCE_URL != undefined}
+        bind:value={form.instance}
         class="flex-1"
         required
-      />
-      {#if !LINKED_INSTANCE_URL}
-        <TextInput
-          id="instance_url"
-          placeholder={DEFAULT_INSTANCE_URL}
-          disabled={LINKED_INSTANCE_URL != undefined}
-          bind:value={form.instance}
-          class="flex-1"
-          required
-          pattern={DOMAIN_REGEX_FORMS}
-          autocorrect="off"
-          autocapitalize="off"
-        >
-          {#snippet customLabel()}
-            {$t('form.instance')}
-            <span class="absolute right-0">
-              {#if detectedClient}
-                <span
-                  class="capitalize font-normal"
-                  in:fly={{ duration: 300, y: 2, easing: expoOut }}
-                >
-                  {detectedClient}
-                </span>
-              {:else if detectedClient === null}
-                <Spinner />
-              {/if}
-            </span>
-          {/snippet}
-        </TextInput>
-      {/if}
-    </div>
-    <div role="presentation" class="flex flex-row gap-2">
-      <TextInput
-        id="password"
-        bind:value={form.password}
-        label={$t('form.password')}
-        type="password"
-        minlength={form.client.name == 'piefed'
-          ? PiefedClient.constants.password.minLength
-          : LemmyClient.constants.password.minLength}
-        maxlength={form.client.name == 'piefed'
-          ? PiefedClient.constants.password.maxLength
-          : LemmyClient.constants.password.maxLength}
-        required
-        class="w-full"
-      />
-      <TextInput
-        id="totp"
-        bind:value={form.totp}
-        label={$t('form.2fa')}
-        placeholder="123456"
-        pattern={'\\d{6}'}
-        minlength={6}
-        maxlength={6}
-        class="w-24"
-      />
-    </div>
-    <Button
-      loading={form.loading}
-      disabled={form.loading}
-      color="primary"
-      size="lg"
-      submit
-    >
-      {$t('account.login')}
+        pattern={DOMAIN_REGEX_FORMS}
+        autocorrect="off"
+        autocapitalize="off"
+      >
+        {#snippet customLabel()}
+          {$t('form.instance')}
+          <span class="absolute right-0">
+            {#if detectedClient}
+              <span
+                class="capitalize font-normal"
+                in:fly={{ duration: 300, y: 2, easing: expoOut }}
+              >
+                {detectedClient}
+              </span>
+            {:else if detectedClient === null}
+              <Spinner />
+            {/if}
+          </span>
+        {/snippet}
+      </TextInput>
+    {/if}
+  </div>
+  <div role="presentation" class="flex flex-row gap-2">
+    <TextInput
+      id="password"
+      bind:value={form.password}
+      label={$t('form.password')}
+      type="password"
+      minlength={form.client.name == 'piefed'
+        ? PiefedClient.constants.password.minLength
+        : LemmyClient.constants.password.minLength}
+      maxlength={form.client.name == 'piefed'
+        ? PiefedClient.constants.password.maxLength
+        : LemmyClient.constants.password.maxLength}
+      required
+      class="flex-1!"
+    />
+    <TextInput
+      id="totp"
+      bind:value={form.totp}
+      label={$t('form.2fa')}
+      placeholder="123456"
+      pattern={'\\d{6}'}
+      minlength={6}
+      maxlength={6}
+      class="w-24"
+    />
+  </div>
+  <Button
+    loading={form.loading}
+    disabled={form.loading}
+    color="primary"
+    size="lg"
+    submit
+  >
+    {$t('account.login')}
+  </Button>
+  <hr class="border-slate-200 dark:border-zinc-800" />
+  <ButtonGroup orientation="horizontal" class="flex overflow-auto">
+    <Button href="/signup" icon={Identification}>
+      {$t('account.signup')}
     </Button>
-    <hr class="border-slate-200 dark:border-zinc-800" />
-    <ButtonGroup orientation="horizontal" class="flex overflow-auto">
-      <Button href="/signup" icon={Identification}>
-        {$t('account.signup')}
+    <Button href="/login_reset" icon={QuestionMarkCircle}>
+      {$t('form.forgotpassword')}
+    </Button>
+    {#if !LINKED_INSTANCE_URL}
+      <Button href="/login/guest" icon={UserCircle}>
+        {$t('account.guest')}
       </Button>
-      <Button href="/login_reset" icon={QuestionMarkCircle}>
-        {$t('form.forgotpassword')}
-      </Button>
-      {#if !LINKED_INSTANCE_URL}
-        <Button href="/login/guest" icon={UserCircle}>
-          {$t('account.guest')}
-        </Button>
-      {/if}
-    </ButtonGroup>
-  </form>
-</div>
+    {/if}
+  </ButtonGroup>
+</form>
