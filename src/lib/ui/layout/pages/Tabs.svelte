@@ -91,8 +91,10 @@
     flex-direction: row;
     align-items: center;
     justify-items: center;
-    flex-wrap: wrap;
+    overflow-x: auto;
+    max-width: 100%;
     z-index: 20;
+    flex-shrink: 0;
 
     @variant sm {
       margin-top: 0;
