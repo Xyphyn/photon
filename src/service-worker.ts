@@ -16,11 +16,7 @@ self.addEventListener('install', (event) => {
     await cache.addAll(ASSETS)
   }
 
-  event.waitUntil(
-    addFilesToCache().then(() => {
-      self.skipWaiting()
-    }),
-  )
+  event.waitUntil(addFilesToCache())
 })
 
 self.addEventListener('activate', (event) => {
@@ -32,11 +28,7 @@ self.addEventListener('activate', (event) => {
     }
   }
 
-  event.waitUntil(
-    deleteOldCaches().then(() => {
-      self.clients.claim()
-    }),
-  )
+  event.waitUntil(deleteOldCaches())
 })
 
 self.addEventListener('fetch', (e) => {
@@ -71,7 +63,14 @@ self.addEventListener('fetch', (e) => {
         throw new Error('invalid response from fetch')
       }
 
-      if (response.status === 200) {
+      const isHtmlResponse = response.headers
+        .get('content-type')
+        ?.includes('text/html')
+      const isAsset =
+        url.pathname.endsWith('.js') || url.pathname.endsWith('.css')
+      const isLocal = url.origin === self.location.origin
+
+      if (response.status === 200 && isLocal && !isHtmlResponse && !isAsset) {
         cache.put(event.request, response.clone())
       }
 
