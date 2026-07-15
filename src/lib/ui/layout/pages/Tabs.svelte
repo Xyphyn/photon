@@ -28,7 +28,9 @@
 
   let matchType = $derived<('search' | 'pathname')[]>(
     routes.map((i) =>
-      new URL(`https://example.com${i.href}`)?.search != '' ? 'search' : 'pathname',
+      new URL(`https://example.com${i.href}`)?.search != ''
+        ? 'search'
+        : 'pathname',
     ),
   )
 
@@ -40,9 +42,9 @@
     // me on 2025/10/9: no shi buh
     const usePathname = !routes.some(
       (i) =>
-        new Set(new URL(`https://example.com${i.href}`).searchParams.values()).intersection(
-          currentSearch,
-        ).size > 0,
+        new Set(
+          new URL(`https://example.com${i.href}`).searchParams.values(),
+        ).intersection(currentSearch).size > 0,
     )
 
     const hasSearchParam = hrefSearch.intersection(currentSearch).size > 0
@@ -91,8 +93,10 @@
     flex-direction: row;
     align-items: center;
     justify-items: center;
-    flex-wrap: wrap;
     z-index: 20;
+    overflow-x: auto;
+    max-width: 100%;
+    flex-shrink: 0;
 
     @variant sm {
       margin-top: 0;
@@ -102,10 +106,9 @@
   .tab-bar.bar-header {
     padding: calc(var(--spacing) * 0.5);
     gap: calc(var(--spacing) * 1) calc(var(--spacing) * 1);
-    justify-content: center;
+    margin-top: calc(var(--spacing) * -1);
     margin-left: auto;
     margin-right: auto;
-    margin-top: calc(var(--spacing) * -1);
 
     @variant sm {
       justify-content: start;

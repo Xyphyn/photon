@@ -116,15 +116,15 @@
   </Modal>
 {/if}
 
-<li
-  class={['py-3 relative', clazz]}
+<details
+  class={['py-3 relative comment', clazz]}
   id={node.comment_view.comment.id.toString()}
+  bind:open
 >
   {#if meta}
     {@const creatorIsOp =
       node.comment_view.creator.id == node.comment_view.post.creator_id}
-    <label
-      for="comment-expand-{node.comment_view.comment.id}"
+    <summary
       class="flex flex-row cursor-pointer gap-2 items-center group text-sm flex-wrap w-full z-0 group relative"
     >
       <div
@@ -247,15 +247,9 @@
           #{node.comment_view.comment.id}
         </span>
       {/if}
-    </label>
+    </summary>
   {/if}
-  <input
-    class="appearance-none absolute top-0 left-0 h-8 w-full pointer-events-none comment-expand"
-    type="checkbox"
-    id="comment-expand-{node.comment_view.comment.id}"
-    bind:checked={open}
-  />
-  <div class={['expand max-w-full', contentClass]} inert={!open}>
+  <div class={['max-w-full', contentClass]}>
     <div id="comment-content">
       <div
         class={[
@@ -310,22 +304,25 @@
       {@render children?.()}
     </div>
   </div>
-</li>
+</details>
 
 <style>
-  .expand {
-    display: grid;
-    grid-template-rows: 0fr;
-    grid-template-columns: 100%;
+  .comment {
+    interpolate-size: allow-keywords;
+  }
+
+  .comment::details-content {
+    height: 0;
+    opacity: 0;
     overflow: hidden;
-    transition: grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    transition:
+      height 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+      opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+      content-visibility 0.4s allow-discrete;
   }
 
-  .comment-expand:checked + .expand {
-    grid-template-rows: 1fr;
-  }
-
-  .expand > * {
-    min-height: 0;
+  .comment[open]::details-content {
+    height: auto;
+    opacity: 1;
   }
 </style>

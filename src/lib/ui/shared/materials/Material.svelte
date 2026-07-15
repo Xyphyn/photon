@@ -134,7 +134,11 @@
     }
 
     .material-distinct {
-      background-image: linear-gradient(to bottom, var(--color-white), var(--color-slate-50));
+      background-image: linear-gradient(
+        to bottom,
+        var(--color-white),
+        var(--color-slate-50)
+      );
       border: 1px solid var(--color-slate-200);
       box-shadow: 0px -2px 0px -1px --alpha(var(--color-slate-200) / 90%) inset;
       background-clip: padding-box;
@@ -167,9 +171,11 @@
     .material-uniform {
       border-width: 1px;
       border-color: var(--color-slate-200);
+      background-color: var(--color-slate-50);
 
       @variant dark {
         border-color: var(--color-zinc-900);
+        background-color: var(--color-zinc-950);
       }
     }
 

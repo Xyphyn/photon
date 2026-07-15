@@ -188,6 +188,7 @@
 
       @variant hover {
         cursor: pointer;
+        transition-duration: 0s;
       }
     }
 
@@ -196,14 +197,22 @@
     }
 
     .btn-primary {
-      background-image: linear-gradient(to bottom, var(--color-primary-800), var(--color-primary-900));
+      background-image: linear-gradient(
+        to bottom,
+        var(--color-primary-800),
+        var(--color-primary-900)
+      );
       box-shadow: 0px 1.5px 0px 0px var(--color-slate-500) inset;
       color: var(--color-slate-50);
       border: 1px solid var(--color-slate-900);
 
       @variant dark {
         border-color: var(--color-primary-200);
-        background-image: linear-gradient(to bottom, var(--color-primary-100), var(--color-primary-200));
+        background-image: linear-gradient(
+          to bottom,
+          var(--color-primary-100),
+          var(--color-primary-200)
+        );
         color: var(--color-zinc-900);
         box-shadow: 0px 2.5px 0px -1px var(--color-white) inset;
       }
@@ -294,7 +303,11 @@
     }
 
     .btn-danger {
-      background: linear-gradient(to bottom, var(--color-red-400), var(--color-red-500));
+      background: linear-gradient(
+        to bottom,
+        var(--color-red-400),
+        var(--color-red-500)
+      );
       border: 1px solid var(--color-red-700);
       box-shadow:
         0px 1.5px 0px 0px inset --alpha(var(--color-red-50) / 50%),
@@ -302,7 +315,11 @@
       color: var(--color-white);
 
       @variant dark {
-        background-image: linear-gradient(to bottom, var(--color-red-300), var(--color-red-400));
+        background-image: linear-gradient(
+          to bottom,
+          var(--color-red-300),
+          var(--color-red-400)
+        );
         color: var(--color-black);
         border-color: var(--color-red-900);
         background-clip: padding-box;

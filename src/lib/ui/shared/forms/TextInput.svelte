@@ -189,6 +189,7 @@
     border-radius: var(--radius-xl);
     font-size: var(--text-sm);
     z-index: 10;
+    width: 100%;
 
     @variant disabled {
       background: var(--color-slate-100);

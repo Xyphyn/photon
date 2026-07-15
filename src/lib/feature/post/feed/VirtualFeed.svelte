@@ -6,11 +6,11 @@
   import { t } from '$lib/app/i18n'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import { settings } from '$lib/app/settings.svelte'
+  import { ReactiveState } from '$lib/app/util.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
   import { Button, Material, Spinner } from 'mono-svelte'
   import { onDestroy, untrack } from 'svelte'
-  import type { Attachment } from 'svelte/attachments'
   import {
     ArchiveBox,
     ArrowsPointingOut,
@@ -20,12 +20,12 @@
     Icon,
   } from 'svelte-hero-icons/dist'
   import InfiniteScroll from 'svelte-infinite-scroll'
+  import type { Attachment } from 'svelte/attachments'
   import { expoOut } from 'svelte/easing'
   import { SvelteSet } from 'svelte/reactivity'
   import { fly } from 'svelte/transition'
   import { Post } from '..'
   import { filterPost, type FilteredItem } from '../filters.svelte'
-  import { ReactiveState } from '$lib/app/util.svelte'
 
   interface Props {
     posts: PostView[]
@@ -196,7 +196,6 @@
             class={[
               'relative post-container',
               filter.value.action == 'hide' && 'hidden',
-              row < 7 && '',
             ]}
             {@attach intersectionAttach}
           >

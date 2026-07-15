@@ -1,6 +1,6 @@
 {
   "name": "photon-lemmy",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@capacitor/android": "^8.4.2",

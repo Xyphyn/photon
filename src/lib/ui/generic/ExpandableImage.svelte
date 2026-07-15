@@ -53,7 +53,7 @@
         class="gap-1 p-0.5 px-1 flex flex-row items-center"
         rounding="full"
         padding="none"
-        color="uniform"
+        color="distinct"
         onclick={(e) => e.stopPropagation()}
       >
         <Button

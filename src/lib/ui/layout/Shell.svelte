@@ -38,7 +38,7 @@
 {@render children?.()}
 <div class="min-h-screen flex flex-col">
   <div
-    class={['shell-navbar-holder', !dockVisible && 'max-md:-bottom-24!']}
+    class={['shell-navbar-holder', !dockVisible && 'auto-hidden']}
     aria-hidden="true"
   >
     <div class="md:hidden flex justify-between" dir="ltr">
@@ -71,11 +71,20 @@
 
   .shell-navbar-holder {
     position: fixed;
-    bottom: 0;
     z-index: 50;
     pointer-events: none;
     width: 100%;
-    transition: bottom 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+    bottom: 0;
+
+    translate: 0% 0%;
+    transition: translate 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: translate;
+
+    @variant max-md {
+      &.auto-hidden {
+        translate: 0% 100% !important;
+      }
+    }
 
     @variant md {
       position: sticky;
@@ -108,7 +117,6 @@
           background-color: var(--color-zinc-950);
           border-color: var(--color-zinc-900);
           @variant md {
-            background-color: --alpha(var(--color-zinc-950) / 70%);
           }
         }
       }

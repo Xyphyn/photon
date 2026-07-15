@@ -54,7 +54,9 @@
           navigate
           bind:selected={data.filters.value.sort!}
         />
-        <ViewSelect placement="bottom" />
+        <div class="hidden md:block">
+          <ViewSelect placement="bottom" />
+        </div>
 
         <noscript>
           <Button class="self-end h-8.5 aspect-square" size="custom" submit>
