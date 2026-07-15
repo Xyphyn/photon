@@ -3,6 +3,11 @@
   "version": "2.3.0",
   "license": "AGPL-3.0-only",
   "devDependencies": {
+    "@capacitor/android": "^8.4.2",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/cli": "^8.4.2",
+    "@capacitor/core": "^8.4.2",
+    "@capacitor/haptics": "^8.0.2",
     "@dicebear/core": "^9.4.3",
     "@dicebear/initials": "^9.4.2",
     "@eslint/compat": "^1.4.1",

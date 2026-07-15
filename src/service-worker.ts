@@ -51,7 +51,7 @@ self.addEventListener('fetch', (e) => {
     if (url.pathname.includes('/api/')) {
       try {
         return await fetch(event.request)
-      } catch (err) {
+      } catch {
         return new Response(JSON.stringify({ error: 'Offline' }), {
           status: 503,
           headers: { 'Content-Type': 'application/json' },

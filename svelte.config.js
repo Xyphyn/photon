@@ -18,8 +18,8 @@ const config = {
     adapter:
       process.env.ADAPTER == 'static'
         ? staticAdapter({
-            fallback: 'app.html',
-            precompress: true,
+            fallback: 'index.html',
+            precompress: false,
           })
         : process.env.ADAPTER == 'node'
           ? node()
