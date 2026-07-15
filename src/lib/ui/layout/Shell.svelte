@@ -90,7 +90,13 @@
         border-color: var(--color-slate-100);
         border-top: none;
         background-color: var(--color-slate-50);
-        padding-bottom: env(safe-area-inset-bottom, 0px);
+
+        @variant max-md {
+          padding-bottom: max(
+            env(safe-area-inset-bottom),
+            calc(var(--spacing) * 2)
+          );
+        }
 
         @variant md {
           border-left: none;
@@ -168,6 +174,7 @@
   }
 
   .shell-content {
+    padding-top: env(safe-area-inset-top, 0px);
     :global {
       .shell-main {
         width: 100%;
@@ -178,7 +185,6 @@
         padding-bottom: calc(
           calc(var(--spacing) * 22) + env(safe-area-inset-bottom, 0px)
         );
-        padding-top: env(safe-area-inset-top, 0px);
 
         @variant dark {
           background-color: var(--color-zinc-925);
