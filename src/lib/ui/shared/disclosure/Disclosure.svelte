@@ -18,40 +18,40 @@
     children,
     ...rest
   }: Props = $props()
+
+  const id = $props.id()
 </script>
 
-<details {...rest} class={['w-full relative disclosure', clazz]} bind:open>
-  <summary class="discosure-summary">
+<div {...rest} class={['w-full relative', clazz]}>
+  <label for={id} class="w-full">
     {@render summary?.({ open })}
-  </summary>
+  </label>
   {@render extended?.()}
-  <div class="expand">
+  <input
+    {id}
+    class="appearance-none absolute w-full h-full inset-0 pointer-events-none"
+    type="checkbox"
+    bind:checked={open}
+  />
+  <div class="expand" inert={!open}>
     {@render children?.({ open })}
   </div>
-</details>
+</div>
 
 <style>
-  .disclosure {
-    interpolate-size: allow-keywords;
-    will-change: height;
-  }
-
-  .disclosure::details-content {
-    height: 0;
-    opacity: 0;
+  .expand {
+    display: grid;
+    grid-template-rows: 0fr;
+    grid-template-columns: 100%;
     overflow: hidden;
-    transition:
-      height 0.5s cubic-bezier(0.19, 1, 0.22, 1),
-      opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1),
-      content-visibility 0.4s allow-discrete;
+    transition: grid-template-rows 0.5s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  .disclosure[open]::details-content {
-    height: auto;
-    opacity: 1;
+  input:checked + .expand {
+    grid-template-rows: 1fr;
   }
 
-  summary {
-    list-style: none;
+  .expand > :global(*) {
+    min-height: 0;
   }
 </style>
