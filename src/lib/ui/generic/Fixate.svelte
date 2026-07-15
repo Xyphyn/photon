@@ -2,8 +2,8 @@
   import type { Snippet } from 'svelte'
 
   const placements = {
-    top: 'top-6 lg:top-22',
-    bottom: 'bottom-22 lg:bottom-6 pt-6 mt-auto',
+    top: 'placement-top',
+    bottom: 'placement-bottom',
   }
 
   interface Props {
@@ -22,3 +22,25 @@
 >
   {@render children?.()}
 </div>
+
+<style>
+  @reference '../../../app.css';
+
+  .placement-bottom {
+    bottom: calc(calc(var(--spacing) * 22) + env(safe-area-inset-bottom, 0px));
+    padding-top: calc(var(--spacing) * 6);
+    margin-top: auto;
+
+    @variant lg {
+      bottom: calc(var(--spacing) * 6);
+    }
+  }
+
+  .placement-top {
+    top: calc(calc(var(--spacing) * 6) + env(safe-area-inset-top, 0px));
+
+    @variant lg {
+      top: calc(var(--spacing) * 22);
+    }
+  }
+</style>

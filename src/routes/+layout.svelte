@@ -17,6 +17,7 @@
   import { Shell } from '$lib/ui/layout'
   import Navbar from '$lib/ui/navbar/Navbar.svelte'
   import Sidebar from '$lib/ui/sidebar/Sidebar.svelte'
+  import { App } from '@capacitor/app'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
@@ -36,6 +37,10 @@
     easing: 'ease-out',
     speed: 300,
     showSpinner: false,
+  })
+
+  App.addListener('backButton', () => {
+    history.back()
   })
 
   onMount(() => {

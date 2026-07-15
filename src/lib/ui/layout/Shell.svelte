@@ -90,6 +90,7 @@
         border-color: var(--color-slate-100);
         border-top: none;
         background-color: var(--color-slate-50);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
 
         @variant md {
           border-left: none;
@@ -118,6 +119,27 @@
     grid-template-columns: 1fr;
     grid-template-areas: 'main';
     justify-items: start;
+    --fade-color: var(--color-slate-50);
+
+    @variant dark {
+      --fade-color: var(--color-zinc-950);
+    }
+  }
+
+  .shell-content::before {
+    position: fixed;
+    content: '';
+    height: calc(env(safe-area-inset-top, 0px) * 1.25);
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 101;
+
+    background-image: linear-gradient(
+      to bottom,
+      var(--fade-color),
+      --alpha(var(--fade-color) / 0%)
+    );
   }
 
   .shell-content.limit-width {
@@ -153,7 +175,10 @@
         background-color: var(--color-slate-25);
         border-left: 1px solid var(--color-slate-100);
         border-right: 1px solid var(--color-slate-100);
-        padding-bottom: calc(var(--spacing) * 22);
+        padding-bottom: calc(
+          calc(var(--spacing) * 22) + env(safe-area-inset-bottom, 0px)
+        );
+        padding-top: env(safe-area-inset-top, 0px);
 
         @variant dark {
           background-color: var(--color-zinc-925);
