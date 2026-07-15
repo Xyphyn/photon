@@ -1,0 +1,69 @@
+name: Build Android App
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v7
+
+      # Bun will be replaced by Deno soon
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build Web App
+        run: ADAPTER=static bun run build
+
+      - name: Sync Capacitor
+        run: bunx cap sync android
+
+      - name: Decode Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > android/app/release.keystore
+
+      - name: Build and Sign Android App
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          bunx cap build android --androidreleasetype=APK \
+            --keystorepath=app/release.keystore \
+            --keystorepass="$KEYSTORE_PASSWORD" \
+            --keystorealias="$KEY_ALIAS" \
+            --keystorealiaspass="$KEY_PASSWORD" \
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: android-release-apk
+          path: android/app/build/outputs/apk/release/app-release-signed.apk
+          retention-days: 7
+          archive: false
+
+      - name: Upload Asset to Release
+        if: github.event_name == 'release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ github.event.release.tag_name }} android/app/build/outputs/apk/release/app-release-signed.apk
