@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Source Code
@@ -52,6 +54,7 @@ jobs:
             --keystorepass="$KEYSTORE_PASSWORD" \
             --keystorealias="$KEY_ALIAS" \
             --keystorealiaspass="$KEY_PASSWORD" \
+            --signing-type="apksigner"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v7
