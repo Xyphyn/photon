@@ -9,7 +9,7 @@
         "@capacitor/app": "^8.1.0",
         "@capacitor/cli": "^8.4.2",
         "@capacitor/core": "^8.4.2",
-        "@capacitor/ios": "^8.4.2",
+        "@capacitor/haptics": "^8.0.2",
         "@dicebear/core": "^9.4.3",
         "@dicebear/initials": "^9.4.2",
         "@eslint/compat": "^1.4.1",
@@ -63,7 +63,7 @@
 
     "@capacitor/core": ["@capacitor/core@8.4.2", "", { "dependencies": { "tslib": "^2.1.0" } }, "sha512-fQPRb3JXRaU2pnufDUvqOjhsrYxDQeFRZyaj/sHydIUxD2NxOGHKMpmKUdI+U4OOmKuGZyvRpi7TSJU+7Bjbmg=="],
 
-    "@capacitor/ios": ["@capacitor/ios@8.4.2", "", { "peerDependencies": { "@capacitor/core": "^8.4.0" } }, "sha512-ClVzIjK++yRjsRPOpdEzhsZfbHfoEc0f4M6vD0v7sWh0qcoF6NkxNAeHpWTn4OPJpJfpGGoYsq+IfEHrYyBiWA=="],
+    "@capacitor/haptics": ["@capacitor/haptics@8.0.2", "", { "peerDependencies": { "@capacitor/core": ">=8.0.0" } }, "sha512-c2hZzRR5Fk1tbTvhG1jhh2XBAf3EhnIerMIb2sl7Mt41Gxx1fhBJFDa0/BI1IbY4loVepyyuqNC9820/GZuoWQ=="],
 
     "@cloudflare/kv-asset-handler": ["@cloudflare/kv-asset-handler@0.5.0", "", {}, "sha512-jxQYkj8dSIzc0cD6cMMNdOc1UVjqSqu8BZdor5s8cGjW2I8BjODt/kWPVdY+u9zj3ms75Q5qaZgnxUad83+eAg=="],
 

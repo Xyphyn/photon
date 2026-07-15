@@ -18,6 +18,8 @@
   import Navbar from '$lib/ui/navbar/Navbar.svelte'
   import Sidebar from '$lib/ui/sidebar/Sidebar.svelte'
   import { App } from '@capacitor/app'
+  import { Capacitor } from '@capacitor/core'
+  import { Haptics } from '@capacitor/haptics'
   import { Button, ModalContainer, Spinner, ToastContainer } from 'mono-svelte'
   import nProgress from 'nprogress'
   import 'nprogress/nprogress.css'
@@ -42,6 +44,17 @@
   App.addListener('backButton', () => {
     history.back()
   })
+
+  if (Capacitor.isNativePlatform()) {
+    navigator.vibrate = (pattern: VibratePattern | Iterable<number>) => {
+      Haptics.vibrate({
+        // @ts-expect-error Iterable is a thing
+        duration: (Array.isArray(pattern) ? pattern[0] : pattern) ?? 100,
+      })
+
+      return true
+    }
+  }
 
   onMount(() => {
     if (browser) {
