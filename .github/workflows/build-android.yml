@@ -49,18 +49,19 @@ jobs:
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          bunx cap build android --androidreleasetype=APK \
-            --keystorepath=app/release.keystore \
-            --keystorepass="$KEYSTORE_PASSWORD" \
-            --keystorealias="$KEY_ALIAS" \
-            --keystorealiaspass="$KEY_PASSWORD" \
-            --signing-type="apksigner"
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease \
+            -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/android/app/release.keystore \
+            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v7
         with:
           name: android-release-apk
-          path: android/app/build/outputs/apk/release/app-release-signed.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 7
           archive: false
 
@@ -69,4 +70,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload ${{ github.event.release.tag_name }} android/app/build/outputs/apk/release/app-release-signed.apk
+          gh release upload ${{ github.event.release.tag_name }} android/app/build/outputs/apk/release/app-release.apk

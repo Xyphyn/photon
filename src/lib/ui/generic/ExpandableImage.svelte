@@ -24,6 +24,24 @@
   }
 
   let { alt = '' }: Props = $props()
+
+  async function share() {
+    if (navigator.share != undefined && page.state.openImage != null) {
+      const url = page.state.openImage
+      const blob = await fetch(url).then((i) => i.blob())
+      const file = new File([blob], url.substring(url.lastIndexOf('/') + 1), {
+        type: blob.type,
+      })
+      navigator.share({
+        files: [file],
+      })
+    } else {
+      navigator.clipboard.writeText(page.state.openImage ?? '')
+      toast({
+        content: $t('toast.copied'),
+      })
+    }
+  }
 </script>
 
 {#if page.state.openImage || '' != ''}
@@ -57,16 +75,13 @@
         onclick={(e) => e.stopPropagation()}
       >
         <Button
-          onclick={() => {
-            navigator.clipboard.writeText(page.state?.openImage ?? '')
-            toast({ content: $t('toast.copied') })
-          }}
+          onclick={share}
           color="tertiary"
           size="square-lg"
           rounding="pill"
           aria-label={$t('post.actions.more.share')}
           icon={Share}
-        ></Button>
+        />
         <Button
           onclick={() => history.back()}
           color="tertiary"
@@ -74,7 +89,7 @@
           rounding="pill"
           aria-label={$t('common.back')}
           icon={XMark}
-        ></Button>
+        />
       </Material>
     </div>
   </div>
