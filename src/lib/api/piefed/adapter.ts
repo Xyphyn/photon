@@ -1,5 +1,6 @@
 import createClient from 'openapi-fetch'
 import type { BaseClient, ClientType } from '../base'
+import type { LemmyV3Client } from '../lemmy-v3/adapter'
 import type * as types from '../types'
 import {
   fromCreateComment,
@@ -38,10 +39,8 @@ type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 // i think this should be inside baseclient maybe
 type MethodName = NonNullable<
   {
-    [K in keyof BaseClient]: BaseClient[K] extends (...args: any[]) => any
-      ? K
-      : never
-  }[keyof BaseClient]
+    [K in keyof LemmyV3Client]: LemmyV3Client[K] extends (...args: any[]) => any ? K : never
+  }[keyof LemmyV3Client]
 >
 
 type MethodConfig<
@@ -51,27 +50,22 @@ type MethodConfig<
 > = {
   method: HttpMethod
   path: keyof paths
-  query?: (params: Parameters<BaseClient[K]>[0]) => unknown
-  body?: (params: Parameters<BaseClient[K]>[0]) => unknown
+  query?: (params: Parameters<LemmyV3Client[K]>[0]) => unknown
+  body?: (params: Parameters<LemmyV3Client[K]>[0]) => unknown
   transform: (
     response: SuccessResponse<P, M>,
-    params: Parameters<BaseClient[K]>[0],
-  ) => Awaited<ReturnType<BaseClient[K]>>
+    params: Parameters<LemmyV3Client[K]>[0],
+  ) => Awaited<ReturnType<LemmyV3Client[K]>>
 }
 
 type MethodDef<K extends MethodName> =
-  | MethodConfig<K>
-  | ((client: ApiClient, params: any) => Promise<unknown>)
-  | 'unsupported'
+  MethodConfig<K> | ((client: ApiClient, params: any) => Promise<unknown>) | 'unsupported'
 
 type MethodDefinitions = {
   [K in MethodName]: MethodDef<K>
 }
 
-type SuccessResponse<
-  P extends keyof paths,
-  M extends HttpMethod,
-> = paths[P] extends {
+type SuccessResponse<P extends keyof paths, M extends HttpMethod> = paths[P] extends {
   [K in M]: { responses: { 200: { content: { 'application/json': infer R } } } }
 }
   ? R
@@ -85,9 +79,7 @@ type SuccessResponse<
 
 function assertData<T>(response: { data?: T; error?: unknown }): T {
   if (response.error || !response.data) {
-    throw new Error(
-      `API error: ${JSON.stringify(response.error ?? 'No data returned')}`,
-    )
+    throw new Error(`API error: ${JSON.stringify(response.error ?? 'No data returned')}`)
   }
   return response.data
 }
@@ -505,10 +497,7 @@ const methods: MethodDefinitions = {
     }),
   },
 
-  banFromCommunity: async (
-    client,
-    params: Parameters<BaseClient['banFromCommunity']>[0],
-  ) => {
+  banFromCommunity: async (client, params: Parameters<BaseClient['banFromCommunity']>[0]) => {
     const response = params.ban
       ? await client.POST('/api/alpha/community/moderate/ban', {
           body: {
@@ -516,9 +505,7 @@ const methods: MethodDefinitions = {
             user_id: params.person_id,
             reason: params.reason ?? 'No reason provided.',
             // why is this nullable bro
-            expiredAt: new Date(
-              params.expires ?? '6767-06-07T06:07:06Z',
-            ).toISOString(),
+            expiredAt: new Date(params.expires ?? '6767-06-07T06:07:06Z').toISOString(),
           } as any,
         })
       : await client.PUT('/api/alpha/community/moderate/unban', {
@@ -804,11 +791,7 @@ export const PiefedClientConstants = {
   password: { minLength: 6, maxLength: 128 },
 }
 
-async function executeMethod<
-  K extends MethodName,
-  P extends keyof paths,
-  M extends HttpMethod,
->(
+async function executeMethod<K extends MethodName, P extends keyof paths, M extends HttpMethod>(
   client: ApiClient,
   config: MethodConfig<K, P, M>,
   // i have been up for 3 hours writing typescript types. i am not going to be bothered to figure
@@ -827,9 +810,7 @@ async function executeMethod<
     }
   }
 
-  return execute().then((response) =>
-    config.transform(assertData(response), params),
-  )
+  return execute().then((response) => config.transform(assertData(response), params))
 }
 
 export function createPiefedClient(

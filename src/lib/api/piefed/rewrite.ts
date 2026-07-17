@@ -1,4 +1,4 @@
-import * as base from '../types'
+import * as base from 'lemmy-js-client-v3'
 import type { components, paths } from './schema'
 
 type Schema<T extends keyof components['schemas']> = components['schemas'][T]
@@ -15,9 +15,7 @@ type PathBody<P extends keyof paths> = paths[P] extends {
   ? B
   : never
 
-export function toPersonView(
-  personView: Schema<'PersonView'>,
-): base.PersonView {
+export function toPersonView(personView: Schema<'PersonView'>): base.PersonView {
   return {
     counts: personView.counts,
     is_admin: personView.is_admin,
@@ -39,9 +37,7 @@ export function toLocalSite(site: Schema<'Site'>): base.LocalSite {
   return {}
 }
 
-export function toCommunityView(
-  communityView: Schema<'CommunityView'>,
-): base.CommunityView {
+export function toCommunityView(communityView: Schema<'CommunityView'>): base.CommunityView {
   return {
     ...communityView,
     community: toCommunity(communityView.community),
@@ -128,9 +124,7 @@ export function toPost(post: Schema<'Post'>): base.Post {
   }
 }
 
-export function toCommentView(
-  commentView: Schema<'CommentView'>,
-): base.CommentView {
+export function toCommentView(commentView: Schema<'CommentView'>): base.CommentView {
   return {
     ...commentView,
     comment: toComment(commentView.comment),
@@ -207,9 +201,7 @@ export function toFeedView(feedView: Schema<'FeedView'>): base.FeedView {
   }
 }
 
-export function fromGetPosts(
-  getPosts: base.GetPosts,
-): PathQuery<'/api/alpha/post/list'> {
+export function fromGetPosts(getPosts: base.GetPosts): PathQuery<'/api/alpha/post/list'> {
   return {
     ...getPosts,
     sort: toSortType(getPosts.sort),
@@ -226,24 +218,18 @@ export function fromGetComments(
   }
 }
 
-export function fromGetPost(
-  getPost: base.GetPost,
-): PathQuery<'/api/alpha/post'> {
+export function fromGetPost(getPost: base.GetPost): PathQuery<'/api/alpha/post'> {
   return getPost
 }
 
-export function fromGetReplies(
-  getReplies: base.GetReplies,
-): PathQuery<'/api/alpha/user/replies'> {
+export function fromGetReplies(getReplies: base.GetReplies): PathQuery<'/api/alpha/user/replies'> {
   return {
     ...getReplies,
     sort: toCommentSortType(getReplies.sort),
   }
 }
 
-export function fromSearch(
-  search: base.Search,
-): PathQuery<'/api/alpha/search'> {
+export function fromSearch(search: base.Search): PathQuery<'/api/alpha/search'> {
   return {
     ...(search as Omit<base.Search, 'type_'> & {
       type_: 'Communities' | 'Users' | 'Url' | 'Posts'
@@ -252,9 +238,7 @@ export function fromSearch(
   }
 }
 
-export function fromCreatePost(
-  createPost: base.CreatePost,
-): PathBody<'/api/alpha/post'> {
+export function fromCreatePost(createPost: base.CreatePost): PathBody<'/api/alpha/post'> {
   return {
     ...createPost,
     title: createPost.name,
@@ -280,9 +264,7 @@ export function fromCreateComment(
   }
 }
 
-export function toSortType(
-  sortType?: base.SortType,
-): Schema<'SortType'> | undefined {
+export function toSortType(sortType?: base.SortType): Schema<'SortType'> | undefined {
   if (!sortType) return
   if (
     sortType == 'Old' ||
@@ -302,10 +284,7 @@ export function toCommentSortType(
   return commentSortType
 }
 
-export function toCommunitiesSortType(
-  sortType?: base.SortType,
-): 'Top' | 'Hot' | 'New' | undefined {
-  if (sortType == 'Hot' || sortType == 'New' || sortType == undefined)
-    return sortType
+export function toCommunitiesSortType(sortType?: base.SortType): 'Top' | 'Hot' | 'New' | undefined {
+  if (sortType == 'Hot' || sortType == 'New' || sortType == undefined) return sortType
   else return 'Top'
 }
