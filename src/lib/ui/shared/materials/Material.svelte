@@ -9,11 +9,11 @@
 
   const elevationClass = {
     flat: '',
-    low: 'shadow-2xs',
-    medium: 'shadow-xs',
-    high: 'shadow-md',
-    xhigh: 'shadow-lg',
-    max: 'shadow-xl',
+    low: 'material-shadow-2xs',
+    medium: 'material-shadow-xs',
+    high: 'material-shadow-md',
+    xhigh: 'material-shadow-lg',
+    max: 'material-shadow-xl',
   }
 
   const paddingClass = {
@@ -140,7 +140,9 @@
         var(--color-slate-50)
       );
       border: 1px solid var(--color-slate-200);
-      box-shadow: 0px -2px 0px -1px --alpha(var(--color-slate-200) / 90%) inset;
+      box-shadow:
+        0px -2px 0px -1px --alpha(var(--color-slate-200) / 90%) inset,
+        var(--material-shadow, 0 0 0 0 #0000);
       background-clip: padding-box;
 
       @variant dark {
@@ -150,7 +152,9 @@
           var(--color-zinc-900)
         );
         border-color: oklab(0.2 0 0%);
-        box-shadow: 0px 1.5px 0px 0px --alpha(var(--color-zinc-700) / 80%) inset;
+        box-shadow:
+          0px 1.5px 0px 0px --alpha(var(--color-zinc-700) / 80%) inset,
+          var(--material-shadow, 0 0 0 0 #0000);
       }
     }
 
@@ -233,6 +237,7 @@
 
       color: var(--color-slate-900);
       border: 1px solid --alpha(var(--color-slate-300) / 30%);
+      box-shadow: var(--material-shadow);
 
       @variant dark {
         color: var(--color-slate-300);
@@ -243,6 +248,22 @@
           --alpha(var(--color-slate-500) / 15%)
         );
       }
+    }
+
+    .material-shadow-2xs {
+      --material-shadow: var(--shadow-2xs);
+    }
+    .material-shadow-xs {
+      --material-shadow: var(--shadow-xs);
+    }
+    .material-shadow-md {
+      --material-shadow: var(--shadow-md);
+    }
+    .material-shadow-lg {
+      --material-shadow: var(--shadow-lg);
+    }
+    .material-shadow-xl {
+      --material-shadow: var(--shadow-xl);
     }
   }
 </style>

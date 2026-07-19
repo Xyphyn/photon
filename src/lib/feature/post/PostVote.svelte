@@ -93,7 +93,7 @@
   <button
     onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
     class={[
-      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2 first:border-r-0! first:rounded-l-[inherit] last:rounded-r-[inherit]',
+      'post-vote-button',
       'last:flex-row-reverse',
       vote == targetNum
         ? shouldShowVoteColor(
@@ -136,7 +136,7 @@
   )}
   <div
     class={[
-      'rounded-xl h-full font-medium flex relative overflow-hidden shadow-xs',
+      'post-vote-container',
       voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}
     aria-label={$t('aria.vote.group')}
@@ -150,6 +150,37 @@
 {/if}
 
 <style>
+  .post-vote-container {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    border-radius: var(--radius-xl);
+    font-weight: var(--font-weight-medium);
+    box-shadow: var(--shadow-xs);
+
+    .post-vote-button {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing) * 0.5);
+      position: relative;
+      cursor: pointer;
+      padding: calc(var(--spacing) * 2);
+      height: 100%;
+      border-radius: inherit;
+
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: none;
+      }
+      &:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+
   .vote-ratio {
     z-index: 0;
   }

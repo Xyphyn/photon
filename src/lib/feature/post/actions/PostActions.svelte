@@ -19,6 +19,7 @@
     Spinner,
     toast,
   } from 'mono-svelte'
+  import Material from 'mono-svelte/materials/Material.svelte'
   import {
     Bookmark,
     BookmarkSlash,
@@ -139,120 +140,131 @@
     />
     <FormattedNumber number={post.counts.comments} />
   </Button>
-  <div class="flex-1"></div>
-
-  {#if settings.debugInfo}
-    {#if debug}
-      {#await import('$lib/ui/util/debug/DebugObject.svelte') then { default: DebugObject }}
-        <DebugObject object={post} bind:open={debug} />
+  <Material
+    padding="none"
+    color="none"
+    class={[
+      'flex ml-auto btn btn-secondary pointer-events-none *:pointer-events-auto',
+    ]}
+  >
+    {#if settings.debugInfo}
+      {#if debug}
+        {#await import('$lib/ui/util/debug/DebugObject.svelte') then { default: DebugObject }}
+          <DebugObject object={post} bind:open={debug} />
+        {/await}
+      {/if}
+      <Button
+        onclick={() => (debug = true)}
+        title="Debug"
+        size="custom"
+        color="tertiary"
+        rounding="xl"
+        class={buttonSquare}
+        icon={BugAnt}
+      ></Button>
+    {/if}
+    {#if profile.isMod(post.community) || profile.isAdmin}
+      {#await import('$lib/feature/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
+        <ModerationMenu bind:item={post}>
+          {#snippet target(attachment, acting)}
+            <Button
+              {@attach attachment}
+              size="custom"
+              color="tertiary"
+              rounding="xl"
+              loading={acting}
+              class={buttonSquare}
+            >
+              <Icon src={ShieldCheck} size="18" mini />
+            </Button>
+          {/snippet}
+        </ModerationMenu>
       {/await}
     {/if}
-    <Button
-      onclick={() => (debug = true)}
-      title="Debug"
-      size="custom"
-      rounding="xl"
-      class={buttonSquare}
-      icon={BugAnt}
-    ></Button>
-  {/if}
-  {#if profile.isMod(post.community) || profile.isAdmin}
-    {#await import('$lib/feature/moderation/ModerationMenu.svelte') then { default: ModerationMenu }}
-      <ModerationMenu bind:item={post}>
-        {#snippet target(attachment, acting)}
-          <Button
-            {@attach attachment}
-            size="custom"
-            rounding="xl"
-            loading={acting}
-            class={buttonSquare}
-          >
-            <Icon src={ShieldCheck} size="18" mini />
-          </Button>
-        {/snippet}
-      </ModerationMenu>
-    {/await}
-  {/if}
 
-  {#if profile.current?.jwt}
-    <Button
-      onclick={async () => {
-        if (!profile.current?.jwt) return
-        saving = true
-        post.saved = await save(post, !post.saved)
-        saving = false
-      }}
-      size="custom"
-      class={buttonSquare}
-      rounding="xl"
-      loading={saving}
-      disabled={saving}
-      title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
-      icon={post.saved ? BookmarkSlash : Bookmark}
-    ></Button>
-  {/if}
-
-  <Menu placement="bottom-end">
-    {#snippet target(attachment)}
+    {#if profile.current?.jwt}
       <Button
-        {@attach post.post.local ? () => {} : attachment}
-        rounding="xl"
-        size="custom"
-        class={buttonSquare}
-        onclick={() => {
-          if (post.post.local) share()
+        onclick={async () => {
+          if (!profile.current?.jwt) return
+          saving = true
+          post.saved = await save(post, !post.saved)
+          saving = false
         }}
-        icon={Share}
-        title={$t('post.actions.more.share')}
-      />
-    {/snippet}
-    <MenuDivider showLabel>{$t('post.actions.more.share.from')}</MenuDivider>
-    <MenuButton onclick={() => share(true)} icon={GlobeAlt}>
-      {$t('post.actions.more.share.global')}
-    </MenuButton>
-    <MenuButton onclick={() => share(false)} icon={MapPin}>
-      {$t('post.actions.more.share.local')}
-    </MenuButton>
-    {#if !LINKED_INSTANCE_URL}
-      <MenuDivider>
-        <svelte:fragment></svelte:fragment>
-      </MenuDivider>
-      <MenuButton
-        onclick={() =>
-          share(
-            false,
-            new URL(`/go/${post.post.ap_id}`, page.url.origin).toString(),
-          )}
-        icon={Photon}
-      >
-        {$t('post.actions.more.share.photon')}
-      </MenuButton>
+        size="custom"
+        color="tertiary"
+        class={buttonSquare}
+        rounding="xl"
+        loading={saving}
+        disabled={saving}
+        title={post.saved ? $t('post.actions.unsave') : $t('post.actions.save')}
+        icon={post.saved ? BookmarkSlash : Bookmark}
+      ></Button>
     {/if}
-  </Menu>
 
-  {#if profile.current.jwt}
     <Menu placement="bottom-end">
-      {#snippet target(popover)}
+      {#snippet target(attachment)}
         <Button
-          {@attach popover}
-          title={$t('post.actions.more.label')}
+          {@attach post.post.local ? () => {} : attachment}
           rounding="xl"
           size="custom"
+          color="tertiary"
           class={buttonSquare}
-          icon={EllipsisHorizontal}
-        ></Button>
+          onclick={() => {
+            if (post.post.local) share()
+          }}
+          icon={Share}
+          title={$t('post.actions.more.share')}
+        />
       {/snippet}
-      {#snippet children(open)}
-        {#if open}
-          {#await import('./PostActionsMenu.svelte')}
-            <div class="p-8 w-full h-full grid place-items-center">
-              <Spinner width={20} />
-            </div>
-          {:then { default: PostActionsMenu }}
-            <PostActionsMenu bind:post {onhide} bind:editing />
-          {/await}
-        {/if}
-      {/snippet}
+      <MenuDivider showLabel>{$t('post.actions.more.share.from')}</MenuDivider>
+      <MenuButton onclick={() => share(true)} icon={GlobeAlt}>
+        {$t('post.actions.more.share.global')}
+      </MenuButton>
+      <MenuButton onclick={() => share(false)} icon={MapPin}>
+        {$t('post.actions.more.share.local')}
+      </MenuButton>
+      {#if !LINKED_INSTANCE_URL}
+        <MenuDivider>
+          <svelte:fragment></svelte:fragment>
+        </MenuDivider>
+        <MenuButton
+          onclick={() =>
+            share(
+              false,
+              new URL(`/go/${post.post.ap_id}`, page.url.origin).toString(),
+            )}
+          icon={Photon}
+        >
+          {$t('post.actions.more.share.photon')}
+        </MenuButton>
+      {/if}
     </Menu>
-  {/if}
+
+    {#if profile.current.jwt}
+      <Menu placement="bottom-end">
+        {#snippet target(popover)}
+          <Button
+            {@attach popover}
+            title={$t('post.actions.more.label')}
+            rounding="xl"
+            size="custom"
+            color="tertiary"
+            class={buttonSquare}
+            icon={EllipsisHorizontal}
+          />
+        {/snippet}
+        {#snippet children(open)}
+          {#if open}
+            {#await import('./PostActionsMenu.svelte')}
+              <div class="p-8 w-full h-full grid place-items-center">
+                <Spinner width={20} />
+              </div>
+            {:then { default: PostActionsMenu }}
+              <PostActionsMenu bind:post {onhide} bind:editing />
+            {/await}
+          {/if}
+        {/snippet}
+      </Menu>
+    {/if}
+  </Material>
 </footer>
