@@ -2,7 +2,7 @@
   import { invalidate } from '$app/navigation'
   import { page as pageData } from '$app/state'
   import { t } from '$lib/app/i18n'
-  import { Button } from 'mono-svelte'
+  import { Button, Material } from 'mono-svelte'
   import { ChevronLeft, ChevronRight, Icon } from 'svelte-hero-icons/dist'
   import { backOut } from 'svelte/easing'
   import { SvelteURLSearchParams } from 'svelte/reactivity'
@@ -43,12 +43,15 @@
 </script>
 
 {#if hasMore || page != 1}
-  <nav
+  <Material
+    padding="none"
+    rounding="full"
+    color="distinct"
+    elevation="xhigh"
     aria-label={$t('aria.pagination.nav')}
     class={[
-      'flex flex-row gap-4 items-center justify-center',
-      'rounded-full overflow-hidden w-max mx-auto p-1',
-      'material-distinct',
+      'flex flex-row gap-2 items-center justify-center',
+      'overflow-hidden w-max mx-auto p-1',
     ]}
   >
     {#if children}
@@ -104,5 +107,5 @@
         <Icon src={ChevronRight} size="24" mini />
       {/snippet}
     </Button>
-  </nav>
+  </Material>
 {/if}

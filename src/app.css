@@ -16,7 +16,7 @@
   --ease-cubic: cubic-bezier(0.075, 0.82, 0.165, 1);
 
   --color-slate-25: rgb(252 253 254);
-  --color-zinc-925: 28 28 32;
+  --color-zinc-925: rgb(28 28 32);
 
   /* dark theme */
   --color-primary-100: rgb(248 248 251);
@@ -87,7 +87,7 @@
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 accent-slate-950 dark:accent-zinc-50;
+  @apply bg-slate-100 text-slate-900 dark:bg-zinc-950 dark:text-zinc-100 accent-slate-950 dark:accent-zinc-50;
 }
 
 .dark {

@@ -43,10 +43,10 @@
   >
     <div class="md:hidden flex justify-between" dir="ltr">
       <InvertedCorner
-        class="w-8 h-8 text-slate-50 dark:text-zinc-950 rotate-270"
+        class="w-8 h-8 text-slate-100 dark:text-zinc-950 rotate-270"
       />
       <InvertedCorner
-        class="w-8 h-8 text-slate-50 dark:text-zinc-950 rotate-180"
+        class="w-8 h-8 text-slate-100 dark:text-zinc-950 rotate-180"
       />
     </div>
     {@render navbar?.({
@@ -96,9 +96,9 @@
         pointer-events: auto;
         backdrop-filter: blur(var(--blur-xl));
         border-width: 1px;
-        border-color: var(--color-slate-100);
+        border-color: var(--color-slate-200);
         border-top: none;
-        background-color: var(--color-slate-50);
+        background-color: var(--color-slate-100);
 
         @variant max-md {
           padding-bottom: max(
@@ -110,7 +110,7 @@
         @variant md {
           border-left: none;
           border-right: none;
-          background-color: --alpha(var(--color-slate-50) / 70%);
+          background-color: --alpha(var(--color-slate-100) / 70%);
         }
 
         @variant dark {
@@ -133,7 +133,7 @@
     grid-template-columns: 1fr;
     grid-template-areas: 'main';
     justify-items: start;
-    --fade-color: var(--color-slate-50);
+    --fade-color: var(--color-slate-100);
 
     @variant dark {
       --fade-color: var(--color-zinc-950);
@@ -187,9 +187,9 @@
       .shell-main {
         width: 100%;
         grid-area: main;
-        background-color: var(--color-slate-25);
-        border-left: 1px solid var(--color-slate-100);
-        border-right: 1px solid var(--color-slate-100);
+        background-color: var(--color-slate-50);
+        border-left: 1px solid var(--color-slate-200);
+        border-right: 1px solid var(--color-slate-200);
         padding-bottom: calc(
           calc(var(--spacing) * 22) + env(safe-area-inset-bottom, 0px)
         );
@@ -210,7 +210,7 @@
         position: sticky;
         top: 0;
         left: 0;
-        background-color: var(--color-slate-50);
+        background-color: var(--color-slate-100);
         z-index: 40;
         width: 100%;
         overflow: auto;

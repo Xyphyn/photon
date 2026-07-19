@@ -95,7 +95,7 @@
         bind:this={element}
         class={[
           buttonSize[size],
-          'btn btn-secondary select rounded-xl appearance-none pr-6! w-full',
+          'btn btn-secondary btn-shadow-sm select rounded-xl appearance-none pr-6! w-full',
           selectClass,
           clazz,
         ]}
