@@ -32,7 +32,7 @@
   }
 
   export const buttonShadow = {
-    sm: 'shadow-xs',
+    sm: 'btn-shadow-sm',
     none: 'shadow-none',
   }
 
@@ -109,7 +109,7 @@
     size = 'md',
     rounding = size == 'lg' || size == 'square-lg' ? '2xl' : 'xl',
     alignment = 'center',
-    shadow = 'none',
+    shadow = 'sm',
     gap = 'md',
     disabled,
     loaderWidth = undefined,
@@ -234,38 +234,27 @@
 
     .btn-secondary {
       border: 1px solid var(--color-slate-200);
+      background: linear-gradient(
+        to bottom,
+        var(--color-white),
+        var(--color-slate-100)
+      );
       border-bottom-color: var(--color-slate-300);
-      background-color: var(--color-white);
+      box-shadow: var(--btn-shadow, 0 0 0 0 #0000);
 
       @variant dark {
-        border: 1px solid
-          color-mix(
-            in oklab,
-            var(--color-zinc-800) 80%,
-            var(--color-zinc-900) 20%
-          );
+        border: 1px solid var(--color-zinc-800);
         background: linear-gradient(
           to bottom,
-          color-mix(
-            in oklab,
-            var(--color-zinc-800) 50%,
-            var(--color-zinc-900) 50%
-          ),
+          color-mix(in oklab, var(--color-zinc-800), var(--color-zinc-900)),
           var(--color-zinc-900)
         );
-        border-top-color: color-mix(
-          in oklab,
-          var(--color-zinc-700) 50%,
-          var(--color-zinc-800) 50%
-        );
+        border-top-color: var(--color-zinc-700);
+        box-shadow: var(--btn-shadow);
       }
 
       @variant hover {
-        background: color-mix(
-          in oklab,
-          var(--color-white),
-          var(--color-slate-50)
-        );
+        background: var(--color-slate-100);
         @variant dark {
           background: color-mix(
             in oklab,
@@ -416,6 +405,10 @@
       @variant dark {
         opacity: 0.5;
       }
+    }
+
+    .btn-shadow-sm {
+      --btn-shadow: var(--shadow-xs);
     }
   }
 </style>

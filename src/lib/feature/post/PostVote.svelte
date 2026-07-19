@@ -136,7 +136,7 @@
   )}
   <div
     class={[
-      'rounded-xl h-full font-medium flex relative overflow-hidden',
+      'rounded-xl h-full font-medium flex relative overflow-hidden shadow-xs',
       voteRatio < 85 && settings.voteRatioBar && 'vote-ratio',
     ]}
     aria-label={$t('aria.vote.group')}
