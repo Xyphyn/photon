@@ -78,7 +78,6 @@
 
     translate: 0% 0%;
     transition: translate 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    will-change: translate;
 
     @variant max-md {
       &.auto-hidden {
@@ -91,33 +90,30 @@
       top: 0;
     }
 
-    :global {
-      .shell-navbar {
-        pointer-events: auto;
-        backdrop-filter: blur(var(--blur-xl));
-        border-width: 1px;
-        border-color: var(--color-slate-100);
-        border-top: none;
-        background-color: var(--color-slate-50);
+    :global(.shell-navbar) {
+      pointer-events: auto;
+      border-width: 1px;
+      border-color: var(--color-slate-100);
+      border-top: none;
+      background-color: var(--color-slate-50);
 
-        @variant max-md {
-          padding-bottom: max(
-            env(safe-area-inset-bottom),
-            calc(var(--spacing) * 2)
-          );
-        }
+      @variant max-md {
+        padding-bottom: max(
+          env(safe-area-inset-bottom),
+          calc(var(--spacing) * 2)
+        );
+      }
 
+      @variant md {
+        border-left: none;
+        border-right: none;
+        background-color: --alpha(var(--color-slate-50) / 70%);
+      }
+
+      @variant dark {
+        background-color: var(--color-zinc-950);
+        border-color: var(--color-zinc-900);
         @variant md {
-          border-left: none;
-          border-right: none;
-          background-color: --alpha(var(--color-slate-50) / 70%);
-        }
-
-        @variant dark {
-          background-color: var(--color-zinc-950);
-          border-color: var(--color-zinc-900);
-          @variant md {
-          }
         }
       }
     }

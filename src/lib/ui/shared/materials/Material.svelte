@@ -111,10 +111,8 @@
 
       @variant dark {
         background: var(--color-zinc-900);
-        border-color: var(--color-zinc-950);
-        box-shadow:
-          0px 1.5px 0px 0px inset var(--color-zinc-700),
-          0px -1px 0px 0px inset var(--color-zinc-950);
+        border-color: var(--color-zinc-800);
+        border-top-color: var(--color-zinc-700);
 
         @variant hover {
           background-color: var(--color-zinc-925);

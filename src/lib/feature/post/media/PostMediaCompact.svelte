@@ -175,14 +175,14 @@
     background-image: linear-gradient(
       to bottom,
       --alpha(var(--color-slate-50) / 0%),
-      --alpha(var(--color-slate-50) / 95%)
+      var(--color-slate-50)
     );
 
     @variant dark {
       background-image: linear-gradient(
         to bottom,
         --alpha(var(--color-zinc-900) / 0%),
-        --alpha(var(--color-zinc-900) / 95%)
+        var(--color-zinc-900)
       );
     }
   }

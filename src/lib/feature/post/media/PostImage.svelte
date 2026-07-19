@@ -23,11 +23,7 @@
 <svelte:element
   this={settings.expandImages ? 'button' : 'a'}
   href={postLink(post)}
-  class={[
-    'container/a z-10 rounded-2xl cursor-pointer relative overflow-hidden',
-    'bg-slate-100 dark:bg-zinc-900 transition-colors',
-    'border border-slate-200 dark:border-zinc-800 group',
-  ]}
+  class={['container/a group post-image-container']}
   data-sveltekit-preload-data="off"
   aria-label={post.name}
   onclick={() => showImage(bestImageURL(post, false, -1, null))}
@@ -35,12 +31,12 @@
   tabindex="0"
 >
   <!-- svelte-ignore a11y_missing_attribute -->
-  <div class="inset-0 absolute -z-10 rounded-xl overflow-hidden">
+  <div class="post-image-blur-container">
     <img
       loading="lazy"
       fetchpriority="auto"
       src={bestImageURL(post, false, 64)}
-      class=" object-cover w-full h-full opacity-50 blur-lg"
+      class="post-image-blur"
     />
   </div>
   <picture class="max-h-[60vh]">
@@ -70,7 +66,7 @@
       src={blur ? '' : bestImageURL(post, false, -1, null)}
       loading="lazy"
       class={[
-        'max-w-full rounded-xl z-30 transition-all max-h-[60vh] duration-500 object-contain mx-auto group-hover:scale-98 group-active:scale-95',
+        'post-image',
         'duration-200 ease-cubic',
         imageLoaded === false ? 'opacity-0' : 'opacity-100',
         blur && 'blur-3xl',
@@ -107,3 +103,59 @@
     {/if}
   </div>
 </svelte:element>
+
+<style>
+  @reference '../../../../app.css';
+
+  .post-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-2xl);
+    cursor: pointer;
+    background-color: var(--color-slate-100);
+    border: 1px solid var(--color-slate-200);
+    z-index: 10;
+
+    @variant dark {
+      background-color: var(--color-zinc-900);
+      border-color: var(--color-zinc-800);
+    }
+
+    .post-image {
+      max-width: 100%;
+      z-index: 30;
+      margin-left: auto;
+      margin-right: auto;
+      transition: filter 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    &:hover {
+      .post-image {
+        transition-duration: 0;
+        filter: brightness(85%);
+      }
+    }
+
+    &:active {
+      .post-image {
+        filter: brightness(75%);
+      }
+    }
+  }
+
+  .post-image-blur-container {
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+
+    .post-image-blur {
+      width: 2%;
+      height: 2%;
+      filter: blur(1px);
+      opacity: 0.3;
+      transform: scale(100);
+      transform-origin: center;
+    }
+  }
+</style>

@@ -115,7 +115,7 @@
     display: flex;
     flex-direction: column-reverse;
     overflow: hidden;
-    gap: calc(var(--spacing) * 4);
+    gap: calc(var(--spacing) * 2);
     position: relative;
     @variant sm {
       flex-direction: row;
@@ -160,13 +160,10 @@
     .post-link-image {
       flex-shrink: 0;
       margin-bottom: auto;
+      position: relative;
 
       @variant sm {
         margin-left: auto;
-      }
-
-      @variant max-md {
-        mask-image: linear-gradient(to bottom, black, transparent);
       }
 
       @variant sm {
@@ -174,8 +171,10 @@
         max-width: calc(var(--spacing) * 90);
       }
 
-      @variant md {
-        mask-image: linear-gradient(to left, black, black, transparent);
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
       }
 
       img {
