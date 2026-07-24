@@ -1,11 +1,13 @@
 <script lang="ts">
   import { browser } from '$app/environment'
+  import { page } from '$app/state'
   import { client } from '$lib/api/client.svelte'
   import type { GetPosts, PostView } from '$lib/api/types'
   import { errorMessage } from '$lib/app/error'
   import { t } from '$lib/app/i18n'
   import VirtualList from '$lib/app/render/VirtualList.svelte'
   import { settings } from '$lib/app/settings.svelte'
+  import { showcaseModeEnabled } from '$lib/app/showcase'
   import { ReactiveState } from '$lib/app/util.svelte'
   import Placeholder from '$lib/ui/info/Placeholder.svelte'
   import EndPlaceholder from '$lib/ui/layout/EndPlaceholder.svelte'
@@ -234,7 +236,7 @@
     {/if}
   {/key}
 
-  {#if settings.infiniteScroll && browser && posts.length > 0}
+  {#if settings.infiniteScroll && !showcaseModeEnabled(page.url) && browser && posts.length > 0}
     {#if error}
       <Material color="error" class="flex flex-col gap-4">
         <div>

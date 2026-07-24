@@ -1,7 +1,8 @@
 import { client } from '$lib/api/client.svelte'
+import { generateShowcaseCommunities, showcaseModeEnabled } from '$lib/app/showcase'
 import { feed } from '$lib/feature/feeds/feed.svelte.js'
 
-export async function load({ fetch, parent }) {
+export async function load({ fetch, parent, url }) {
   const { page, query, sort, type, typeInstance } = await parent()
 
   const feedData = await feed('/explore/communities', async (params) =>
@@ -32,7 +33,9 @@ export async function load({ fetch, parent }) {
   })
 
   return {
-    communities: feedData.communities,
+    communities: showcaseModeEnabled(url)
+      ? await generateShowcaseCommunities(fetch, typeInstance)
+      : feedData.communities,
     type: type,
     sort: sort,
     query: query,

@@ -38,7 +38,7 @@ def capture(browser, shot):
     )
 
     page = context.new_page()
-    page.goto(f"{SITE}{shot['path']}", wait_until="domcontentloaded")
+    page.goto(f"{SITE}{shot['path']}?showcase", wait_until="domcontentloaded")
 
     try:
         page.wait_for_selector(shot["wait"], timeout=30000)
