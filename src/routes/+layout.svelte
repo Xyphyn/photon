@@ -41,31 +41,29 @@
     showSpinner: false,
   })
 
-  App.addListener('backButton', () => {
-    history.back()
-  })
-
-  if (Capacitor.isNativePlatform()) {
-    navigator.vibrate = (pattern: VibratePattern | Iterable<number>) => {
-      Haptics.vibrate({
-        // @ts-expect-error Iterable is a thing
-        duration: (Array.isArray(pattern) ? pattern[0] : pattern) ?? 100,
-      })
-
-      return true
-    }
-  }
-
   onMount(() => {
-    if (browser) {
-      if (window.location.hash == 'main') {
-        history.replaceState(
-          null,
-          '',
-          window.location.toString().replace('#main', ''),
-        )
+    if (window.location.hash == 'main') {
+      history.replaceState(
+        null,
+        '',
+        window.location.toString().replace('#main', ''),
+      )
+    }
+    document.body.querySelector('.loader')?.classList.add('hidden')
+
+    App.addListener('backButton', () => {
+      history.back()
+    })
+
+    if (Capacitor.isNativePlatform()) {
+      navigator.vibrate = (pattern: VibratePattern | Iterable<number>) => {
+        Haptics.vibrate({
+          // @ts-expect-error Iterable is a thing
+          duration: (Array.isArray(pattern) ? pattern[0] : pattern) ?? 100,
+        })
+
+        return true
       }
-      document.body.querySelector('.loader')?.classList.add('hidden')
     }
   })
 

@@ -19,7 +19,9 @@
   })
 
   onDestroy(() => {
-    portal.remove()
+    if (browser) {
+      portal.remove()
+    }
   })
 
   interface Props {
