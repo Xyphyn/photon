@@ -14,7 +14,8 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
-                "paste": "Plak dit in je authenticator-app."
+                "paste": "Plak dit in je authenticator-app.",
+                "disabled": ""
             },
             "displayName": "Weergavenaam",
             "bio": "Biografie",
@@ -24,6 +25,14 @@
                 "label": "Verwijder account",
                 "deleteContent": "Verwijder inhoud",
                 "warning": "Dit verwijdert AL je inzendingen."
+            },
+            "credentials": {
+                "description": "",
+                "title": ""
+            },
+            "languages": {
+                "title": "",
+                "description": ""
             }
         },
         "description": "Beschrijving",
@@ -48,7 +57,20 @@
             "generateTitle": "Genereer titel",
             "uploadImage": "Afbeelding uploaden",
             "altText": "Alternatieve tekst",
-            "selectFile": "Bestand selecteren"
+            "selectFile": "Bestand selecteren",
+            "fetching": "",
+            "flair": "",
+            "addUrl": "",
+            "readMore": "",
+            "customThumbnail": "",
+            "setLanguage": "",
+            "autosubmit": "",
+            "unset": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "email": "E-mail",
         "setup": "Instellen",
@@ -59,21 +81,47 @@
             "chooseInstance": "Kies een instantie",
             "application": {
                 "label": "Aanvraag",
-                "info": "Om je bij deze instantie aan te sluiten, moet je deze aanvraag invullen en wachten op acceptatie. Je ontvangt een e-mail als je aanvraag is geaccepteerd."
+                "info": "Om je bij deze instantie aan te sluiten, moet je deze aanvraag invullen en wachten op acceptatie. Je ontvangt een e-mail als je aanvraag is geaccepteerd.",
+                "notice": ""
             },
             "closed": {
                 "title": "Registraties gesloten",
                 "description": "Deze instantie heeft registraties gesloten. Zoek een andere instantie.",
                 "anotherInstance": "Zoek een andere instantie"
-            }
-        }
+            },
+            "verify": {
+                "title": "",
+                "error": "",
+                "submit": "",
+                "description": ""
+            },
+            "recommended": ""
+        },
+        "time": {
+            "duration": "",
+            "years": "",
+            "permanent": "",
+            "months": "",
+            "days": "",
+            "minutes": "",
+            "hours": ""
+        },
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
             "title": "Voorpagina",
-            "footer": "{{users:number}} actieve {{users; 1:user; default:users;}}"
+            "footer": "{{users:number}} actieve {{users; 1:user; default:users;}}",
+            "empty": {
+                "description": "",
+                "title": ""
+            },
+            "endFeed": ""
         },
-        "modlog": "Modlog",
+        "modlog": {
+            "filters": "",
+            "title": ""
+        },
         "instances": "Instanties",
         "legal": {
             "title": "Juridisch",
@@ -82,7 +130,23 @@
         "profile": {
             "user": "Gebruiker",
             "settings": "Instellingen",
-            "blocks": "Blokken",
+            "blocks": {
+                "empty": {
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
+                },
+                "title": ""
+            },
             "credentials": "Account",
             "moderates": "Modereren",
             "favorites": "Favorieten",
@@ -97,11 +161,20 @@
             "delete": {
                 "title": "Account verwijderen",
                 "warning": "Dit kan niet ongedaan gemaakt worden, weet je het zeker?"
-            }
+            },
+            "overview": "",
+            "edit": "",
+            "submissions": ""
         },
         "translators": "Vertalers",
         "accounts": "Accounts",
-        "communities": "Gemeenschappen",
+        "communities": {
+            "search": {
+                "placeholder": ""
+            },
+            "title": "",
+            "trending": ""
+        },
         "search": {
             "title": "Zoeken",
             "federating": "Federeren",
@@ -110,7 +183,9 @@
                 "title": "Geen Resultaten",
                 "description": "Er zijn geen resultaten die aan die filter voldoen. Probeer je zoekopdracht te verfijnen.",
                 "alt": "Zoeken in het fediverse"
-            }
+            },
+            "other": "",
+            "top": ""
         },
         "saved": "Opgeslagen",
         "createPost": "Bericht Aanmaken",
@@ -130,8 +205,11 @@
                 "context": "Toon context"
             },
             "emptyComments": {
-                "title": "Geen reacties"
-            }
+                "title": "Geen reacties",
+                "description": ""
+            },
+            "loadComments": "",
+            "commented": ""
         },
         "inbox": {
             "title": "Inbox",
@@ -139,6 +217,19 @@
             "empty": {
                 "title": "Geen nieuwe meldingen",
                 "description": "Berichten, antwoorden en vermeldingen verschijnen hier."
+            },
+            "item": {
+                "message": "",
+                "reply": "",
+                "mention": ""
+            },
+            "messages": {
+                "empty": {
+                    "title": ""
+                },
+                "conversation": "",
+                "indicator": "",
+                "start": ""
             }
         },
         "moderation": {
@@ -150,7 +241,17 @@
             "reason": "Reden",
             "resolve": "Oplossen",
             "unresolve": "Oplossen ongedaan maken",
-            "resolvedBy": "Opgelost door"
+            "resolvedBy": "Opgelost door",
+            "markAllComplete": "",
+            "markAll": "",
+            "manage": {
+                "ban": "",
+                "unban": "",
+                "title": "",
+                "modlogs": ""
+            },
+            "feed": "",
+            "resolved": ""
         },
         "admin": {
             "title": "Administratie",
@@ -233,6 +334,9 @@
                     "title": "Geen toegestane instanties",
                     "description": "Het toestaan van een instantie blokkeert elke andere instantie."
                 }
+            },
+            "media": {
+                "title": ""
             }
         },
         "verifyEmail": {
@@ -268,14 +372,44 @@
                 "default": "Standaard",
                 "classic": "Klassiek",
                 "imported": "Jouw thema",
-                "new": "Nieuw thema"
+                "new": "Nieuw thema",
+                "presets": ""
             }
         },
         "community": {
             "settings": {
                 "team": "Team",
-                "settings": "Instellingen"
+                "settings": "Instellingen",
+                "manage": ""
+            },
+            "languageWarning": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "postRedirect": {
+            "title": "",
+            "description": "",
+            "actions": {
+                "back": "",
+                "fetch": "",
+                "switch": ""
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "toast": {
@@ -334,7 +468,8 @@
         "purgeUser": "Die gebruiker verwijderd.",
         "settingsImport": "Instellingen succesvol geïmporteerd.",
         "settingsImportWarning": "De geïmporteerde instellingen lijken niet geldig te zijn. Weet je zeker dat je dit wilt importeren?",
-        "userLoading": "Bezig met het laden van je gebruikersgegevens..."
+        "userLoading": "Bezig met het laden van je gebruikersgegevens...",
+        "lemmyDonate": ""
     },
     "settings": {
         "lemmy": {
@@ -372,6 +507,14 @@
             "instances": {
                 "title": "Toon instanties",
                 "description": "Toon de instanties waar bepaalde inhoud vandaan komt."
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "moderation": {
@@ -387,6 +530,10 @@
             "debug": {
                 "title": "Debug-informatie",
                 "description": "Toon debug-informatie"
+            },
+            "virtualizeFeeds": {
+                "title": "",
+                "description": ""
             }
         },
         "navigation": {
@@ -408,6 +555,10 @@
             "pins": {
                 "title": "Pins",
                 "description": "Klik op een pin om deze naar de bovenkant van de zijbalk te verzenden. Klik met de rechtermuisknop op een vastgezet item om het te verwijderen."
+            },
+            "autoHide": {
+                "title": "",
+                "description": ""
             }
         },
         "title": "Instellingen",
@@ -514,6 +665,22 @@
                     "hide": "Verbergen",
                     "show": "Toon"
                 }
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "embeds": {
@@ -530,6 +697,12 @@
                 "piped": "Piped instantie",
                 "description": "De instantie om YouTube-inhoud in te embedden."
             }
+        },
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
         }
     },
     "error": {
@@ -544,7 +717,30 @@
         "incorrect_login_9": "Elke van deze verzoeken die je doet, verzendt gegevens via een ongelooflijke technologie. En je gebruikt het om mislukte inlogpogingen te maken.",
         "incorrect_login_10": "Denk hier eens over na. De arme instantiebeheerders moeten hun server onderhouden, gewoon zodat jij deze nutteloze verzoeken kunt doen.",
         "incorrect_login_11": "Ik geef het op, echt deze keer.",
-        "incorrect_login_12": "..."
+        "incorrect_login_12": "...",
+        "captcha_incorrect": "",
+        "rate_limit_error": "",
+        "cant_find_object": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "honeypot_failed": "",
+        "invalid_password": "",
+        "couldnt_find_post": "",
+        "passwords_do_not_match": "",
+        "cant_block_yourself": "",
+        "slurs": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "invalid_vote_value": "",
+        "email_not_verified": "",
+        "not_an_admin": "",
+        "downvotes_are_disabled": "",
+        "email_already_exists": "",
+        "unsupported": "",
+        "cant_block_local_instance": "",
+        "registration_application_is_pending": "",
+        "token_not_found": ""
     },
     "profile": {
         "profile": "Profiel",
@@ -591,8 +787,14 @@
             "setColor": "Stel kleurenpalet in",
             "setColorTo": "Stel kleurenpalet in op {{default}}",
             "feeds": "Feeds",
-            "downloading": "Acties downloaden"
-        }
+            "downloading": "Acties downloaden",
+            "setTheme": "",
+            "communities": "",
+            "contextual": "",
+            "goto": "",
+            "setThemeTo": ""
+        },
+        "notifications": ""
     },
     "account": {
         "login": "Inloggen",
@@ -605,7 +807,8 @@
         "moveUp": "Omhoog verplaatsen",
         "moveDown": "Omlaag verplaatsen",
         "guest": "Gast",
-        "versionGate": "Deze versie van Photon ondersteunt instanties die draaien op {{version}} of hoger."
+        "versionGate": "Deze versie van Photon ondersteunt instanties die draaien op {{version}} of hoger.",
+        "piefedGate": ""
     },
     "filter": {
         "location": {
@@ -614,7 +817,8 @@
             "local": "Lokaal",
             "subscribed": "Abonnementen",
             "moderator": "Moderator",
-            "global": "Globaal"
+            "global": "Globaal",
+            "popular": ""
         },
         "sort": {
             "label": "Sorteer",
@@ -633,7 +837,8 @@
                     "day": "Dag",
                     "12hours": "12 Uur",
                     "6hours": "6 Uur",
-                    "hour": "Uur"
+                    "hour": "Uur",
+                    "year": ""
                 }
             },
             "new": "Nieuw",
@@ -676,7 +881,8 @@
             "blockInstance": "Blokkeer instantie",
             "favorite": "Favoriet",
             "unfavorite": "Verwijder favoriet",
-            "activeDay": "Actief vandaag"
+            "activeDay": "Actief vandaag",
+            "flair": ""
         }
     },
     "admin": {
@@ -695,7 +901,8 @@
         "comments": "Reacties",
         "communities": "Gemeenschappen",
         "instances": "Instanties",
-        "message": "Bericht"
+        "message": "Bericht",
+        "url": ""
     },
     "post": {
         "actions": {
@@ -716,7 +923,11 @@
                 "share": "Delen",
                 "crosspost": "Crosspost",
                 "delete": "Verwijderen",
-                "restore": "Herstellen"
+                "restore": "Herstellen",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "mediaBias": {
                 "description": "Beschrijving",
@@ -728,6 +939,11 @@
                 },
                 "downloading": "Dataset downloaden",
                 "loading": "Bron laden"
+            },
+            "vote": {
+                "score": "",
+                "downvote": "",
+                "upvote": ""
             }
         },
         "badges": {
@@ -737,6 +953,27 @@
             "removed": "Verwijderd",
             "deleted": "Verwijderd",
             "saved": "Opgeslagen"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
+        },
+        "image": {
+            "zoomIn": "",
+            "zoomOut": ""
         }
     },
     "comment": {
@@ -747,7 +984,9 @@
         },
         "locked": "Dit bericht is vergrendeld.",
         "banned": "Je bent verbannen uit deze gemeenschap.",
-        "more": "{{comments:number}} meer"
+        "more": "{{comments:number}} meer",
+        "expand": "",
+        "collapse": ""
     },
     "moderation": {
         "report": "Rapporteer",
@@ -774,7 +1013,12 @@
         },
         "reportModal": {
             "title": "Rapporteer",
-            "success": "Inzending gerapporteerd."
+            "success": "Inzending gerapporteerd.",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "Reden",
         "lock": "Vergrendelen",
@@ -784,7 +1028,13 @@
         "label": "Moderatie",
         "labelInstanceOnly": "Moderatie (Alleen Instantie)",
         "feature": "Uitlichten",
-        "unfeature": "Niet meer uitlichten"
+        "unfeature": "Niet meer uitlichten",
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "votes": ""
     },
     "common": {
         "back": "Terug",
@@ -799,11 +1049,58 @@
         "disable": "Uitschakelen",
         "add": "Toevoegen",
         "cancel": "Annuleren",
-        "send": "Verzenden"
+        "send": "Verzenden",
+        "info": "",
+        "attach": "",
+        "download": "",
+        "general": "",
+        "continue": "",
+        "remove": ""
     },
     "message": {
         "success": "Succes",
         "error": "Fout",
         "retry": "Opnieuw proberen"
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
     }
 }
