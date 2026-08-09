@@ -47,7 +47,9 @@
             "search": "Поиск {{default}}",
             "main": "Главная",
             "downloading": "Скачивающие действия",
-            "contextual": "На этой странице"
+            "contextual": "На этой странице",
+            "communities": "",
+            "goto": ""
         },
         "notifications": "Оповещение"
     },
@@ -210,7 +212,8 @@
                 "description": "Проверьте свою электронную почту на наличие ссылки для подтверждения. После того, как вы перейдете по ней, нажмите кнопку ниже.",
                 "submit": "Я подтвердил свой адрес электронной почты",
                 "error": "Ваш адрес электронной почты не подтвержден."
-            }
+            },
+            "recommended": ""
         },
         "description": "Описание",
         "instance": "Адрес сервера",
@@ -490,7 +493,8 @@
                 "settings": "Настройки",
                 "team": "Команда",
                 "manage": "Управлять"
-            }
+            },
+            "languageWarning": ""
         },
         "accounts": "Аккаунты",
         "modlog": {
@@ -514,7 +518,8 @@
             "title": "Межсерверный контент",
             "automatic": {
                 "title": "Поиск поста",
-                "description": "Этот контент не размещен на сервере вашего аккаунта."
+                "description": "Этот контент не размещен на сервере вашего аккаунта.",
+                "found": ""
             }
         },
         "accounts.placeholder": {
@@ -526,6 +531,9 @@
             "title": "Сообщества",
             "feeds": "Ленты",
             "topics": "Темы"
+        },
+        "user": {
+            "note": ""
         }
     },
     "cards": {
@@ -723,7 +731,8 @@
         "attach": "Добавить файл",
         "remove": "Удалить",
         "download": "Скачать",
-        "info": "Информация"
+        "info": "Информация",
+        "continue": ""
     },
     "message": {
         "success": "Успех",
@@ -813,7 +822,19 @@
         "captcha_failed": "Неправильный ответ CAPTCHA.",
         "invalid_vote_value": "Вы не можете совершать голосовательный подлог на постах Lemmy, извините.",
         "incorrect_login_4": "Успешный вход-подождите...нет, всё ещё неверные данные.",
-        "incorrect_login_9": "Каждый из этих запросов отправляет данные при помощи восхитительных технологий. И ты используешь их для неудачных попыток входа."
+        "incorrect_login_9": "Каждый из этих запросов отправляет данные при помощи восхитительных технологий. И ты используешь их для неудачных попыток входа.",
+        "captcha_incorrect": "",
+        "rate_limit_error": "",
+        "cant_find_object": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "not_an_admin": "",
+        "unsupported": "",
+        "token_not_found": ""
     },
     "settings": {
         "app": {
@@ -912,6 +933,22 @@
                 },
                 "title": "Обрабатывать теги в заголовке",
                 "description": "Брать текст в [скобках] и превращать его в теги, по которым можно кликать для поиска."
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "title": "Настройки",
@@ -997,6 +1034,14 @@
             "instances": {
                 "title": "Показывать серверы",
                 "description": "Показывает серверы, откуда контент."
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "moderation": {
@@ -1017,6 +1062,53 @@
                 "description": "Виртуализация показывает лишь видимые посты, что значительно увеличивет производительность. Выключите виртуализацию, если вы испытываете проблемы с дёрганием. Это отключит бесконечную прокрутку.",
                 "title": "Не виртуалзировать ленты"
             }
+        },
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
         }
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
     }
 }
