@@ -19,6 +19,10 @@
                 "on": "オン",
                 "off": "オフ",
                 "adaptive": "自動"
+            },
+            "autoHide": {
+                "title": "",
+                "description": ""
             }
         },
         "app": {
@@ -117,6 +121,22 @@
                     "hide": "隠す",
                     "show": "表示"
                 }
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "title": "設定",
@@ -162,6 +182,14 @@
             "instances": {
                 "title": "インスタンスを表示",
                 "description": "コンテンツはどのインスタンスから送信かを表示。"
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "moderation": {
@@ -197,6 +225,12 @@
                 "title": "デバッグ情報",
                 "description": "デバッグ情報を表示する"
             }
+        },
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
         }
     },
     "moderation": {
@@ -225,7 +259,12 @@
         },
         "reportModal": {
             "title": "報告",
-            "success": "投稿を報告しました。"
+            "success": "投稿を報告しました。",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "理由",
         "lock": "施錠",
@@ -234,7 +273,13 @@
         "labelInstanceOnly": "モデレーション（インスタンスのみ）",
         "feature": "勧める",
         "unfeature": "お勧めを解除",
-        "label": "モデレーション"
+        "label": "モデレーション",
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "votes": ""
     },
     "toast": {
         "generatedTitle": "URLから題名と本文を作りました。これを前の状態に戻しますか？",
@@ -292,7 +337,8 @@
         "passwordReset": "パスワードはリセットされました。",
         "saveSettings": "ユーザー設定を保存しました。もしeメールを変えた場合、認証リンクが送られました。",
         "confirmDelete3": "もう一度確認します。本当にアカウントを完全的に削除してもよろしいですか？",
-        "failFetchInstances": "通信可能のインスタンスのリストを読み取れませんでした。"
+        "failFetchInstances": "通信可能のインスタンスのリストを読み取れませんでした。",
+        "lemmyDonate": ""
     },
     "nav": {
         "commands": {
@@ -308,7 +354,10 @@
             "downloading": "ダウンロード作業",
             "setTheme": "テーマを設定",
             "setThemeTo": "テーマを{{default}}に設定",
-            "setColorTo": "配色を{{default}}に設定"
+            "setColorTo": "配色を{{default}}に設定",
+            "communities": "",
+            "contextual": "",
+            "goto": ""
         },
         "home": "ホーム",
         "admin": "管理者",
@@ -336,7 +385,8 @@
             "source": "ソースコード",
             "donate": "寄付する",
             "instance": "インスタンス"
-        }
+        },
+        "notifications": ""
     },
     "profile": {
         "profile": "プロフィール",
@@ -355,7 +405,8 @@
         "guest": "ゲスト",
         "addGuest": "ゲストを作成",
         "changeinstance": "インスタンスを変える",
-        "versionGate": "このPhotonバージョンは{{version}}以上のインスタンスバージョンに対応しています。"
+        "versionGate": "このPhotonバージョンは{{version}}以上のインスタンスバージョンに対応しています。",
+        "piefedGate": ""
     },
     "filter": {
         "location": {
@@ -364,7 +415,8 @@
             "local": "ローカル",
             "moderator": "モデレーター",
             "global": "グローバル",
-            "subscribed": "購読済み"
+            "subscribed": "購読済み",
+            "popular": ""
         },
         "sort": {
             "label": "並び替え",
@@ -383,7 +435,8 @@
                     "12hours": "12時間以内",
                     "6hours": "6時間以内",
                     "hour": "1時間以内",
-                    "9months": "9ヶ月以内"
+                    "9months": "9ヶ月以内",
+                    "year": ""
                 }
             },
             "old": "古い",
@@ -429,7 +482,20 @@
             "uploadImage": "画像をアップロード",
             "altText": "代替テキスト",
             "create": "投稿を作成",
-            "selectFile": "ファイルを選択"
+            "selectFile": "ファイルを選択",
+            "fetching": "",
+            "flair": "",
+            "addUrl": "",
+            "readMore": "",
+            "customThumbnail": "",
+            "setLanguage": "",
+            "autosubmit": "",
+            "unset": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "displayName": "呼び名",
@@ -448,14 +514,23 @@
             "2fa": {
                 "totp": "TOTP 二段階認証",
                 "2fa": "二段階認証",
-                "paste": "二段階認証用アプリにこれをペーストしてください。"
+                "paste": "二段階認証用アプリにこれをペーストしてください。",
+                "disabled": ""
             },
             "deleteAccount": {
                 "label": "アカウントを削除",
                 "deleteContent": "コンテンツを削除",
                 "warning": "すべての投稿が削除されます。"
             },
-            "showBots": "Botアカウントを表示"
+            "showBots": "Botアカウントを表示",
+            "credentials": {
+                "description": "",
+                "title": ""
+            },
+            "languages": {
+                "title": "",
+                "description": ""
+            }
         },
         "email": "eメール",
         "setup": "初期設定",
@@ -464,7 +539,8 @@
             "chooseInstance": "インスタンスを選択",
             "application": {
                 "info": "このインスタンスに参加するには、以下の申込み書と管理者の承認が必要です。承認の場合はeメールで通知します。",
-                "label": "申し込み"
+                "label": "申し込み",
+                "notice": ""
             },
             "closed": {
                 "title": "新規登録閉鎖",
@@ -472,19 +548,43 @@
                 "description": "このインスタンスは現在、新規登録を受け付けていません。他のインスタンスを探してください。"
             },
             "info": "インスタンスとは、自分のアカウントをホストするサーバーです。しかし、他のインスタンスのコンテンツをアクセスと操作が可能です。",
-            "description": "次の中からお気に入りのサーバーを選択するか、インスタンスのURLを入れてください。"
+            "description": "次の中からお気に入りのサーバーを選択するか、インスタンスのURLを入れてください。",
+            "verify": {
+                "title": "",
+                "error": "",
+                "submit": "",
+                "description": ""
+            },
+            "recommended": ""
         },
         "description": "説明",
         "username": "ユーザー名",
-        "submit": "送信"
+        "submit": "送信",
+        "time": {
+            "duration": "",
+            "years": "",
+            "permanent": "",
+            "months": "",
+            "days": "",
+            "minutes": "",
+            "hours": ""
+        },
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
             "title": "ホームページ",
             "footer": "{{users:number}}アクティブユーザー{{users; 1:user; default:users;}}",
-            "endFeed": "{{community_name; undefined:the feed.; default:{{community_name}}の最後にたどり着きました。}}"
+            "endFeed": "{{community_name; undefined:the feed.; default:{{community_name}}の最後にたどり着きました。}}",
+            "empty": {
+                "description": "",
+                "title": ""
+            }
         },
-        "modlog": "モデレーション記録",
+        "modlog": {
+            "filters": "",
+            "title": ""
+        },
         "instances": "インスタンス",
         "legal": {
             "title": "法的条件",
@@ -493,7 +593,23 @@
         "profile": {
             "user": "ユーザー",
             "settings": "設定",
-            "blocks": "ブロック",
+            "blocks": {
+                "empty": {
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
+                },
+                "title": ""
+            },
             "credentials": "アカウント",
             "moderates": "モデレーター担当",
             "favorites": "お気に入り",
@@ -508,11 +624,20 @@
             "delete": {
                 "title": "アカウントを削除",
                 "warning": "この操作は元に戻せません。よろしいですか？"
-            }
+            },
+            "overview": "",
+            "edit": "",
+            "submissions": ""
         },
         "translators": "翻訳者",
         "accounts": "アカウント",
-        "communities": "コミュニティ",
+        "communities": {
+            "search": {
+                "placeholder": ""
+            },
+            "title": "",
+            "trending": ""
+        },
         "search": {
             "title": "検索",
             "federating": "連合",
@@ -521,7 +646,9 @@
                 "title": "結果なし",
                 "alt": "連合ネットワーク全体を検索する",
                 "description": "このフィルターに一致する結果はありません。検索条件を変えて改めてお試しください。"
-            }
+            },
+            "other": "",
+            "top": ""
         },
         "saved": "保存済み",
         "createPost": "投稿を作成",
@@ -543,7 +670,9 @@
                 "title": "コメントなし",
                 "description": "会話を始めよう！"
             },
-            "instanceWarning": "この投稿はよそのサーバーからリクエストされました。操作は限られています。"
+            "instanceWarning": "この投稿はよそのサーバーからリクエストされました。操作は限られています。",
+            "loadComments": "",
+            "commented": ""
         },
         "inbox": {
             "title": "受信箱",
@@ -551,6 +680,19 @@
             "empty": {
                 "title": "新通知なし",
                 "description": "メッセージ、返信、言及はここに現れます。"
+            },
+            "item": {
+                "message": "",
+                "reply": "",
+                "mention": ""
+            },
+            "messages": {
+                "empty": {
+                    "title": ""
+                },
+                "conversation": "",
+                "indicator": "",
+                "start": ""
             }
         },
         "moderation": {
@@ -563,7 +705,16 @@
             "resolve": "解決",
             "resolved": "解決済み",
             "unresolve": "解決を取消",
-            "resolvedBy": "解決者"
+            "resolvedBy": "解決者",
+            "markAllComplete": "",
+            "markAll": "",
+            "manage": {
+                "ban": "",
+                "unban": "",
+                "title": "",
+                "modlogs": ""
+            },
+            "feed": ""
         },
         "admin": {
             "title": "管理",
@@ -646,6 +797,9 @@
                     "title": "許可インスタンスなし",
                     "description": "許可インスタンスを一つ以上登録したら、他のインスタンスすべてがブロックされます。"
                 }
+            },
+            "media": {
+                "title": ""
             }
         },
         "verifyEmail": {
@@ -681,14 +835,44 @@
                 "default": "デフォルト",
                 "classic": "クラシック",
                 "imported": "あなたのテーマ",
-                "new": "新テーマ"
+                "new": "新テーマ",
+                "presets": ""
             }
         },
         "community": {
             "settings": {
                 "team": "チーム",
-                "settings": "設定"
+                "settings": "設定",
+                "manage": ""
+            },
+            "languageWarning": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "postRedirect": {
+            "title": "",
+            "description": "",
+            "actions": {
+                "back": "",
+                "fetch": "",
+                "switch": ""
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "cards": {
@@ -708,7 +892,8 @@
             "favorite": "お気に入り",
             "unfavorite": "お気に入りを取消",
             "activeDay": "今日活発",
-            "unblock": "ブロック取消"
+            "unblock": "ブロック取消",
+            "flair": ""
         }
     },
     "admin": {
@@ -727,7 +912,8 @@
         "comments": "コメント",
         "communities": "コミュニティ",
         "message": "メッセージ",
-        "instances": "インスタンス"
+        "instances": "インスタンス",
+        "url": ""
     },
     "post": {
         "actions": {
@@ -747,7 +933,11 @@
                 "crosspost": "転送",
                 "delete": "削除",
                 "restore": "復元",
-                "mediaBias": "メディアの偏り"
+                "mediaBias": "メディアの偏り",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "mediaBias": {
                 "description": "説明",
@@ -764,7 +954,12 @@
                 "title": "代わりのリンク集",
                 "actions": "リンク操作"
             },
-            "unsave": "保存を解除"
+            "unsave": "保存を解除",
+            "vote": {
+                "score": "",
+                "downvote": "",
+                "upvote": ""
+            }
         },
         "badges": {
             "nsfw": "成人向け（NSFW)",
@@ -773,6 +968,27 @@
             "deleted": "削除",
             "removed": "撤去",
             "locked": "施錠"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
+        },
+        "image": {
+            "zoomIn": "",
+            "zoomOut": ""
         }
     },
     "comment": {
@@ -783,7 +999,9 @@
             "label": "操作",
             "link": "リンクをコピー"
         },
-        "banned": "このコミュニティから禁止されています。"
+        "banned": "このコミュニティから禁止されています。",
+        "expand": "",
+        "collapse": ""
     },
     "common": {
         "next": "次へ",
@@ -799,7 +1017,12 @@
         "cancel": "取り消す",
         "send": "送信",
         "general": "総合",
-        "add": "追加"
+        "add": "追加",
+        "info": "",
+        "attach": "",
+        "download": "",
+        "continue": "",
+        "remove": ""
     },
     "message": {
         "success": "成功",
@@ -830,6 +1053,59 @@
         "incorrect_login_9": "このリクエストはすごい技術を通してサーバーに送信しています。繰り返して不正認証をするのは時間とデータ通信の無駄遣いですよ。",
         "incorrect_login_10": "ここまで来て、ログインするつもりあるか？可愛そうな管理者を一旦でも考えましょうよ。",
         "incorrect_login_11": "まったく、話が進まないな。やっぱ無理か、こっちは諦めた。",
-        "incorrect_login_12": "。。。"
+        "incorrect_login_12": "。。。",
+        "captcha_incorrect": "",
+        "rate_limit_error": "",
+        "cant_find_object": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "not_an_admin": "",
+        "unsupported": "",
+        "token_not_found": ""
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
     }
 }
