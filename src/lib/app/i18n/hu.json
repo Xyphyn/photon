@@ -42,8 +42,16 @@
             "feeds": "Feedek",
             "setTheme": "Téma beállítása",
             "recents": "Legutóbbiak",
-            "search": "Keresés erre: {{default}}"
-        }
+            "search": "Keresés erre: {{default}}",
+            "main": "",
+            "communities": "",
+            "downloading": "",
+            "prompt": "",
+            "contextual": "",
+            "goto": "",
+            "setThemeTo": ""
+        },
+        "notifications": ""
     },
     "account": {
         "login": "Bejelentkezés",
@@ -52,7 +60,11 @@
         "changeinstance": "Szerver váltás",
         "addGuest": "Vendég hozzáadása",
         "guest": "Vendég",
-        "logout": "Kijelentkezés"
+        "logout": "Kijelentkezés",
+        "moveDown": "",
+        "resetColor": "",
+        "piefedGate": "",
+        "moveUp": ""
     },
     "filter": {
         "location": {
@@ -61,7 +73,8 @@
             "subscribed": "Feliratkozások",
             "moderator": "Moderátor",
             "global": "Globális",
-            "all": "Összes"
+            "all": "Összes",
+            "popular": ""
         },
         "sort": {
             "label": "Rendezés",
@@ -79,7 +92,8 @@
                     "day": "Nap",
                     "12hours": "12 óra",
                     "6hours": "6 óra",
-                    "hour": "Óra"
+                    "hour": "Óra",
+                    "year": ""
                 },
                 "label": "Legnépszerűbb"
             },
@@ -94,7 +108,8 @@
             "label": "Nézet",
             "cozy": "Kényelmes",
             "list": "Lista",
-            "compact": "Kompakt"
+            "compact": "Kompakt",
+            "legacy": ""
         },
         "filter": "Szűrő",
         "inbox": {
@@ -127,7 +142,20 @@
             "selectFile": "Fájl kiválasztása",
             "altText": "Alternatív szöveg",
             "uploadImage": "Kép feltöltése",
-            "community": "Közösség"
+            "community": "Közösség",
+            "fetching": "",
+            "flair": "",
+            "addUrl": "",
+            "readMore": "",
+            "customThumbnail": "",
+            "setLanguage": "",
+            "autosubmit": "",
+            "unset": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "bio": "Biográfia",
@@ -143,7 +171,9 @@
             "newPassword": "Új jelszó",
             "2fa": {
                 "2fa": "Kétlépcsős azonosítás",
-                "paste": "Illeszd ezt be a hitelesítő alkalmazásba."
+                "paste": "Illeszd ezt be a hitelesítő alkalmazásba.",
+                "totp": "",
+                "disabled": ""
             },
             "deleteAccount": {
                 "label": "Fiók törlése",
@@ -152,7 +182,15 @@
             },
             "displayName": "Megjelenítendő név",
             "bot": "Robot fiók",
-            "verifyNewPassword": "Új jelszó megerősítése"
+            "verifyNewPassword": "Új jelszó megerősítése",
+            "credentials": {
+                "description": "",
+                "title": ""
+            },
+            "languages": {
+                "title": "",
+                "description": ""
+            }
         },
         "email": "Email",
         "setup": "Beállítás",
@@ -162,23 +200,49 @@
             "chooseInstance": "Válassz egy szervert",
             "application": {
                 "label": "Alkalmazás",
-                "info": "Hogy csatlakozhass ehhez a szerverhez, ki kell töltened ezt a jelentkezési lapot, és meg kell várni hogy elfogadják. Az elfogadást követően kapsz egy email-es értesítést."
+                "info": "Hogy csatlakozhass ehhez a szerverhez, ki kell töltened ezt a jelentkezési lapot, és meg kell várni hogy elfogadják. Az elfogadást követően kapsz egy email-es értesítést.",
+                "notice": ""
             },
             "closed": {
                 "title": "A regisztrációk le vannak zárva",
                 "anotherInstance": "Másik szerver keresése",
                 "description": "Ezen a szerveren le van zárva a regisztráció lehetősége. Válassz egy másik szervert."
             },
-            "info": "A választott szerveren lesz tárolva a fiókod, de képes leszel interaktálni más szervereken található tartalmakkal is."
+            "info": "A választott szerveren lesz tárolva a fiókod, de képes leszel interaktálni más szervereken található tartalmakkal is.",
+            "verify": {
+                "title": "",
+                "error": "",
+                "submit": "",
+                "description": ""
+            },
+            "recommended": ""
         },
-        "description": "Leírás"
+        "description": "Leírás",
+        "time": {
+            "duration": "",
+            "years": "",
+            "permanent": "",
+            "months": "",
+            "days": "",
+            "minutes": "",
+            "hours": ""
+        },
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
             "title": "Főoldal",
-            "footer": "{{users:number}} aktív {{users; 1:user; default:users;}}"
+            "footer": "{{users:number}} aktív {{users; 1:user; default:users;}}",
+            "empty": {
+                "description": "",
+                "title": ""
+            },
+            "endFeed": ""
         },
-        "modlog": "Moderálási napló",
+        "modlog": {
+            "filters": "",
+            "title": ""
+        },
         "instances": "Szerverek",
         "legal": {
             "title": "Jogi",
@@ -187,7 +251,23 @@
         "profile": {
             "user": "Felhasználó",
             "settings": "Beállítások",
-            "blocks": "Letiltások",
+            "blocks": {
+                "empty": {
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
+                },
+                "title": ""
+            },
             "credentials": "Fiók",
             "moderates": "Moderálás",
             "favorites": "Kedvencek",
@@ -202,7 +282,10 @@
                 "title": "Fiók törlése",
                 "warning": "Ez visszavonhatatlan. Biztos vagy benne, hogy ezt akarod tenni?"
             },
-            "welcome": "Üdvözöljük, {{default}}!"
+            "welcome": "Üdvözöljük, {{default}}!",
+            "overview": "",
+            "edit": "",
+            "submissions": ""
         },
         "translators": "Fordítók",
         "accounts": "Fiókok",
@@ -233,7 +316,10 @@
                 "title": "Nincsenek megjegyzések",
                 "description": "Kezdd el a beszélgetést!"
             },
-            "scrollToTop": "Görgetés a tetejére"
+            "scrollToTop": "Görgetés a tetejére",
+            "crosspostCount": "",
+            "loadComments": "",
+            "commented": ""
         },
         "inbox": {
             "title": "Postaláda",
@@ -241,7 +327,20 @@
                 "title": "Nincsenek új értesítések",
                 "description": "Az üzenetek, válaszok és megemlítések itt fognak megjelenni."
             },
-            "markAsRead": "Az összes megjelölése olvasottként"
+            "markAsRead": "Az összes megjelölése olvasottként",
+            "item": {
+                "message": "",
+                "reply": "",
+                "mention": ""
+            },
+            "messages": {
+                "empty": {
+                    "title": ""
+                },
+                "conversation": "",
+                "indicator": "",
+                "start": ""
+            }
         },
         "moderation": {
             "title": "Moderálás",
@@ -253,7 +352,16 @@
             "resolve": "Megoldás",
             "resolved": "Megoldva",
             "unresolve": "Megoldatlan",
-            "resolvedBy": "Megoldva általa:"
+            "resolvedBy": "Megoldva általa:",
+            "markAllComplete": "",
+            "markAll": "",
+            "manage": {
+                "ban": "",
+                "unban": "",
+                "title": "",
+                "modlogs": ""
+            },
+            "feed": ""
         },
         "admin": {
             "title": "Adminisztráció",
@@ -271,11 +379,84 @@
                 "applicationQuestion": "Jelentkezési kérdés",
                 "adminCommunityOnly": "Csak adminisztrátorok tudnak közösségeket létrehozni",
                 "downvotesEnabled": "Leszavazások engedélyezése",
-                "requireVerifyEmail": "Email igazolás szükséges"
+                "requireVerifyEmail": "Email igazolás szükséges",
+                "federation": "",
+                "listingType": {
+                    "all": "",
+                    "local": "",
+                    "label": ""
+                },
+                "emailAdminsOnReport": "",
+                "banner": "",
+                "private": "",
+                "captcha": {
+                    "enabled": ""
+                },
+                "slurFilter": "",
+                "hideModlogModNames": "",
+                "emailAdminsOnApplication": "",
+                "federationDebug": ""
+            },
+            "federation": {
+                "emptyAllow": {
+                    "description": "",
+                    "title": ""
+                },
+                "csv": "",
+                "blocked": "",
+                "blockplaceholder": "",
+                "allowplaceholder": "",
+                "allowed": "",
+                "allow": "",
+                "title": "",
+                "emptyBlock": {
+                    "description": "",
+                    "title": ""
+                },
+                "block": ""
+            },
+            "taglines": {
+                "add": "",
+                "title": "",
+                "empty": {
+                    "title": "",
+                    "description": ""
+                }
+            },
+            "applications": {
+                "approve": "",
+                "modalTitle": "",
+                "user": "",
+                "denied": "",
+                "deny": "",
+                "empty": {
+                    "title": "",
+                    "description": ""
+                },
+                "title": "",
+                "reason": "",
+                "application": "",
+                "approved": ""
+            },
+            "media": {
+                "title": ""
+            },
+            "team": {
+                "title": "",
+                "empty": {
+                    "description": "",
+                    "title": ""
+                }
             }
         },
         "createCommunity": "Közösség létrehozása",
-        "communities": "Közösségek",
+        "communities": {
+            "search": {
+                "placeholder": ""
+            },
+            "title": "",
+            "trending": ""
+        },
         "verifyEmail": {
             "error": "Sikertelen email megerősítés.",
             "message": "Az email címed sikeresen meg lett erősítve. Mostmár bezárhatod ezt az ablakot."
@@ -308,14 +489,45 @@
                 "classic": "Klasszikus",
                 "imported": "Saját téma",
                 "new": "Új téma",
-                "title": "Nem lehet módosítani"
-            }
+                "title": "Nem lehet módosítani",
+                "presets": ""
+            },
+            "accent": ""
         },
         "community": {
             "settings": {
                 "team": "Csapat",
-                "settings": "Beállítások"
+                "settings": "Beállítások",
+                "manage": ""
+            },
+            "languageWarning": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "postRedirect": {
+            "title": "",
+            "description": "",
+            "actions": {
+                "back": "",
+                "fetch": "",
+                "switch": ""
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "cards": {
@@ -335,7 +547,8 @@
             "blockInstance": "Szerver tiltása",
             "favorite": "Kedvenc",
             "activeDay": "Ma aktív",
-            "unfavorite": "Eltávolítás a kedvencek közül"
+            "unfavorite": "Eltávolítás a kedvencek közül",
+            "flair": ""
         }
     },
     "content": {
@@ -345,7 +558,8 @@
         "comments": "Megjegyzések",
         "communities": "Közösségek",
         "message": "Üzenet",
-        "instances": "Szerverek"
+        "instances": "Szerverek",
+        "url": ""
     },
     "post": {
         "actions": {
@@ -365,7 +579,12 @@
                 "restore": "Visszaállítás",
                 "label": "További műveletek",
                 "actions": "Műveletek",
-                "markRead": "Megjelölés olvasottként"
+                "markRead": "Megjelölés olvasottként",
+                "crosspost": "",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "mediaBias": {
                 "credibility": "Hitelesség",
@@ -381,6 +600,11 @@
             "link": {
                 "title": "Alternatív linkek",
                 "actions": "Link opciók"
+            },
+            "vote": {
+                "score": "",
+                "downvote": "",
+                "upvote": ""
             }
         },
         "badges": {
@@ -390,6 +614,27 @@
             "removed": "Eltávolítva",
             "deleted": "Törölve",
             "saved": "Mentve"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
+        },
+        "image": {
+            "zoomIn": "",
+            "zoomOut": ""
         }
     },
     "comment": {
@@ -399,15 +644,58 @@
             "link": "Link másolása"
         },
         "locked": "Ez a bejegyzés zárolva van.",
-        "banned": "Ki vagy tiltva ebből a közösségből."
+        "banned": "Ki vagy tiltva ebből a közösségből.",
+        "expand": "",
+        "collapse": "",
+        "more": ""
     },
     "moderation": {
         "ban": {
             "banning": "Felhasználó kitiltása",
             "unbanning": "Felhasználó tiltásának feloldása",
-            "deleteData": "Adat törlése"
+            "deleteData": "Adat törlése",
+            "expires": "",
+            "banFromCommunity": "",
+            "unbanFromCommunity": "",
+            "warning": ""
         },
-        "report": "Jelentés"
+        "report": "Jelentés",
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "removeSubmission": {
+            "titlePurge": "",
+            "titleRestore": "",
+            "failMessage": "",
+            "message": "",
+            "successPurge": "",
+            "title": "",
+            "comment": "",
+            "failEmptyReply": "",
+            "withReason": "",
+            "failReply": ""
+        },
+        "votes": "",
+        "reportModal": {
+            "success": "",
+            "title": "",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
+        },
+        "label": "",
+        "unfeature": "",
+        "restore": "",
+        "labelInstanceOnly": "",
+        "remove": "",
+        "unlock": "",
+        "lock": "",
+        "feature": "",
+        "reason": ""
     },
     "common": {
         "next": "Következő",
@@ -422,7 +710,13 @@
         "send": "Küldés",
         "general": "Általános",
         "back": "Vissza",
-        "disabled": "Kikapcsolva"
+        "disabled": "Kikapcsolva",
+        "debug": "",
+        "info": "",
+        "attach": "",
+        "download": "",
+        "continue": "",
+        "remove": ""
     },
     "message": {
         "success": "Siker",
@@ -466,7 +760,26 @@
         "unblockUser": "Felhasználó tiltása feloldva,",
         "failSignup": "Sikertelen bejelentkezés.",
         "settingsImport": "Beállítások importálása sikeres",
-        "userLoading": "Még mindig töltődnek a felhasználói adataid..."
+        "userLoading": "Még mindig töltődnek a felhasználói adataid...",
+        "purgeUser": "",
+        "failInstanceURL": "",
+        "updateMods": "",
+        "removeAdminWarning": "",
+        "addMod": "",
+        "lemmyDonate": "",
+        "failCSV": "",
+        "failFindUser": "",
+        "purgedCommunity": "",
+        "invalidDateBeforeCurrent": "",
+        "removeAdmin": "",
+        "unresolveReport": "",
+        "updatedCommunity": "",
+        "updatedSite": "",
+        "resolveReport": "",
+        "invalidDateAbsolute": "",
+        "loginRefresh": "",
+        "noComments": "",
+        "needCommunity": ""
     },
     "settings": {
         "app": {
@@ -486,7 +799,11 @@
                 "de": "Német",
                 "fi": "Finn",
                 "pt": "Portugál",
-                "zh": "Kínai"
+                "zh": "Kínai",
+                "useRtl": {
+                    "title": "",
+                    "description": ""
+                }
             },
             "theming": {
                 "description": "A Photon színeinek személyreszabása.",
@@ -501,7 +818,70 @@
             "view": {
                 "title": "Bejegyzések stílusa",
                 "cozy": "Nagyméretű képek, bő beágyazások, és hosszabb poszttestek.",
-                "list": "A bejegyzések megjelenítése lista nézetben, kompakt médiával."
+                "list": "A bejegyzések megjelenítése lista nézetben, kompakt médiával.",
+                "compact": ""
+            },
+            "limitLayoutWidth": {
+                "title": "",
+                "description": ""
+            },
+            "duplicateTitles": {
+                "title": "",
+                "description": ""
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "infiniteScroll": {
+                "description": "",
+                "title": ""
+            },
+            "font": {
+                "description": "",
+                "title": ""
+            },
+            "sort": {
+                "description": "",
+                "title": ""
+            },
+            "postsInNewTab": {
+                "description": "",
+                "title": ""
+            },
+            "placeholders": {
+                "title": "",
+                "description": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleTags": {
+                "description": "",
+                "title": ""
+            },
+            "displayName": {
+                "description": "",
+                "title": ""
+            },
+            "expandImages": {
+                "title": "",
+                "description": ""
+            },
+            "thumbnailSide": {
+                "description": "",
+                "title": "",
+                "right": "",
+                "left": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "navigation": {
@@ -523,6 +903,10 @@
                 "top": "Fent",
                 "bottom": "Lent",
                 "adaptive": "Adaptív"
+            },
+            "autoHide": {
+                "title": "",
+                "description": ""
             }
         },
         "beta": "Béta",
@@ -532,6 +916,178 @@
         "export": "Exportálás",
         "import": "Importálás",
         "reset": "Alapértelmezett beállítások visszaállítása",
-        "title": "Beállítások"
+        "title": "Beállítások",
+        "embeds": {
+            "youtube": {
+                "description": ""
+            },
+            "instance": {
+                "invidious": "",
+                "description": "",
+                "piped": ""
+            },
+            "clickToView": {
+                "description": "",
+                "title": ""
+            },
+            "title": ""
+        },
+        "lemmy": {
+            "instances": {
+                "description": "",
+                "title": ""
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
+            },
+            "hideSubmissions": {
+                "title": "",
+                "removed": "",
+                "deleted": "",
+                "description": ""
+            },
+            "crosspostMarker": {
+                "title": "",
+                "description": ""
+            },
+            "fadeReadPosts": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "showHiddenPosts": {
+                "title": "",
+                "description": ""
+            },
+            "nsfwBlur": {
+                "description": "",
+                "title": ""
+            },
+            "compactFeatured": {
+                "title": "",
+                "description": ""
+            },
+            "markReadPosts": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "moderation": {
+            "replyPresets": {
+                "title": "",
+                "description": "",
+                "syntax": ""
+            },
+            "title": ""
+        },
+        "other": {
+            "virtualizeFeeds": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "debug": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
+        }
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "error": {
+        "incorrect_login_9": "",
+        "incorrect_login_10": "",
+        "captcha_incorrect": "",
+        "incorrect_login_2": "",
+        "incorrect_login_12": "",
+        "rate_limit_error": "",
+        "incorrect_login_3": "",
+        "incorrect_login_8": "",
+        "cant_find_object": "",
+        "incorrect_login_6": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "honeypot_failed": "",
+        "invalid_password": "",
+        "couldnt_find_post": "",
+        "incorrect_login_7": "",
+        "incorrect_login": "",
+        "passwords_do_not_match": "",
+        "cant_block_yourself": "",
+        "slurs": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "invalid_vote_value": "",
+        "email_not_verified": "",
+        "not_an_admin": "",
+        "downvotes_are_disabled": "",
+        "incorrect_login_11": "",
+        "incorrect_login_4": "",
+        "email_already_exists": "",
+        "unsupported": "",
+        "cant_block_local_instance": "",
+        "registration_application_is_pending": "",
+        "token_not_found": "",
+        "incorrect_login_5": ""
+    },
+    "admin": {
+        "label": "",
+        "purgeCommunity": {
+            "title": "",
+            "warning": ""
+        },
+        "purge": "",
+        "instance": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
     }
 }
