@@ -18,7 +18,8 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
-                "paste": "o pana e nimi ni tawa ilo Authenticator sina"
+                "paste": "o pana e nimi ni tawa ilo Authenticator sina",
+                "disabled": ""
             },
             "deleteAccount": {
                 "label": "o weka e sijelo ilo",
@@ -26,9 +27,14 @@
                 "deleteContent": "o weka"
             },
             "languages": {
-                "title": "toki"
+                "title": "toki",
+                "description": ""
             },
-            "showBots": "o lukin e jan ilo"
+            "showBots": "o lukin e jan ilo",
+            "credentials": {
+                "description": "",
+                "title": ""
+            }
         },
         "name": "nimi jan",
         "password": "nimi lawa",
@@ -52,7 +58,16 @@
             "unset": "o weka",
             "addUrl": "o pana e URL sin",
             "setLanguage": "o ante e toki",
-            "readMore": "o lukin e toki mute"
+            "readMore": "o lukin e toki mute",
+            "fetching": "",
+            "flair": "",
+            "customThumbnail": "",
+            "autosubmit": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "preview": "lukin",
         "email": "Email",
@@ -62,7 +77,8 @@
             "chooseInstance": "o wile e tomo",
             "application": {
                 "notice": "o awen e ni: jan lawa wile e sina. ni la sina ken kepeken e tomo ni.",
-                "info": "sina wile kama tawa tomo ni la o toki tawa jan lawa. ona wile e sina la sina jo e Email."
+                "info": "sina wile kama tawa tomo ni la o toki tawa jan lawa. ona wile e sina la sina jo e Email.",
+                "label": ""
             },
             "closed": {
                 "title": "sina ken ala kama tawa tomo ni.",
@@ -75,27 +91,39 @@
                 "error": "Email sina li pona ala.",
                 "description": "o lukin e poki toki sina. sina lukin e URL la kepeken e ona. ni la kepeken e nena anpa."
             },
-            "description": "o kama tawa tomo pi olin sina. kin sina ken pana e URL ona."
+            "description": "o kama tawa tomo pi olin sina. kin sina ken pana e URL ona.",
+            "recommended": ""
         },
         "time": {
             "duration": "tenpo",
             "days": "tenpo suno",
             "years": "tenpo sike",
-            "permanent": "tenpo ale"
+            "permanent": "tenpo ale",
+            "months": "",
+            "minutes": "",
+            "hours": ""
         },
-        "instance": "ma tomo"
+        "instance": "ma tomo",
+        "description": "",
+        "setup": "",
+        "instanceType": ""
     },
     "routes": {
         "modlog": {
-            "title": "lipu lawa"
+            "title": "lipu lawa",
+            "filters": ""
         },
         "search": {
             "noResults": {
                 "alt": "o alasa e ale tan ma",
-                "title": "ala"
+                "title": "ala",
+                "description": ""
             },
             "title": "o alasa",
-            "query": "nimi"
+            "query": "nimi",
+            "other": "",
+            "top": "",
+            "federating": ""
         },
         "post": {
             "scrollToTop": "o tawa sewi",
@@ -105,7 +133,8 @@
             "thread": {
                 "part": "sina lukin e kipisi toki",
                 "single": "sina lukin e toki wan.",
-                "allComments": "o lukin e toki ale"
+                "allComments": "o lukin e toki ale",
+                "context": ""
             },
             "emptyComments": {
                 "description": "o open e toki!",
@@ -121,7 +150,13 @@
                 "fetch": "o alasa e toki tan {{homeInstance}}",
                 "switch": "o kepeken e jan sina tan {{destInstance}}"
             },
-            "title": "tomo li sama ala"
+            "title": "tomo li sama ala",
+            "description": "",
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
+            }
         },
         "profile": {
             "delete": {
@@ -138,13 +173,36 @@
                 "download": "o lanpan e lipu"
             },
             "welcome": "o kama pona, {{default}}!",
-            "overview": "suli"
+            "overview": "suli",
+            "blocks": {
+                "empty": {
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
+                },
+                "title": ""
+            },
+            "logins": "",
+            "edit": "",
+            "submissions": "",
+            "moderates": "",
+            "credentials": ""
         },
         "communities": {
             "title": "kulupu",
             "search": {
                 "placeholder": "o alasa e kulupu sin"
-            }
+            },
+            "trending": ""
         },
         "inbox": {
             "messages": {
@@ -178,7 +236,8 @@
                 "description": "toki tan alasa sina li lon ala"
             },
             "title": "lipu sewi",
-            "endFeed": "sina kama tawa pini."
+            "endFeed": "sina kama tawa pini.",
+            "footer": ""
         },
         "translators": "jan pana pi nimi pi toki ante",
         "accounts": "jan sina",
@@ -192,7 +251,19 @@
                 "title": "o ante",
                 "unban": "o pini weka e jan",
                 "modlogs": "lipu lawa sin"
-            }
+            },
+            "markAllComplete": "",
+            "empty": {
+                "title": "",
+                "description": ""
+            },
+            "reason": "",
+            "markAll": "",
+            "unresolve": "",
+            "feed": "",
+            "resolved": "",
+            "resolvedBy": "",
+            "resolve": ""
         },
         "admin": {
             "config": {
@@ -204,15 +275,28 @@
                 "registration": {
                     "application": "o wile e lipu",
                     "closed": "ala ken kama",
-                    "open": "ale ken kama"
+                    "open": "ale ken kama",
+                    "label": ""
                 },
                 "requireVerifyEmail": "o wile e Email pona",
                 "listingType": {
-                    "all": "ale"
+                    "all": "ale",
+                    "local": "",
+                    "label": ""
                 },
                 "emailAdminsOnApplication": "lipu sin la o Email e jan lawa",
                 "slurFilter": "nimi Regex pi nimi ike",
-                "adminCommunityOnly": "jan lawa taso ken pali e kulupu sin"
+                "adminCommunityOnly": "jan lawa taso ken pali e kulupu sin",
+                "federation": "",
+                "downvotesEnabled": "",
+                "applicationQuestion": "",
+                "emailAdminsOnReport": "",
+                "private": "",
+                "captcha": {
+                    "enabled": ""
+                },
+                "hideModlogModNames": "",
+                "federationDebug": ""
             },
             "title": "lawa",
             "applications": {
@@ -227,7 +311,8 @@
                 "approved": "pona",
                 "denied": "ike",
                 "modalTitle": "ike",
-                "approve": "pona"
+                "approve": "pona",
+                "reason": ""
             },
             "team": {
                 "title": "jan lawa",
@@ -237,10 +322,33 @@
                 }
             },
             "federation": {
-                "csv": "o pana e lipu CSV"
+                "csv": "o pana e lipu CSV",
+                "emptyAllow": {
+                    "description": "",
+                    "title": ""
+                },
+                "blocked": "",
+                "blockplaceholder": "",
+                "allowplaceholder": "",
+                "allowed": "",
+                "allow": "",
+                "title": "",
+                "emptyBlock": {
+                    "description": "",
+                    "title": ""
+                },
+                "block": ""
             },
             "media": {
                 "title": "sitelen"
+            },
+            "taglines": {
+                "add": "",
+                "title": "",
+                "empty": {
+                    "title": "",
+                    "description": ""
+                }
             }
         },
         "theme": {
@@ -262,7 +370,8 @@
                 "default": "kule ilo",
                 "imported": "kule sina",
                 "new": "o pali e kule",
-                "classic": "kule majuna"
+                "classic": "kule majuna",
+                "presets": ""
             },
             "accent": "kule namako"
         },
@@ -282,9 +391,23 @@
         "community": {
             "settings": {
                 "settings": "ante nasin",
-                "manage": "o ante"
+                "manage": "o ante",
+                "team": ""
             },
             "languageWarning": "ijo lon tomo ni kepeken e toki pi sina jo ala. toki mute ken weka."
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "nav": {
@@ -327,7 +450,10 @@
             "contextual": "lon ni",
             "setColorTo": "o kepeken e tenpo suno {{default}}",
             "setThemeTo": "o kepeken e kule {{default}}",
-            "goto": "o tawa **{{default}}**"
+            "goto": "o tawa **{{default}}**",
+            "communities": "",
+            "feeds": "",
+            "downloading": ""
         },
         "notifications": "sin",
         "home": "tomo"
@@ -346,7 +472,9 @@
                     "month": "tenpo pi sike mun",
                     "12hours": "tenpo 12",
                     "6hours": "tenpo 6",
-                    "hour": "tenpo lili"
+                    "hour": "tenpo lili",
+                    "week": "",
+                    "year": ""
                 }
             },
             "active": "jo e toki mute",
@@ -354,7 +482,10 @@
             "old": "majuna",
             "mostcomments": "jo e toki mute",
             "newcomments": "jo e toki sin",
-            "controversial": "jo e utala toki"
+            "controversial": "jo e utala toki",
+            "label": "",
+            "hot": "",
+            "scaled": ""
         },
         "location": {
             "label": "ma",
@@ -362,20 +493,30 @@
             "local": "tan ma ni",
             "subscribed": "tan olin mi",
             "moderator": "tan ma pi lawa mi",
-            "global": "tan ma ale"
+            "global": "tan ma ale",
+            "popular": ""
         },
         "inbox": {
             "messages": "toki",
-            "replies": "toki"
+            "replies": "toki",
+            "mentions": ""
         },
         "view": {
-            "legacy": "majuna"
-        }
+            "legacy": "majuna",
+            "list": "",
+            "label": "",
+            "cozy": "",
+            "compact": ""
+        },
+        "unread": "",
+        "type": "",
+        "filter": ""
     },
     "profile": {
         "inbox": "poki toki",
         "saved": "poki olin",
-        "profile": "sina"
+        "profile": "sina",
+        "subscribed": ""
     },
     "account": {
         "moveUp": "o tawa sewi",
@@ -388,7 +529,8 @@
         "resetColor": "o weka e kule",
         "guest": "sijelo ilo sin",
         "addGuest": "o pali e sijelo ilo sin",
-        "versionGate": "ilo Photon ken jo e tomo pi nanpa {{version}} anu sewi"
+        "versionGate": "ilo Photon ken jo e tomo pi nanpa {{version}} anu sewi",
+        "piefedGate": ""
     },
     "cards": {
         "site": {
@@ -401,7 +543,14 @@
             "members": "jan",
             "favorite": "o olin",
             "unfavorite": "o olin ala",
-            "modlog": "lipu lawa"
+            "modlog": "lipu lawa",
+            "blockInstance": "",
+            "subscribed": "",
+            "activeDay": "",
+            "unblock": "",
+            "subscribe": "",
+            "flair": "",
+            "block": ""
         }
     },
     "admin": {
@@ -434,7 +583,16 @@
                 "mediaBias": "nasa sona",
                 "delete": "o weka",
                 "edit": "o ante",
-                "crosspost": "o pana tawa kulupu ante"
+                "crosspost": "o pana tawa kulupu ante",
+                "unhide": "",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "markUnread": "",
+                "markRead": "",
+                "hide": "",
+                "restore": "",
+                "share.photon": ""
             },
             "save": "o olin",
             "unsave": "o pini olin",
@@ -456,7 +614,8 @@
             "nsfw": "jaki",
             "featured": "suli",
             "removed": "weka",
-            "saved": "olin"
+            "saved": "olin",
+            "locked": ""
         },
         "image": {
             "zoomIn": "o lukin suli",
@@ -466,6 +625,19 @@
         "meta": {
             "created": "tenpo {{default}} la ni li lon",
             "lastEdited": "tenpo {{default}} la ni li ante"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
         }
     },
     "comment": {
@@ -474,7 +646,11 @@
             "label": "nena",
             "link": "o lanpan e URL"
         },
-        "banned": "jan lawa li weka e sina tan kulupu ni."
+        "banned": "jan lawa li weka e sina tan kulupu ni.",
+        "expand": "",
+        "collapse": "",
+        "locked": "",
+        "more": ""
     },
     "moderation": {
         "ban": {
@@ -483,12 +659,20 @@
             "unbanFromCommunity": "o pini weka e jan tan kulupu ni",
             "banning": "weka e jan",
             "unbanning": "pini weka e jan",
-            "warning": "ni la ale tan jan ni li weka."
+            "warning": "ni la ale tan jan ni li weka.",
+            "expires": ""
         },
         "removeSubmission": {
             "title": "weka e toki",
             "titleRestore": "pini weka e toki",
-            "titlePurge": "o weka e toki"
+            "titlePurge": "o weka e toki",
+            "failMessage": "",
+            "message": "",
+            "successPurge": "",
+            "comment": "",
+            "failEmptyReply": "",
+            "withReason": "",
+            "failReply": ""
         },
         "remove": "o weka",
         "restore": "o pini weka",
@@ -501,7 +685,20 @@
             "user": "lipu lawa pi jan ni",
             "post": "lipu lawa pi toki ni",
             "comment": "lipu lawa pi toki ni"
-        }
+        },
+        "reportModal": {
+            "success": "",
+            "title": "",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
+        },
+        "unlock": "",
+        "report": "",
+        "lock": "",
+        "reason": ""
     },
     "common": {
         "back": "o tawa monsi",
@@ -512,7 +709,17 @@
         "remove": "o weka",
         "cancel": "ala",
         "save": "o olin",
-        "send": "o toki"
+        "send": "o toki",
+        "jump": "",
+        "add": "",
+        "info": "",
+        "enable": "",
+        "attach": "",
+        "disabled": "",
+        "disable": "",
+        "general": "",
+        "continue": "",
+        "enabled": ""
     },
     "error": {
         "incorrect_login_7": "sina musi?",
@@ -536,7 +743,20 @@
         "email_already_exists": "sijelo ilo lon. ona li kepeken e nimi Email ni.",
         "not_an_admin": "sina ala jan lawa.",
         "incorrect_login_2": "nimi lawa ike. open sin.",
-        "couldnt_find_community": "kulupu ni li lon ala."
+        "couldnt_find_community": "kulupu ni li lon ala.",
+        "captcha_incorrect": "",
+        "cant_find_object": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "cant_block_yourself": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "invalid_vote_value": "",
+        "incorrect_login_11": "",
+        "unsupported": "",
+        "cant_block_local_instance": "",
+        "registration_application_is_pending": "",
+        "token_not_found": ""
     },
     "aria": {
         "pagination": {
@@ -545,14 +765,288 @@
         },
         "vote": {
             "downvotes": "jan {{default}} pilin ike",
-            "upvotes": "jan {{default}} pilin pona"
+            "upvotes": "jan {{default}} pilin pona",
+            "score": "",
+            "group": ""
+        },
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
         }
     },
     "placeholders": {
         "comments": "o toki tawa jan lon ni",
-        "body": "sina wile toki e seme?"
+        "body": "sina wile toki e seme?",
+        "title": ""
     },
     "toast": {
-        "lemmyDonate": "tomo sina kepeken e ilo Lemmy. jan pali ona wile e mani tan jan. jan mute pana la ona ken pali e ilo Lemmy li weka e toki mani jaki tan ni.\n\ntenpo sike ale la ona wile e mani tan sina.\n\n[o pana e mani](https://join-lemmy.org/donate)\n\n*a: sina pana e mani tawa Lemmy. sina ala pana e mani tawa Photon.*"
+        "lemmyDonate": "tomo sina kepeken e ilo Lemmy. jan pali ona wile e mani tan jan. jan mute pana la ona ken pali e ilo Lemmy li weka e toki mani jaki tan ni.\n\ntenpo sike ale la ona wile e mani tan sina.\n\n[o pana e mani](https://join-lemmy.org/donate)\n\n*a: sina pana e mani tawa Lemmy. sina ala pana e mani tawa Photon.*",
+        "purgeUser": "",
+        "failInstanceURL": "",
+        "failSignup": "",
+        "unblockUser": "",
+        "copied": "",
+        "updateMods": "",
+        "removeAdminWarning": "",
+        "settingsImportWarning": "",
+        "addMod": "",
+        "waitApplication": "",
+        "confirmDelete1": "",
+        "loginVoteGate": "",
+        "successSignup": "",
+        "failCSV": "",
+        "sentMessage": "",
+        "blockedInstance": "",
+        "deleted": "",
+        "confirmDelete3": "",
+        "blockUser": "",
+        "failFindUser": "",
+        "unbannedUser": "",
+        "bannedUser": "",
+        "purgedCommunity": "",
+        "resetSettings": "",
+        "invalidDateBeforeCurrent": "",
+        "removeAdmin": "",
+        "settingsImport": "",
+        "restoredFromDraft": "",
+        "resetLink": "",
+        "failFetchInstances": "",
+        "failGenerateTitle": "",
+        "unresolveReport": "",
+        "passwordReset": "",
+        "updatedCommunity": "",
+        "updatedSite": "",
+        "invalidLogin": "",
+        "addAccount": "",
+        "logIn": "",
+        "resolveReport": "",
+        "blockedCommunity": "",
+        "needPassword": "",
+        "invalidDateAbsolute": "",
+        "loginRefresh": "",
+        "verifyEmail": "",
+        "deniedApplication": "",
+        "userLoading": "",
+        "confirmDelete2": "",
+        "saveSettings": "",
+        "noComments": "",
+        "unblockedCommunity": "",
+        "invalidURL": "",
+        "approvedApplication": "",
+        "deleting": "",
+        "generatedTitle": "",
+        "needCommunity": ""
+    },
+    "settings": {
+        "app": {
+            "limitLayoutWidth": {
+                "title": "",
+                "description": ""
+            },
+            "duplicateTitles": {
+                "title": "",
+                "description": ""
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "theming": {
+                "description": "",
+                "link": "",
+                "title": ""
+            },
+            "infiniteScroll": {
+                "description": "",
+                "title": ""
+            },
+            "lang": {
+                "title": "",
+                "useRtl": {
+                    "title": "",
+                    "description": ""
+                },
+                "description": "",
+                "credits": "",
+                "auto": ""
+            },
+            "view": {
+                "cozy": "",
+                "title": "",
+                "compact": ""
+            },
+            "font": {
+                "description": "",
+                "title": ""
+            },
+            "sort": {
+                "description": "",
+                "title": ""
+            },
+            "postsInNewTab": {
+                "description": "",
+                "title": ""
+            },
+            "placeholders": {
+                "title": "",
+                "description": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "titleTags": {
+                "description": "",
+                "title": ""
+            },
+            "displayName": {
+                "description": "",
+                "title": ""
+            },
+            "expandImages": {
+                "title": "",
+                "description": ""
+            },
+            "thumbnailSide": {
+                "description": "",
+                "title": "",
+                "right": "",
+                "left": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "embeds": {
+            "youtube": {
+                "description": ""
+            },
+            "instance": {
+                "invidious": "",
+                "description": "",
+                "piped": ""
+            },
+            "clickToView": {
+                "description": "",
+                "title": ""
+            },
+            "title": ""
+        },
+        "lemmy": {
+            "instances": {
+                "description": "",
+                "title": ""
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
+            },
+            "hideSubmissions": {
+                "title": "",
+                "removed": "",
+                "deleted": "",
+                "description": ""
+            },
+            "crosspostMarker": {
+                "title": "",
+                "description": ""
+            },
+            "fadeReadPosts": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "showHiddenPosts": {
+                "title": "",
+                "description": ""
+            },
+            "nsfwBlur": {
+                "description": "",
+                "title": ""
+            },
+            "compactFeatured": {
+                "title": "",
+                "description": ""
+            },
+            "markReadPosts": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "moderation": {
+            "replyPresets": {
+                "title": "",
+                "description": "",
+                "syntax": ""
+            },
+            "title": ""
+        },
+        "export": "",
+        "navigation": {
+            "title": "",
+            "autoHide": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "other": {
+            "virtualizeFeeds": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "debug": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "beta": "",
+        "import": "",
+        "mobile": "",
+        "desktop": "",
+        "reset": "",
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
+        },
+        "tablet": "",
+        "title": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
+    },
+    "message": {
+        "success": "",
+        "error": "",
+        "retry": ""
     }
 }
