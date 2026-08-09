@@ -44,8 +44,14 @@
             "setViewTo": "Definir vista como {{default}}",
             "setColor": "Definir esquema de cores",
             "feeds": "Listagens",
-            "downloading": "Ações de descarga"
-        }
+            "downloading": "Ações de descarga",
+            "setTheme": "",
+            "communities": "",
+            "contextual": "",
+            "goto": "",
+            "setThemeTo": ""
+        },
+        "notifications": ""
     },
     "account": {
         "login": "Iniciar sessão",
@@ -58,7 +64,8 @@
         "resetColor": "Repor cor",
         "addGuest": "Adicionar convidado",
         "moveUp": "Mover para cima",
-        "guest": "Convidado"
+        "guest": "Convidado",
+        "piefedGate": ""
     },
     "filter": {
         "filter": "Filtro",
@@ -75,7 +82,8 @@
                     "month": "Mês",
                     "day": "Dia",
                     "6hours": "6 horas",
-                    "hour": "Hora"
+                    "hour": "Hora",
+                    "year": ""
                 },
                 "label": "Topo"
             },
@@ -95,7 +103,8 @@
             "moderator": "Moderador",
             "label": "Fonte",
             "all": "Tudo",
-            "global": "Global"
+            "global": "Global",
+            "popular": ""
         },
         "view": {
             "label": "Vista",
@@ -136,14 +145,24 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "A2F",
-                "paste": "Cola isto no teu autenticador."
+                "paste": "Cola isto no teu autenticador.",
+                "disabled": ""
+            },
+            "credentials": {
+                "description": "",
+                "title": ""
+            },
+            "languages": {
+                "title": "",
+                "description": ""
             }
         },
         "signup": {
             "info": "A tua instância é o servidor no qual a tua conta irá residir, permitindo na mesma aceder e interagir com conteúdo de outras instâncias.",
             "application": {
                 "info": "Para te juntares a esta instância, tens que preencher esta candidatura, e aguardar a sua aprovação. Receberás um e-mail se fores aceite.",
-                "label": "Candidatura"
+                "label": "Candidatura",
+                "notice": ""
             },
             "title": "Registar",
             "description": "Escolhe uma instância do teu interesse, ou escreve um URL manualmente.",
@@ -152,7 +171,14 @@
                 "title": "Registos fechados",
                 "description": "Esta instância não está a permitir novos registos. Por favor, encontra outra.",
                 "anotherInstance": "Encontrar outra instância"
-            }
+            },
+            "verify": {
+                "title": "",
+                "error": "",
+                "submit": "",
+                "description": ""
+            },
+            "recommended": ""
         },
         "username": "Nome de utilizador",
         "name": "Nome",
@@ -174,16 +200,45 @@
             "nsfw": "NSFW",
             "generateTitle": "Gerar título",
             "uploadImage": "Carregar imagem",
-            "altText": "Texto alternativo"
+            "altText": "Texto alternativo",
+            "fetching": "",
+            "selectFile": "",
+            "flair": "",
+            "addUrl": "",
+            "readMore": "",
+            "customThumbnail": "",
+            "setLanguage": "",
+            "autosubmit": "",
+            "unset": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "email": "E-mail",
         "setup": "Configurar",
-        "description": "Descrição"
+        "description": "Descrição",
+        "time": {
+            "duration": "",
+            "years": "",
+            "permanent": "",
+            "months": "",
+            "days": "",
+            "minutes": "",
+            "hours": ""
+        },
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
             "footer": "{{users:number}} {{users; 1:utilizador ativo; default:utilizadores ativos;}}",
-            "title": "Página inicial"
+            "title": "Página inicial",
+            "empty": {
+                "description": "",
+                "title": ""
+            },
+            "endFeed": ""
         },
         "search": {
             "noResults": {
@@ -193,7 +248,9 @@
             },
             "title": "Pesquisar",
             "federating": "A federar",
-            "query": "Pesquisa"
+            "query": "Pesquisa",
+            "other": "",
+            "top": ""
         },
         "post": {
             "instanceWarning": "Esta publicação foi pedida a um servidor diferente do da tua conta. Algumas ações não vão funcionar.",
@@ -208,6 +265,12 @@
                 "allComments": "Todos os comentários",
                 "part": "Estás a ver parte de uma linha de comentários.",
                 "context": "Mostrar conteúdo"
+            },
+            "loadComments": "",
+            "commented": "",
+            "emptyComments": {
+                "title": "",
+                "description": ""
             }
         },
         "admin": {
@@ -291,6 +354,9 @@
                 },
                 "blockplaceholder": "Bloquear uma instância...",
                 "allowed": "Instâncias permitidas"
+            },
+            "media": {
+                "title": ""
             }
         },
         "moderation": {
@@ -301,9 +367,23 @@
                 "description": "Quando forem denunciadas submissões, podes geri-las aqui."
             },
             "reason": "Razão",
-            "resolve": "Resolver"
+            "resolve": "Resolver",
+            "markAllComplete": "",
+            "markAll": "",
+            "manage": {
+                "ban": "",
+                "unban": "",
+                "title": "",
+                "modlogs": ""
+            },
+            "feed": "",
+            "resolved": "",
+            "resolvedBy": ""
         },
-        "modlog": "Registo de moderação",
+        "modlog": {
+            "filters": "",
+            "title": ""
+        },
         "instances": "Instâncias",
         "legal": {
             "title": "Info legal",
@@ -312,7 +392,23 @@
         "profile": {
             "user": "Utilizador",
             "settings": "Configurações",
-            "blocks": "Bloqueios",
+            "blocks": {
+                "empty": {
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
+                },
+                "title": ""
+            },
             "credentials": "Credenciais",
             "moderates": "Modera",
             "favorites": "Favoritos",
@@ -321,11 +417,25 @@
                 "title": "Multimédia"
             },
             "upvoted": "Votou positivamente",
-            "downvoted": "Votou negativamente"
+            "downvoted": "Votou negativamente",
+            "logins": "",
+            "overview": "",
+            "edit": "",
+            "submissions": "",
+            "delete": {
+                "title": "",
+                "warning": ""
+            }
         },
         "translators": "Tradutores",
         "accounts": "Contas",
-        "communities": "Comunidades",
+        "communities": {
+            "search": {
+                "placeholder": ""
+            },
+            "title": "",
+            "trending": ""
+        },
         "saved": "Guardados",
         "createPost": "Criar publicação",
         "createCommunity": "Criar comunidade",
@@ -335,6 +445,19 @@
             "empty": {
                 "title": "Sem notificações novas",
                 "description": "Mensagens, respostas e menções irão aparecer aqui."
+            },
+            "item": {
+                "message": "",
+                "reply": "",
+                "mention": ""
+            },
+            "messages": {
+                "empty": {
+                    "title": ""
+                },
+                "conversation": "",
+                "indicator": "",
+                "start": ""
             }
         },
         "verifyEmail": {
@@ -370,14 +493,44 @@
                 "default": "Padrão",
                 "classic": "Clássico",
                 "imported": "O teu tema",
-                "new": "Tema novo"
+                "new": "Tema novo",
+                "presets": ""
             }
         },
         "community": {
             "settings": {
                 "team": "Equipa",
-                "settings": "Configurações"
+                "settings": "Configurações",
+                "manage": ""
+            },
+            "languageWarning": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "postRedirect": {
+            "title": "",
+            "description": "",
+            "actions": {
+                "back": "",
+                "fetch": "",
+                "switch": ""
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "cards": {
@@ -397,7 +550,8 @@
             "blockInstance": "Bloquear instância",
             "favorite": "Adicionar aos favoritos",
             "unfavorite": "Remover dos favoritos",
-            "activeDay": "Utilizadores ativos hoje"
+            "activeDay": "Utilizadores ativos hoje",
+            "flair": ""
         }
     },
     "admin": {
@@ -416,7 +570,8 @@
         "comments": "Comentários",
         "communities": "Comunidades",
         "instances": "Instâncias",
-        "message": "Mensagem"
+        "message": "Mensagem",
+        "url": ""
     },
     "post": {
         "actions": {
@@ -437,7 +592,11 @@
                 "crosspost": "Fazer publicação cruzada",
                 "delete": "Eliminar",
                 "restore": "Restaurar",
-                "mediaBias": "Parcialidade jornalística"
+                "mediaBias": "Parcialidade jornalística",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "mediaBias": {
                 "downloading": "A descarregar dados",
@@ -449,6 +608,11 @@
                 },
                 "loading": "A carregar fonte",
                 "reporting": "Jornalismo factual"
+            },
+            "vote": {
+                "score": "",
+                "downvote": "",
+                "upvote": ""
             }
         },
         "badges": {
@@ -458,6 +622,27 @@
             "removed": "Removida",
             "deleted": "Eliminada",
             "saved": "Guardada"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
+        },
+        "image": {
+            "zoomIn": "",
+            "zoomOut": ""
         }
     },
     "common": {
@@ -473,7 +658,13 @@
         "enable": "Ativar",
         "disable": "Desativar",
         "add": "Adicionar",
-        "send": "Enviar"
+        "send": "Enviar",
+        "info": "",
+        "attach": "",
+        "download": "",
+        "general": "",
+        "continue": "",
+        "remove": ""
     },
     "comment": {
         "actions": {
@@ -483,7 +674,9 @@
         "reply": "Responder",
         "locked": "Esta publicação está trancada.",
         "more": "Mais {{comments:number}}",
-        "banned": "Estás banido desta comunidade."
+        "banned": "Estás banido desta comunidade.",
+        "expand": "",
+        "collapse": ""
     },
     "moderation": {
         "removeSubmission": {
@@ -510,7 +703,12 @@
         "report": "Denunciar",
         "reportModal": {
             "title": "Denunciar",
-            "success": "Submissão denunciada."
+            "success": "Submissão denunciada.",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "Razão",
         "lock": "Trancar",
@@ -520,7 +718,13 @@
         "label": "Moderação",
         "labelInstanceOnly": "Moderação (apenas na instância)",
         "feature": "Destacar",
-        "unfeature": "Remover destaque"
+        "unfeature": "Remover destaque",
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "votes": ""
     },
     "toast": {
         "loginVoteGate": "É necessário ter sessão iniciada para votar.",
@@ -578,7 +782,8 @@
         "purgeUser": "Utilizador purgado.",
         "settingsImport": "Configurações importadas com sucesso",
         "settingsImportWarning": "Estas configurações não parecem válidas. Tens a certeza que as queres importar?",
-        "userLoading": "Ainda a carregar os teus dados de utilizador..."
+        "userLoading": "Ainda a carregar os teus dados de utilizador...",
+        "lemmyDonate": ""
     },
     "message": {
         "success": "Sucesso",
@@ -621,6 +826,14 @@
             "nsfwBlur": {
                 "title": "Desfoque de NSFW",
                 "description": "Desfocar imagens e remover texto das publicações NSFW."
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "app": {
@@ -719,6 +932,22 @@
             "infiniteScroll": {
                 "title": "Listagem infinita",
                 "description": "Em vez de teres que passar de página, as publicações vão aparecendo à medida que andas para baixo."
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "navigation": {
@@ -740,6 +969,10 @@
             "pins": {
                 "description": "Carrega num ícone para o enviar para o topo da barra lateral direita. Usa o botão direito para o removeres.",
                 "title": "Atalhos"
+            },
+            "autoHide": {
+                "title": "",
+                "description": ""
             }
         },
         "embeds": {
@@ -762,7 +995,11 @@
                 "description": "Mostrar informação técnica de depuração",
                 "title": "Informação técnica"
             },
-            "title": "Outras"
+            "title": "Outras",
+            "virtualizeFeeds": {
+                "title": "",
+                "description": ""
+            }
         },
         "title": "Configurações",
         "beta": "Beta",
@@ -779,6 +1016,90 @@
         "import": "Importar",
         "reset": "Redefinir",
         "desktop": "Computador",
-        "mobile": "Telemóvel"
+        "mobile": "Telemóvel",
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
+        }
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "error": {
+        "incorrect_login_9": "",
+        "incorrect_login_10": "",
+        "captcha_incorrect": "",
+        "incorrect_login_2": "",
+        "incorrect_login_12": "",
+        "rate_limit_error": "",
+        "incorrect_login_3": "",
+        "incorrect_login_8": "",
+        "cant_find_object": "",
+        "incorrect_login_6": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "honeypot_failed": "",
+        "invalid_password": "",
+        "couldnt_find_post": "",
+        "incorrect_login_7": "",
+        "incorrect_login": "",
+        "passwords_do_not_match": "",
+        "cant_block_yourself": "",
+        "slurs": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "invalid_vote_value": "",
+        "email_not_verified": "",
+        "not_an_admin": "",
+        "downvotes_are_disabled": "",
+        "incorrect_login_11": "",
+        "incorrect_login_4": "",
+        "email_already_exists": "",
+        "unsupported": "",
+        "cant_block_local_instance": "",
+        "registration_application_is_pending": "",
+        "token_not_found": "",
+        "incorrect_login_5": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
     }
 }
