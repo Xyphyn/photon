@@ -143,7 +143,8 @@
                 "start": "Aloita keskustelu",
                 "empty": {
                     "title": "Ei viestejä"
-                }
+                },
+                "indicator": ""
             }
         },
         "legal": {
@@ -283,12 +284,25 @@
                 "back": "Mene takaisin",
                 "fetch": "Hae julkaisu oman instanssisi kautta: {{homeInstance}}",
                 "switch": "Vaihda tilille kohdeinstanssilla {{destInstance}}"
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
         },
         "accounts.placeholder": {
             "title": "Kirjautunut ulos",
             "description": "Et ole kirjautunut sisään. Voit kirjautua tai rekisteröityä täällä.",
             "descriptionWithGuest": "Et ole kirjautunut sisään. Voit kirjautua, rekisteröityä tai luoda vieraskäyttäjän täällä."
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "cards": {
@@ -308,7 +322,8 @@
             "blockInstance": "Estä instanssi",
             "favorite": "Lisää suosikkeihin",
             "unfavorite": "Poista suosikeista",
-            "activeDay": "Aktiivisia tänään"
+            "activeDay": "Aktiivisia tänään",
+            "flair": ""
         }
     },
     "post": {
@@ -327,7 +342,11 @@
                 "restore": "Palauta",
                 "hide": "Piilota",
                 "unhide": "Näytä",
-                "mediaBias": "Median puolueellisuus"
+                "mediaBias": "Median puolueellisuus",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "comments": "Kommentit",
             "save": "Tallenna",
@@ -369,6 +388,19 @@
         "meta": {
             "lastEdited": "Viimeksi muokattu {{default}}",
             "created": "Luotu {{default}}"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
         }
     },
     "content": {
@@ -433,7 +465,8 @@
             "setTheme": "Aseta teema",
             "setThemeTo": "Aseta teema: {{default}}",
             "contextual": "Tällä sivulla",
-            "communities": "Yhteisöt, joiden nimessä on **{{default}}**"
+            "communities": "Yhteisöt, joiden nimessä on **{{default}}**",
+            "goto": ""
         },
         "notifications": "Ilmoitukset"
     },
@@ -540,7 +573,8 @@
                 "event": "Tapahtuma"
             },
             "autosubmit": "Lähetä automaattisesti",
-            "customThumbnail": "Aseta pikkukuva"
+            "customThumbnail": "Aseta pikkukuva",
+            "flair": ""
         },
         "profile": {
             "2fa": {
@@ -643,7 +677,12 @@
         },
         "reportModal": {
             "title": "Ilmianna",
-            "success": "Lähetys ilmiannettu."
+            "success": "Lähetys ilmiannettu.",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "Syy",
         "lock": "Lukitse",
@@ -670,7 +709,9 @@
         "locked": "Tämä julkaisu on lukittu.",
         "reply": "Vastaa",
         "more": "{{comments:number}} lisää",
-        "banned": "Olet saanut porttikiellon tähän yhteisöön."
+        "banned": "Olet saanut porttikiellon tähän yhteisöön.",
+        "expand": "",
+        "collapse": ""
     },
     "common": {
         "back": "Takaisin",
@@ -690,7 +731,8 @@
         "remove": "Poista",
         "download": "Lataa",
         "attach": "Liitä tiedosto",
-        "info": "Tietoja"
+        "info": "Tietoja",
+        "continue": ""
     },
     "message": {
         "success": "Onnistui",
@@ -865,6 +907,10 @@
             "absoluteDates": {
                 "title": "Näytä päiväys",
                 "description": "Korvaa suhteelliset aikaleimat (esim. 3 tuntia sitten) tarkoilla päiväyksillä."
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "title": "Asetukset",
@@ -933,6 +979,14 @@
             "showHiddenPosts": {
                 "title": "Näytä piilotetut julkaisut",
                 "description": "Näyttää käsin piilottamasi julkaisut."
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "moderation": {
@@ -977,6 +1031,9 @@
         "reset": "Palauta oletukset",
         "account": {
             "title": "Käyttäjätili"
+        },
+        "donate": {
+            "description": ""
         }
     },
     "error": {
@@ -1007,7 +1064,15 @@
         "language_not_allowed": "Valitsemasi kieli ei ole sallitu tässä yhteisössä. Poista valinta käyttääksesi yhteisön oletusta.",
         "couldnt_find_community": "Tätä yhteisöä ei ole olemassa.",
         "couldnt_find_person": "Tätä käyttäjää ei ole olemassa.",
-        "not_an_admin": "Et ole instanssin ylläpitäjä."
+        "not_an_admin": "Et ole instanssin ylläpitäjä.",
+        "captcha_incorrect": "",
+        "rate_limit_error": "",
+        "cant_find_object": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "not_live_supported": "",
+        "unsupported": "",
+        "token_not_found": ""
     },
     "aria": {
         "vote": {
@@ -1021,7 +1086,8 @@
             "current": "Nykyinen sivu"
         },
         "sidebar": {
-            "title": "Sivupalkki"
+            "title": "Sivupalkki",
+            "accounts": ""
         },
         "loading": "Ladataan",
         "element": {
@@ -1031,6 +1097,9 @@
             "openImage": "Avaa kuva: {{default}}",
             "openLink": "Avaa linkki: {{default}}",
             "openPost": "Avaa julkaisu: {{default}}"
+        },
+        "comments": {
+            "children": ""
         }
     },
     "stats": {
@@ -1038,6 +1107,12 @@
         "created": "Luotu"
     },
     "placeholders": {
-        "title": "Kirjoita julkaisun otsikko"
+        "title": "Kirjoita julkaisun otsikko",
+        "body": "",
+        "comments": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
     }
 }
