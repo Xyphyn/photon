@@ -30,8 +30,28 @@
             "about": "關於",
             "source": "來源",
             "instance": "站點",
-            "label": "個人資料"
-        }
+            "label": "個人資料",
+            "donate": ""
+        },
+        "commands": {
+            "setTheme": "",
+            "main": "",
+            "setViewTo": "",
+            "setColor": "",
+            "communities": "",
+            "feeds": "",
+            "downloading": "",
+            "setView": "",
+            "recents": "",
+            "prompt": "",
+            "contextual": "",
+            "goto": "",
+            "setThemeTo": "",
+            "setColorTo": "",
+            "search": "",
+            "content": ""
+        },
+        "notifications": ""
     },
     "account": {
         "login": "登入",
@@ -43,7 +63,8 @@
         "moveUp": "往上",
         "moveDown": "往下",
         "guest": "遊客",
-        "signup": "註冊"
+        "signup": "註冊",
+        "piefedGate": ""
     },
     "filter": {
         "location": {
@@ -52,7 +73,8 @@
             "subscribed": "已訂閱",
             "moderator": "管理的",
             "global": "全部",
-            "local": "本站"
+            "local": "本站",
+            "popular": ""
         },
         "sort": {
             "label": "排序",
@@ -70,7 +92,8 @@
                     "day": "日",
                     "6hours": "6小時",
                     "hour": "這小時",
-                    "12hours": "12小時"
+                    "12hours": "12小時",
+                    "year": ""
                 }
             },
             "new": "最新",
@@ -117,7 +140,21 @@
             "nsfw": "限制級(NSFW)",
             "altText": "替代文字",
             "generateTitle": "代入標題",
-            "uploadImage": "上傳影像"
+            "uploadImage": "上傳影像",
+            "fetching": "",
+            "selectFile": "",
+            "flair": "",
+            "addUrl": "",
+            "readMore": "",
+            "customThumbnail": "",
+            "setLanguage": "",
+            "autosubmit": "",
+            "unset": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "displayName": "顯示名稱",
@@ -132,12 +169,64 @@
             "currentPassword": "當前密碼",
             "newPassword": "新密碼",
             "verifyNewPassword": "確認密碼",
-            "showBots": "顯示機器人貼文"
+            "showBots": "顯示機器人貼文",
+            "credentials": {
+                "description": "",
+                "title": ""
+            },
+            "2fa": {
+                "totp": "",
+                "disabled": "",
+                "2fa": "",
+                "paste": ""
+            },
+            "languages": {
+                "title": "",
+                "description": ""
+            },
+            "matrix": "",
+            "deleteAccount": {
+                "warning": "",
+                "deleteContent": ""
+            }
         },
         "signup": {
-            "title": "註冊"
+            "title": "註冊",
+            "verify": {
+                "title": "",
+                "error": "",
+                "submit": "",
+                "description": ""
+            },
+            "closed": {
+                "description": "",
+                "anotherInstance": "",
+                "title": ""
+            },
+            "description": "",
+            "application": {
+                "info": "",
+                "label": "",
+                "notice": ""
+            },
+            "recommended": "",
+            "info": "",
+            "chooseInstance": ""
         },
-        "2fa": "2FA兩步驗證碼"
+        "2fa": "2FA兩步驗證碼",
+        "time": {
+            "duration": "",
+            "years": "",
+            "permanent": "",
+            "months": "",
+            "days": "",
+            "minutes": "",
+            "hours": ""
+        },
+        "description": "",
+        "email": "",
+        "setup": "",
+        "instanceType": ""
     },
     "routes": {
         "saved": "保存",
@@ -146,7 +235,20 @@
         "post": {
             "crosspostCount": "轉貼",
             "commentCount": "留言",
-            "addComment": "新增留言"
+            "addComment": "新增留言",
+            "scrollToTop": "",
+            "thread": {
+                "part": "",
+                "allComments": "",
+                "single": "",
+                "context": ""
+            },
+            "loadComments": "",
+            "commented": "",
+            "emptyComments": {
+                "title": "",
+                "description": ""
+            }
         },
         "verifyEmail": {
             "error": "無法驗證您的電子郵件。",
@@ -165,8 +267,266 @@
             "title": "主題",
             "import": "匯入",
             "export": "匯出",
-            "reset": "重設"
-        }
+            "reset": "重設",
+            "accent": "",
+            "preset": {
+                "delete": {
+                    "confirm": "",
+                    "title": ""
+                },
+                "new": "",
+                "default": "",
+                "description": "",
+                "classic": "",
+                "presets": "",
+                "imported": "",
+                "title": ""
+            },
+            "resetWarning": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "inbox": {
+            "item": {
+                "message": "",
+                "reply": "",
+                "mention": ""
+            },
+            "empty": {
+                "title": "",
+                "description": ""
+            },
+            "messages": {
+                "empty": {
+                    "title": ""
+                },
+                "conversation": "",
+                "indicator": "",
+                "start": ""
+            },
+            "title": "",
+            "markAsRead": ""
+        },
+        "admin": {
+            "federation": {
+                "emptyAllow": {
+                    "description": "",
+                    "title": ""
+                },
+                "csv": "",
+                "blocked": "",
+                "blockplaceholder": "",
+                "allowplaceholder": "",
+                "allowed": "",
+                "allow": "",
+                "title": "",
+                "emptyBlock": {
+                    "description": "",
+                    "title": ""
+                },
+                "block": ""
+            },
+            "config": {
+                "sidebar": "",
+                "nsfwEnabled": "",
+                "federation": "",
+                "listingType": {
+                    "all": "",
+                    "local": "",
+                    "label": ""
+                },
+                "registration": {
+                    "open": "",
+                    "label": "",
+                    "closed": "",
+                    "application": ""
+                },
+                "downvotesEnabled": "",
+                "applicationQuestion": "",
+                "emailAdminsOnReport": "",
+                "icon": "",
+                "banner": "",
+                "private": "",
+                "title": "",
+                "adminCommunityOnly": "",
+                "captcha": {
+                    "enabled": ""
+                },
+                "requireVerifyEmail": "",
+                "slurFilter": "",
+                "hideModlogModNames": "",
+                "emailAdminsOnApplication": "",
+                "federationDebug": ""
+            },
+            "taglines": {
+                "add": "",
+                "title": "",
+                "empty": {
+                    "title": "",
+                    "description": ""
+                }
+            },
+            "applications": {
+                "approve": "",
+                "modalTitle": "",
+                "user": "",
+                "denied": "",
+                "deny": "",
+                "empty": {
+                    "title": "",
+                    "description": ""
+                },
+                "title": "",
+                "reason": "",
+                "application": "",
+                "approved": ""
+            },
+            "media": {
+                "title": ""
+            },
+            "title": "",
+            "team": {
+                "title": "",
+                "empty": {
+                    "description": "",
+                    "title": ""
+                }
+            }
+        },
+        "profile": {
+            "upvoted": "",
+            "settings": "",
+            "blocks": {
+                "empty": {
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
+                },
+                "title": ""
+            },
+            "media": {
+                "title": "",
+                "download": ""
+            },
+            "logins": "",
+            "overview": "",
+            "edit": "",
+            "submissions": "",
+            "user": "",
+            "moderates": "",
+            "downvoted": "",
+            "credentials": "",
+            "delete": {
+                "title": "",
+                "warning": ""
+            },
+            "favorites": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "frontpage": {
+            "footer": "",
+            "empty": {
+                "description": "",
+                "title": ""
+            },
+            "title": "",
+            "endFeed": ""
+        },
+        "moderation": {
+            "markAllComplete": "",
+            "empty": {
+                "title": "",
+                "description": ""
+            },
+            "reason": "",
+            "title": "",
+            "markAll": "",
+            "unresolve": "",
+            "manage": {
+                "ban": "",
+                "unban": "",
+                "title": "",
+                "modlogs": ""
+            },
+            "feed": "",
+            "resolved": "",
+            "resolvedBy": "",
+            "resolve": ""
+        },
+        "postRedirect": {
+            "title": "",
+            "description": "",
+            "actions": {
+                "back": "",
+                "fetch": "",
+                "switch": ""
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
+            }
+        },
+        "search": {
+            "other": "",
+            "title": "",
+            "noResults": {
+                "title": "",
+                "description": "",
+                "alt": ""
+            },
+            "top": "",
+            "query": "",
+            "federating": ""
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "modlog": {
+            "filters": "",
+            "title": ""
+        },
+        "communities": {
+            "search": {
+                "placeholder": ""
+            },
+            "title": "",
+            "trending": ""
+        },
+        "translators": "",
+        "community": {
+            "settings": {
+                "settings": "",
+                "team": "",
+                "manage": ""
+            },
+            "languageWarning": ""
+        },
+        "user": {
+            "note": ""
+        },
+        "instances": "",
+        "legal": {
+            "title": "",
+            "noLegal": ""
+        },
+        "accounts": ""
     },
     "cards": {
         "site": {
@@ -183,46 +543,497 @@
             "blockInstance": "封鎖站點",
             "favorite": "最愛",
             "unfavorite": "取消最愛",
-            "members": "訪客"
+            "members": "訪客",
+            "activeDay": "",
+            "flair": "",
+            "modlog": ""
         }
     },
     "content": {
         "all": "所有",
-        "users": "使用者"
+        "users": "使用者",
+        "instances": "",
+        "posts": "",
+        "comments": "",
+        "message": "",
+        "url": "",
+        "communities": ""
     },
     "post": {
         "actions": {
             "save": "保存",
             "more": {
-                "crosspost": "轉貼"
-            }
+                "crosspost": "轉貼",
+                "share": "",
+                "unhide": "",
+                "label": "",
+                "delete": "",
+                "share.global": "",
+                "share.local": "",
+                "edit": "",
+                "creator": "",
+                "share.from": "",
+                "actions": "",
+                "markUnread": "",
+                "markRead": "",
+                "hide": "",
+                "restore": "",
+                "share.photon": ""
+            },
+            "vote": {
+                "score": "",
+                "downvote": "",
+                "upvote": ""
+            },
+            "comments": "",
+            "unsave": ""
         },
         "badges": {
             "nsfw": "限制級(NSFW)",
-            "featured": "置頂"
+            "featured": "置頂",
+            "locked": "",
+            "deleted": "",
+            "removed": "",
+            "saved": ""
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
+        },
+        "image": {
+            "zoomIn": "",
+            "zoomOut": ""
         }
     },
     "moderation": {
-        "report": "檢舉"
+        "report": "檢舉",
+        "ban": {
+            "deleteData": "",
+            "expires": "",
+            "banFromCommunity": "",
+            "unbanFromCommunity": "",
+            "banning": "",
+            "unbanning": "",
+            "warning": ""
+        },
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "removeSubmission": {
+            "titlePurge": "",
+            "titleRestore": "",
+            "failMessage": "",
+            "message": "",
+            "successPurge": "",
+            "title": "",
+            "comment": "",
+            "failEmptyReply": "",
+            "withReason": "",
+            "failReply": ""
+        },
+        "votes": "",
+        "reportModal": {
+            "success": "",
+            "title": "",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
+        },
+        "label": "",
+        "unfeature": "",
+        "restore": "",
+        "labelInstanceOnly": "",
+        "remove": "",
+        "unlock": "",
+        "lock": "",
+        "feature": "",
+        "reason": ""
     },
     "settings": {
         "title": "設定",
         "app": {
             "lang": {
                 "auto": "自動",
-                "title": "語言"
+                "title": "語言",
+                "useRtl": {
+                    "title": "",
+                    "description": ""
+                },
+                "description": "",
+                "credits": ""
+            },
+            "limitLayoutWidth": {
+                "title": "",
+                "description": ""
+            },
+            "duplicateTitles": {
+                "title": "",
+                "description": ""
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "theming": {
+                "description": "",
+                "link": "",
+                "title": ""
+            },
+            "infiniteScroll": {
+                "description": "",
+                "title": ""
+            },
+            "view": {
+                "cozy": "",
+                "title": "",
+                "compact": ""
+            },
+            "font": {
+                "description": "",
+                "title": ""
+            },
+            "sort": {
+                "description": "",
+                "title": ""
+            },
+            "postsInNewTab": {
+                "description": "",
+                "title": ""
+            },
+            "placeholders": {
+                "title": "",
+                "description": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "titleTags": {
+                "description": "",
+                "title": ""
+            },
+            "displayName": {
+                "description": "",
+                "title": ""
+            },
+            "expandImages": {
+                "title": "",
+                "description": ""
+            },
+            "thumbnailSide": {
+                "description": "",
+                "title": "",
+                "right": "",
+                "left": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "lemmy": {
             "nsfwBlur": {
                 "description": "模糊圖片並隱藏限制級(NSFW)帖文預覽。",
                 "title": "限制級(NSFW) 遮擋"
+            },
+            "instances": {
+                "description": "",
+                "title": ""
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
+            },
+            "hideSubmissions": {
+                "title": "",
+                "removed": "",
+                "deleted": "",
+                "description": ""
+            },
+            "crosspostMarker": {
+                "title": "",
+                "description": ""
+            },
+            "fadeReadPosts": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "showHiddenPosts": {
+                "title": "",
+                "description": ""
+            },
+            "compactFeatured": {
+                "title": "",
+                "description": ""
+            },
+            "markReadPosts": {
+                "title": "",
+                "description": ""
             }
-        }
+        },
+        "embeds": {
+            "youtube": {
+                "description": ""
+            },
+            "instance": {
+                "invidious": "",
+                "description": "",
+                "piped": ""
+            },
+            "clickToView": {
+                "description": "",
+                "title": ""
+            },
+            "title": ""
+        },
+        "moderation": {
+            "replyPresets": {
+                "title": "",
+                "description": "",
+                "syntax": ""
+            },
+            "title": ""
+        },
+        "export": "",
+        "navigation": {
+            "title": "",
+            "autoHide": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "other": {
+            "virtualizeFeeds": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "debug": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "beta": "",
+        "import": "",
+        "mobile": "",
+        "desktop": "",
+        "reset": "",
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
+        },
+        "tablet": ""
     },
     "common": {
         "next": "往後",
         "back": "往前",
-        "refresh": "重整"
+        "refresh": "重整",
+        "jump": "",
+        "save": "",
+        "add": "",
+        "debug": "",
+        "info": "",
+        "enable": "",
+        "cancel": "",
+        "attach": "",
+        "send": "",
+        "disabled": "",
+        "disable": "",
+        "download": "",
+        "general": "",
+        "continue": "",
+        "remove": "",
+        "enabled": ""
+    },
+    "toast": {
+        "purgeUser": "",
+        "failInstanceURL": "",
+        "failSignup": "",
+        "unblockUser": "",
+        "copied": "",
+        "updateMods": "",
+        "removeAdminWarning": "",
+        "settingsImportWarning": "",
+        "addMod": "",
+        "waitApplication": "",
+        "confirmDelete1": "",
+        "lemmyDonate": "",
+        "loginVoteGate": "",
+        "successSignup": "",
+        "failCSV": "",
+        "sentMessage": "",
+        "blockedInstance": "",
+        "deleted": "",
+        "confirmDelete3": "",
+        "blockUser": "",
+        "failFindUser": "",
+        "unbannedUser": "",
+        "bannedUser": "",
+        "purgedCommunity": "",
+        "resetSettings": "",
+        "invalidDateBeforeCurrent": "",
+        "removeAdmin": "",
+        "settingsImport": "",
+        "restoredFromDraft": "",
+        "resetLink": "",
+        "failFetchInstances": "",
+        "failGenerateTitle": "",
+        "unresolveReport": "",
+        "passwordReset": "",
+        "updatedCommunity": "",
+        "updatedSite": "",
+        "invalidLogin": "",
+        "addAccount": "",
+        "logIn": "",
+        "resolveReport": "",
+        "blockedCommunity": "",
+        "needPassword": "",
+        "invalidDateAbsolute": "",
+        "loginRefresh": "",
+        "verifyEmail": "",
+        "deniedApplication": "",
+        "userLoading": "",
+        "confirmDelete2": "",
+        "saveSettings": "",
+        "noComments": "",
+        "unblockedCommunity": "",
+        "invalidURL": "",
+        "approvedApplication": "",
+        "deleting": "",
+        "generatedTitle": "",
+        "needCommunity": ""
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "error": {
+        "incorrect_login_9": "",
+        "incorrect_login_10": "",
+        "captcha_incorrect": "",
+        "incorrect_login_2": "",
+        "incorrect_login_12": "",
+        "rate_limit_error": "",
+        "incorrect_login_3": "",
+        "incorrect_login_8": "",
+        "cant_find_object": "",
+        "incorrect_login_6": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "honeypot_failed": "",
+        "invalid_password": "",
+        "couldnt_find_post": "",
+        "incorrect_login_7": "",
+        "incorrect_login": "",
+        "passwords_do_not_match": "",
+        "cant_block_yourself": "",
+        "slurs": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "invalid_vote_value": "",
+        "email_not_verified": "",
+        "not_an_admin": "",
+        "downvotes_are_disabled": "",
+        "incorrect_login_11": "",
+        "incorrect_login_4": "",
+        "email_already_exists": "",
+        "unsupported": "",
+        "cant_block_local_instance": "",
+        "registration_application_is_pending": "",
+        "token_not_found": "",
+        "incorrect_login_5": ""
+    },
+    "comment": {
+        "expand": "",
+        "banned": "",
+        "reply": "",
+        "actions": {
+            "label": "",
+            "link": ""
+        },
+        "collapse": "",
+        "locked": "",
+        "more": ""
+    },
+    "admin": {
+        "label": "",
+        "purgeCommunity": {
+            "title": "",
+            "warning": ""
+        },
+        "purge": "",
+        "instance": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
+    },
+    "message": {
+        "success": "",
+        "error": "",
+        "retry": ""
     }
 }
