@@ -47,8 +47,11 @@
             "setThemeTo": "Choisir theme {{default}}",
             "setTheme": "Choisir un theme",
             "downloading": "Téléchargement des actions",
-            "contextual": "Sur cette page"
-        }
+            "contextual": "Sur cette page",
+            "communities": "",
+            "goto": ""
+        },
+        "notifications": ""
     },
     "account": {
         "login": "Connexion",
@@ -61,7 +64,8 @@
         "moveDown": "Descendre",
         "guest": "invité",
         "versionGate": "Cette version de Photon prend en charge des instances en version {{version}} ou supérieure.",
-        "resetColor": "Réinitialiser les couleurs"
+        "resetColor": "Réinitialiser les couleurs",
+        "piefedGate": ""
     },
     "filter": {
         "location": {
@@ -70,7 +74,8 @@
             "subscribed": "Abonnements",
             "moderator": "Modérateur",
             "global": "Tout",
-            "local": "Local"
+            "local": "Local",
+            "popular": ""
         },
         "sort": {
             "label": "Trier",
@@ -88,7 +93,8 @@
                     "day": "Du jour",
                     "12hours": "Des douze dernières heures",
                     "6hours": "Des six dernières heures",
-                    "hour": "De l'heure"
+                    "hour": "De l'heure",
+                    "year": ""
                 },
                 "label": "Top"
             },
@@ -140,7 +146,16 @@
             "addUrl": "Ajouter un URL",
             "setLanguage": "Choisir la langue",
             "unset": "Non défini",
-            "readMore": "En savoir plus"
+            "readMore": "En savoir plus",
+            "fetching": "",
+            "flair": "",
+            "customThumbnail": "",
+            "autosubmit": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "displayName": "Nom affiché",
@@ -158,7 +173,8 @@
             "2fa": {
                 "paste": "Copier ceci dans votre applicaton d'authentication.",
                 "totp": "L'authentification à plusieurs facteurs",
-                "2fa": "l'authentification à deux facteurs"
+                "2fa": "l'authentification à deux facteurs",
+                "disabled": ""
             },
             "deleteAccount": {
                 "label": "Supprimer le compte",
@@ -166,7 +182,15 @@
                 "warning": "Cette opération supprimera TOUTES vos publications."
             },
             "avatar": "Avatar",
-            "email": "Email"
+            "email": "Email",
+            "credentials": {
+                "description": "",
+                "title": ""
+            },
+            "languages": {
+                "title": "",
+                "description": ""
+            }
         },
         "email": "Adresse E-mail",
         "setup": "Activer",
@@ -177,22 +201,44 @@
             "chooseInstance": "Choisissez une instance",
             "application": {
                 "label": "Demande d'autorisation",
-                "info": "Pour rejoindre cet instance, vous devez remplir cette demande d'autorisation et attendre q'uelle soit accepté. Vous recevrez un courriel si votre demande d'autorisation est acceptée."
+                "info": "Pour rejoindre cet instance, vous devez remplir cette demande d'autorisation et attendre q'uelle soit accepté. Vous recevrez un courriel si votre demande d'autorisation est acceptée.",
+                "notice": ""
             },
             "closed": {
                 "title": "Les inscriptions sont closes",
                 "description": "Cet instance n'accepte plus les registration. Trouvez un autre instance.",
                 "anotherInstance": "Trouver une autre instance"
-            }
+            },
+            "verify": {
+                "title": "",
+                "error": "",
+                "submit": "",
+                "description": ""
+            },
+            "recommended": ""
         },
         "password": "Mot de passe",
-        "description": "Description"
+        "description": "Description",
+        "time": {
+            "duration": "",
+            "years": "",
+            "permanent": "",
+            "months": "",
+            "days": "",
+            "minutes": "",
+            "hours": ""
+        },
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
             "title": "Page d'accueil",
             "footer": "{{users:number}} En ligne {{users; 1:user; default:users;}}",
-            "endFeed": "Vous avez atteint la fin de {{community_name; undefined:the feed.; default:{{community_name}}.}}"
+            "endFeed": "Vous avez atteint la fin de {{community_name; undefined:the feed.; default:{{community_name}}.}}",
+            "empty": {
+                "description": "",
+                "title": ""
+            }
         },
         "legal": {
             "noLegal": "Cet instance n'a aucune information legale.",
@@ -205,7 +251,19 @@
                 "title": "Bloqué",
                 "empty": {
                     "title": "Aucune entité bloquée",
-                    "description": "Si vous bloquez quelque-chose, il n'apparaît plus dans vos fils."
+                    "description": "Si vous bloquez quelque-chose, il n'apparaît plus dans vos fils.",
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
                 }
             },
             "credentials": "Compte",
@@ -224,7 +282,8 @@
             "upvoted": "Upvoted",
             "downvoted": "Downvoted",
             "overview": "Vue d'ensemble",
-            "submissions": "Soumissions"
+            "submissions": "Soumissions",
+            "edit": ""
         },
         "accounts": "Comptes",
         "communities": {
@@ -265,7 +324,9 @@
             "emptyComments": {
                 "title": "Pas de commentaires",
                 "description": "Lancez la conversation !"
-            }
+            },
+            "loadComments": "",
+            "commented": ""
         },
         "inbox": {
             "title": "Boîte de réception",
@@ -278,6 +339,14 @@
                 "reply": "{{user}} vous a répondu dans {{post}}",
                 "mention": "{{user}} vous a mentionné dans {{post}}",
                 "message": "{{user}} a messagé {{recipient}}"
+            },
+            "messages": {
+                "empty": {
+                    "title": ""
+                },
+                "conversation": "",
+                "indicator": "",
+                "start": ""
             }
         },
         "moderation": {
@@ -290,7 +359,16 @@
             "resolve": "Resolu",
             "unresolve": "Non resolu",
             "resolved": "Résolu",
-            "resolvedBy": "Résolu par"
+            "resolvedBy": "Résolu par",
+            "markAllComplete": "",
+            "markAll": "",
+            "manage": {
+                "ban": "",
+                "unban": "",
+                "title": "",
+                "modlogs": ""
+            },
+            "feed": ""
         },
         "admin": {
             "title": "L'administration",
@@ -374,6 +452,9 @@
                     "title": "Aucunes instances sur la liste blanche",
                     "description": "Mettre une instance sur la liste blanche bloquera toutes les autres instances."
                 }
+            },
+            "media": {
+                "title": ""
             }
         },
         "team": {
@@ -404,7 +485,10 @@
         "instances": "Instances",
         "translators": "Traducteurs",
         "createCommunity": "Créer une communauté",
-        "modlog": "Journal de modération",
+        "modlog": {
+            "filters": "",
+            "title": ""
+        },
         "verifyEmail": {
             "message": "Votre email a été verifié, vous pouvez maintenant fermer cette fenêtre.",
             "error": "La vérification de l'email a échouée."
@@ -447,7 +531,35 @@
                 "team": "Équipe",
                 "settings": "Paramètres",
                 "manage": "Gestion"
+            },
+            "languageWarning": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "postRedirect": {
+            "title": "",
+            "description": "",
+            "actions": {
+                "back": "",
+                "fetch": "",
+                "switch": ""
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "verifyEmail": {
@@ -561,6 +673,22 @@
             "duplicateTitles": {
                 "title": "Masquer les titres ou corps en double",
                 "description": "Masque le titre et le corps de l'article s'ils sont identiques à ceux du lien."
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "title": "Paramètres",
@@ -589,6 +717,10 @@
                 "top": "En haut",
                 "bottom": "En bas",
                 "adaptive": "automatique"
+            },
+            "autoHide": {
+                "title": "",
+                "description": ""
             }
         },
         "reset": "Réinitialiser",
@@ -642,6 +774,14 @@
             "fadeReadPosts": {
                 "title": "Rendre les publications lues semi-transparents",
                 "description": "Rendre les titres des publications lues semi-transparents"
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "moderation": {
@@ -662,6 +802,12 @@
                 "title": "Ne pas virtualiser le flux",
                 "description": "La virtualisation ne charge que les publications visibles, ce qui augmente considérablement la performance du site. Désactivez la virtualisation si vous avez des problèmes de bégaiement (ex : le fil qui remonde en descendant). Cela désactivera le défilement infini."
             }
+        },
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
         }
     },
     "comment": {
@@ -672,7 +818,9 @@
         },
         "locked": "Cette publication est verrouillée.",
         "more": "{{comments:number}} en plus",
-        "banned": "Vous êtes banni de cette communauté."
+        "banned": "Vous êtes banni de cette communauté.",
+        "expand": "",
+        "collapse": ""
     },
     "moderation": {
         "report": "Créer un signalement",
@@ -699,7 +847,12 @@
         },
         "reportModal": {
             "title": "Signaler",
-            "success": "Publication signalée."
+            "success": "Publication signalée.",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "Raison",
         "remove": "Retirer",
@@ -709,7 +862,13 @@
         "feature": "Présenter",
         "unfeature": "Retirer la présentation",
         "unlock": "Déverrouiller",
-        "lock": "Verrouiller"
+        "lock": "Verrouiller",
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "votes": ""
     },
     "cards": {
         "site": {
@@ -728,7 +887,8 @@
             "blockInstance": "Bloquer l'instance",
             "favorite": "Favoris",
             "unfavorite": "Enlever Le Favori",
-            "activeDay": "En ligne aujourd'hui"
+            "activeDay": "En ligne aujourd'hui",
+            "flair": ""
         }
     },
     "admin": {
@@ -747,7 +907,8 @@
         "comments": "Commentaires",
         "communities": "Communautés",
         "instances": "Instances",
-        "message": "Message"
+        "message": "Message",
+        "url": ""
     },
     "post": {
         "actions": {
@@ -768,7 +929,11 @@
                 "delete": "Supprimer",
                 "markUnread": "Marquer comme non lu",
                 "mediaBias": "Barème de partialitée",
-                "restore": "Rétablir"
+                "restore": "Rétablir",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "mediaBias": {
                 "noData": {
@@ -784,6 +949,11 @@
             "link": {
                 "title": "Liens alternatifs",
                 "actions": "Actions de lien"
+            },
+            "vote": {
+                "score": "",
+                "downvote": "",
+                "upvote": ""
             }
         },
         "badges": {
@@ -793,6 +963,27 @@
             "removed": "Enlevé",
             "deleted": "Supprimé",
             "saved": "Sauvegardé"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
+        },
+        "image": {
+            "zoomIn": "",
+            "zoomOut": ""
         }
     },
     "common": {
@@ -809,7 +1000,12 @@
         "cancel": "Annuler",
         "send": "Envoyer",
         "debug": "Déboguer",
-        "general": "Général"
+        "general": "Général",
+        "info": "",
+        "attach": "",
+        "download": "",
+        "continue": "",
+        "remove": ""
     },
     "message": {
         "success": "Succès",
@@ -872,7 +1068,8 @@
         "settingsImport": "L'importation des paramètres a réussie",
         "userLoading": "En train de charger vos données d'utilisateur...",
         "purgeUser": "Utlisateur purgée.",
-        "purgedCommunity": "Communauté purgée."
+        "purgedCommunity": "Communauté purgée.",
+        "lemmyDonate": ""
     },
     "error": {
         "cant_block_yourself": "Vous ne pouvez pas vous bloquer. Vous ne devriez pas non plus, vous êtes quelqu'un de bien !",
@@ -898,6 +1095,59 @@
         "couldnt_find_post": "Cette publication n'existe pas, n'est pas sur cette instance ou a été supprimé.",
         "invalid_vote_value": "Vous ne pouvez pas commettre de fraude électorale sur les publications Lemmy, désolé.",
         "incorrect_login": "Identifiants de connexion incorrects. Veuillez réessayer.",
-        "incorrect_login_5": "Petite question, regardez-vous les touches sur lesquelles vous appuyez ?"
+        "incorrect_login_5": "Petite question, regardez-vous les touches sur lesquelles vous appuyez ?",
+        "captcha_incorrect": "",
+        "rate_limit_error": "",
+        "cant_find_object": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "not_an_admin": "",
+        "unsupported": "",
+        "token_not_found": ""
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
     }
 }
