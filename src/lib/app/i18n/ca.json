@@ -47,7 +47,9 @@
             "search": "Cerca {{default}}",
             "setViewTo": "Canvia la vista a {{default}}",
             "setColorTo": "Canvia l’esquema de colors a {{default}}",
-            "downloading": "Accions de descàrrega"
+            "downloading": "Accions de descàrrega",
+            "communities": "",
+            "goto": ""
         },
         "notifications": "Notificacions"
     },
@@ -92,7 +94,8 @@
                     "12hours": "12 hores",
                     "6hours": "6 hores",
                     "hour": "Hora",
-                    "month": "Mes"
+                    "month": "Mes",
+                    "year": ""
                 }
             },
             "old": "Antics",
@@ -143,7 +146,16 @@
             "readMore": "Llegeix més",
             "edit": "Editar publicació",
             "altText": "Text alternatiu",
-            "create": "Crear publicació"
+            "create": "Crear publicació",
+            "fetching": "",
+            "flair": "",
+            "customThumbnail": "",
+            "autosubmit": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "bio": "Biografia",
@@ -201,7 +213,8 @@
                 "error": "El teu correu electrònic no ha estat verificat.",
                 "description": "Revisa la teva safata d’entrada per trobar l’enllaç de verificació. Un cop l’hagis clicat, prem el botó de sota."
             },
-            "description": "Escull una instància que t’interessi, o escriu l’URL manualment."
+            "description": "Escull una instància que t’interessi, o escriu l’URL manualment.",
+            "recommended": ""
         },
         "description": "Descripció",
         "time": {
@@ -213,7 +226,8 @@
             "permanent": "Permanent",
             "minutes": "Minuts"
         },
-        "confirmPassword": "Confirma la contrasenya"
+        "confirmPassword": "Confirma la contrasenya",
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
@@ -241,7 +255,19 @@
                 "title": "Blocats",
                 "empty": {
                     "title": "Cap entitat blocada",
-                    "description": "Quan bloquegis alguna cosa, ja no apareixerà als teus canals."
+                    "description": "Quan bloquegis alguna cosa, ja no apareixerà als teus canals.",
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
                 }
             },
             "credentials": "Credencials",
@@ -311,7 +337,12 @@
                 "switch": "Canvia a un compte a {{destInstance}}",
                 "fetch": "Localitza la publicació a {{homeInstance}}"
             },
-            "description": "Aquest enllaç porta a una publicació que no és a la instància del teu compte, {{homeInstance}}."
+            "description": "Aquest enllaç porta a una publicació que no és a la instància del teu compte, {{homeInstance}}.",
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
+            }
         },
         "inbox": {
             "title": "Safata d'entrada",
@@ -441,6 +472,567 @@
                 "title": "Multimèdia"
             }
         },
-        "accounts": "Comptes"
+        "accounts": "Comptes",
+        "theme": {
+            "accent": "",
+            "preset": {
+                "delete": {
+                    "confirm": "",
+                    "title": ""
+                },
+                "new": "",
+                "default": "",
+                "description": "",
+                "classic": "",
+                "presets": "",
+                "imported": "",
+                "title": ""
+            },
+            "title": "",
+            "resetWarning": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "passwordChange": {
+            "description": "",
+            "instance": "",
+            "title": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "verifyEmail": {
+            "message": "",
+            "error": ""
+        },
+        "community": {
+            "settings": {
+                "settings": "",
+                "team": "",
+                "manage": ""
+            },
+            "languageWarning": ""
+        },
+        "user": {
+            "note": ""
+        },
+        "resetLogin": {
+            "description": "",
+            "title": ""
+        }
+    },
+    "settings": {
+        "app": {
+            "limitLayoutWidth": {
+                "title": "",
+                "description": ""
+            },
+            "duplicateTitles": {
+                "title": "",
+                "description": ""
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "theming": {
+                "description": "",
+                "link": "",
+                "title": ""
+            },
+            "infiniteScroll": {
+                "description": "",
+                "title": ""
+            },
+            "lang": {
+                "title": "",
+                "useRtl": {
+                    "title": "",
+                    "description": ""
+                },
+                "description": "",
+                "credits": "",
+                "auto": ""
+            },
+            "view": {
+                "cozy": "",
+                "title": "",
+                "compact": ""
+            },
+            "font": {
+                "description": "",
+                "title": ""
+            },
+            "sort": {
+                "description": "",
+                "title": ""
+            },
+            "postsInNewTab": {
+                "description": "",
+                "title": ""
+            },
+            "placeholders": {
+                "title": "",
+                "description": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "titleTags": {
+                "description": "",
+                "title": ""
+            },
+            "displayName": {
+                "description": "",
+                "title": ""
+            },
+            "expandImages": {
+                "title": "",
+                "description": ""
+            },
+            "thumbnailSide": {
+                "description": "",
+                "title": "",
+                "right": "",
+                "left": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "embeds": {
+            "youtube": {
+                "description": ""
+            },
+            "instance": {
+                "invidious": "",
+                "description": "",
+                "piped": ""
+            },
+            "clickToView": {
+                "description": "",
+                "title": ""
+            },
+            "title": ""
+        },
+        "lemmy": {
+            "instances": {
+                "description": "",
+                "title": ""
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
+            },
+            "hideSubmissions": {
+                "title": "",
+                "removed": "",
+                "deleted": "",
+                "description": ""
+            },
+            "crosspostMarker": {
+                "title": "",
+                "description": ""
+            },
+            "fadeReadPosts": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "showHiddenPosts": {
+                "title": "",
+                "description": ""
+            },
+            "nsfwBlur": {
+                "description": "",
+                "title": ""
+            },
+            "compactFeatured": {
+                "title": "",
+                "description": ""
+            },
+            "markReadPosts": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "moderation": {
+            "replyPresets": {
+                "title": "",
+                "description": "",
+                "syntax": ""
+            },
+            "title": ""
+        },
+        "export": "",
+        "navigation": {
+            "title": "",
+            "autoHide": {
+                "title": "",
+                "description": ""
+            }
+        },
+        "other": {
+            "virtualizeFeeds": {
+                "title": "",
+                "description": ""
+            },
+            "title": "",
+            "debug": {
+                "description": "",
+                "title": ""
+            }
+        },
+        "beta": "",
+        "import": "",
+        "mobile": "",
+        "desktop": "",
+        "reset": "",
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
+        },
+        "tablet": "",
+        "title": ""
+    },
+    "post": {
+        "actions": {
+            "vote": {
+                "score": "",
+                "downvote": "",
+                "upvote": ""
+            },
+            "more": {
+                "share": "",
+                "crosspost": "",
+                "unhide": "",
+                "label": "",
+                "delete": "",
+                "share.global": "",
+                "share.local": "",
+                "edit": "",
+                "creator": "",
+                "share.from": "",
+                "actions": "",
+                "markUnread": "",
+                "markRead": "",
+                "hide": "",
+                "restore": "",
+                "share.photon": ""
+            },
+            "comments": "",
+            "unsave": "",
+            "save": ""
+        },
+        "badges": {
+            "locked": "",
+            "nsfw": "",
+            "featured": "",
+            "deleted": "",
+            "removed": "",
+            "saved": ""
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
+        },
+        "image": {
+            "zoomIn": "",
+            "zoomOut": ""
+        }
+    },
+    "toast": {
+        "purgeUser": "",
+        "failInstanceURL": "",
+        "failSignup": "",
+        "unblockUser": "",
+        "copied": "",
+        "updateMods": "",
+        "removeAdminWarning": "",
+        "settingsImportWarning": "",
+        "addMod": "",
+        "waitApplication": "",
+        "confirmDelete1": "",
+        "lemmyDonate": "",
+        "loginVoteGate": "",
+        "successSignup": "",
+        "failCSV": "",
+        "sentMessage": "",
+        "blockedInstance": "",
+        "deleted": "",
+        "confirmDelete3": "",
+        "blockUser": "",
+        "failFindUser": "",
+        "unbannedUser": "",
+        "bannedUser": "",
+        "purgedCommunity": "",
+        "resetSettings": "",
+        "invalidDateBeforeCurrent": "",
+        "removeAdmin": "",
+        "settingsImport": "",
+        "restoredFromDraft": "",
+        "resetLink": "",
+        "failFetchInstances": "",
+        "failGenerateTitle": "",
+        "unresolveReport": "",
+        "passwordReset": "",
+        "updatedCommunity": "",
+        "updatedSite": "",
+        "invalidLogin": "",
+        "addAccount": "",
+        "logIn": "",
+        "resolveReport": "",
+        "blockedCommunity": "",
+        "needPassword": "",
+        "invalidDateAbsolute": "",
+        "loginRefresh": "",
+        "verifyEmail": "",
+        "deniedApplication": "",
+        "userLoading": "",
+        "confirmDelete2": "",
+        "saveSettings": "",
+        "noComments": "",
+        "unblockedCommunity": "",
+        "invalidURL": "",
+        "approvedApplication": "",
+        "deleting": "",
+        "generatedTitle": "",
+        "needCommunity": ""
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "common": {
+        "jump": "",
+        "refresh": "",
+        "save": "",
+        "add": "",
+        "debug": "",
+        "info": "",
+        "enable": "",
+        "cancel": "",
+        "back": "",
+        "attach": "",
+        "send": "",
+        "disabled": "",
+        "disable": "",
+        "download": "",
+        "general": "",
+        "continue": "",
+        "next": "",
+        "remove": "",
+        "enabled": ""
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "error": {
+        "incorrect_login_9": "",
+        "incorrect_login_10": "",
+        "captcha_incorrect": "",
+        "incorrect_login_2": "",
+        "incorrect_login_12": "",
+        "rate_limit_error": "",
+        "incorrect_login_3": "",
+        "incorrect_login_8": "",
+        "cant_find_object": "",
+        "incorrect_login_6": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "honeypot_failed": "",
+        "invalid_password": "",
+        "couldnt_find_post": "",
+        "incorrect_login_7": "",
+        "incorrect_login": "",
+        "passwords_do_not_match": "",
+        "cant_block_yourself": "",
+        "slurs": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "invalid_vote_value": "",
+        "email_not_verified": "",
+        "not_an_admin": "",
+        "downvotes_are_disabled": "",
+        "incorrect_login_11": "",
+        "incorrect_login_4": "",
+        "email_already_exists": "",
+        "unsupported": "",
+        "cant_block_local_instance": "",
+        "registration_application_is_pending": "",
+        "token_not_found": "",
+        "incorrect_login_5": ""
+    },
+    "comment": {
+        "expand": "",
+        "banned": "",
+        "reply": "",
+        "actions": {
+            "label": "",
+            "link": ""
+        },
+        "collapse": "",
+        "locked": "",
+        "more": ""
+    },
+    "moderation": {
+        "ban": {
+            "deleteData": "",
+            "expires": "",
+            "banFromCommunity": "",
+            "unbanFromCommunity": "",
+            "banning": "",
+            "unbanning": "",
+            "warning": ""
+        },
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "removeSubmission": {
+            "titlePurge": "",
+            "titleRestore": "",
+            "failMessage": "",
+            "message": "",
+            "successPurge": "",
+            "title": "",
+            "comment": "",
+            "failEmptyReply": "",
+            "withReason": "",
+            "failReply": ""
+        },
+        "votes": "",
+        "reportModal": {
+            "success": "",
+            "title": "",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
+        },
+        "label": "",
+        "unfeature": "",
+        "restore": "",
+        "labelInstanceOnly": "",
+        "remove": "",
+        "unlock": "",
+        "report": "",
+        "lock": "",
+        "feature": "",
+        "reason": ""
+    },
+    "content": {
+        "instances": "",
+        "posts": "",
+        "comments": "",
+        "message": "",
+        "users": "",
+        "all": "",
+        "url": "",
+        "communities": ""
+    },
+    "cards": {
+        "community": {
+            "members": "",
+            "blockInstance": "",
+            "subscribed": "",
+            "activeDay": "",
+            "unblock": "",
+            "subscribe": "",
+            "moderators": "",
+            "flair": "",
+            "modlog": "",
+            "block": ""
+        },
+        "site": {
+            "admins": "",
+            "stats": "",
+            "about": ""
+        }
+    },
+    "admin": {
+        "label": "",
+        "purgeCommunity": {
+            "title": "",
+            "warning": ""
+        },
+        "purge": "",
+        "instance": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
+    },
+    "message": {
+        "success": "",
+        "error": "",
+        "retry": ""
     }
 }
