@@ -47,8 +47,11 @@
             "downloading": "Eylemler indiriliyor",
             "setTheme": "Temayı ayarla",
             "setThemeTo": "Temayı şuna ayarla: {{default}}",
-            "contextual": "Bu sayfada"
-        }
+            "contextual": "Bu sayfada",
+            "communities": "",
+            "goto": ""
+        },
+        "notifications": ""
     },
     "account": {
         "login": "Giriş Yap",
@@ -61,7 +64,8 @@
         "moveUp": "Yukarı Taşı",
         "moveDown": "Aşağı Taşı",
         "guest": "Misafir",
-        "versionGate": "Photon'un bu sürümü {{version}} veya daha üstü versiyonda çalışan sunucuları destekler."
+        "versionGate": "Photon'un bu sürümü {{version}} veya daha üstü versiyonda çalışan sunucuları destekler.",
+        "piefedGate": ""
     },
     "filter": {
         "location": {
@@ -70,7 +74,8 @@
             "local": "Yerel",
             "subscribed": "Abonelikler",
             "moderator": "Moderatör",
-            "global": "Küresel"
+            "global": "Küresel",
+            "popular": ""
         },
         "sort": {
             "label": "Filtre",
@@ -89,7 +94,8 @@
                     "day": "Gün",
                     "12hours": "12 Saat",
                     "6hours": "6 Saat",
-                    "hour": "Saat"
+                    "hour": "Saat",
+                    "year": ""
                 }
             },
             "new": "Yeni",
@@ -141,7 +147,16 @@
             "addUrl": "URL ekle",
             "setLanguage": "Dili ayarla",
             "unset": "Ayarlanmadı",
-            "readMore": "Devamını oku"
+            "readMore": "Devamını oku",
+            "fetching": "",
+            "flair": "",
+            "customThumbnail": "",
+            "autosubmit": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "displayName": "Görünen ad",
@@ -161,12 +176,21 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
-                "paste": "Bunu kimlik doğrulayıcı uygulamanıza yapıştırın."
+                "paste": "Bunu kimlik doğrulayıcı uygulamanıza yapıştırın.",
+                "disabled": ""
             },
             "deleteAccount": {
                 "label": "Hesabı sil",
                 "deleteContent": "İçeriği sil",
                 "warning": "Bu, TÜM gönderimlerinizi silecektir."
+            },
+            "credentials": {
+                "description": "",
+                "title": ""
+            },
+            "languages": {
+                "title": "",
+                "description": ""
             }
         },
         "email": "E-posta",
@@ -178,23 +202,48 @@
             "chooseInstance": "Bir sunucu seçin",
             "application": {
                 "label": "Başvuru",
-                "info": "Bu sunucuya katılmak için bu başvuru formunu doldurmalı ve kabul edilmeyi beklemelisiniz. "
+                "info": "Bu sunucuya katılmak için bu başvuru formunu doldurmalı ve kabul edilmeyi beklemelisiniz. ",
+                "notice": ""
             },
             "closed": {
                 "title": "Kayıtlar kapandı",
                 "description": "Bu sunucuda kayıtlar kapatıldı. ",
                 "anotherInstance": "Başka bir sunucu bul"
-            }
+            },
+            "verify": {
+                "title": "",
+                "error": "",
+                "submit": "",
+                "description": ""
+            },
+            "recommended": ""
         },
-        "description": "Tanım"
+        "description": "Tanım",
+        "time": {
+            "duration": "",
+            "years": "",
+            "permanent": "",
+            "months": "",
+            "days": "",
+            "minutes": "",
+            "hours": ""
+        },
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
             "title": "Ana Sayfa",
             "footer": "{{users:number}} aktif {{users; 1:user; default:users;}}",
-            "endFeed": "sonuna ulaştın {{community_name; undefined:the feed.; default:{{community_name}}.}}"
+            "endFeed": "sonuna ulaştın {{community_name; undefined:the feed.; default:{{community_name}}.}}",
+            "empty": {
+                "description": "",
+                "title": ""
+            }
         },
-        "modlog": "Mod günlüğü",
+        "modlog": {
+            "filters": "",
+            "title": ""
+        },
         "instances": "Sunucular",
         "legal": {
             "title": "Yasal",
@@ -207,7 +256,19 @@
                 "title": "Engellendi",
                 "empty": {
                     "title": "Engellenen varlık yok",
-                    "description": "Herhangi bir şeyi engellediğinizde, artık yayınlarınızda görünmez."
+                    "description": "Herhangi bir şeyi engellediğinizde, artık yayınlarınızda görünmez.",
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
                 }
             },
             "credentials": "Kimlik bilgileri",
@@ -226,7 +287,8 @@
                 "warning": "Bu kalıcıdır. "
             },
             "overview": "Genel Bakış",
-            "submissions": "Gönderimler"
+            "submissions": "Gönderimler",
+            "edit": ""
         },
         "translators": "Çevirmenler",
         "accounts": "Hesaplar",
@@ -269,7 +331,9 @@
             "emptyComments": {
                 "title": "Yorum yok",
                 "description": "Konuşmayı başlatın!"
-            }
+            },
+            "loadComments": "",
+            "commented": ""
         },
         "inbox": {
             "title": "Gelen kutusu",
@@ -277,6 +341,19 @@
             "empty": {
                 "title": "Yeni bildirim yok",
                 "description": "Mesajlar, yanıtlar ve bahsedenler burada görünecektir."
+            },
+            "item": {
+                "message": "",
+                "reply": "",
+                "mention": ""
+            },
+            "messages": {
+                "empty": {
+                    "title": ""
+                },
+                "conversation": "",
+                "indicator": "",
+                "start": ""
             }
         },
         "moderation": {
@@ -289,7 +366,16 @@
             "resolve": "Çöz",
             "resolved": "Çözüldü",
             "unresolve": "Çöz",
-            "resolvedBy": "Tarafından çözüldü"
+            "resolvedBy": "Tarafından çözüldü",
+            "markAllComplete": "",
+            "markAll": "",
+            "manage": {
+                "ban": "",
+                "unban": "",
+                "title": "",
+                "modlogs": ""
+            },
+            "feed": ""
         },
         "admin": {
             "title": "Yönetim",
@@ -372,6 +458,9 @@
                     "title": "Beyaz listeye alınmış sunucu yok",
                     "description": "Bir sunucunun beyaz listeye alınması diğer tüm sunucuları engelleyecektir."
                 }
+            },
+            "media": {
+                "title": ""
             }
         },
         "verifyEmail": {
@@ -416,7 +505,35 @@
                 "team": "Ekip",
                 "settings": "Ayarlar",
                 "manage": "Yönet"
+            },
+            "languageWarning": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "postRedirect": {
+            "title": "",
+            "description": "",
+            "actions": {
+                "back": "",
+                "fetch": "",
+                "switch": ""
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "cards": {
@@ -436,7 +553,8 @@
             "blockInstance": "Sunucuyu engelle",
             "favorite": "Favori",
             "unfavorite": "Favoriyi Kaldır",
-            "activeDay": "Bugün Aktif"
+            "activeDay": "Bugün Aktif",
+            "flair": ""
         }
     },
     "admin": {
@@ -455,7 +573,8 @@
         "comments": "Yorumlar",
         "communities": "Topluluklar",
         "instances": "Sunucular",
-        "message": "Mesaj"
+        "message": "Mesaj",
+        "url": ""
     },
     "post": {
         "actions": {
@@ -476,7 +595,11 @@
                 "share": "Paylaşmak",
                 "crosspost": "Çapraz Paylaş",
                 "delete": "Sil",
-                "restore": "Eski haline getir"
+                "restore": "Eski haline getir",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "mediaBias": {
                 "description": "Tanım",
@@ -515,6 +638,19 @@
         "meta": {
             "lastEdited": "Son düzenleme {{default}}",
             "created": "Oluşturuldu {{default}}"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
         }
     },
     "comment": {
@@ -525,7 +661,9 @@
         },
         "locked": "Bu yazı kilitlidir.",
         "banned": "Bu topluluktan yasaklandınız.",
-        "more": "{{comments:number}} Daha"
+        "more": "{{comments:number}} Daha",
+        "expand": "",
+        "collapse": ""
     },
     "moderation": {
         "report": "Rapor",
@@ -552,7 +690,12 @@
         },
         "reportModal": {
             "title": "Rapor",
-            "success": "Bu başvuruyu bildirdik."
+            "success": "Bu başvuruyu bildirdik.",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "Sebep",
         "lock": "Kilit",
@@ -562,7 +705,13 @@
         "label": "Moderasyon",
         "labelInstanceOnly": "Moderasyon (Yalnızca Sunucu)",
         "feature": "Öne Çıkar",
-        "unfeature": "Öne Çıkarmayı İptal Et"
+        "unfeature": "Öne Çıkarmayı İptal Et",
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "votes": ""
     },
     "common": {
         "back": "Geri",
@@ -578,7 +727,12 @@
         "add": "Ekle",
         "cancel": "İptal et",
         "send": "Gönder",
-        "general": "Genel"
+        "general": "Genel",
+        "info": "",
+        "attach": "",
+        "download": "",
+        "continue": "",
+        "remove": ""
     },
     "message": {
         "success": "Başarı",
@@ -641,7 +795,8 @@
         "purgeUser": "Bu kullanıcıyı sildi.",
         "settingsImport": "Ayarlar başarıyla içe aktarıldı",
         "settingsImportWarning": "İçe aktarılan ayarlar geçerli görünmüyor. ",
-        "userLoading": "Kullanıcı verileriniz hâlâ yükleniyor..."
+        "userLoading": "Kullanıcı verileriniz hâlâ yükleniyor...",
+        "lemmyDonate": ""
     },
     "settings": {
         "title": "Ayarlar",
@@ -675,6 +830,10 @@
             "commands": {
                 "title": "Komut paleti",
                 "description": "Arama yaparak uygulamada gezinmek için eğik çizgiye basın veya Photon logosuna sağ tıklayın."
+            },
+            "autoHide": {
+                "title": "",
+                "description": ""
             }
         },
         "app": {
@@ -778,6 +937,18 @@
             "reverseActions": {
                 "title": "Ters işlem satırı",
                 "description": "Gönderiler ve yorumlardaki eylemlerin sırasını tersine çevirir."
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "embeds": {
@@ -830,6 +1001,14 @@
             "instances": {
                 "title": "Sunucuları göster",
                 "description": "Belirli içeriğin geldiği sunucuları gösterin."
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "moderation": {
@@ -853,6 +1032,9 @@
         },
         "account": {
             "title": "Hesap"
+        },
+        "donate": {
+            "description": ""
         }
     },
     "error": {
@@ -882,7 +1064,16 @@
         "invalid_vote_value": "Lemmy paylaşımlarında trafoya kedi giremez, üzgünüm.",
         "language_not_allowed": "Bu toplulukta bu dile izin verilmiyor. ",
         "couldnt_find_person": "Bu kullanıcı mevcut değil.",
-        "couldnt_find_community": "O topluluk yok."
+        "couldnt_find_community": "O topluluk yok.",
+        "captcha_incorrect": "",
+        "rate_limit_error": "",
+        "cant_find_object": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "not_live_supported": "",
+        "not_an_admin": "",
+        "unsupported": "",
+        "token_not_found": ""
     },
     "aria": {
         "pagination": {
@@ -894,10 +1085,35 @@
             "upvotes": "{{default}} olumlu oylar",
             "downvotes": "{{default}} olumsuz oylar",
             "score": "Gol: {{default}}"
+        },
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
         }
     },
     "stats": {
         "joined": "Katıldı",
         "created": "Oluşturuldu"
+    },
+    "placeholders": {
+        "body": "",
+        "title": "",
+        "comments": ""
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
     }
 }
