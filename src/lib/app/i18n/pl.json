@@ -21,7 +21,8 @@
                 "description": "Sprawdź skrzynkę odbiorczą, czy jest tam link weryfikacyjny. Gdy go klikniesz, wciśnij przycisk poniżej.",
                 "submit": "Mój mail został zweryfikowany",
                 "error": "Twój mail nie został zweryfikowany."
-            }
+            },
+            "recommended": ""
         },
         "username": "Nazwa użytkownika",
         "name": "Imię",
@@ -47,7 +48,16 @@
             "addUrl": "Dodaj adres URL",
             "readMore": "Czytaj więcej",
             "setLanguage": "Ustaw język",
-            "unset": "Usuń ustawiony język"
+            "unset": "Usuń ustawiony język",
+            "fetching": "",
+            "flair": "",
+            "customThumbnail": "",
+            "autosubmit": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "displayName": "Wyświetlana nazwa",
@@ -67,7 +77,8 @@
             "2fa": {
                 "totp": "TOTP",
                 "2fa": "2FA",
-                "paste": "Wklej to w swojej aplikacji uwierzytelniającej."
+                "paste": "Wklej to w swojej aplikacji uwierzytelniającej.",
+                "disabled": ""
             },
             "deleteAccount": {
                 "label": "Usuń konto",
@@ -77,6 +88,10 @@
             "languages": {
                 "title": "Języki",
                 "description": "Jeżeli dodasz któryś, zobaczysz tylko wpisy z tym językiem ustawionym wprost. Większość treści, bez oznaczenia, podpada pod „Undetermined”"
+            },
+            "credentials": {
+                "description": "",
+                "title": ""
             }
         },
         "email": "Email",
@@ -90,7 +105,8 @@
             "months": "Miesiące",
             "years": "Lata",
             "permanent": "Na trwałe"
-        }
+        },
+        "instanceType": ""
     },
     "routes": {
         "profile": {
@@ -100,7 +116,19 @@
             "blocks": {
                 "empty": {
                     "description": "Gdy coś zablokujesz, przestanie ci się pojawiać w twoich kanałach.",
-                    "title": "Nic nie jest blokowane"
+                    "title": "Nic nie jest blokowane",
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
                 },
                 "title": "Blokady"
             },
@@ -119,12 +147,17 @@
                 "warning": "To jest nieodwracalne. Czy na pewno chcesz to zrobić?"
             },
             "overview": "Przegląd",
-            "submissions": "Zamieszczone"
+            "submissions": "Zamieszczone",
+            "edit": ""
         },
         "frontpage": {
             "title": "Strona główna",
             "footer": "{{users:number}} aktywnych {{users; 1:user; default:users;}}",
-            "endFeed": "Dotarłeś do końca {{community_name; undefined:feedu.; default:{{community_name}}.}}"
+            "endFeed": "Dotarłeś do końca {{community_name; undefined:feedu.; default:{{community_name}}.}}",
+            "empty": {
+                "description": "",
+                "title": ""
+            }
         },
         "modlog": {
             "title": "Dziennik moderacyjny",
@@ -360,7 +393,25 @@
                 "back": "Wróć",
                 "fetch": "Zaciągnij post na {{homeInstance}}",
                 "switch": "Przełącz na konto na {{destInstance}}"
+            },
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "nav": {
@@ -405,7 +456,9 @@
             "downloading": "Pobieranie akcji",
             "setTheme": "Ustaw motyw",
             "setThemeTo": "Ustaw motyw na {{default}}",
-            "contextual": "Na tej stronie"
+            "contextual": "Na tej stronie",
+            "communities": "",
+            "goto": ""
         },
         "notifications": "Powiadomienia"
     },
@@ -436,7 +489,11 @@
                 "share": "Udostępnij",
                 "crosspost": "Krzyżowy post",
                 "delete": "Usuń",
-                "restore": "Przywróć"
+                "restore": "Przywróć",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "mediaBias": {
                 "description": "Opis",
@@ -467,6 +524,19 @@
         "meta": {
             "lastEdited": "Ostatnio edytowane {{default}}",
             "created": "Utworzone {{default}}"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
         }
     },
     "account": {
@@ -480,7 +550,8 @@
         "moveUp": "Przesuń w górę",
         "moveDown": "Przesuń w dół",
         "guest": "Gość",
-        "versionGate": "Ta wersja Photon obsługuje instancje działające na {{version}} lub nowszej."
+        "versionGate": "Ta wersja Photon obsługuje instancje działające na {{version}} lub nowszej.",
+        "piefedGate": ""
     },
     "filter": {
         "location": {
@@ -489,7 +560,8 @@
             "local": "Lokalne",
             "subscribed": "Subskrybowane",
             "moderator": "Moderowane",
-            "global": "Globalne"
+            "global": "Globalne",
+            "popular": ""
         },
         "sort": {
             "label": "Sortowanie",
@@ -508,7 +580,8 @@
                     "day": "Dzień",
                     "12hours": "12 Godzin",
                     "6hours": "6 Godzin",
-                    "hour": "Godzina"
+                    "hour": "Godzina",
+                    "year": ""
                 }
             },
             "new": "Nowe",
@@ -551,7 +624,8 @@
             "blockInstance": "Zablokuj instancję",
             "favorite": "Ulubione",
             "unfavorite": "Usuń z ulubionych",
-            "activeDay": "Aktywny dzisiaj"
+            "activeDay": "Aktywny dzisiaj",
+            "flair": ""
         }
     },
     "admin": {
@@ -581,7 +655,9 @@
         },
         "locked": "Ten post jest zablokowany.",
         "banned": "Zostałeś zbanowany z tej społeczności.",
-        "more": "{{comments:number}} więcej"
+        "more": "{{comments:number}} więcej",
+        "expand": "",
+        "collapse": ""
     },
     "moderation": {
         "report": "Zgłoś",
@@ -608,7 +684,12 @@
         },
         "reportModal": {
             "title": "Zgłoś",
-            "success": "Zgłoszono to zgłoszenie."
+            "success": "Zgłoszono to zgłoszenie.",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "Powód",
         "lock": "Zablokuj",
@@ -642,7 +723,10 @@
         "cancel": "Anuluj",
         "send": "Wyślij",
         "remove": "Usuń",
-        "download": "Pobierz"
+        "download": "Pobierz",
+        "info": "",
+        "attach": "",
+        "continue": ""
     },
     "message": {
         "success": "Sukces",
@@ -705,7 +789,8 @@
         "purgeUser": "Wyczyszczono dane tego użytkownika.",
         "settingsImport": "Pomyślnie zaimportowano ustawienia",
         "settingsImportWarning": "Zaimportowane ustawienia wydają się nieprawidłowe. Czy na pewno chcesz je zaimportować?",
-        "userLoading": "Ładowanie danych użytkownika w toku..."
+        "userLoading": "Ładowanie danych użytkownika w toku...",
+        "lemmyDonate": ""
     },
     "settings": {
         "beta": "Beta",
@@ -817,6 +902,10 @@
             "titleOpensUrl": {
                 "title": "Tytuł otwiera URL",
                 "description": "Kliknięcie tytułu otworzy stronę linkowaną w poście, nie komentarze."
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "title": "Ustawienia",
@@ -886,6 +975,14 @@
             "nsfwBlur": {
                 "title": "Rozmycie NSFW",
                 "description": "Rozmywa obrazy i usuwa treści postów NSFW."
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
             }
         },
         "embeds": {
@@ -964,7 +1061,14 @@
         "couldnt_find_community": "Ta społeczność nie istnieje.",
         "not_an_admin": "Nie jesteś administratorem tej instancji.",
         "rate_limit_error": "Działasz za szybko.",
-        "passwords_do_not_match": "Oba twoje hasła nie pasują do siebie."
+        "passwords_do_not_match": "Oba twoje hasła nie pasują do siebie.",
+        "captcha_incorrect": "",
+        "cant_find_object": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "not_live_supported": "",
+        "unsupported": "",
+        "token_not_found": ""
     },
     "aria": {
         "pagination": {
@@ -976,6 +1080,22 @@
             "upvotes": "Głosy w górę: {{default}}",
             "downvotes": "Głosy w dół: {{default}}",
             "score": "Ocena: {{default}}"
+        },
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
         }
     },
     "stats": {
@@ -986,5 +1106,9 @@
         "comments": "Dołącz do rozmowy",
         "title": "Dodaj tytuł posta",
         "body": "Co masz do powiedzenia?"
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
     }
 }
