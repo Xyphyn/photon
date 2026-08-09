@@ -47,7 +47,9 @@
             "setTheme": "Thema festlegen",
             "setThemeTo": "Thema auf {{default}} festlegen",
             "contextual": "Auf dieser Seite",
-            "main": "Haupt"
+            "main": "Haupt",
+            "communities": "",
+            "goto": ""
         },
         "notifications": "Benachrichtigungen"
     },
@@ -62,7 +64,8 @@
         "moveDown": "Nach unten",
         "guest": "Gast",
         "addGuest": "Gast hinzufügen",
-        "versionGate": "Diese Version von Photon unterstützt Instanzen mit {{version}} oder höher."
+        "versionGate": "Diese Version von Photon unterstützt Instanzen mit {{version}} oder höher.",
+        "piefedGate": ""
     },
     "filter": {
         "location": {
@@ -71,7 +74,8 @@
             "subscribed": "Abonnements",
             "moderator": "Moderator",
             "all": "Alle",
-            "global": "Global"
+            "global": "Global",
+            "popular": ""
         },
         "sort": {
             "label": "Sortieren",
@@ -89,7 +93,8 @@
                     "day": "Tag",
                     "12hours": "12 Stunden",
                     "6hours": "6 Stunden",
-                    "hour": "Stunde"
+                    "hour": "Stunde",
+                    "year": ""
                 },
                 "label": "Spitze"
             },
@@ -142,7 +147,16 @@
             "readMore": "Weiterlesen",
             "addUrl": "URL hinzufügen",
             "setLanguage": "Sprache festlegen",
-            "unset": "Nicht festgelegt"
+            "unset": "Nicht festgelegt",
+            "fetching": "",
+            "flair": "",
+            "customThumbnail": "",
+            "autosubmit": "",
+            "types": {
+                "poll": "",
+                "event": "",
+                "normal": ""
+            }
         },
         "profile": {
             "bio": "Biografie",
@@ -171,7 +185,8 @@
             "displayName": "Anzeigename",
             "scores": "Punkte anzeigen",
             "languages": {
-                "title": "Sprachen"
+                "title": "Sprachen",
+                "description": ""
             },
             "credentials": {
                 "title": "Verwalte, wie du dich anmeldest",
@@ -200,7 +215,8 @@
                 "description": "Überprüfe deinen Posteingang auf einen Verifizierungslink. Sobald du darauf geklickt hast, drücke den Button unten.",
                 "submit": "Ich habe meine E-Mail verifiziert",
                 "error": "Deine E-Mail wurde nicht verifiziert."
-            }
+            },
+            "recommended": ""
         },
         "description": "Beschreibung",
         "time": {
@@ -211,15 +227,18 @@
             "permanent": "Dauerhaft",
             "months": "Monate",
             "years": "Jahre"
-        }
+        },
+        "instanceType": ""
     },
     "routes": {
         "frontpage": {
             "title": "Startseite",
             "footer": "{{users:number}} aktiv {{users; 1:user; default:users;}}",
             "empty": {
-                "title": "Keine Beiträge"
-            }
+                "title": "Keine Beiträge",
+                "description": ""
+            },
+            "endFeed": ""
         },
         "modlog": {
             "title": "Moderationsprotokoll",
@@ -237,7 +256,19 @@
                 "title": "Blockiert",
                 "empty": {
                     "title": "Keine blockierten Entitäten",
-                    "description": "Wenn du etwas blockierst, wird es nicht mehr in deinen Feeds angezeigt."
+                    "description": "Wenn du etwas blockierst, wird es nicht mehr in deinen Feeds angezeigt.",
+                    "community": {
+                        "description": "",
+                        "title": ""
+                    },
+                    "instance": {
+                        "title": "",
+                        "description": ""
+                    },
+                    "user": {
+                        "title": "",
+                        "description": ""
+                    }
                 }
             },
             "credentials": "Anmeldedaten",
@@ -312,7 +343,14 @@
                 "start": "Chat starten",
                 "empty": {
                     "title": "Keine Nachrichten"
-                }
+                },
+                "conversation": "",
+                "indicator": ""
+            },
+            "item": {
+                "message": "",
+                "reply": "",
+                "mention": ""
             }
         },
         "moderation": {
@@ -330,9 +368,11 @@
             "manage": {
                 "unban": "Entsperren",
                 "ban": "Sperren",
-                "title": "Verwalten"
+                "title": "Verwalten",
+                "modlogs": ""
             },
-            "feed": "Meldungen"
+            "feed": "Meldungen",
+            "markAllComplete": ""
         },
         "admin": {
             "title": "Administration",
@@ -462,7 +502,15 @@
         "postRedirect": {
             "title": "Nicht übereinstimmende Instanz",
             "actions": {
-                "back": "Zurückgehen"
+                "back": "Zurückgehen",
+                "fetch": "",
+                "switch": ""
+            },
+            "description": "",
+            "automatic": {
+                "title": "",
+                "found": "",
+                "description": ""
             }
         },
         "community": {
@@ -470,7 +518,21 @@
                 "team": "Team",
                 "settings": "Einstellungen",
                 "manage": "Verwalten"
-            }
+            },
+            "languageWarning": ""
+        },
+        "accounts.placeholder": {
+            "descriptionWithGuest": "",
+            "description": "",
+            "title": ""
+        },
+        "explore": {
+            "topics": "",
+            "title": "",
+            "feeds": ""
+        },
+        "user": {
+            "note": ""
         }
     },
     "toast": {
@@ -519,7 +581,17 @@
         "unblockUser": "Blockierung des Nutzers aufgehoben.",
         "settingsImport": "Einstellungen erfolgreich importiert",
         "settingsImportWarning": "Die importierten Einstellungen scheinen ungültig zu sein. Möchtest du sie trotzdem importieren?",
-        "userLoading": "Deine Benutzerdaten werden noch geladen..."
+        "userLoading": "Deine Benutzerdaten werden noch geladen...",
+        "purgeUser": "",
+        "failInstanceURL": "",
+        "updateMods": "",
+        "lemmyDonate": "",
+        "failFetchInstances": "",
+        "failGenerateTitle": "",
+        "unresolveReport": "",
+        "resolveReport": "",
+        "loginRefresh": "",
+        "generatedTitle": ""
     },
     "cards": {
         "community": {
@@ -532,7 +604,9 @@
             "unblock": "Blockierung aufheben",
             "blockInstance": "Instanz blockieren",
             "favorite": "Favorisieren",
-            "unfavorite": "Favorisierung aufheben"
+            "unfavorite": "Favorisierung aufheben",
+            "activeDay": "",
+            "flair": ""
         },
         "site": {
             "about": "Über",
@@ -555,7 +629,11 @@
                 "translate": "Übersetzen",
                 "share": "Teilen",
                 "crosspost": "Querpost",
-                "restore": "Wiederherstellen"
+                "restore": "Wiederherstellen",
+                "share.global": "",
+                "share.local": "",
+                "share.from": "",
+                "share.photon": ""
             },
             "comments": "Kommentare",
             "save": "Speichern",
@@ -577,6 +655,23 @@
         "image": {
             "zoomIn": "Hineinzoomen",
             "zoomOut": "Herauszoomen"
+        },
+        "poll": {
+            "results": {
+                "hide": "",
+                "show": "",
+                "ends": "",
+                "ended": ""
+            },
+            "choices": "",
+            "votes": "",
+            "multiple": "",
+            "single": "",
+            "mode": ""
+        },
+        "meta": {
+            "lastEdited": "",
+            "created": ""
         }
     },
     "comment": {
@@ -587,7 +682,9 @@
             "link": "Link kopieren"
         },
         "more": "{{comments:number}} mehr",
-        "banned": "Du bist aus dieser Community gesperrt."
+        "banned": "Du bist aus dieser Community gesperrt.",
+        "expand": "",
+        "collapse": ""
     },
     "moderation": {
         "removeSubmission": {
@@ -614,7 +711,12 @@
         "report": "Melden",
         "reportModal": {
             "title": "Melden",
-            "success": "Dieser Beitrag wurde gemeldet."
+            "success": "Dieser Beitrag wurde gemeldet.",
+            "presets": {
+                "rules.content": "",
+                "rules": "",
+                "spam": ""
+            }
         },
         "reason": "Grund",
         "lock": "Schließen",
@@ -624,7 +726,13 @@
         "label": "Moderation",
         "labelInstanceOnly": "Moderation (Nur diese Instanz)",
         "feature": "Vorstellen",
-        "unfeature": "Vorstellung aufheben"
+        "unfeature": "Vorstellung aufheben",
+        "modlog": {
+            "post": "",
+            "comment": "",
+            "user": ""
+        },
+        "votes": ""
     },
     "admin": {
         "purgeCommunity": {
@@ -649,7 +757,12 @@
         "add": "Hinzufügen",
         "cancel": "Abbrechen",
         "send": "Senden",
-        "general": "Allgemein"
+        "general": "Allgemein",
+        "info": "",
+        "attach": "",
+        "download": "",
+        "continue": "",
+        "remove": ""
     },
     "content": {
         "all": "Alles",
@@ -674,7 +787,8 @@
             },
             "title": "Andere",
             "virtualizeFeeds": {
-                "title": "Feeds nicht virtualisieren"
+                "title": "Feeds nicht virtualisieren",
+                "description": ""
             }
         },
         "app": {
@@ -700,14 +814,21 @@
                 "en-US": "Englisch (US)",
                 "he": "Hebräisch",
                 "et": "Estnisch",
-                "fr": "Französisch"
+                "fr": "Französisch",
+                "useRtl": {
+                    "title": "",
+                    "description": ""
+                }
             },
             "view": {
                 "title": "Beitragsstil",
-                "legacy": "Der alte Photon-Look."
+                "legacy": "Der alte Photon-Look.",
+                "cozy": "",
+                "compact": ""
             },
             "sort": {
-                "title": "Standard-Sortierung"
+                "title": "Standard-Sortierung",
+                "description": ""
             },
             "postsInNewTab": {
                 "title": "Beiträge in einem neuen Tab öffnen",
@@ -715,12 +836,15 @@
             },
             "thumbnailSide": {
                 "left": "Links",
-                "right": "Rechts"
+                "right": "Rechts",
+                "description": "",
+                "title": ""
             },
             "title": "Photon",
             "theming": {
                 "description": "Photons Farben anpassen.",
-                "link": "Gehe zu Themen"
+                "link": "Gehe zu Themen",
+                "title": ""
             },
             "displayName": {
                 "title": "Anzeigename verwenden",
@@ -739,7 +863,32 @@
                 "description": "Welche Schriftart Photon in der UI verwendet."
             },
             "infiniteScroll": {
-                "title": "Unendliches Scrollen"
+                "title": "Unendliches Scrollen",
+                "description": ""
+            },
+            "duplicateTitles": {
+                "title": "",
+                "description": ""
+            },
+            "reverseActions": {
+                "description": "",
+                "title": ""
+            },
+            "absoluteDates": {
+                "title": "",
+                "description": ""
+            },
+            "titleTags": {
+                "description": "",
+                "title": ""
+            },
+            "titleOpensUrl": {
+                "description": "",
+                "title": ""
+            },
+            "voteRatioBar": {
+                "description": "",
+                "title": ""
             }
         },
         "navigation": {
@@ -757,6 +906,10 @@
                 "on": "An",
                 "off": "Aus",
                 "adaptive": "Adaptiv"
+            },
+            "autoHide": {
+                "title": "",
+                "description": ""
             }
         },
         "lemmy": {
@@ -774,15 +927,34 @@
             },
             "hideSubmissions": {
                 "deleted": "Vom Nutzer gelöscht",
-                "removed": "Durch einen Moderator entfernt"
+                "removed": "Durch einen Moderator entfernt",
+                "title": "",
+                "description": ""
             },
             "instances": {
-                "title": "Instanzen anzeigen"
+                "title": "Instanzen anzeigen",
+                "description": ""
             },
             "title": "Lemmy",
             "showHiddenPosts": {
                 "title": "Versteckte Beiträge anzeigen",
                 "description": "Zeige die von Dir versteckten Beiträge an."
+            },
+            "contentFilter": {
+                "minimized": "",
+                "disabled": "",
+                "hide": "",
+                "minimize": "",
+                "description": "",
+                "title": ""
+            },
+            "crosspostMarker": {
+                "title": "",
+                "description": ""
+            },
+            "nsfwBlur": {
+                "description": "",
+                "title": ""
             }
         },
         "beta": "Beta",
@@ -791,18 +963,37 @@
             "clickToView": {
                 "description": "Einbettungen nur laden, sobald Du auf sie klickst.",
                 "title": "Zum Ansehen klicken"
+            },
+            "youtube": {
+                "description": ""
+            },
+            "instance": {
+                "invidious": "",
+                "description": "",
+                "piped": ""
             }
         },
         "title": "Einstellungen",
         "moderation": {
             "title": "Moderation",
             "replyPresets": {
-                "syntax": "Syntax"
+                "syntax": "Syntax",
+                "title": "",
+                "description": ""
             }
         },
         "export": "Exportieren",
         "import": "Importieren",
-        "reset": "Zurücksetzen"
+        "reset": "Zurücksetzen",
+        "mobile": "",
+        "desktop": "",
+        "donate": {
+            "description": ""
+        },
+        "account": {
+            "title": ""
+        },
+        "tablet": ""
     },
     "error": {
         "email_not_verified": "Die E-Mail deines Kontos ist noch nicht verifiziert.",
@@ -827,11 +1018,60 @@
         "incorrect_login_6": "Ich glaube an dich.",
         "incorrect_login_7": "Okay, du verarscht mich jetzt.",
         "incorrect_login_8": "Ich gebe auf.",
-        "incorrect_login_9": "Jede dieser Anfragen, die du machst, schickt Daten über eine unglaubliche Technologie. Und du nutzt das, um fehlgeschlagene Anmeldungen zu machen."
+        "incorrect_login_9": "Jede dieser Anfragen, die du machst, schickt Daten über eine unglaubliche Technologie. Und du nutzt das, um fehlgeschlagene Anmeldungen zu machen.",
+        "captcha_incorrect": "",
+        "rate_limit_error": "",
+        "cant_find_object": "",
+        "couldnt_find_person": "",
+        "couldnt_find_community": "",
+        "unimplemented": "",
+        "invalid_password": "",
+        "not_live_supported": "",
+        "language_not_allowed": "",
+        "not_an_admin": "",
+        "incorrect_login_11": "",
+        "unsupported": "",
+        "token_not_found": ""
     },
     "placeholders": {
         "title": "Füge einen Beitragstitel hinzu",
         "body": "Was hast du zu sagen?",
         "comments": "Mach bei der Diskussion mit"
+    },
+    "aria": {
+        "sidebar": {
+            "accounts": "",
+            "title": ""
+        },
+        "vote": {
+            "upvotes": "",
+            "score": "",
+            "downvotes": "",
+            "group": ""
+        },
+        "pagination": {
+            "nav": "",
+            "current": ""
+        },
+        "postDecor": {
+            "openImage": "",
+            "openLink": "",
+            "openPost": ""
+        },
+        "loading": "",
+        "element": {
+            "pageHeader": ""
+        },
+        "comments": {
+            "children": ""
+        }
+    },
+    "class": {
+        "admin": "",
+        "moderator": ""
+    },
+    "stats": {
+        "created": "",
+        "joined": ""
     }
 }
