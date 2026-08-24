@@ -65,7 +65,7 @@
         "guest": "invité",
         "versionGate": "Cette version de Photon prend en charge des instances en version {{version}} ou supérieure.",
         "resetColor": "Réinitialiser les couleurs",
-        "piefedGate": ""
+        "piefedGate": "Le support de PieFed est expérimental. Certaines fonctionnalités ne sont pas encore prises en charge."
     },
     "filter": {
         "location": {
@@ -75,7 +75,7 @@
             "moderator": "Modérateur",
             "global": "Tout",
             "local": "Local",
-            "popular": ""
+            "popular": "Populaire"
         },
         "sort": {
             "label": "Trier",
@@ -94,7 +94,7 @@
                     "12hours": "Des douze dernières heures",
                     "6hours": "Des six dernières heures",
                     "hour": "De l'heure",
-                    "year": ""
+                    "year": "L'année dernière"
                 },
                 "label": "Top"
             },
@@ -148,13 +148,13 @@
             "unset": "Non défini",
             "readMore": "En savoir plus",
             "fetching": "",
-            "flair": "",
-            "customThumbnail": "",
-            "autosubmit": "",
+            "flair": "Ajouter une étiquette",
+            "customThumbnail": "Définir la miniature",
+            "autosubmit": "Soumettre automatiquement",
             "types": {
-                "poll": "",
-                "event": "",
-                "normal": ""
+                "poll": "Sondage",
+                "event": "Évenement",
+                "normal": "Discussion"
             }
         },
         "profile": {
@@ -174,7 +174,7 @@
                 "paste": "Copier ceci dans votre applicaton d'authentication.",
                 "totp": "L'authentification à plusieurs facteurs",
                 "2fa": "l'authentification à deux facteurs",
-                "disabled": ""
+                "disabled": "L'A2F est désactivée"
             },
             "deleteAccount": {
                 "label": "Supprimer le compte",
@@ -185,10 +185,10 @@
             "email": "Email",
             "credentials": {
                 "description": "",
-                "title": ""
+                "title": "Gérer vos méthodes de connexion"
             },
             "languages": {
-                "title": "",
+                "title": "Langues",
                 "description": ""
             }
         },
