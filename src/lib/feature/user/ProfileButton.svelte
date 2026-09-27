@@ -17,7 +17,7 @@
 </script>
 
 <SidebarButton
-  alignment="left"
+  alignment="start"
   loading={switching}
   rounding="lg"
   loaderWidth={22}
@@ -53,6 +53,6 @@
     {/if}
   </span>
   {#if !prof.jwt}
-    <Icon src={QuestionMarkCircle} size="14" micro class="ml-auto opacity-50" />
+    <Icon src={QuestionMarkCircle} size="14" micro class="ms-auto opacity-50" />
   {/if}
 </SidebarButton>

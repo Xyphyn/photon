@@ -30,7 +30,7 @@
 
 <Button
   color="tertiary"
-  alignment="left"
+  alignment="start"
   rounding="xl"
   {...rest}
   {href}

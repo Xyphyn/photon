@@ -46,12 +46,18 @@
       }
 
       &:first-child:not(:last-child) {
-        border-radius: var(--radius-xl) 0px 0px var(--radius-xl) !important;
-        border-right: 0px;
+        border-start-start-radius: var(--radius-xl);
+        border-end-start-radius: var(--radius-xl);
+        border-start-end-radius: 0px;
+        border-end-end-radius: 0px;
+        border-inline-end: 0px;
       }
 
       &:last-child:not(:first-child) {
-        border-radius: 0px var(--radius-xl) var(--radius-xl) 0px !important;
+        border-start-end-radius: var(--radius-xl);
+        border-end-end-radius: var(--radius-xl);
+        border-start-start-radius: 0px;
+        border-end-start-radius: 0px;
       }
     }
   }

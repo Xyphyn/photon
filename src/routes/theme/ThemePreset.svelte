@@ -18,7 +18,7 @@
     rounding="none"
     color="default"
     class={[
-      'rounded-2xl flex relative cursor-pointer h-full flex-col text-left p-0.5',
+      'rounded-2xl flex relative cursor-pointer h-full flex-col text-start p-0.5',
     ]}
   >
     <div
@@ -31,7 +31,7 @@
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </div>
       <div
-        class="w-3 h-3 rounded-full ml-auto"
+        class="w-3 h-3 rounded-full ms-auto"
         style="background-color: rgb({theme.colors['primary'][100]})"
       ></div>
     </div>
@@ -40,7 +40,7 @@
         src={CheckCircle}
         size="20"
         solid
-        class="absolute top-0 right-0 m-2 text-primary-100"
+        class="absolute top-0 inset-e-0 m-2 text-primary-100"
       />
     {/if}
     <div class="px-4 py-2 flex items-center gap-1 justify-between">
@@ -48,7 +48,7 @@
         bind:value={theme.name}
         disabled={theme.id <= 0}
         class={[
-          'text-left font-medium text-lg font-display disabled:pointer-events-none',
+          'text-start font-medium text-lg font-display disabled:pointer-events-none',
         ]}
       >
         {theme.name}

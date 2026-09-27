@@ -123,7 +123,7 @@
       <div class="py-2">
         <UserLink avatar={false} user={item.creator} class="py-1 block" />
         <blockquote
-          class="italic text-sm pl-4 border-l-2 border-slate-300 dark:border-zinc-700"
+          class="italic text-sm ps-4 border-s-2 border-slate-300 dark:border-zinc-700"
         >
           {item.reason}
         </blockquote>
@@ -153,7 +153,7 @@
   {#if items.length > 1}
     <button
       onclick={() => (usersModal = !usersModal)}
-      class="flex-1 text-2xl font-medium hover:underline cursor-pointer text-left w-max"
+      class="flex-1 text-2xl font-medium hover:underline cursor-pointer text-start w-max"
     >
       {items.length}x
     </button>

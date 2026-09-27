@@ -31,7 +31,7 @@
     <input
       bind:checked
       type="checkbox"
-      class="peer appearance-none absolute top-0 left-0 w-full h-full cursor-pointer z-10"
+      class="peer appearance-none absolute top-0 inset-s-0 w-full h-full cursor-pointer z-10"
     />
     <div
       class="box-border w-5 h-full bg-white dark:peer-checked:bg-black rounded-full shadow-xs

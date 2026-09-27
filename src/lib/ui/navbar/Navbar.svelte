@@ -141,7 +141,7 @@
         {/if}
         {#if Math.max(...Object.values(profile.inbox.notifications)) > 0}
           <div
-            class="w-2 h-2 absolute top-0.5 right-0.5 bg-red-500 rounded-full"
+            class="w-2 h-2 absolute top-0.5 inset-e-0.5 bg-red-500 rounded-full"
           ></div>
         {/if}
       </button>
@@ -173,8 +173,7 @@
     box-sizing: border-box;
 
     @variant max-md {
-      padding-left: calc(var(--spacing) * 8);
-      padding-right: calc(var(--spacing) * 8);
+      padding-inline: calc(var(--spacing) * 8);
 
       & > :global(*) {
         flex: 1;
@@ -188,7 +187,7 @@
 
   .navbar button:last-of-type {
     @variant md {
-      margin-left: calc(var(--spacing) * 2);
+      margin-inline-start: calc(var(--spacing) * 2);
     }
   }
 </style>

@@ -43,19 +43,18 @@
 
   let popoverEl = $state<HTMLElement>()
 
-  let origins: Record<Placement, string> = {
-    bottom: 'top',
-    'bottom-end': 'top right',
-    'bottom-start': 'top left',
-    left: 'left',
-    'left-end': 'left',
-    'left-start': 'left',
-    right: 'right',
-    'right-end': 'right',
-    'right-start': 'right',
-    top: 'bottom',
-    'top-end': 'bottom right',
-    'top-start': 'bottom',
+  // Floating UI keeps `-start`/`-end` logical, so resolve them against the
+  // popover's direction. Sides (left/right) are already physical.
+  const placementToOrigin = (placement: Placement, rtl: boolean): string => {
+    const [side, align] = placement.split('-')
+
+    if (side != 'top' && side != 'bottom') return side
+    if (!align) return side
+
+    const start = rtl ? 'right' : 'left'
+    const end = rtl ? 'left' : 'right'
+
+    return `${side} ${align == 'start' ? start : end}`
   }
 
   const [floatingRef, floatingContent] = createFloatingActions({
@@ -64,7 +63,8 @@
     middleware: middleware,
     onComputed: ({ placement }) => {
       if (popoverEl) {
-        popoverEl.style.transformOrigin = origins[placement]
+        const rtl = getComputedStyle(popoverEl).direction == 'rtl'
+        popoverEl.style.transformOrigin = placementToOrigin(placement, rtl)
       }
     },
   })

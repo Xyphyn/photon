@@ -160,6 +160,7 @@
         href="."
         title={$t('common.back')}
         icon={ArrowLeft}
+        iconClass="rtl:-scale-x-100"
       ></Button>
       <UserLink avatar user={data.creator.value.person_view.person} />
     </div>

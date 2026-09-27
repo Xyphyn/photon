@@ -105,7 +105,7 @@
   {/if}
   <span
     class="flex gap-0 items-center shrink max-w-full min-w-0"
-    class:ml-0.5={avatar}
+    class:ms-0.5={avatar}
   >
     <span
       class:font-medium={showInstance}

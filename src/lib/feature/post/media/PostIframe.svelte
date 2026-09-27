@@ -149,7 +149,7 @@
       {#if thumbnail}
         <img
           src={optimizeImageURL(thumbnail, 512)}
-          class="absolute top-0 left-0 -z-10 w-full object-cover h-full mask-b-from-0 brightness-75"
+          class="absolute top-0 inset-s-0 -z-10 w-full object-cover h-full mask-b-from-0 brightness-75"
           alt=""
         />
       {:else}
@@ -159,7 +159,7 @@
       {/if}
       <Icon src={data.icon} solid size="40" />
       <h1
-        class="font-display text-xl md:text-2xl xl:text-3xl font-medium text-left overflow-hidden overflow-ellipsis line-clamp-2"
+        class="font-display text-xl md:text-2xl xl:text-3xl font-medium text-start overflow-hidden overflow-ellipsis line-clamp-2"
       >
         {title ?? data.text}
       </h1>

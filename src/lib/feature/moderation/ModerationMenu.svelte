@@ -104,7 +104,7 @@
     >
       <Icon src={Megaphone} size="16" mini />
       <div
-        class="flex flex-row gap-2 text-left items-center justify-between w-full"
+        class="flex flex-row gap-2 text-start items-center justify-between w-full"
       >
         <span>
           {item.post.featured_community
@@ -160,7 +160,7 @@
     >
       <Icon src={Megaphone} size="16" mini />
       <div
-        class="flex flex-row gap-2 text-left items-center justify-between w-full"
+        class="flex flex-row gap-2 text-start items-center justify-between w-full"
       >
         <span>
           {item.post.featured_local

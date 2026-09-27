@@ -174,7 +174,7 @@
 {#if showContext && tree[0]}
   <Button
     color="secondary"
-    alignment="left"
+    alignment="start"
     rounding="pill"
     href={`/comment/${
       // split first comment path to get 5 before
@@ -188,7 +188,7 @@
     })}
   </Button>
   <div
-    class="border-l h-4 -mb-5 ml-2.5 border-slate-200 dark:border-zinc-800"
+    class="border-s h-4 -mb-5 ms-2.5 border-slate-200 dark:border-zinc-800"
   ></div>
 {/if}
 {#if virtualize}

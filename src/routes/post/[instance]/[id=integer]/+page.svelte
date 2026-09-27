@@ -125,7 +125,7 @@
 
 <article class="flex flex-col gap-2">
   <header class="flex flex-col gap-2">
-    <div class="flex flex-row items-center gap-2 flex-wrap">
+    <div class="flex flex-row items-center gap-2 flex-wrap ">
       <PostMeta
         community={data.data.value.post.community}
         user={data.data.value.post.creator}
@@ -254,7 +254,7 @@
     {/if}
   {/await}
   {#if data.data.value.post.counts.comments > 5}
-    <EndPlaceholder>
+    <EndPlaceholder margin="lg">
       {$t('routes.post.commentCount')}
       {#snippet action()}
         <span class="text-black dark:text-white font-bold">

@@ -37,10 +37,7 @@
 
 <style>
   li {
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
+    border-radius: 0 !important;
     margin-top: calc(var(--spacing) * -1);
     border-top: none !important;
   }

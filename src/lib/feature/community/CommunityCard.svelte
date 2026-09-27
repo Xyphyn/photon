@@ -198,7 +198,7 @@
         color={subscribed ? 'secondary' : 'primary'}
         onclick={() => subscribe(community_view)}
         class="px-4 relative z-[inherit]"
-        alignment="left"
+        alignment="start"
         icon={community_view.subscribed == 'Subscribed' ? Check : Plus}
       >
         {subscribed

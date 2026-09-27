@@ -790,11 +790,7 @@
                 "title": "Language",
                 "description": "The language used for text in the UI.",
                 "auto": "Auto",
-                "credits": "Credits",
-                "useRtl": {
-                    "title": "Use RTL layout",
-                    "description": "Use an RTL layout for RTL languages."
-                }
+                "credits": "Credits"
             },
             "view": {
                 "title": "Post style",

@@ -23,7 +23,7 @@
 
 <Button
   href={action.href}
-  alignment="left"
+  alignment="start"
   color="none"
   size="custom"
   class="px-3! py-2! w-full"

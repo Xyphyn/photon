@@ -67,7 +67,7 @@
             <div class="text-sm text-slate-600 dark:text-zinc-400">
               {$t('routes.admin.applications.user')}
             </div>
-            {#await client().getPersonDetails( { person_id: data.params.user, limit: 1 }, )}
+            {#await client().getPersonDetails( { person_id: data.params.user, limit: 1 } )}
               <Spinner width={24} />
             {:then person}
               <UserLink class="inline" user={person.person_view.person} />
@@ -80,7 +80,7 @@
               <!--TODO add translation key-->
               Moderator
             </div>
-            {#await client().getPersonDetails( { person_id: data.params.moderator, limit: 1 }, )}
+            {#await client().getPersonDetails( { person_id: data.params.moderator, limit: 1 } )}
               <Spinner width={24} />
             {:then person}
               <UserLink class="inline" user={person.person_view.person} />
@@ -245,7 +245,7 @@
             <col style="width: 16.6%;" />
             <col style="width: 16.6%;" />
           </colgroup>
-          <thead class="text-left">
+          <thead class="text-start">
             <tr class="rounded-t-lg overflow-hidden">
               <th>Time</th>
               <th>Moderator</th>

@@ -72,7 +72,7 @@
   {#if children}
     <svelte:element
       this={element}
-      class="font-medium text-left flex flex-row gap-1 items-center"
+      class="font-medium text-start flex flex-row gap-1 items-center"
     >
       {@render children?.()}
     </svelte:element>

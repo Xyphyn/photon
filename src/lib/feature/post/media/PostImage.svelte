@@ -80,8 +80,8 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
-    class="absolute bottom-0 left-0 right-0 flex justify-between items-center
-        rounded-full ml-auto w-max m-2 p-0 gap-1
+    class="absolute bottom-0 inset-s-0 inset-e-0 flex justify-between items-center
+        rounded-full ms-auto w-max m-2 p-0 gap-1
         *:bg-white *:border *:border-slate-200 dark:*:border-zinc-800 dark:*:bg-zinc-900"
     onclick={(e) => e.stopPropagation()}
   >
@@ -124,8 +124,7 @@
     .post-image {
       max-width: 100%;
       z-index: 30;
-      margin-left: auto;
-      margin-right: auto;
+      margin-inline: auto;
       transition: filter 400ms cubic-bezier(0.075, 0.82, 0.165, 1);
     }
 

@@ -136,7 +136,7 @@
             </div>
             <p>{application.registration_application.deny_reason}</p>
           </div>
-          <div class="md:ml-auto"></div>
+          <div class="md:ms-auto"></div>
         {:else}
           <div class="flex items-center gap-1 text-sm">
             <Icon
@@ -152,7 +152,7 @@
                 : $t('routes.admin.applications.denied')}
             </Label>
           </div>
-          <div class="md:ml-auto"></div>
+          <div class="md:ms-auto"></div>
         {/if}
       {/if}
     </div>

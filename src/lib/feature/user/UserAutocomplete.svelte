@@ -60,7 +60,7 @@
       {#if showWhenEmpty}
         <MenuButton onclick={() => dispatcher('select', undefined)}>
           <Icon src={XCircle} size="16" mini />
-          <div class="flex flex-col text-left">
+          <div class="flex flex-col text-start">
             <span>None</span>
           </div>
         </MenuButton>
@@ -73,7 +73,7 @@
     <div in:fly|global={{ y: -4, opacity: 0 }}>
       <MenuButton onclick={() => select(item)}>
         <Avatar url={item.avatar} alt={item.name} width={24} />
-        <div class="flex flex-col text-left">
+        <div class="flex flex-col text-start">
           <span>{item.name}</span>
           <span class="text-xs opacity-80">
             {new URL(item.actor_id).hostname}

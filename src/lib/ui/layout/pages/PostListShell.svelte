@@ -91,7 +91,12 @@
                 size="custom"
                 submit
               >
-                <Icon src={ArrowRight} size="16" micro />
+                <Icon
+                  src={ArrowRight}
+                  size="16"
+                  micro
+                  class="rtl:-scale-x-100"
+                />
               </Button>
             </noscript>
           </div>

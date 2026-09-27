@@ -59,7 +59,7 @@
         {#if q == '' && showWhenEmpty}
           <MenuButton onclick={() => dispatcher('select', undefined)}>
             <Icon src={XCircle} size="16" mini />
-            <div class="flex flex-col text-left">
+            <div class="flex flex-col text-start">
               <span>None</span>
             </div>
           </MenuButton>
@@ -76,7 +76,7 @@
             alt={item.community.title}
             width={24}
           />
-          <div class="flex flex-col text-left">
+          <div class="flex flex-col text-start">
             <span>{item.community.title}</span>
             <span class="text-xs opacity-80">
               {new URL(item.community.actor_id).hostname}
@@ -105,7 +105,7 @@
       <div class="w-full h-full">
         {#if q == '' && showWhenEmpty}
           <MenuButton onclick={() => dispatcher('select', undefined)}>
-            <div class="flex flex-col text-left">
+            <div class="flex flex-col text-start">
               <span>None (Start typing to search)</span>
             </div>
           </MenuButton>
@@ -118,7 +118,7 @@
       <div in:fly|global={{ y: -4, opacity: 0 }}>
         <MenuButton onclick={() => select(item)}>
           <Icon src={ServerStack} size="16" mini />
-          <div class="flex flex-col text-left">
+          <div class="flex flex-col text-start">
             <span>{item.domain}</span>
           </div>
         </MenuButton>

@@ -76,7 +76,7 @@
 
 <div class="mx-auto max-w-xl flex flex-col gap-4 my-auto h-max w-full">
   <Button href="/accounts" class="mb-4 w-max" rounding="pill">
-    <Icon src={ArrowLeft} size="16" micro />
+    <Icon src={ArrowLeft} size="16" micro class="rtl:-scale-x-100" />
     {$t('common.back')}
   </Button>
   <Header>{$t('form.signup.title')}</Header>
@@ -97,7 +97,7 @@
           <button
             onclick={() => (selectedInstance = instance.baseurl ?? '')}
             class={[
-              'flex flex-row items-center text-left gap-2 w-full cursor-pointer rounded-[inherit]',
+              'flex flex-row items-center text-start gap-2 w-full cursor-pointer rounded-[inherit]',
               instance.recommended && 'material-success',
             ]}
           >
@@ -114,7 +114,7 @@
                 <span>
                   {instance.name}
                 </span>
-                <span class="text-slate-500 dark:text-zinc-500 ml-auto">
+                <span class="text-slate-500 dark:text-zinc-500 ms-auto">
                   {instance.baseurl}
                 </span>
               </div>

@@ -47,7 +47,7 @@
 {#if page.state.openImage || '' != ''}
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
-    class="fixed top-0 left-0 w-screen h-svh overflow-auto bg-white/50 dark:bg-black/50
+    class="fixed top-0 inset-s-0 w-screen h-svh overflow-auto bg-white/50 dark:bg-black/50
     flex flex-col z-100 backdrop-blur-xs"
     transition:fade={{ duration: 150 }}
     onclick={() => history.back()}

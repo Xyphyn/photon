@@ -129,7 +129,7 @@
     >
       <div
         class={[
-          'absolute -inset-0.5 right-1 group-hover:right-0 group-hover:-inset-1.5 opacity-0 group-hover:opacity-100 transition-all',
+          'absolute -inset-0.5 inset-e-1 group-hover:inset-e-0 group-hover:-inset-1.5 opacity-0 group-hover:opacity-100 transition-all',
           'bg-slate-100 dark:bg-zinc-900 -z-10 rounded-full inline-flex items-center justify-end',
         ]}
       >
@@ -198,7 +198,7 @@
         class="text-slate-600 dark:text-zinc-400"
         date={publishedToDate(node.comment_view.comment.published)}
       />
-      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ml-1">
+      <span class="text-slate-600 dark:text-zinc-400 flex flex-row gap-2 ms-1">
         {#if node.comment_view.comment.updated}{@const edited = $t(
             'post.meta.lastEdited',
             {
@@ -243,14 +243,14 @@
         {/if}
       </span>
       {#if settings.debugInfo}
-        <span class="text-slate-600 dark:text-zinc-400 font-mono ml-auto">
+        <span class="text-slate-600 dark:text-zinc-400 font-mono ms-auto">
           #{node.comment_view.comment.id}
         </span>
       {/if}
     </label>
   {/if}
   <input
-    class="appearance-none absolute top-0 left-0 h-8 w-full pointer-events-none comment-expand"
+    class="appearance-none absolute top-0 inset-s-0 h-8 w-full pointer-events-none comment-expand"
     type="checkbox"
     id="comment-expand-{node.comment_view.comment.id}"
     bind:checked={open}
