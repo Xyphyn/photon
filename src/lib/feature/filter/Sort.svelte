@@ -45,7 +45,7 @@
 <div class="flex flex-row {clazz}">
   <Select
     {...rest}
-    class={selected?.startsWith('Top') ? 'rounded-r-none' : ''}
+    class={selected?.startsWith('Top') ? 'rounded-e-none' : ''}
     bind:value={sort}
     onchange={() => {
       setSelected()
@@ -90,7 +90,7 @@
   </Select>
   {#if selected?.startsWith('Top')}
     <Select
-      class="border-l-0 rounded-l-none"
+      class="border-s-0 rounded-s-none"
       bind:value={selected}
       onchange={() => {
         sort = 'TopAll'

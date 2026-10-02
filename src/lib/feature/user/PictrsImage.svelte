@@ -76,7 +76,7 @@
         profile.current.instance,
       )}/pictrs/image/{image.pictrs_alias}"
       size="square-md"
-      class="ml-auto"
+      class="ms-auto"
       icon={ArrowDownTray}
     />
     <Button

@@ -106,7 +106,7 @@
 
 <style>
   ul {
-    padding-left: 2rem;
+    padding-inline-start: 2rem;
   }
 
   .top-list > li {

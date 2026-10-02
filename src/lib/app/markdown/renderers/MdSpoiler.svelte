@@ -31,7 +31,7 @@
 
 <Expandable class="border-y border-slate-200 dark:border-zinc-800 py-2">
   {#snippet title()}
-    <div class="text-left">
+    <div class="text-start">
       {data.title}
     </div>
   {/snippet}

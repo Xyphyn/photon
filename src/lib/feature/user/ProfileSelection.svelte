@@ -35,7 +35,7 @@
     <Button
       {@attach attachment}
       color="tertiary"
-      alignment="left"
+      alignment="start"
       size="md"
       rounding="xl"
       class="flex flex-row gap-2! items-center"

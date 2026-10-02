@@ -95,8 +95,7 @@ const settingsSchema = {
   },
   modlogCardView: {
     default: (toBool(env.PUBLIC_MODLOG_CARD_VIEW) ?? undefined) as
-      | boolean
-      | undefined,
+      boolean | undefined,
   },
   debugInfo: { default: false, env: 'PUBLIC_DEBUG_INFO' },
   expandImages: { default: true, env: 'PUBLIC_EXPAND_IMAGES' },
@@ -134,7 +133,6 @@ const settingsSchema = {
   },
   infiniteScroll: { default: true },
   language: { default: null as string | null, env: 'PUBLIC_LANGUAGE' },
-  useRtl: { default: false },
   parseTags: { default: true },
   logoColorMonth: { default: null as number | null },
   absoluteDates: { default: false },
@@ -152,6 +150,7 @@ function createSettingsState(initial: Settings): Settings {
   if (browser) {
     try {
       const localSettings = JSON.parse(localStorage.getItem('settings') ?? '{}')
+
       const merged = mergeDeep(initial, localSettings)
 
       settings = merged

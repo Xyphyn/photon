@@ -104,7 +104,7 @@
         <Material
           color="uniform"
           padding="none"
-          class="absolute -bottom-2 -right-2 p-1"
+          class="absolute -bottom-2 -inset-e-2 p-1"
           rounding="full"
         >
           <Icon

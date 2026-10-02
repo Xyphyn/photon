@@ -122,7 +122,7 @@
 </Header>
 <div class="flex flex-col gap-4 h-full">
   <h3
-    class="relative -mb-7 z-10 left-6 font-medium text-sm bg-slate-25 dark:bg-zinc-925 w-max px-1"
+    class="relative -mb-7 z-10 inset-s-6 font-medium text-sm bg-slate-25 dark:bg-zinc-925 w-max px-1"
   >
     {$t('routes.theme.preset.presets')}
   </h3>

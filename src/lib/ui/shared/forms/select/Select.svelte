@@ -95,7 +95,7 @@
         bind:this={element}
         class={[
           buttonSize[size],
-          'btn btn-secondary select rounded-xl appearance-none pr-6! w-full',
+          'btn btn-secondary select rounded-xl appearance-none pe-6! w-full',
           selectClass,
           clazz,
         ]}
@@ -120,7 +120,7 @@
         src={ChevronUpDown}
         micro
         size="16"
-        class="absolute bottom-1/2 translate-y-1/2 right-1 box-border pointer-events-none z-10 text-slate-600 dark:text-zinc-400"
+        class="absolute bottom-1/2 translate-y-1/2 inset-e-1 box-border pointer-events-none z-10 text-slate-600 dark:text-zinc-400"
       />
     </div>
   </Label>

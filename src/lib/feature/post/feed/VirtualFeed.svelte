@@ -242,7 +242,7 @@
             src={ExclamationTriangle}
             size="20"
             micro
-            class="inline-block rounded-lg clear-both float-left mr-2"
+            class="inline-block rounded-lg clear-both float-start me-2"
           />
           {errorMessage(error)}
         </div>
@@ -261,7 +261,7 @@
       </div>
     {:else}
       <div style="border-top-width: 0">
-        <EndPlaceholder>
+        <EndPlaceholder margin="lg">
           {$t('routes.frontpage.endFeed', {
             community_name:
               params.community_name ??

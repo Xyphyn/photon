@@ -76,7 +76,7 @@
     onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
     class={[
       'flex items-center gap-0.5 transition-colors relative cursor-pointer px-1.5 py-1',
-      'first:rounded-l-3xl last:rounded-r-3xl',
+      'first:rounded-s-3xl last:rounded-e-3xl',
       'last:flex-row-reverse',
       vote == targetNum
         ? shouldShowVoteColor(
@@ -137,12 +137,17 @@
     width: 100%;
     opacity: 10%;
     z-index: -10;
-    left: 0;
+    inset-inline-start: 0;
     bottom: 0px;
+    --vote-gradient: to right;
     background: linear-gradient(
-      to right,
+      var(--vote-gradient),
       var(--color-indigo-500) calc(var(--vote-ratio) - 5%),
       var(--color-red-500) calc(var(--vote-ratio) + 5%)
     );
+  }
+
+  :global([dir='rtl']) .vote-ratio::before {
+    --vote-gradient: to left;
   }
 </style>

@@ -55,7 +55,7 @@
   {#if number > 0}
     <Badge
       color="red-subtle"
-      class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
+      class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ms-auto"
     >
       {number > 99 ? '∞' : number}
     </Badge>
@@ -67,7 +67,7 @@
   <MenuButton href="/inbox" icon={Inbox}>
     {$t('profile.inbox')}
     {#if notifications.inbox > 0}
-      <Badge color="red-subtle" class="text-xs ml-auto font-bold py-0.5!">
+      <Badge color="red-subtle" class="text-xs ms-auto font-bold py-0.5!">
         {notifications.inbox > 99 ? '∞' : notifications.inbox}
       </Badge>
     {/if}
@@ -150,7 +150,7 @@
   icon={CommandLine}
 >
   {$t('nav.commands.prompt')}
-  <div class="text-slate-600 dark:text-zinc-400 text-xs ml-auto max-sm:hidden">
+  <div class="text-slate-600 dark:text-zinc-400 text-xs ms-auto max-sm:hidden">
     {@render key('Ctrl')}
     {@render key('K')}
   </div>

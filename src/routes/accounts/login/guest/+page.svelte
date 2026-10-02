@@ -12,7 +12,7 @@
     class="w-max hover:underline text-slate-600 dark:text-zinc-400"
     onclick={() => history?.back()}
   >
-    <Icon src={ArrowLeft} size="16" micro />
+    <Icon src={ArrowLeft} size="16" micro class="rtl:-scale-x-100" />
     {$t('account.accounts')}
   </Button>
 </LoginPage>

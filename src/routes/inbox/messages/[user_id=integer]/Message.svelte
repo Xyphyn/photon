@@ -45,7 +45,7 @@
     </div>
     {#if showTimestamp}
       <RelativeDate
-        class="text-xs block -mt-0.5 ml-1 text-slate-600 dark:text-zinc-400"
+        class="text-xs block -mt-0.5 ms-1 text-slate-600 dark:text-zinc-400"
         date={publishedToDate(message.private_message.published)}
       />
     {/if}

@@ -60,8 +60,8 @@
       size="square-md"
       color="ghost"
       class={[
-        'text-black dark:text-white absolute z-10 isolate pointer-events-auto left-0 bottom-0 transition-colors',
-        'left-1/2 -translate-x-1/2 mb-4 hover:backdrop-blur-lg bg-slate-100 dark:bg-zinc-900/70',
+        'text-black dark:text-white absolute z-10 isolate pointer-events-auto inset-x-0 bottom-0 mx-auto transition-colors',
+        'mb-4 hover:backdrop-blur-lg bg-slate-100 dark:bg-zinc-900/70',
         expanded && 'shadow-md rotate-180 sticky bottom-16',
       ]}
       title="Expand"

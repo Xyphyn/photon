@@ -32,7 +32,7 @@
             mini
             size="32"
             class="bg-gray-200/20 dark:bg-gray-600/20 p-1.5 rounded-lg color
-            text-gray-500 dark:text-gray-300 float-left mr-2 clear-both"
+            text-gray-500 dark:text-gray-300 float-start me-2 clear-both"
             style="grid-area: icon;"
           />
         {/if}
@@ -46,7 +46,7 @@
             </div>
           {/if}
         </div>
-        <Icon src={ChevronRight} size="20" class />
+        <Icon src={ChevronRight} size="20" class="rtl:-scale-x-100" />
       </a>
     {/snippet}
   </CommonList>

@@ -62,7 +62,8 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write .",
     "format:specific": "prettier --write",
-    "lint": "eslint ."
+    "lint": "eslint . && node scripts/check-rtl.mjs",
+    "lint:rtl": "node scripts/check-rtl.mjs"
   },
   "type": "module"
 }

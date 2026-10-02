@@ -66,8 +66,8 @@
       contentClass={[
         (node.children.length > 0 ||
           node.comment_view.counts.child_count > 0) &&
-          'border-l',
-        'ml-2.5 pl-3 sm:pl-4 lg:pl-5',
+          'border-s',
+        'ms-2.5 ps-3 sm:ps-4 lg:ps-5',
         'comment-border',
       ]}
       bind:open={nodes[index].expanded}
@@ -85,7 +85,7 @@
     {#if node.comment_view.counts.child_count > 0 && node.children.length == 0}
       <svelte:element
         this={browser ? 'div' : 'a'}
-        class="w-full h-10 -mt-2 -ml-2.5"
+        class="w-full h-10 -mt-2 -ms-2.5"
         href="/comment/{node.comment_view.comment.id}"
       >
         <Button
@@ -148,7 +148,7 @@
     width: calc(var(--spacing) * 4);
     position: absolute;
     top: 0;
-    left: calc(var(--spacing) * 0.5);
+    inset-inline-start: calc(var(--spacing) * 0.5);
     height: 100%;
     cursor: pointer;
   }
@@ -156,9 +156,9 @@
   .comment-corner {
     position: absolute;
     top: calc(var(--spacing) * 2);
-    left: calc(var(--spacing) * -3);
-    border-bottom-left-radius: calc(infinity * 1px);
-    border-left-width: 1px;
+    inset-inline-start: calc(var(--spacing) * -3);
+    border-end-start-radius: calc(infinity * 1px);
+    border-inline-start-width: 1px;
     border-bottom-width: 1px;
     border-color: var(--color-slate-200);
     @variant dark {
@@ -169,7 +169,7 @@
 
     @variant sm {
       top: calc(var(--spacing) * 1);
-      left: calc(var(--spacing) * -5.5);
+      inset-inline-start: calc(var(--spacing) * -5.5);
       width: calc(var(--spacing) * 5);
       height: calc(var(--spacing) * 5);
     }

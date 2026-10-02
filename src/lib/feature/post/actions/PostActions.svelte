@@ -33,7 +33,7 @@
     ShieldCheck,
   } from 'svelte-hero-icons/dist'
   import { PostVote } from '..'
-  import { PostFormState } from '../form/postform.svelte'
+  import { PostFormState } from '../form/postform.svelte.ts'
   import { postLink } from '../helpers'
 
   let saving = $state(false)

@@ -189,7 +189,7 @@
       >
         {#snippet customLabel()}
           {$t('form.instance')}
-          <span class="absolute right-0">
+          <span class="absolute inset-e-0">
             {#if detectedClient}
               <span
                 class="capitalize font-normal"

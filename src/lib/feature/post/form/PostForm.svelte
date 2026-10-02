@@ -47,7 +47,7 @@
     Trash,
     XMark,
   } from 'svelte-hero-icons/dist'
-  import { autofillPost, PostFormState } from './postform.svelte'
+  import { autofillPost, PostFormState } from './postform.svelte.ts'
 
   interface Props {
     editPost?: number
@@ -254,7 +254,7 @@
         <Button
           class="w-full"
           onclick={() => (form.community = undefined)}
-          alignment="left"
+          alignment="start"
           size="sm"
           rounding="xl"
         >
@@ -300,7 +300,7 @@
         <Button
           color="none"
           rounding="none"
-          class="h-full border-l border-slate-200 dark:border-zinc-800 aspect-square hover:bg-slate-50 hover:dark:bg-zinc-900 rounded-[inherit]"
+          class="h-full border-s border-slate-200 dark:border-zinc-800 aspect-square hover:bg-slate-50 hover:dark:bg-zinc-900 rounded-[inherit]"
           size="custom"
           disabled={!form.url || !URL.canParse(form.url)}
           icon={Sparkles}
@@ -400,10 +400,10 @@
 
   <div class="flex flex-row overflow-auto gap-2 -mx-3 px-3 relative">
     <div
-      class="bg-gradient-to-r from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute left-0 w-3 h-full z-10"
+      class="bg-gradient-to-r from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute inset-s-0 w-3 h-full z-10"
     ></div>
     <div
-      class="bg-gradient-to-l from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute right-0 w-3 h-full z-10"
+      class="bg-gradient-to-l from-slate-25 to-slate-25/0 dark:from-zinc-925 dark:to-zinc-925/0 absolute inset-e-0 w-3 h-full z-10"
     ></div>
     <ButtonGroup
       orientation="horizontal"

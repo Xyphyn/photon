@@ -56,18 +56,17 @@
     transition: background-color 0.1s;
     background-color: var(--color-white);
     container-type: inline-size;
-    border-left: 1px solid var(--color-slate-100);
-    border-right: 1px solid var(--color-slate-100);
+    border-inline: 1px solid var(--color-slate-100);
 
     &:first-of-type {
-      border-top-left-radius: var(--radius-2xl);
-      border-top-right-radius: var(--radius-2xl);
+      border-start-start-radius: var(--radius-2xl);
+      border-start-end-radius: var(--radius-2xl);
       border-top: 1px solid var(--color-slate-100);
     }
     border-bottom: 1px solid var(--color-slate-100);
     &:last-of-type {
-      border-bottom-left-radius: var(--radius-2xl);
-      border-bottom-right-radius: var(--radius-2xl);
+      border-end-start-radius: var(--radius-2xl);
+      border-end-end-radius: var(--radius-2xl);
     }
 
     &:hover {
