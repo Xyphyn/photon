@@ -98,7 +98,7 @@
     {#snippet description()}
       <p>
         {$t('settings.app.lang.description')}
-        <Link href="/translators" highlight class="text-base font-semibold">
+        <Link href="/translators" highlight class="font-semibold">
           {$t('settings.app.lang.credits')}
         </Link>
       </p>

@@ -7,8 +7,8 @@
 @theme {
   --font-sans: sans-serif;
   --font-system: system-ui;
-  --font-display: Inter, system-ui, sans-serif;
-  --font-reading: Inter, system-ui, sans-serif;
+  --font-display: sans-serif;
+  --font-reading: sans-serif;
   --font-mono: monospace;
 
   --animate-pop-in: pop-in 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
