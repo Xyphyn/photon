@@ -48,8 +48,8 @@
             "setViewTo": "Canvia la vista a {{default}}",
             "setColorTo": "Canvia l’esquema de colors a {{default}}",
             "downloading": "Accions de descàrrega",
-            "communities": "",
-            "goto": ""
+            "communities": "Comunitats amb **{{default}}**",
+            "goto": "Ves a **{{default}}**"
         },
         "notifications": "Notificacions"
     },
@@ -95,7 +95,7 @@
                     "6hours": "6 hores",
                     "hour": "Hora",
                     "month": "Mes",
-                    "year": ""
+                    "year": "Darrer any"
                 }
             },
             "old": "Antics",
@@ -147,14 +147,14 @@
             "edit": "Editar publicació",
             "altText": "Text alternatiu",
             "create": "Crear publicació",
-            "fetching": "",
-            "flair": "",
-            "customThumbnail": "",
-            "autosubmit": "",
+            "fetching": "Obtenint les metadades del lloc web",
+            "flair": "Afegeix etiqueta",
+            "customThumbnail": "Defineix la miniatura",
+            "autosubmit": "Envia automàticament",
             "types": {
-                "poll": "",
-                "event": "",
-                "normal": ""
+                "poll": "Enquesta",
+                "event": "Esdeveniment",
+                "normal": "Debat"
             }
         },
         "profile": {
@@ -214,7 +214,7 @@
                 "description": "Revisa la teva safata d’entrada per trobar l’enllaç de verificació. Un cop l’hagis clicat, prem el botó de sota."
             },
             "description": "Escull una instància que t’interessi, o escriu l’URL manualment.",
-            "recommended": ""
+            "recommended": "Recomanat"
         },
         "description": "Descripció",
         "time": {
@@ -227,7 +227,7 @@
             "minutes": "Minuts"
         },
         "confirmPassword": "Confirma la contrasenya",
-        "instanceType": ""
+        "instanceType": "Tipus de programari del servidor"
     },
     "routes": {
         "frontpage": {
@@ -257,16 +257,16 @@
                     "title": "Cap entitat blocada",
                     "description": "Quan bloquegis alguna cosa, ja no apareixerà als teus canals.",
                     "community": {
-                        "description": "",
-                        "title": ""
+                        "description": "Bloquejar una comunitat n'amagarà les publicacions dels canals.",
+                        "title": "Cap comunitat bloquejada"
                     },
                     "instance": {
-                        "title": "",
-                        "description": ""
+                        "title": "Cap instància bloquejada",
+                        "description": "Bloquejar una instància amagarà dels canals les publicacions de les seves comunitats."
                     },
                     "user": {
-                        "title": "",
-                        "description": ""
+                        "title": "Cap usuari bloquejat",
+                        "description": "Bloquejar un usuari amagarà les seves publicacions i comentaris dels canals."
                     }
                 }
             },
@@ -339,9 +339,9 @@
             },
             "description": "Aquest enllaç porta a una publicació que no és a la instància del teu compte, {{homeInstance}}.",
             "automatic": {
-                "title": "",
-                "found": "",
-                "description": ""
+                "title": "Cercant el contingut",
+                "found": "Redirigint",
+                "description": "Cercant aquest contingut al teu servidor..."
             }
         },
         "inbox": {
@@ -474,565 +474,565 @@
         },
         "accounts": "Comptes",
         "theme": {
-            "accent": "",
+            "accent": "Accent",
             "preset": {
                 "delete": {
-                    "confirm": "",
-                    "title": ""
+                    "confirm": "Confirma",
+                    "title": "Elimina el tema"
                 },
-                "new": "",
-                "default": "",
-                "description": "",
-                "classic": "",
-                "presets": "",
-                "imported": "",
-                "title": ""
+                "new": "Tema nou",
+                "default": "Per defecte",
+                "description": "Aquest és un tema per defecte i no es pot modificar.",
+                "classic": "Clàssic",
+                "presets": "Temes predefinits",
+                "imported": "El teu tema",
+                "title": "no es pot modificar"
             },
-            "title": "",
+            "title": "Tema",
             "resetWarning": {
-                "description": "",
-                "title": ""
+                "description": "Això restablirà tots els colors als valors per defecte. Es recomana exportar el tema abans.",
+                "title": "Restableix el tema"
             }
         },
         "passwordChange": {
-            "description": "",
-            "instance": "",
-            "title": ""
+            "description": "Tria la teva contrasenya nova.",
+            "instance": "A quin servidor està allotjat el teu compte?",
+            "title": "Canvia la contrasenya"
         },
         "accounts.placeholder": {
-            "descriptionWithGuest": "",
-            "description": "",
-            "title": ""
+            "descriptionWithGuest": "No has iniciat sessió. Aquí pots iniciar-la, registrar-te o afegir un compte de convidat nou.",
+            "description": "No has iniciat sessió. Aquí pots registrar-te o iniciar-la.",
+            "title": "No has iniciat sessió"
         },
         "explore": {
-            "topics": "",
-            "title": "",
-            "feeds": ""
+            "topics": "Temes",
+            "title": "Explora",
+            "feeds": "Canals"
         },
         "verifyEmail": {
-            "message": "",
-            "error": ""
+            "message": "S'ha verificat el teu correu electrònic. Ja pots tancar aquesta finestra.",
+            "error": "No s'ha pogut verificar el teu correu electrònic."
         },
         "community": {
             "settings": {
-                "settings": "",
-                "team": "",
-                "manage": ""
+                "settings": "Configuració",
+                "team": "Equip",
+                "manage": "Gestiona"
             },
-            "languageWarning": ""
+            "languageWarning": "El contingut d'aquesta comunitat és en llengües que no tens seleccionades. Pot ser que falti part de les publicacions o totes."
         },
         "user": {
-            "note": ""
+            "note": "Defineix una nota"
         },
         "resetLogin": {
-            "description": "",
-            "title": ""
+            "description": "Introdueix el correu electrònic del teu compte i t'enviarem un enllaç per restablir la contrasenya. Si el compte no té correu electrònic, contacta amb l'administració del servidor.",
+            "title": "Restableix la contrasenya"
         }
     },
     "settings": {
         "app": {
             "limitLayoutWidth": {
-                "title": "",
-                "description": ""
+                "title": "Limita l'amplada del contingut",
+                "description": "Millora la llegibilitat limitant l'amplada del contingut principal."
             },
             "duplicateTitles": {
-                "title": "",
-                "description": ""
+                "title": "Amaga el contingut incrustat duplicat",
+                "description": "Amaga el títol i el cos de la publicació si són idèntics al contingut incrustat."
             },
             "reverseActions": {
-                "description": "",
-                "title": ""
+                "description": "Inverteix l'ordre de les accions de les publicacions i els comentaris.",
+                "title": "Inverteix la fila d'accions"
             },
             "theming": {
-                "description": "",
-                "link": "",
-                "title": ""
+                "description": "Personalitza els colors de la interfície.",
+                "link": "Ves als temes",
+                "title": "Temes"
             },
             "infiniteScroll": {
-                "description": "",
-                "title": ""
+                "description": "Carrega publicacions noves a mesura que et desplaces i les afegeix al canal.",
+                "title": "Desplaçament infinit"
             },
             "lang": {
-                "title": "",
+                "title": "Llengua",
                 "useRtl": {
-                    "title": "",
-                    "description": ""
+                    "title": "Usa la disposició de dreta a esquerra",
+                    "description": "Usa una disposició de dreta a esquerra per a les llengües que s'escriuen en aquest sentit."
                 },
-                "description": "",
-                "credits": "",
-                "auto": ""
+                "description": "La llengua dels textos de la interfície.",
+                "credits": "Crèdits",
+                "auto": "Automàtica"
             },
             "view": {
-                "cozy": "",
-                "title": "",
-                "compact": ""
+                "cozy": "Mostra les publicacions amb imatges grans, contingut incrustat i cossos més llargs.",
+                "title": "Estil de les publicacions",
+                "compact": "Mostra les publicacions en una llista, sense cos i amb un espaiat més ajustat."
             },
             "font": {
-                "description": "",
-                "title": ""
+                "description": "El tipus de lletra dels textos de la interfície.",
+                "title": "Tipus de lletra"
             },
             "sort": {
-                "description": "",
-                "title": ""
+                "description": "Canvia el tipus d'ordre que s'usa per defecte als canals.",
+                "title": "Ordre per defecte"
             },
             "postsInNewTab": {
-                "description": "",
-                "title": ""
+                "description": "Obre les publicacions en una pestanya independent en lloc de la pestanya actual.",
+                "title": "Obre les publicacions en una pestanya nova"
             },
             "placeholders": {
-                "title": "",
-                "description": ""
+                "title": "Textos d'exemple aleatoris",
+                "description": "Mostra textos d'exemple aleatoris en alguns camps de text."
             },
             "absoluteDates": {
-                "title": "",
-                "description": ""
+                "title": "Dates absolutes",
+                "description": "Substitueix les dates relatives (fa 3 hores) per dates absolutes (15/6/25)."
             },
-            "title": "",
+            "title": "Aplicació",
             "titleTags": {
-                "description": "",
-                "title": ""
+                "description": "Converteix el text entre [claudàtors] en etiquetes en què es pot fer clic per cercar.",
+                "title": "Interpreta les etiquetes del títol"
             },
             "displayName": {
-                "description": "",
-                "title": ""
+                "description": "Mostra els noms visibles de les persones en lloc dels seus noms d'usuari.",
+                "title": "Usa el nom visible"
             },
             "expandImages": {
-                "title": "",
-                "description": ""
+                "title": "Miniatures ampliables",
+                "description": "En fer clic a la imatge d'una publicació s'obre una vista ampliada en lloc de la pàgina de la publicació."
             },
             "thumbnailSide": {
-                "description": "",
-                "title": "",
-                "right": "",
-                "left": ""
+                "description": "Canvia el lloc on es mostren les miniatures de les publicacions en mode compacte.",
+                "title": "Alineació de les miniatures",
+                "right": "Dreta",
+                "left": "Esquerra"
             },
             "titleOpensUrl": {
-                "description": "",
-                "title": ""
+                "description": "Fa que en fer clic al títol s'obri l'URL adjunta a la publicació, en lloc dels comentaris.",
+                "title": "El títol obre l'URL"
             },
             "voteRatioBar": {
-                "description": "",
-                "title": ""
+                "description": "Quan la controvèrsia d'una publicació supera el 15 %, es mostra una barra als botons de vot per visualitzar millor l'opinió.",
+                "title": "Barra de proporció de vots"
             }
         },
         "embeds": {
             "youtube": {
-                "description": ""
+                "description": "El lloc web on s'incrusta el contingut de YouTube."
             },
             "instance": {
-                "invidious": "",
-                "description": "",
-                "piped": ""
+                "invidious": "Instància d'Invidious",
+                "description": "La instància on s'incrusta el contingut de YouTube.",
+                "piped": "Instància de Piped"
             },
             "clickToView": {
-                "description": "",
-                "title": ""
+                "description": "Només carrega el contingut incrustat quan hi fas clic.",
+                "title": "Fes clic per veure'l"
             },
-            "title": ""
+            "title": "Contingut incrustat"
         },
         "lemmy": {
             "instances": {
-                "description": "",
-                "title": ""
+                "description": "Mostra els servidors d'origen de determinats continguts.",
+                "title": "Mostra els identificadors de servidor"
             },
             "contentFilter": {
-                "minimized": "",
-                "disabled": "",
-                "hide": "",
-                "minimize": "",
-                "description": "",
-                "title": ""
+                "minimized": "Contingut amagat pels teus filtres",
+                "disabled": "Desactivat",
+                "hide": "Amaga",
+                "minimize": "Minimitza",
+                "description": "Amaga o minimitza les publicacions que coincideixin amb unes cadenes de text. Admet expressions regulars.",
+                "title": "Filtres de contingut"
             },
             "hideSubmissions": {
-                "title": "",
-                "removed": "",
-                "deleted": "",
-                "description": ""
+                "title": "Amaga aportacions",
+                "removed": "Retirades per la moderació",
+                "deleted": "Eliminades per l'usuari",
+                "description": "Amaga determinats tipus d'aportacions."
             },
             "crosspostMarker": {
-                "title": "",
-                "description": ""
+                "title": "Marca les publicacions creuades",
+                "description": "Insereix «publicat també a» i un enllaç quan es publica en una altra comunitat."
             },
             "fadeReadPosts": {
-                "title": "",
-                "description": ""
+                "title": "Atenua les publicacions llegides",
+                "description": "Atenua el títol de les publicacions que ja has llegit."
             },
-            "title": "",
+            "title": "Lemmy",
             "showHiddenPosts": {
-                "title": "",
-                "description": ""
+                "title": "Mostra les publicacions amagades",
+                "description": "Mostra les publicacions que has amagat manualment."
             },
             "nsfwBlur": {
-                "description": "",
-                "title": ""
+                "description": "Difumina les imatges i elimina el cos de les publicacions NSFW.",
+                "title": "Difumina el NSFW"
             },
             "compactFeatured": {
-                "title": "",
-                "description": ""
+                "title": "Publicacions destacades compactes",
+                "description": "Fa més compactes les publicacions destacades."
             },
             "markReadPosts": {
-                "title": "",
-                "description": ""
+                "title": "Marca les publicacions com a llegides automàticament",
+                "description": "Marca les publicacions com a llegides quan les visites."
             }
         },
         "moderation": {
             "replyPresets": {
-                "title": "",
-                "description": "",
-                "syntax": ""
+                "title": "Respostes predefinides de retirada",
+                "description": "Respostes predefinides per al «motiu de la resposta» al diàleg de retirada d'aportacions.",
+                "syntax": "Sintaxi"
             },
-            "title": ""
+            "title": "Moderació"
         },
-        "export": "",
+        "export": "Exporta",
         "navigation": {
-            "title": "",
+            "title": "Navegació",
             "autoHide": {
-                "title": "",
-                "description": ""
+                "title": "Amaga automàticament la barra",
+                "description": "Amaga la barra de navegació al mòbil quan desplaces cap avall i la mostra quan desplaces cap amunt."
             }
         },
         "other": {
             "virtualizeFeeds": {
-                "title": "",
-                "description": ""
+                "title": "No virtualitzis els canals",
+                "description": "La virtualització només renderitza les publicacions visibles i millora molt el rendiment. Desactiva-la si notes entrebancs. Això desactivarà el desplaçament infinit."
             },
-            "title": "",
+            "title": "Altres",
             "debug": {
-                "description": "",
-                "title": ""
+                "description": "Mostra informació de depuració.",
+                "title": "Informació de depuració"
             }
         },
-        "beta": "",
-        "import": "",
-        "mobile": "",
-        "desktop": "",
-        "reset": "",
+        "beta": "Beta",
+        "import": "Importa",
+        "mobile": "Mòbil",
+        "desktop": "Ordinador",
+        "reset": "Restableix",
         "donate": {
-            "description": ""
+            "description": "Photon serà sempre gratuït i de codi obert, i es desenvolupa i es dissenya contínuament perquè sigui útil. Si t'agrada Photon i vols donar suport econòmic al seu desenvolupament, pots fer un donatiu aquí."
         },
         "account": {
-            "title": ""
+            "title": "Compte"
         },
-        "tablet": "",
-        "title": ""
+        "tablet": "Tauleta",
+        "title": "Configuració"
     },
     "post": {
         "actions": {
             "vote": {
-                "score": "",
-                "downvote": "",
-                "upvote": ""
+                "score": "Puntuació",
+                "downvote": "Vot negatiu",
+                "upvote": "Vot positiu"
             },
             "more": {
-                "share": "",
-                "crosspost": "",
-                "unhide": "",
-                "label": "",
-                "delete": "",
-                "share.global": "",
-                "share.local": "",
-                "edit": "",
-                "creator": "",
-                "share.from": "",
-                "actions": "",
-                "markUnread": "",
-                "markRead": "",
-                "hide": "",
-                "restore": "",
-                "share.photon": ""
+                "share": "Comparteix",
+                "crosspost": "Publica-ho també en una altra comunitat",
+                "unhide": "Mostra",
+                "label": "Més accions",
+                "delete": "Elimina",
+                "share.global": "Servidor d'origen",
+                "share.local": "El teu servidor",
+                "edit": "Edita",
+                "creator": "Autoria",
+                "share.from": "Comparteix des de",
+                "actions": "Accions",
+                "markUnread": "Marca com a no llegida",
+                "markRead": "Marca com a llegida",
+                "hide": "Amaga",
+                "restore": "Restaura",
+                "share.photon": "Enllaç de Photon"
             },
-            "comments": "",
-            "unsave": "",
-            "save": ""
+            "comments": "Comentaris",
+            "unsave": "Treu de desats",
+            "save": "Desa"
         },
         "badges": {
-            "locked": "",
-            "nsfw": "",
-            "featured": "",
-            "deleted": "",
-            "removed": "",
-            "saved": ""
+            "locked": "Bloquejada",
+            "nsfw": "NSFW",
+            "featured": "Destacada",
+            "deleted": "Eliminada",
+            "removed": "Retirada",
+            "saved": "Desada"
         },
         "poll": {
             "results": {
-                "hide": "",
-                "show": "",
-                "ends": "",
-                "ended": ""
+                "hide": "Amaga els resultats",
+                "show": "Mostra els resultats",
+                "ends": "Acaba {{time}}",
+                "ended": "Va acabar {{time}}"
             },
-            "choices": "",
-            "votes": "",
-            "multiple": "",
-            "single": "",
-            "mode": ""
+            "choices": "Opcions",
+            "votes": "{{votes:number}} vots",
+            "multiple": "Resposta múltiple",
+            "single": "Resposta única",
+            "mode": "Mode"
         },
         "meta": {
-            "lastEdited": "",
-            "created": ""
+            "lastEdited": "Darrera edició: {{default}}",
+            "created": "Creada: {{default}}"
         },
         "image": {
-            "zoomIn": "",
-            "zoomOut": ""
+            "zoomIn": "Amplia",
+            "zoomOut": "Redueix"
         }
     },
     "toast": {
-        "purgeUser": "",
-        "failInstanceURL": "",
-        "failSignup": "",
-        "unblockUser": "",
-        "copied": "",
-        "updateMods": "",
-        "removeAdminWarning": "",
-        "settingsImportWarning": "",
-        "addMod": "",
-        "waitApplication": "",
-        "confirmDelete1": "",
-        "lemmyDonate": "",
-        "loginVoteGate": "",
-        "successSignup": "",
-        "failCSV": "",
-        "sentMessage": "",
-        "blockedInstance": "",
-        "deleted": "",
-        "confirmDelete3": "",
-        "blockUser": "",
-        "failFindUser": "",
-        "unbannedUser": "",
-        "bannedUser": "",
-        "purgedCommunity": "",
-        "resetSettings": "",
-        "invalidDateBeforeCurrent": "",
-        "removeAdmin": "",
-        "settingsImport": "",
-        "restoredFromDraft": "",
-        "resetLink": "",
-        "failFetchInstances": "",
-        "failGenerateTitle": "",
-        "unresolveReport": "",
-        "passwordReset": "",
-        "updatedCommunity": "",
-        "updatedSite": "",
-        "invalidLogin": "",
-        "addAccount": "",
-        "logIn": "",
-        "resolveReport": "",
-        "blockedCommunity": "",
-        "needPassword": "",
-        "invalidDateAbsolute": "",
-        "loginRefresh": "",
-        "verifyEmail": "",
-        "deniedApplication": "",
-        "userLoading": "",
-        "confirmDelete2": "",
-        "saveSettings": "",
-        "noComments": "",
-        "unblockedCommunity": "",
-        "invalidURL": "",
-        "approvedApplication": "",
-        "deleting": "",
-        "generatedTitle": "",
-        "needCommunity": ""
+        "purgeUser": "S'ha purgat l'usuari.",
+        "failInstanceURL": "No s'ha pogut contactar amb aquesta URL de servidor amb aquests paràmetres. Està caigut?",
+        "failSignup": "No s'ha pogut completar el registre.",
+        "unblockUser": "S'ha desbloquejat l'usuari.",
+        "copied": "S'ha copiat al porta-retalls.",
+        "updateMods": "S'ha actualitzat la moderació de la comunitat.",
+        "removeAdminWarning": "Segur que vols eliminar aquesta persona de l'administració?",
+        "settingsImportWarning": "La configuració importada no sembla vàlida. Segur que vols importar-la?",
+        "addMod": "S'ha afegit a la moderació.",
+        "waitApplication": "Espera que s'accepti la teva sol·licitud de registre abans d'iniciar sessió.",
+        "confirmDelete1": "Segur que vols eliminar el teu compte?",
+        "lemmyDonate": "El servidor del teu compte funciona amb Lemmy, i el seu equip de desenvolupament demana donatius. Poden desenvolupar Lemmy com a plataforma de codi obert, sense seguiment ni publicitat, gràcies a la generositat de les persones que l'usen.\n\nCada any et demanen que consideris fer un donatiu per donar suport a la seva feina i permetre'ls continuar mantenint i millorant Lemmy.\n\n[Dona](https://join-lemmy.org/donate)\n\n*Nota: és un donatiu a Lemmy, no a Photon.*",
+        "loginVoteGate": "Has d'iniciar sessió per votar.",
+        "successSignup": "Registre completat.",
+        "failCSV": "No s'ha pogut llegir el CSV",
+        "sentMessage": "S'ha enviat el missatge.",
+        "blockedInstance": "S'ha bloquejat la instància.",
+        "deleted": "S'ha eliminat el teu compte.",
+        "confirmDelete3": "Darrer avís. N'estàs del tot segur?",
+        "blockUser": "S'ha bloquejat l'usuari.",
+        "failFindUser": "No s'ha trobat aquest usuari.",
+        "unbannedUser": "S'ha aixecat el veto a l'usuari.",
+        "bannedUser": "S'ha vetat l'usuari.",
+        "purgedCommunity": "S'ha purgat la comunitat.",
+        "resetSettings": "Vols restablir la configuració als valors per defecte?",
+        "invalidDateBeforeCurrent": "Data no vàlida. És anterior a l'hora actual.",
+        "removeAdmin": "S'ha eliminat de l'administració.",
+        "settingsImport": "S'ha importat la configuració correctament",
+        "restoredFromDraft": "S'ha restaurat la publicació des de l'esborrany.",
+        "resetLink": "T'hem enviat per correu electrònic un enllaç per restablir la contrasenya.",
+        "failFetchInstances": "No s'han pogut obtenir els servidors disponibles.",
+        "failGenerateTitle": "Aquest lloc web no tenia cap títol ni descripció utilitzable.",
+        "unresolveReport": "S'ha reobert la denúncia.",
+        "passwordReset": "S'ha restablert la teva contrasenya.",
+        "updatedCommunity": "S'ha actualitzat la comunitat.",
+        "updatedSite": "S'ha actualitzat el lloc.",
+        "invalidLogin": "Credencials no vàlides",
+        "addAccount": "S'ha afegit el compte.",
+        "logIn": "Sessió iniciada correctament.",
+        "resolveReport": "S'ha resolt la denúncia.",
+        "blockedCommunity": "S'ha bloquejat la comunitat.",
+        "needPassword": "Has d'indicar la teva contrasenya.",
+        "invalidDateAbsolute": "Data no vàlida. Ha de ser una data absoluta.",
+        "loginRefresh": "S'ha renovat la teva sessió.",
+        "verifyEmail": "T'hem enviat un enllaç de verificació per correu electrònic. Verifica'l i després inicia sessió.",
+        "deniedApplication": "S'ha denegat la sol·licitud.",
+        "userLoading": "Encara s'estan carregant les teves dades d'usuari...",
+        "confirmDelete2": "N'estàs del tot segur?",
+        "saveSettings": "S'ha desat la configuració de l'usuari. Si has canviat el correu electrònic, t'hem enviat un enllaç de verificació.",
+        "noComments": "L'API no ha retornat cap comentari.",
+        "unblockedCommunity": "S'ha desbloquejat la comunitat.",
+        "invalidURL": "URL no vàlida",
+        "approvedApplication": "S'ha aprovat la sol·licitud.",
+        "deleting": "Eliminant el teu compte...",
+        "generatedTitle": "S'han generat el títol i el cos a partir de la URL. Vols desfer-ho?",
+        "needCommunity": "Has de triar una comunitat."
     },
     "aria": {
         "sidebar": {
-            "accounts": "",
-            "title": ""
+            "accounts": "Selector de comptes",
+            "title": "Barra lateral"
         },
         "vote": {
-            "upvotes": "",
-            "score": "",
-            "downvotes": "",
-            "group": ""
+            "upvotes": "{{default}} vots positius",
+            "score": "Puntuació: {{default}}",
+            "downvotes": "{{default}} vots negatius",
+            "group": "Controls de vot de la publicació"
         },
         "pagination": {
-            "nav": "",
-            "current": ""
+            "nav": "Paginació",
+            "current": "Pàgina actual"
         },
         "postDecor": {
-            "openImage": "",
-            "openLink": "",
-            "openPost": ""
+            "openImage": "Obre la imatge: {{default}}",
+            "openLink": "Obre l'enllaç: {{default}}",
+            "openPost": "Obre la publicació: {{default}}"
         },
-        "loading": "",
+        "loading": "Carregant",
         "element": {
-            "pageHeader": ""
+            "pageHeader": "Capçalera de la pàgina"
         },
         "comments": {
-            "children": ""
+            "children": "{{childCount}} respostes"
         }
     },
     "common": {
-        "jump": "",
-        "refresh": "",
-        "save": "",
-        "add": "",
-        "debug": "",
-        "info": "",
-        "enable": "",
-        "cancel": "",
-        "back": "",
-        "attach": "",
-        "send": "",
-        "disabled": "",
-        "disable": "",
-        "download": "",
-        "general": "",
-        "continue": "",
-        "next": "",
-        "remove": "",
-        "enabled": ""
+        "jump": "Salta",
+        "refresh": "Actualitza",
+        "save": "Desa",
+        "add": "Afegeix",
+        "debug": "Depuració",
+        "info": "Informació",
+        "enable": "Activa",
+        "cancel": "Cancel·la",
+        "back": "Enrere",
+        "attach": "Adjunta un fitxer",
+        "send": "Envia",
+        "disabled": "Desactivat",
+        "disable": "Desactiva",
+        "download": "Baixa",
+        "general": "General",
+        "continue": "Continua",
+        "next": "Següent",
+        "remove": "Elimina",
+        "enabled": "Activat"
     },
     "placeholders": {
-        "body": "",
-        "title": "",
-        "comments": ""
+        "body": "Què hi tens a dir?",
+        "title": "Afegeix un títol a la publicació",
+        "comments": "Uneix-te a la conversa"
     },
     "error": {
-        "incorrect_login_9": "",
-        "incorrect_login_10": "",
-        "captcha_incorrect": "",
-        "incorrect_login_2": "",
-        "incorrect_login_12": "",
-        "rate_limit_error": "",
-        "incorrect_login_3": "",
-        "incorrect_login_8": "",
-        "cant_find_object": "",
-        "incorrect_login_6": "",
-        "couldnt_find_person": "",
-        "couldnt_find_community": "",
-        "unimplemented": "",
-        "honeypot_failed": "",
-        "invalid_password": "",
-        "couldnt_find_post": "",
-        "incorrect_login_7": "",
-        "incorrect_login": "",
-        "passwords_do_not_match": "",
-        "cant_block_yourself": "",
-        "slurs": "",
-        "not_live_supported": "",
-        "language_not_allowed": "",
-        "invalid_vote_value": "",
-        "email_not_verified": "",
-        "not_an_admin": "",
-        "downvotes_are_disabled": "",
-        "incorrect_login_11": "",
-        "incorrect_login_4": "",
-        "email_already_exists": "",
-        "unsupported": "",
-        "cant_block_local_instance": "",
-        "registration_application_is_pending": "",
-        "token_not_found": "",
-        "incorrect_login_5": ""
+        "incorrect_login_9": "Cadascuna d'aquestes peticions envia dades gràcies a una tecnologia increïble. I tu l'uses per fer inicis de sessió fallits.",
+        "incorrect_login_10": "Pensa-hi. L'administració del servidor ha de mantenir-lo només perquè tu facis aquestes peticions inútils.",
+        "captcha_incorrect": "Resposta del CAPTCHA incorrecta.",
+        "incorrect_login_2": "Les credencials no són correctes. Torna-ho a provar.",
+        "incorrect_login_12": "...",
+        "rate_limit_error": "Estàs fent aquesta acció massa de pressa.",
+        "incorrect_login_3": "Torna a ser incorrecte. Prova-ho unes quantes vegades més.",
+        "incorrect_login_8": "Em rendeixo.",
+        "cant_find_object": "No s'ha trobat aquest contingut al teu servidor.",
+        "incorrect_login_6": "Crec en tu.",
+        "couldnt_find_person": "Aquest usuari no existeix.",
+        "couldnt_find_community": "Aquesta comunitat no existeix.",
+        "unimplemented": "El programari del servidor del teu compte ja té aquesta funció, però Photon encara no la admet.",
+        "honeypot_failed": "Ets un robot? Bip bop bap bop. Si no ho ets, ha fallat la comprovació anti-robots.",
+        "invalid_password": "Contrasenya no vàlida.",
+        "couldnt_find_post": "Aquesta publicació no existeix, no és en aquest servidor o s'ha retirat.",
+        "incorrect_login_7": "D'acord, ara em prens el pèl.",
+        "incorrect_login": "Les credencials d'inici de sessió no són correctes. Torna-ho a provar.",
+        "passwords_do_not_match": "La contrasenya i la contrasenya de verificació no coincideixen.",
+        "cant_block_yourself": "No pots bloquejar-te. Ni cal: (probablement) ets una gran persona!",
+        "slurs": "L'aportació conté un terme prohibit en aquest servidor.",
+        "not_live_supported": "Aquest servidor no executa un programari compatible o està fora de línia.",
+        "language_not_allowed": "Aquesta llengua no és permesa en aquesta comunitat. Desmarca-la per usar la llengua per defecte de la comunitat.",
+        "invalid_vote_value": "No es pot fer frau de vots a les publicacions de Lemmy, ho sentim.",
+        "email_not_verified": "El correu electrònic del teu compte no està verificat.",
+        "not_an_admin": "No formes part de l'administració d'aquest servidor.",
+        "downvotes_are_disabled": "Els vots negatius estan desactivats en aquest servidor.",
+        "incorrect_login_11": "Cada vegada que prems el botó es gasten milers de cicles de processador per atendre la petició, que acaba fallant.",
+        "incorrect_login_4": "Tu pots. Només uns quants intents més.",
+        "email_already_exists": "Ja existeix un compte amb aquest correu electrònic.",
+        "unsupported": "El programari del servidor del teu compte no admet aquesta funció.",
+        "cant_block_local_instance": "No pots bloquejar el servidor que estàs utilitzant.",
+        "registration_application_is_pending": "La sol·licitud de registre d'aquest compte encara no s'ha acceptat.",
+        "token_not_found": "Aquest enllaç de verificació del correu electrònic ha caducat o no ha existit mai.",
+        "incorrect_login_5": "Aquesta vegada mira el teclat mentre escrius."
     },
     "comment": {
-        "expand": "",
-        "banned": "",
-        "reply": "",
+        "expand": "Desplega",
+        "banned": "Estàs vetat en aquesta comunitat.",
+        "reply": "Respon",
         "actions": {
-            "label": "",
-            "link": ""
+            "label": "Accions",
+            "link": "Copia l'enllaç"
         },
-        "collapse": "",
-        "locked": "",
-        "more": ""
+        "collapse": "Replega",
+        "locked": "Aquesta publicació està bloquejada.",
+        "more": "{{comments:number}} més"
     },
     "moderation": {
         "ban": {
-            "deleteData": "",
-            "expires": "",
-            "banFromCommunity": "",
-            "unbanFromCommunity": "",
-            "banning": "",
-            "unbanning": "",
-            "warning": ""
+            "deleteData": "Elimina les dades",
+            "expires": "Caduca (UTC)",
+            "banFromCommunity": "Veta l'usuari de la comunitat",
+            "unbanFromCommunity": "Aixeca el veto de l'usuari a la comunitat",
+            "banning": "Vetant l'usuari",
+            "unbanning": "Aixecant el veto a l'usuari",
+            "warning": "Això eliminarà TOTES les aportacions d'aquest usuari aquí."
         },
         "modlog": {
-            "post": "",
-            "comment": "",
-            "user": ""
+            "post": "Registre de moderació de la publicació",
+            "comment": "Registre de moderació del comentari",
+            "user": "Registre de moderació de l'usuari"
         },
         "removeSubmission": {
-            "titlePurge": "",
-            "titleRestore": "",
-            "failMessage": "",
-            "message": "",
-            "successPurge": "",
-            "title": "",
-            "comment": "",
-            "failEmptyReply": "",
-            "withReason": "",
-            "failReply": ""
+            "titlePurge": "Purgant l'aportació",
+            "titleRestore": "Restaurant l'aportació",
+            "failMessage": "No s'ha pogut enviar el missatge a l'usuari. Es retira igualment...",
+            "message": "Missatge",
+            "successPurge": "S'ha purgat l'aportació correctament.",
+            "title": "Retirant l'aportació",
+            "comment": "Comentari",
+            "failEmptyReply": "La resposta no pot estar buida si «Avisa l'autoria» està activat.",
+            "withReason": "Avisa l'autoria",
+            "failReply": "No s'ha pogut publicar la resposta. Es retira igualment..."
         },
-        "votes": "",
+        "votes": "Vots",
         "reportModal": {
-            "success": "",
-            "title": "",
+            "success": "S'ha denunciat l'aportació.",
+            "title": "Denuncia",
             "presets": {
-                "rules.content": "",
-                "rules": "",
-                "spam": ""
+                "rules.content": "Aquesta aportació incompleix les normes perquè __",
+                "rules": "Incompleix les normes de la comunitat",
+                "spam": "Brossa o abús"
             }
         },
-        "label": "",
-        "unfeature": "",
-        "restore": "",
-        "labelInstanceOnly": "",
-        "remove": "",
-        "unlock": "",
-        "report": "",
-        "lock": "",
-        "feature": "",
-        "reason": ""
+        "label": "Moderació",
+        "unfeature": "Deixa de destacar",
+        "restore": "Restaura",
+        "labelInstanceOnly": "Moderació (només local)",
+        "remove": "Retira",
+        "unlock": "Desbloqueja",
+        "report": "Denuncia",
+        "lock": "Bloqueja",
+        "feature": "Destaca",
+        "reason": "Motiu"
     },
     "content": {
-        "instances": "",
-        "posts": "",
-        "comments": "",
-        "message": "",
-        "users": "",
-        "all": "",
-        "url": "",
-        "communities": ""
+        "instances": "Instàncies",
+        "posts": "Publicacions",
+        "comments": "Comentaris",
+        "message": "Missatge",
+        "users": "Usuaris",
+        "all": "Tot",
+        "url": "URL",
+        "communities": "Comunitats"
     },
     "cards": {
         "community": {
-            "members": "",
-            "blockInstance": "",
-            "subscribed": "",
-            "activeDay": "",
-            "unblock": "",
-            "subscribe": "",
-            "moderators": "",
-            "flair": "",
-            "modlog": "",
-            "block": ""
+            "members": "Membres",
+            "blockInstance": "Bloqueja la instància",
+            "subscribed": "Subscrit",
+            "activeDay": "Actius avui",
+            "unblock": "Desbloqueja",
+            "subscribe": "Subscriu-m'hi",
+            "moderators": "Moderació",
+            "flair": "Defineix la meva etiqueta",
+            "modlog": "Registre de moderació",
+            "block": "Bloqueja"
         },
         "site": {
-            "admins": "",
-            "stats": "",
-            "about": ""
+            "admins": "Administració",
+            "stats": "Estadístiques",
+            "about": "Quant a"
         }
     },
     "admin": {
-        "label": "",
+        "label": "Administració",
         "purgeCommunity": {
-            "title": "",
-            "warning": ""
+            "title": "Purgant la comunitat",
+            "warning": "Això eliminarà totes les publicacions. N'estàs segur? (El botó s'activarà d'aquí a 3 segons.)"
         },
-        "purge": "",
-        "instance": ""
+        "purge": "Purga",
+        "instance": "Instància"
     },
     "class": {
-        "admin": "",
-        "moderator": ""
+        "admin": "Administració",
+        "moderator": "Moderació"
     },
     "stats": {
-        "created": "",
-        "joined": ""
+        "created": "Creada",
+        "joined": "Es va unir"
     },
     "message": {
-        "success": "",
-        "error": "",
-        "retry": ""
+        "success": "Fet",
+        "error": "Error",
+        "retry": "Torna-ho a provar"
     }
 }
