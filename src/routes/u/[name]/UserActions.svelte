@@ -114,7 +114,7 @@
       </Button>
     {/if}
     {#if profile.isAdmin}
-      <Menu class="ml-auto" placement="bottom-end">
+      <Menu class="ms-auto" placement="bottom-end">
         {#snippet target(attachment)}
           <Button
             {@attach attachment}

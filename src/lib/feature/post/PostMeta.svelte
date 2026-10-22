@@ -209,7 +209,7 @@
         <button
           {@attach attachment}
           class={[
-            'row-span-2 shrink-0 mr-2 self-center group/btn',
+            'row-span-2 shrink-0 me-2 self-center group/btn',
             'bg-slate-200 dark:bg-zinc-800 rounded-lg cursor-pointer',
           ]}
         >
@@ -311,7 +311,7 @@
     {/if}
   </div>
   <div
-    class="flex flex-row min-sm:justify-end items-center self-center flex-wrap gap-2 *:shrink-0 badges min-sm:ml-2"
+    class="flex flex-row min-sm:justify-end items-center self-center flex-wrap gap-2 *:shrink-0 badges min-sm:ms-2"
     style="grid-area: badges;"
   >
     {#if tags}

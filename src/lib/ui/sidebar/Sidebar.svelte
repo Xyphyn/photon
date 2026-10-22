@@ -61,7 +61,7 @@
     <SidebarButton icon={Inbox} href="/inbox" label={$t('profile.inbox')}>
       {#if notifications.inbox > 0}
         <Badge
-          class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ml-auto"
+          class="min-w-5 h-5 p-0! px-0.5 grid place-items-center ms-auto"
           color="red-subtle"
         >
           {notifications.inbox > 99 ? '∞' : notifications.inbox}
@@ -113,7 +113,7 @@
         <Option value="dark" class="hidden" icon={Moon}>
           {$t('nav.menu.colorscheme.dark')}
         </Option>
-        <Icon micro size="16" src={ChevronUpDown} class="ml-auto" />
+        <Icon micro size="16" src={ChevronUpDown} class="ms-auto" />
       </SidebarButton>
     {/snippet}
   </Select>

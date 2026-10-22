@@ -3,6 +3,7 @@
   import { navigating, page } from '$app/state'
   import { site } from '$lib/api/client.svelte'
   import { locale } from '$lib/app/i18n'
+  import { directionFor } from '$lib/app/i18n/direction'
   import { LINKED_INSTANCE_URL } from '$lib/app/instance.svelte'
   import { settings } from '$lib/app/settings.svelte'
   import { getDefaultColors } from '$lib/app/theme/presets'
@@ -93,8 +94,8 @@
     })
 
     $effect(() => {
-      document.documentElement.dir =
-        ($locale == 'he' || $locale == 'ar') && settings.useRtl ? 'rtl' : 'ltr'
+      document.documentElement.dir = directionFor($locale)
+      document.documentElement.lang = $locale
     })
   }
 
@@ -139,7 +140,7 @@
 </svelte:head>
 
 <Button
-  class="fixed -top-16 focus:top-0 left-0 m-4 z-300 transition-all"
+  class="fixed -top-16 focus:top-0 inset-s-0 m-4 z-300 transition-all"
   href="#main"
   icon={Forward}
 >

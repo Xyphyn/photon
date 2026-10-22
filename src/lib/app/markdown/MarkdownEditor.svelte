@@ -289,6 +289,7 @@
       <!--Actual text area-->
       <TextArea
         class="z-0 focus:ring-transparent! transition-none! resize-none"
+        dir="auto"
         bind:value
         bind:element={textArea}
         onkeydown={(e) => {

@@ -28,7 +28,7 @@
       class="font-normal w-full h-max block gap-2"
       gap="lg"
       color="none"
-      alignment="left"
+      alignment="start"
       href={link ? item.url : undefined}
     >
       <div class="flex-none">

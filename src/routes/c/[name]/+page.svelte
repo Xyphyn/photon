@@ -74,14 +74,14 @@
       <Note>You've blocked this community.</Note>
     {/if}
     {#if profile.current.user}
-      {#if !data.community.discussion_languages.every( (l) => profile.current.user?.discussion_languages.includes(l), ) && profile.current.user.discussion_languages.length > 0}
+      {#if !data.community.discussion_languages.every( (l) => profile.current.user?.discussion_languages.includes(l) ) && profile.current.user.discussion_languages.length > 0}
         {@const missing = data.community.discussion_languages.filter(
           (i) => !profile.current.user?.discussion_languages.includes(i),
         )}
-        <Note class="p-1! pl-3! flex-col md:flex-row">
+        <Note class="p-1! ps-3! flex-col md:flex-row">
           <div>{$t('routes.community.languageWarning')}</div>
           <Button
-            class="inline-block ml-auto"
+            class="inline-block ms-auto"
             href="/profile/settings"
             color="tertiary"
             rounding="pill"
@@ -89,7 +89,7 @@
           >
             {$t('profile.profile')}
             {#snippet suffix()}
-              <Icon src={ArrowRight} size="16" micro />
+              <Icon src={ArrowRight} size="16" micro class="rtl:-scale-x-100" />
             {/snippet}
           </Button>
         </Note>

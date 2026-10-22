@@ -136,7 +136,7 @@
     <Button
       onclick={() => modal({ title: 'Alt text', body: post.alt_text })}
       aria-label="Alt text"
-      class="absolute bottom-0 left-0 z-20 m-1"
+      class="absolute bottom-0 inset-s-0 z-20 m-1"
       size="square-md"
       rounding="xl"
     >
@@ -163,14 +163,14 @@
   .post-media-indicator {
     position: absolute;
     bottom: 0;
-    left: 0;
+    inset-inline-start: 0;
     display: flex;
     align-items: end;
     padding: calc(var(--spacing) * 2);
     height: calc(var(--spacing) * 16);
     width: 100%;
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: inherit;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
 
     background-image: linear-gradient(
       to bottom,

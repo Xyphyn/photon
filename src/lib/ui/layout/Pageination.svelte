@@ -49,6 +49,7 @@
       'flex flex-row gap-4 items-center justify-center',
       'rounded-full overflow-hidden w-max mx-auto p-1',
       'material-distinct',
+      'mt-2',
     ]}
   >
     {#if children}
@@ -70,7 +71,7 @@
           page <= 1}
       >
         {#snippet suffix()}
-          <Icon src={ChevronLeft} size="24" mini />
+          <Icon src={ChevronLeft} size="24" mini class="rtl:-scale-x-100" />
         {/snippet}
       </Button>
     {/if}
@@ -101,7 +102,7 @@
       disabled={!hasMore}
     >
       {#snippet suffix()}
-        <Icon src={ChevronRight} size="24" mini />
+        <Icon src={ChevronRight} size="24" mini class="rtl:-scale-x-100" />
       {/snippet}
     </Button>
   </nav>

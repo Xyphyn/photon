@@ -107,8 +107,7 @@
     padding: calc(var(--spacing) * 0.5);
     gap: calc(var(--spacing) * 1) calc(var(--spacing) * 1);
     margin-top: calc(var(--spacing) * -1);
-    margin-left: auto;
-    margin-right: auto;
+    margin-inline: auto;
 
     @variant sm {
       justify-content: start;

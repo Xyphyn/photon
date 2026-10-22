@@ -58,7 +58,7 @@
             class="border divide-x divide-slate-200 dark:divide-zinc-800 border-slate-200 dark:border-zinc-800 *:px-4 *:py-2"
           >
             <th style="width: 6%;"></th>
-            <th style="width: 60%;" class="text-left">
+            <th style="width: 60%;" class="text-start">
               {$t('routes.admin.applications.user')}
             </th>
             <th style="width: 5%;"></th>
@@ -86,7 +86,7 @@
                   }}
                 />
               </td>
-              <td class="text-sm w-full text-right">
+              <td class="text-sm w-full text-end">
                 <a
                   href="/modlog?user={vote.creator.id}"
                   data-sveltekit-preload-data="tap"
@@ -110,7 +110,7 @@
             size="square-md"
             disabled={page == 1}
           >
-            <Icon src={ChevronLeft} size="20" mini />
+            <Icon src={ChevronLeft} size="20" mini class="rtl:-scale-x-100" />
           </Button>
           {page}
           <Button
@@ -121,7 +121,7 @@
             size="square-md"
             disabled={votes.length < 50}
           >
-            <Icon src={ChevronRight} size="20" mini />
+            <Icon src={ChevronRight} size="20" mini class="rtl:-scale-x-100" />
           </Button>
         </div>
       {/if}

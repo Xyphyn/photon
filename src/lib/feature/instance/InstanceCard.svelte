@@ -90,7 +90,7 @@
       />
       <Popover openOnHover placement="bottom-end">
         {#snippet target(attachment)}
-          <button class="text-left cursor-pointer" {@attach attachment}>
+          <button class="text-start cursor-pointer" {@attach attachment}>
             <LabelStat
               label={$t('cards.community.activeDay')}
               content={site.counts.users_active_day.toString()}

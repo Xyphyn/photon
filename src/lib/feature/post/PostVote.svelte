@@ -93,7 +93,7 @@
   <button
     onclick={() => castVote(vote == targetNum ? 0 : targetNum)}
     class={[
-      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2 first:border-r-0! first:rounded-l-[inherit] last:rounded-r-[inherit]',
+      'flex items-center gap-0.5 transition-colors relative cursor-pointer h-full p-2 first:border-e-0! first:rounded-s-[inherit] last:rounded-e-[inherit]',
       'last:flex-row-reverse',
       vote == targetNum
         ? shouldShowVoteColor(
@@ -161,13 +161,18 @@
     height: 100%;
     opacity: 10%;
     width: 100%;
-    left: 0;
+    inset-inline-start: 0;
     bottom: 0px;
     z-index: -10;
+    --vote-gradient: to right;
     background: linear-gradient(
-      to right,
+      var(--vote-gradient),
       var(--color-indigo-400) calc(var(--vote-ratio) - 2%),
       var(--color-red-400) calc(var(--vote-ratio) + 2%)
     );
+  }
+
+  :global([dir='rtl']) .vote-ratio::before {
+    --vote-gradient: to left;
   }
 </style>

@@ -139,7 +139,7 @@
       <PostMediaCompact
         post={post.post}
         {type}
-        class="{settings.leftAlign ? 'mr-3' : 'ml-3'} shrink no-list-margin"
+        class="{settings.leftAlign ? 'me-3' : 'ms-3'} shrink no-list-margin"
         style="grid-area: media;"
         blur={rule == 'blur-sm' ? true : undefined}
         {view}

@@ -82,7 +82,7 @@
     <div
       role="dialog"
       class={[
-        'overflow-hidden fixed top-0 left-0 w-screen h-screen z-100',
+        'overflow-hidden fixed top-0 inset-s-0 w-screen h-screen z-100',
         'flex flex-col items-center justify-center backdrop-blur-xs',
         'bg-white/50 dark:bg-black/50 box-border p-4',
       ]}
@@ -109,7 +109,7 @@
       >
         {#if dismissable}
           <Button
-            class="absolute top-0 right-0 m-2 text-slate-600 dark:text-zinc-400"
+            class="absolute top-0 inset-e-0 m-2 text-slate-600 dark:text-zinc-400"
             color="tertiary"
             size="square-sm"
             onclick={onclose}

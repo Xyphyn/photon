@@ -9,7 +9,7 @@
   let { object, isParent = false }: Props = $props()
 </script>
 
-<ul class:ml-4={!isParent} class="leading-8">
+<ul class:ms-4={!isParent} class="leading-8">
   {#each Object.keys(object) as key}
     <details open={false}>
       <summary class="cursor-pointer">

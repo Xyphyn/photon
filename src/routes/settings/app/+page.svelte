@@ -1,6 +1,6 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
-  import { locale, t } from '$lib/app/i18n'
+  import { t } from '$lib/app/i18n'
   import { settings } from '$lib/app/settings.svelte'
   import Sort from '$lib/feature/filter/Sort.svelte'
   import ViewSelect from '$lib/feature/filter/ViewSelect.svelte'
@@ -81,7 +81,7 @@
       {/snippet}
       <Button
         color="none"
-        class="bg-linear-to-r ml-6 dark:from-pink-400 dark:to-fuchsia-400 from-pink-600 to-red-600 text-white dark:text-black"
+        class="bg-linear-to-r ms-6 dark:from-pink-400 dark:to-fuchsia-400 from-pink-600 to-red-600 text-white dark:text-black"
         href="https://buymeacoffee.com/xylight"
         target="_blank"
         rounding="xl"
@@ -98,7 +98,11 @@
     {#snippet description()}
       <p>
         {$t('settings.app.lang.description')}
-        <Link href="/translators" highlight class="text-base font-semibold">
+        <Link
+          href="/translators"
+          highlight
+          class="text-base text-sm font-semibold"
+        >
           {$t('settings.app.lang.credits')}
         </Link>
       </p>
@@ -119,12 +123,6 @@
       {/each}
     </Select>
   </Setting>
-  {#if $locale == 'he' || $locale == 'ar'}
-    <ToggleSetting
-      bind:checked={settings.useRtl}
-      title={$t('settings.app.lang.useRtl.title')}
-    ></ToggleSetting>
-  {/if}
   <Setting icon={ViewColumns}>
     {#snippet title()}
       <span>{$t('settings.app.view.title')}</span>

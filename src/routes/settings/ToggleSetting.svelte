@@ -85,7 +85,7 @@
     <Switch
       bind:checked
       class="flex-row-reverse items-center w-full"
-      labelClass="flex-1 mr-auto"
+      labelClass="flex-1 me-auto"
     >
       <h1 class="font-medium text-base">{title}</h1>
       {#if description}

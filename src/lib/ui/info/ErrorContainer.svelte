@@ -59,7 +59,7 @@
         src={ExclamationTriangle}
         size="20"
         micro
-        class="inline-block rounded-lg clear-both float-left mr-2"
+        class="inline-block rounded-lg clear-both float-start me-2"
       />
       {#if message}
         {message}

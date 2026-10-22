@@ -187,7 +187,7 @@
                     {@attach attachment}
                     size="square-md"
                     color="tertiary"
-                    class="justify-self-end ml-auto z-50"
+                    class="justify-self-end ms-auto z-50"
                     aria-label={$t('post.actions.more.label')}
                     icon={EllipsisHorizontal}
                   ></Button>

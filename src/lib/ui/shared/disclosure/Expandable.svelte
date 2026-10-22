@@ -28,7 +28,7 @@
   {#snippet summary()}
     <div
       class={[
-        'font-medium w-full text-left flex flex-row items-center justify-between hover:text-primary-900',
+        'font-medium w-full text-start flex flex-row items-center justify-between hover:text-primary-900',
         'dark:hover:text-primary-100 transition-colors z-0 group relative cursor-pointer',
       ]}
     >
@@ -38,7 +38,7 @@
       {#if icon}
         <div
           class={[
-            'ml-auto',
+            'ms-auto',
             !open && 'rotate-90',
             'transition-transform duration-300 ease-out',
           ]}

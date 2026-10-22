@@ -38,7 +38,7 @@
   }}
 >
   {#if toast.loading}
-    <div class="relative m-2 ml-4 shrink-0">
+    <div class="relative m-2 ms-4 shrink-0">
       <Spinner width={20} />
     </div>
   {:else}
@@ -66,7 +66,7 @@
       class={toast.long ? 'text-[15px]' : 'text-sm font-medium'}
     />
   </div>
-  <div class="absolute top-0 right-0 flex items-center gap-1 m-1">
+  <div class="absolute top-0 inset-e-0 flex items-center gap-1 m-1">
     {#if toast.action}
       <button
         onclick={() => {

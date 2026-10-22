@@ -22,7 +22,7 @@
   style="background-color: rgb({value});"
 >
   <input
-    class="rounded-md border cursor-pointer absolute top-0 left-0 w-full h-full opacity-0"
+    class="rounded-md border cursor-pointer absolute top-0 inset-s-0 w-full h-full opacity-0"
     type="color"
     bind:value
     onchange={() => onchange?.(hexToRgb(value))}

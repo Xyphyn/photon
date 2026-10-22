@@ -21,13 +21,13 @@
     src={InformationCircle}
     size="20"
     micro
-    class="inline-block rounded-lg clear-both float-left mr-2"
+    class="inline-block rounded-lg clear-both float-start me-2"
   />
   <div class="flex flex-col md:flex-row items-center w-full">
     {#if children}
       {@render children?.()}
     {:else if content}
-      <p class="text-left justify-self-start">
+      <p class="text-start justify-self-start">
         {content}
       </p>
     {/if}

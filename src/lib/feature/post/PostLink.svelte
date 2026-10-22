@@ -163,7 +163,7 @@
       position: relative;
 
       @variant sm {
-        margin-left: auto;
+        margin-inline-start: auto;
       }
 
       @variant sm {

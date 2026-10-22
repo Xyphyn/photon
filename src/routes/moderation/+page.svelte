@@ -100,7 +100,7 @@
         disabled={batch.progress >= 0 || data.items.value?.length == 0}
         onclick={markAllAsResolved}
         size="lg"
-        class="ml-auto"
+        class="ms-auto"
         color="primary"
       >
         <Icon src={Check} size="16" mini />

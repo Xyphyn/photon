@@ -33,7 +33,7 @@
       <div>
         <Icon
           src={Plus}
-          class="text-slate-400 dark:text-zinc-500 absolute top-0 left-0 m-2"
+          class="text-slate-400 dark:text-zinc-500 absolute top-0 inset-s-0 m-2"
           size="20"
           micro
         />

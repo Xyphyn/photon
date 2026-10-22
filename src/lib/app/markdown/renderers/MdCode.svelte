@@ -37,7 +37,7 @@
   <div
     class="w-full bg-slate-25 dark:bg-zinc-925 h-9 flex items-center justify-between p-2"
   >
-    <pre class="code-baseline text-xs"> {codeblock.lang}</pre>
+    <pre class="code-baseline text-xs" dir="ltr"> {codeblock.lang}</pre>
     <Button
       size="square-sm"
       color="tertiary"
@@ -55,7 +55,8 @@
     </Button>
   </div>
   <pre
-    class="code-baseline w-full overflow-x-auto text-xs bg-white dark:bg-zinc-950 px-4">
+    class="code-baseline w-full overflow-x-auto text-xs bg-white dark:bg-zinc-950 px-4"
+    dir="ltr">
     {codeblock.code}
   </pre>
 </Material>

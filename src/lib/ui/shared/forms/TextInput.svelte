@@ -68,7 +68,7 @@
       text={label}
       class={[
         'peer-invalid:text-red-500 relative',
-        required && "after:content-['*'] after:text-red-500 after:ml-1",
+        required && "after:content-['*'] after:text-red-500 after:ms-1",
       ]}
     >
       {@render passedCustomLabel?.()}
@@ -84,7 +84,7 @@
     {#if prefix || icon}
       <div
         class={[
-          'rounded-xl rounded-r-none text-slate-600 dark:text-zinc-400 pl-3',
+          'rounded-xl rounded-e-none text-slate-600 dark:text-zinc-400 ps-3',
         ]}
       >
         {#if prefix}
@@ -106,17 +106,17 @@
       class={[
         sizeClass[size],
         'text-input flex-1',
-        (prefix || icon) && 'rounded-l-none',
-        (prefix || icon) && inlineAffixes && 'border-l-0',
-        suffix && 'rounded-r-none',
-        suffix && inlineAffixes && 'border-r-0',
+        (prefix || icon) && 'rounded-s-none',
+        (prefix || icon) && inlineAffixes && 'border-s-0',
+        suffix && 'rounded-e-none',
+        suffix && inlineAffixes && 'border-e-0',
         clazz,
       ]}
     />
     {#if suffix}
       <div
         class={[
-          'rounded-xl rounded-l-none text-slate-600 dark:text-zinc-400 h-full',
+          'rounded-xl rounded-s-none text-slate-600 dark:text-zinc-400 h-full',
         ]}
       >
         {@render suffix?.()}

@@ -64,7 +64,7 @@
       <div class="flex">
         <Markdown source={tagline} inline />
 
-        <div class="flex gap-2 ml-auto">
+        <div class="flex gap-2 ms-auto">
           <Button
             onclick={() => {
               taglines.splice(

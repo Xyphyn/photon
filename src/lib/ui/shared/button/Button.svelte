@@ -9,9 +9,9 @@
   export type ButtonShadow = keyof typeof buttonShadow
 
   export const buttonAlignment = {
-    left: 'justify-start text-left origin-left',
+    start: 'justify-start text-start origin-left rtl:origin-right',
     center: 'justify-center',
-    right: 'justify-end text-right origin-right',
+    end: 'justify-end text-end origin-right rtl:origin-left',
   }
 
   export const buttonColor = {
@@ -94,6 +94,7 @@
     suffix?: Snippet
     onclick?: any
     icon?: IconSource
+    iconClass?: ClassValue
     weight?: ButtonWeight
   }
 
@@ -119,6 +120,7 @@
     children,
     suffix,
     icon,
+    iconClass,
     weight = 'md',
     ...rest
   }: Props = $props()
@@ -142,9 +144,9 @@
     (disabled || loading) && 'btn-disabled',
     alignment == 'center'
       ? 'origin-center'
-      : alignment == 'left'
-        ? 'origin-left'
-        : 'origin-right',
+      : alignment == 'start'
+        ? 'origin-left rtl:origin-right'
+        : 'origin-right rtl:origin-left',
     clazz,
   ]}
   type={submit ? 'submit' : 'button'}
@@ -158,7 +160,10 @@
       src={icon}
       size="16"
       mini
-      class={[color == 'secondary' && 'text-slate-600 dark:text-zinc-400']}
+      class={[
+        color == 'secondary' && 'text-slate-600 dark:text-zinc-400',
+        iconClass,
+      ]}
     />
   {/if}
   {@render children?.()}

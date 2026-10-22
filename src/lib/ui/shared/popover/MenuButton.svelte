@@ -24,7 +24,7 @@
 
   let {
     color = 'tertiary',
-    alignment = 'left',
+    alignment = 'start',
     href = undefined,
     disabled = false,
     class: clazz = '',
@@ -74,7 +74,12 @@
   {#snippet suffix()}
     {@render passedSuffix?.()}
     {#if nest}
-      <Icon src={ChevronRight} size="16" micro class="ml-auto" />
+      <Icon
+        src={ChevronRight}
+        size="16"
+        micro
+        class="ms-auto rtl:-scale-x-100"
+      />
     {/if}
   {/snippet}
 </Button>

@@ -61,7 +61,7 @@
       for={id}
       text={label}
       class="peer-invalid:text-red-500 {required
-        ? "after:content-['*'] after:text-red-500 after:ml-1"
+        ? "after:content-['*'] after:text-red-500 after:ms-1"
         : ''}"
     >
       {@render customLabel?.()}

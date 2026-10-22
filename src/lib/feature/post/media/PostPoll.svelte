@@ -123,7 +123,7 @@
           ></div>
         {/if}
         <label
-          class="px-4 py-2 w-full text-left flex flex-row gap-2 items-center"
+          class="px-4 py-2 w-full text-start flex flex-row gap-2 items-center"
         >
           {#if !multi}
             <input
@@ -153,7 +153,7 @@
             {choice.choice_text}
           </div>
           {#if chosen}
-            <div class="ml-auto">
+            <div class="ms-auto">
               {percentage}%
             </div>
           {/if}

@@ -163,7 +163,7 @@
       }}
     >
       <Button href="/accounts" class=" mb-4 w-max">
-        <Icon src={ArrowLeft} size="16" micro />
+        <Icon src={ArrowLeft} size="16" micro class="rtl:-scale-x-100" />
         {$t('common.back')}
       </Button>
       <Header>
@@ -312,7 +312,7 @@
           {$t('form.signup.verify.submit')}
         </Button>
         <Button href="/signup" rounding="pill">
-          <Icon src={ArrowLeft} size="16" micro />
+          <Icon src={ArrowLeft} size="16" micro class="rtl:-scale-x-100" />
           {$t('common.back')}
         </Button>
       </form>
@@ -323,7 +323,7 @@
         {$t('form.signup.application.notice')}
       </h2>
       <Button href="/signup" rounding="pill">
-        <Icon src={ArrowLeft} size="16" micro />
+        <Icon src={ArrowLeft} size="16" micro class="rtl:-scale-x-100" />
         {$t('common.back')}
       </Button>
     </div>
